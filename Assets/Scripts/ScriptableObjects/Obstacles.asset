@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca2c0d1ea88956459f9633cbac401be, type: 3}
+  m_Name: Obstacles
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: deae00807db5f764ea0ef2695a63b383, type: 2}
+  - {fileID: 11400000, guid: d095f88ac495c044d99a4723ecaa26fa, type: 2}
+  - {fileID: 11400000, guid: fe4ca965ac9fa004e845bf5de1095b66, type: 2}
+  - {fileID: 11400000, guid: 1402461137d3fd044b32cac4b5816fc5, type: 2}
+  - {fileID: 11400000, guid: f61b272e2b39c5b428b2d576262b7e08, type: 2}
+  - {fileID: 11400000, guid: 95ccb540fa44f17469fee0ff1633513c, type: 2}
+  - {fileID: 11400000, guid: 2137d5b02fd3c0649aafbf8a1f530ffb, type: 2}
+  - {fileID: 11400000, guid: eb6390df3d50a4c4d8697f2cce635941, type: 2}
+  - {fileID: 11400000, guid: 79654a212388194419cce109afd233a6, type: 2}
+  - {fileID: 11400000, guid: d2bd6f056a81b5a4f9e7eee56631f1c1, type: 2}
+  - {fileID: 11400000, guid: d5299ba5d2c64ca42a43bf086315a447, type: 2}
+  - {fileID: 11400000, guid: 55ad09def2241d14eb84d04580a59180, type: 2}
+  - {fileID: 11400000, guid: 959c04eea18ebad42899e49fe59f7e68, type: 2}
+  - {fileID: 11400000, guid: 774ac110954dc534b9a1ae7dea058370, type: 2}
+  - {fileID: 11400000, guid: 5456e14e4f314684685e68dc13135542, type: 2}
+  - {fileID: 11400000, guid: 5aff049bf9fc08743827222273103ce0, type: 2}
+  - {fileID: 11400000, guid: 3ea006491e54ced4ab35184e15eedea8, type: 2}
+  - {fileID: 11400000, guid: e2cf9835c435a324e8692be36a6f440a, type: 2}
+  - {fileID: 11400000, guid: 2398ecdb3d1edb2489edd837fe4e5a8e, type: 2}
+  - {fileID: 11400000, guid: 666dfb782873e1a469ddc8bb21f337fb, type: 2}
+  - {fileID: 11400000, guid: 563076fff363df94ea2ce17e65ac3447, type: 2}
+  - {fileID: 11400000, guid: 1a56dd13d2090b4458a33a7fd4d62092, type: 2}
+  - {fileID: 11400000, guid: 5c370c5f0c379be44ad815f4e6b90fcc, type: 2}
+  - {fileID: 11400000, guid: bdadfaebc9b8a004ba15cf2dbcdcbd21, type: 2}
+  - {fileID: 11400000, guid: 22abbfcc7b15e964a82c336ad6d53910, type: 2}
+  isWalkable: 0
