@@ -11,7 +11,7 @@ public class ButtonManager : MonoBehaviour
     public List<GameObject> ActionButtons;
     public GameObject ButtonHolder;
     GameObject thisCharacter;
-    TurnManager turnManager;
+
 
     public void makeButtons()
     {
@@ -19,11 +19,15 @@ public class ButtonManager : MonoBehaviour
         clearButtons();
         InstantiateButtons();
     }
+    TurnManager turnManager;
+    ReticalManager rayCastReticalManager;
+    MapManager mapManager;
     void setVariable()
     {
         turnManager = this.GetComponent<TurnManager>();
         thisCharacter = this.GetComponent<TurnManager>().characterThisTurn;
-        rayCastReticalManager = this.GetComponent<RayCastReticalManager>();
+        rayCastReticalManager = this.GetComponent<ReticalManager>();
+        mapManager = this.GetComponent<MapManager>();
     }
     public class MoveListClass
     {
@@ -73,43 +77,59 @@ public class ButtonManager : MonoBehaviour
         //Debug.Log("Pressed button0");
         action();
     }
-    RayCastReticalManager rayCastReticalManager;
+
+    Vector3Int tryHere;
+    Dictionary<Vector3, GameObject> PositionToGameObject;
+    void GetDataForActions()
+    {
+        tryHere = rayCastReticalManager.getMovePoint();//CriticalData
+        PositionToGameObject = mapManager.PositionToGameObject;
+    }
 
     void MoveCharacter()
     {
+
         void thisAction()
         {
-            Vector3 currentPosition = thisCharacter.transform.position;
-            Vector3Int tryMoveHere = rayCastReticalManager.getMovePoint();
-            bool isWalkableFloor = rayCastReticalManager.checkOrder(tryMoveHere);
-            GameObject potentialGameObjectHere = turnManager.isDictionarySpaceOccupied(tryMoveHere);
-            if (potentialGameObjectHere != null)
+            GetDataForActions();
+            if (PositionToGameObject.ContainsKey(tryHere))//Checks if There is a Game Object Here
             {
-                Debug.Log("Cant do that there is " + potentialGameObjectHere.name + " is Occuping this Space");
+                Debug.Log("Cant do that there is " + PositionToGameObject[tryHere] + " is Occuping this Space");
             }
-            else if (!isWalkableFloor)
+            else if (!mapManager.getIsWalkable(tryHere))
             {
                 Debug.Log("Not Walable Bro");
             }
             else
             {
-                turnManager.UpdateCharacterPosition(currentPosition, tryMoveHere, thisCharacter);
-                thisCharacter.transform.position = tryMoveHere;
+                Vector3 currentPosition = thisCharacter.transform.position;
+                mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
+                thisCharacter.transform.position = tryHere;
             }
         }
-        StartCoroutine(waitUntileButton(thisAction));
+        StartCoroutine(waitUntileButton(thisAction));//the co routine starts the action not all actions need a co routine
     }
     void AttackHere()
     {
         void thisAction()
         {
-            Debug.Log("Characert Attact at" + rayCastReticalManager.getMovePoint());
+            GetDataForActions();
+            if (!PositionToGameObject.ContainsKey(tryHere))
+            {
+                Debug.Log("no Character Here");
+            }
+            else
+            {
+                characterDataHolder targetCharacter = PositionToGameObject[tryHere].gameObject.GetComponent<characterDataHolder>();
+                characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
+                targetCharacter.health -= attackingCharacter.AttackDamage;
+                targetCharacter.UpdateCharacterData();
+            }
         }
         StartCoroutine(waitUntileButton(thisAction));
     }
     void endTurn()
     {
-        //Debug.Log("Turn Ended" + thisCharacter.transform.position);
         this.GetComponent<TurnManager>().endTurn();
     }
 }

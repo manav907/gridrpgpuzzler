@@ -7,31 +7,37 @@ public class TurnManager : MonoBehaviour
 {
     void Start()
     {
-        InstantiateallIntractableCharacters();
-        recalculateOrder();
         GetGameObjects();
+        InstantiateallIntractableCharacters();//Can only be called after getting game objects
+        recalculateOrder();//can only be called after Instanstiating the Characterts
         beginTurn();
     }
 
     private TMPro.TextMeshProUGUI turnCountTMP;
     private ButtonManager thisButtonManager;
-    private RayCastReticalManager rayCastReticalManager;
+    private ReticalManager reticalManager;
+    private MapManager mapManager;
 
     void GetGameObjects()
     {
+        OrderOfInteractableCharacters = new List<GameObject>();
+        tempSpawnPoint = new List<Vector3Int>();
         turnCountTMP = TurnCount.GetComponent<TMPro.TextMeshProUGUI>();
         thisButtonManager = this.gameObject.GetComponent<ButtonManager>();
         thisButtonManager.MakeMoveListClassList();
-        rayCastReticalManager = this.gameObject.GetComponent<RayCastReticalManager>();
-        rayCastReticalManager.SetDictionary();
+        reticalManager = this.gameObject.GetComponent<ReticalManager>();
+        mapManager = this.GetComponent<MapManager>();
+        mapManager.SetDictionary();
     }
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
-    public List<GameObject> allInteractableCharacters;
-    public List<GameObject> OrderOfInteractableCharacters;
+
+    List<GameObject> OrderOfInteractableCharacters;
+    List<Vector3Int> tempSpawnPoint;
     public GameObject characterHolder;
     void InstantiateallIntractableCharacters()
     {
+        List<GameObject> allInteractableCharacters = new List<GameObject>();
         for (int i = 0; i < numberOfCharacterToInstansitate; i++)
         {
             allInteractableCharacters.Add(Instantiate(characterPrefab));
@@ -39,39 +45,11 @@ public class TurnManager : MonoBehaviour
             allInteractableCharacters[i].transform.position += i * Vector3.right;
             allInteractableCharacters[i].name += i;
         }
-        AddCharactersToDictionaryAfterInstantiating();
-    }
-    Dictionary<Vector3, GameObject> PositionToGameObject;
-    void AddCharactersToDictionaryAfterInstantiating()
-    {
-        PositionToGameObject = new Dictionary<Vector3, GameObject>();
-        foreach (GameObject character in allInteractableCharacters)
-        {
-            PositionToGameObject.Add(character.transform.position, character);
-        }
-    }
-    public GameObject isDictionarySpaceOccupied(Vector3 checkhere)
-    {
-        if (PositionToGameObject.ContainsKey(checkhere))
-            return PositionToGameObject[checkhere];
-        else
-            return null;
+        mapManager.AddCharactersToDictionaryAfterInstantiating(allInteractableCharacters);
+
+        PositionToGameObjectCopy = mapManager.PositionToGameObject;//after SetDictionary
     }
 
-    [SerializeField] private List<Vector3> PositionToGameObjectVector3;
-    [SerializeField] private List<GameObject> PositionToGameObjectGameObjects;
-    public void UpdateCharacterPosition(Vector3 previousPosition, Vector3 newPosition, GameObject thisCharacter)
-    {
-        PositionToGameObject.Remove(previousPosition);
-        PositionToGameObject.Add(newPosition, thisCharacter);
-        PositionToGameObjectGameObjects.Clear();
-        PositionToGameObjectVector3.Clear();
-        foreach (Vector3 position in PositionToGameObject.Keys)
-        {
-            PositionToGameObjectGameObjects.Add(PositionToGameObject[position]);
-            PositionToGameObjectVector3.Add(position);
-        }
-    }
 
     public GameObject characterThisTurn;
     public GameObject TurnCount;
@@ -83,12 +61,11 @@ public class TurnManager : MonoBehaviour
         thisButtonManager.makeButtons();
 
     }
-
     int TurnLoop = 1;
     public void endTurn()
     {
         TurnCountInt++;
-        if (TurnCountInt / TurnLoop == allInteractableCharacters.Count)
+        if (TurnCountInt / TurnLoop == PositionToGameObjectCopy.Count)
         {
             recalculateOrder();
             TurnLoop++;
@@ -99,11 +76,14 @@ public class TurnManager : MonoBehaviour
         }
         beginTurn();
     }
+    Dictionary<Vector3, GameObject> PositionToGameObjectCopy;
+
     void recalculateOrder()
     {
-        for (int i = 0; i < allInteractableCharacters.Count; i++)
+
+        foreach (var position in PositionToGameObjectCopy)
         {
-            OrderOfInteractableCharacters.Add(allInteractableCharacters[i]);
+            OrderOfInteractableCharacters.Add(PositionToGameObjectCopy[position.Key]);
         }
     }
 
