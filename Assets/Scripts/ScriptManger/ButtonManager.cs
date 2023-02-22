@@ -11,6 +11,7 @@ public class ButtonManager : MonoBehaviour
     public List<GameObject> ActionButtons;
     public GameObject ButtonHolder;
     GameObject thisCharacter;
+    TurnManager turnManager;
 
     public void makeButtons()
     {
@@ -20,6 +21,7 @@ public class ButtonManager : MonoBehaviour
     }
     void setVariable()
     {
+        turnManager = this.GetComponent<TurnManager>();
         thisCharacter = this.GetComponent<TurnManager>().characterThisTurn;
         rayCastReticalManager = this.GetComponent<RayCastReticalManager>();
     }
@@ -77,13 +79,23 @@ public class ButtonManager : MonoBehaviour
     {
         void thisAction()
         {
+            Vector3 currentPosition = thisCharacter.transform.position;
             Vector3Int tryMoveHere = rayCastReticalManager.getMovePoint();
-            bool isWalkable = rayCastReticalManager.checkOrder(tryMoveHere);
-            if (isWalkable)
+            bool isWalkableFloor = rayCastReticalManager.checkOrder(tryMoveHere);
+            GameObject potentialGameObjectHere = turnManager.isDictionarySpaceOccupied(tryMoveHere);
+            if (potentialGameObjectHere != null)
             {
+                Debug.Log("Cant do that there is " + potentialGameObjectHere.name + " is Occuping this Space");
+            }
+            else if (isWalkableFloor)
+            {
+                Debug.Log("Not Walable Bro");
+            }
+            else
+            {
+                turnManager.UpdateCharacterPosition(currentPosition, tryMoveHere, thisCharacter);
                 thisCharacter.transform.position = tryMoveHere;
             }
-            Debug.Log(isWalkable);
         }
         StartCoroutine(waitUntileButton(thisAction));
     }
@@ -97,7 +109,7 @@ public class ButtonManager : MonoBehaviour
     }
     void endTurn()
     {
-        Debug.Log("Turn Ended" + thisCharacter.transform.position);
+        //Debug.Log("Turn Ended" + thisCharacter.transform.position);
         this.GetComponent<TurnManager>().endTurn();
     }
 }
