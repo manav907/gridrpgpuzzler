@@ -87,7 +87,7 @@ public class ButtonManager : MonoBehaviour
             {
                 Debug.Log("Cant do that there is " + potentialGameObjectHere.name + " is Occuping this Space");
             }
-            else if (isWalkableFloor)
+            else if (!isWalkableFloor)
             {
                 Debug.Log("Not Walable Bro");
             }
