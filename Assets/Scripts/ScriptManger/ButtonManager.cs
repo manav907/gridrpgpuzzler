@@ -57,7 +57,6 @@ public class ButtonManager : MonoBehaviour
         for (int i = 0; i < moveLists.Count; i++)
         {
             ActionButtons.Add(Instantiate(ButtonPrefab));
-            //Buttons[i] = Instantiate(ButtonPrefab);
             ActionButtons[i].transform.SetParent(ButtonHolder.transform, false);
             ActionButtons[i].transform.localPosition = new Vector3(ActionButtons[i].transform.localPosition.x, -50 * i);
             TMPro.TextMeshProUGUI TMPthis;
@@ -66,15 +65,12 @@ public class ButtonManager : MonoBehaviour
             ActionButtons[i].name = moveLists[i].moveName + " Button";
             int captured = i;
             ActionButtons[i].GetComponent<Button>().onClick.AddListener(delegate { moveLists[captured].action(); });
-            //ActionButtons[i].GetComponent<Button>().onClick.AddListener(delegate { StartCoroutine(waitUntileButton(moveLists[captured].action)); });
         }
     }
 
     IEnumerator waitUntileButton(Action action)
     {
-        //Debug.Log("Waiting");
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-        //Debug.Log("Pressed button0");
         action();
     }
 

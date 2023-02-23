@@ -32,6 +32,7 @@ public class MapManager : MonoBehaviour
         return false;
     }
 
+
     public Dictionary<Vector3, GameObject> PositionToGameObject;
     public void AddCharactersToDictionaryAfterInstantiating(List<GameObject> allInteractableCharacters)
     {
@@ -56,4 +57,28 @@ public class MapManager : MonoBehaviour
             PositionToGameObjectVector3.Add(position);
         }
     }
+
+    //Getters
+    public GameObject GetGameObjectAtPos(Vector3 thisPlace)
+
+    {
+        if (PositionToGameObject.ContainsKey(thisPlace))
+        {
+            return PositionToGameObject[thisPlace];
+        }
+        else
+        {
+            Debug.Log("Nothing Here");
+            return null;
+        }
+    }
+
+
+
+
+
+
+
+
+
 }
