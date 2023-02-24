@@ -24,7 +24,7 @@ public class TurnManager : MonoBehaviour
         tempSpawnPoint = new List<Vector3Int>();
         turnCountTMP = TurnCount.GetComponent<TMPro.TextMeshProUGUI>();
         thisButtonManager = this.gameObject.GetComponent<ButtonManager>();
-        thisButtonManager.MakeMoveListClassList();
+        thisButtonManager.SetMoveDictionary();
         reticalManager = this.gameObject.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         mapManager.SetDictionary();
@@ -46,7 +46,6 @@ public class TurnManager : MonoBehaviour
             allInteractableCharacters[i].name += i;
         }
         mapManager.AddCharactersToDictionaryAfterInstantiating(allInteractableCharacters);
-
         PositionToGameObjectCopy = mapManager.PositionToGameObject;//after SetDictionary
     }
 
@@ -57,6 +56,9 @@ public class TurnManager : MonoBehaviour
     public void beginTurn()
     {
         characterThisTurn = OrderOfInteractableCharacters[TurnCountInt];
+        characterDataHolder targetCharacter = characterThisTurn.gameObject.GetComponent<characterDataHolder>();
+        targetCharacter.isCharacterTurn = true;
+        targetCharacter.UpdateCharacterData();
         turnCountTMP.text = (TurnCountInt + "");
         thisButtonManager.makeButtons();
 

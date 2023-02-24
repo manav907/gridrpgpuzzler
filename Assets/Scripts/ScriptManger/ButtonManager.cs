@@ -28,23 +28,16 @@ public class ButtonManager : MonoBehaviour
         thisCharacter = this.GetComponent<TurnManager>().characterThisTurn;
         rayCastReticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
+
     }
-    public class MoveListClass
+    Dictionary<String, Action> MoveNameToActionDictionary;
+    public void SetMoveDictionary()
     {
-        public string moveName;
-        public Action action;
-    }
-    public MoveListClass thatUniquieMove;
-    public List<MoveListClass> moveLists;
-    public void MakeMoveListClassList()
-    {
-        moveLists = new List<MoveListClass>();
-        moveLists.AddRange(new List<MoveListClass>
-        {
-            new MoveListClass { moveName = "Move", action = MoveCharacter },
-            new MoveListClass { moveName = "Attack", action = AttackHere },
-            new MoveListClass { moveName = "End Turn", action = endTurn }
-        });
+        MoveNameToActionDictionary = new Dictionary<String, Action>();
+        MoveNameToActionDictionary.Add("Move", MoveCharacter);
+        MoveNameToActionDictionary.Add("Attack", AttackHere);
+        MoveNameToActionDictionary.Add("End Turn", endTurn);
+        MoveNameToActionDictionary.Add("FireBall", ThrowFireBall);
     }
     void clearButtons()
     {
@@ -54,17 +47,26 @@ public class ButtonManager : MonoBehaviour
     }
     void InstantiateButtons()
     {
-        for (int i = 0; i < moveLists.Count; i++)
+        List<String> basicList = thisCharacter.GetComponent<characterDataHolder>().GetCharacterMoveList();
+        for (int i = 0; i < basicList.Count; i++)
         {
-            ActionButtons.Add(Instantiate(ButtonPrefab));
+            ActionButtons.Add(Instantiate(ButtonPrefab));//Just Instanting
+            //Setting Transforms
             ActionButtons[i].transform.SetParent(ButtonHolder.transform, false);
             ActionButtons[i].transform.localPosition = new Vector3(ActionButtons[i].transform.localPosition.x, -50 * i);
+            //getting TMP to assign Text
             TMPro.TextMeshProUGUI TMPthis;
             TMPthis = ActionButtons[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
-            TMPthis.text = moveLists[i].moveName;
-            ActionButtons[i].name = moveLists[i].moveName + " Button";
+            TMPthis.text = basicList[i];
+            ActionButtons[i].name = basicList[i] + " Button";
+
+            //Assigning On Click Functions
             int captured = i;
-            ActionButtons[i].GetComponent<Button>().onClick.AddListener(delegate { moveLists[captured].action(); });
+            //if (!MoveNameToActionDictionary.ContainsKey(basicList[captured])) Debug.Log(basicList[captured]+" not Found in Dictionary"); //for Debugging
+            ActionButtons[i].GetComponent<Button>().onClick.AddListener(delegate
+            {
+                MoveNameToActionDictionary[basicList[captured]]();//Takes string from basicList and gets the Meathod from Dictionary
+            });
         }
     }
 
@@ -80,6 +82,10 @@ public class ButtonManager : MonoBehaviour
     {
         tryHere = rayCastReticalManager.getMovePoint();//CriticalData
         PositionToGameObject = mapManager.PositionToGameObject;
+    }
+    void ThrowFireBall()
+    {
+        Debug.Log("Throw Fire Ball");
     }
 
     void MoveCharacter()
@@ -119,13 +125,15 @@ public class ButtonManager : MonoBehaviour
                 characterDataHolder targetCharacter = PositionToGameObject[tryHere].gameObject.GetComponent<characterDataHolder>();
                 characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
                 targetCharacter.health -= attackingCharacter.AttackDamage;
-                targetCharacter.UpdateCharacterData();
             }
         }
         StartCoroutine(waitUntileButton(thisAction));
     }
     void endTurn()
     {
+        characterDataHolder targetCharacter = thisCharacter.gameObject.GetComponent<characterDataHolder>();
+        targetCharacter.isCharacterTurn = false;
+        targetCharacter.UpdateCharacterData();
         this.GetComponent<TurnManager>().endTurn();
     }
 }
