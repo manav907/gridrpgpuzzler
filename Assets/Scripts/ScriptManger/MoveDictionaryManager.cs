@@ -46,22 +46,54 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     Vector3Int tryHere;
     Dictionary<Vector3, GameObject> PositionToGameObject;
-    bool GetDataForActions(bool GameObjectHere, bool WalkableTileHere)
+    bool GetDataForActions(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
         PositionToGameObject = mapManager.PositionToGameObject;
         if (thisCharacterCDH.isPlayerCharacter)
         {
+            List<Vector3Int> listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
             tryHere = reticalManager.getMovePoint();
-            bool isWalkableHere = mapManager.getIsWalkable(tryHere);
-            bool isGameObjectHere = PositionToGameObject.ContainsKey(tryHere);
+            if (listOfValidtargets.Contains(tryHere))
+                return true;
+            else
+                return false;
+        }
+        else
+        {
+            Debug.Log("get AI Here");
+            return false;
+        }
+    }
+    List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
+    {
+        getThisCharacterData();
+        Vector3 characterPos = thisCharacter.transform.position;
+        Vector3 startRange = characterPos - new Vector3(rangeOfAction, rangeOfAction);
+        Vector3 endRange = characterPos + new Vector3(rangeOfAction, rangeOfAction);
+        List<Vector3Int> listOfAttackRange = new List<Vector3Int>();
+        for (int x = (int)startRange.x; x <= endRange.x; x++)
+        {
+            for (int y = (int)startRange.y; y <= endRange.y; y++)
+            {
+                Vector3Int atXY = new Vector3Int(x, y, 0);
+                listOfAttackRange.Add(atXY);
+                //Debug.Log(atXY + " ");
+            }
+        }
+        for (int i = 0; i < listOfAttackRange.Count; i++)
+        {
+            bool isWalkableHere = mapManager.getIsWalkable(listOfAttackRange[i]);
+            bool isGameObjectHere = PositionToGameObject.ContainsKey(listOfAttackRange[i]);
             if (isWalkableHere == WalkableTileHere && isGameObjectHere == GameObjectHere)
             {
-
-                return true;
+                //Debug.Log(listOfAttackRange[i] + "Valid " + i);
             }
             else
             {
-                bool debugThis = true;
+                //Debug.Log(listOfAttackRange[i] + "Invalid ");
+                listOfAttackRange.RemoveAt(i);
+                i--;
+                bool debugThis = false;
                 if (debugThis)
                 {
                     bool condtion = false;//Will be reassigned later
@@ -80,14 +112,9 @@ public class MoveDictionaryManager : MonoBehaviour
                     }
 
                 }
-                return false;
             }
         }
-        else
-        {
-            Debug.Log("get AI Here");
-            return false;
-        }
+        return listOfAttackRange;
     }
     void ThrowFireBall()
     {
@@ -95,10 +122,11 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     void MoveCharacter()
     {
-        StartCoroutine(waitUntileButton(thisAction, true));//the co routine starts the action not all actions need a co routine     
+        bool needsButton = true;
+        StartCoroutine(waitUntileButton(thisAction, needsButton));//the co routine starts the action not all actions need a co routine     
         void thisAction()
         {
-            if (GetDataForActions(false, true))
+            if (GetDataForActions(false, true, thisCharacterCDH.rangeOfMove))
             {
                 Vector3 currentPosition = thisCharacter.transform.position;
                 mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
@@ -111,19 +139,21 @@ public class MoveDictionaryManager : MonoBehaviour
             }
         }
     }
+
     void AttackHere()
     {
-        StartCoroutine(waitUntileButton(thisAction, true));
+        bool needsButton = true;
+        StartCoroutine(waitUntileButton(thisAction, needsButton));
         void thisAction()
         {
-            if (GetDataForActions(true, true || false))
+            if (GetDataForActions(true, true || false, thisCharacterCDH.attackRange))
             {
                 characterDataHolder targetCharacter = PositionToGameObject[tryHere].gameObject.GetComponent<characterDataHolder>();
                 characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
                 targetCharacter.health -= attackingCharacter.AttackDamage;
                 targetCharacter.UpdateCharacterData();
             }
-            else
+            //else
             {
                 //problem
                 //Debug.Log("AttackHere");
@@ -133,7 +163,8 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     void endTurn()
     {
-        StartCoroutine(waitUntileButton(thisAction, false));
+        bool needsButton = false;
+        StartCoroutine(waitUntileButton(thisAction, needsButton));
         void thisAction()
         {
             characterDataHolder targetCharacter = thisCharacter.gameObject.GetComponent<characterDataHolder>();

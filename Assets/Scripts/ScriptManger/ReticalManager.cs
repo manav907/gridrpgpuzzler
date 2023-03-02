@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ReticalManager : MonoBehaviour
 {
+    [SerializeField] Vector3 reticalPos;
     void FixedUpdate()
     {
         setRetical();
@@ -13,7 +14,8 @@ public class ReticalManager : MonoBehaviour
     public GameObject characterRetical;
     void setRetical()
     {
-        characterRetical.transform.position = getMovePoint();
+        reticalPos = getMovePoint();
+        characterRetical.transform.position = reticalPos;
     }
     public Tilemap Grid;
     Vector3 worldPos;

@@ -132,13 +132,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  rangeOfMove: 5
+  rangeOfMove: 1
   attackRange: 2
   AttackDamage: 2
   speedValue: 3
-  isCharacterTurn: 0
   Heatlh: {fileID: 1664907520338834495}
   thisAnimation: {fileID: 6540126033809204098}
+  isPlayerCharacter: 1
 --- !u!95 &6540126033809204098
 Animator:
   serializedVersion: 5
