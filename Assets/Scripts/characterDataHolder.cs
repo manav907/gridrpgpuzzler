@@ -10,13 +10,19 @@ public class characterDataHolder : MonoBehaviour
     public int attackRange = 2;
     public int AttackDamage = 2;
     public int speedValue = 3;
-    public bool isCharacterTurn;
     [SerializeField] private TextMesh Heatlh;
-    void Start()
+
+    private ButtonManager thisButtonManager;
+    private MapManager thisMapManager;
+    private TurnManager thisTurnManager;
+    public void InitilizeCharacter(GameObject gameController)
     {
+        thisButtonManager = gameController.GetComponent<ButtonManager>();
+        thisMapManager = gameController.GetComponent<MapManager>();
+        thisTurnManager = gameController.GetComponent<TurnManager>();
         UpdateCharacterData();
     }
-    public List<string> GetCharacterMoveList()
+    List<string> GetCharacterMoveList()
     {
         List<string> defaultMovesAvaliable;
         defaultMovesAvaliable = new List<string>();
@@ -31,16 +37,43 @@ public class characterDataHolder : MonoBehaviour
     }
     public void UpdateCharacterData()
     {
-        if (!isCharacterTurn)
-            thisAnimation.SetFloat("BlendSpeed", 0f);
-        else
-            thisAnimation.SetFloat("BlendSpeed", 1f);
         Heatlh.text = health + "";
         if (health <= 0)
         {
             Debug.Log("I am dying");
+            KillCharacter();
             //Destroy(this.gameObject);
         }
     }
+    void KillCharacter()
+    {
+        if (thisTurnManager.thisCharacter == this.gameObject)
+        {
+            
+            thisTurnManager.endTurn();
+        }
+        thisMapManager.PositionToGameObject.Remove(this.gameObject.transform.position);
+        Destroy(this.gameObject);
+    }
     [SerializeField] Animator thisAnimation;
+    public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
+    {
+        if (!isCharacterTurn)
+            thisAnimation.SetFloat("BlendSpeed", 0f);
+        else
+            thisAnimation.SetFloat("BlendSpeed", 1f);
+    }
+    public bool isPlayerCharacter = true;
+    public void BeginThisCharacterTurn()
+    {
+        ToggleCharacterTurnAnimation(true);
+
+        thisButtonManager.clearButtons();
+        if (isPlayerCharacter)
+            thisButtonManager.InstantiateButtons(GetCharacterMoveList());
+        else
+        {
+            Debug.Log("AI Needed");
+        }
+    }
 }

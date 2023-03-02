@@ -15,8 +15,8 @@ public class TurnManager : MonoBehaviour
 
     private TMPro.TextMeshProUGUI turnCountTMP;
     private ButtonManager thisButtonManager;
-    private ReticalManager reticalManager;
     private MapManager mapManager;
+    MoveDictionaryManager moveDictionaryManager;
 
     void GetGameObjects()
     {
@@ -24,17 +24,18 @@ public class TurnManager : MonoBehaviour
         tempSpawnPoint = new List<Vector3Int>();
         turnCountTMP = TurnCount.GetComponent<TMPro.TextMeshProUGUI>();
         thisButtonManager = this.gameObject.GetComponent<ButtonManager>();
-        thisButtonManager.SetMoveDictionary();
-        reticalManager = this.gameObject.GetComponent<ReticalManager>();
+        thisButtonManager.setButtonManagerVariables();
         mapManager = this.GetComponent<MapManager>();
-        mapManager.SetDictionary();
+        mapManager.setTileDictionary();
+        moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
+        moveDictionaryManager.setMoveDictionaryManagerVariables();
     }
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
 
     List<GameObject> OrderOfInteractableCharacters;
     List<Vector3Int> tempSpawnPoint;
-    public GameObject characterHolder;
+    [SerializeField] private GameObject characterHolder;
     void InstantiateallIntractableCharacters()
     {
         List<GameObject> allInteractableCharacters = new List<GameObject>();
@@ -44,24 +45,35 @@ public class TurnManager : MonoBehaviour
             allInteractableCharacters[i].transform.SetParent(characterHolder.transform, false);
             allInteractableCharacters[i].transform.position += i * Vector3.right;
             allInteractableCharacters[i].name += i;
+            allInteractableCharacters[i].GetComponent<characterDataHolder>().InitilizeCharacter(this.gameObject);
         }
         mapManager.AddCharactersToDictionaryAfterInstantiating(allInteractableCharacters);
-        PositionToGameObjectCopy = mapManager.PositionToGameObject;//after SetDictionary
     }
-
-
-    public GameObject characterThisTurn;
+    public GameObject thisCharacter;
     public GameObject TurnCount;
+    characterDataHolder thisCharacterData;
     int TurnCountInt = 0;
     public void beginTurn()
     {
-        characterThisTurn = OrderOfInteractableCharacters[TurnCountInt];
-        characterDataHolder targetCharacter = characterThisTurn.gameObject.GetComponent<characterDataHolder>();
-        targetCharacter.isCharacterTurn = true;
-        targetCharacter.UpdateCharacterData();
-        turnCountTMP.text = (TurnCountInt + "");
-        thisButtonManager.makeButtons();
 
+        turnCountTMP.text = (TurnCountInt + "");
+        if (OrderOfInteractableCharacters[TurnCountInt])
+        {
+            thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
+            thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
+            beginTurnThisCharacter();
+        }
+        else if (thisCharacter == null)
+        {
+            Debug.Log(TurnCountInt + " has been Skipped");
+            endTurn();
+
+        }
+    }
+    void beginTurnThisCharacter()
+    {
+        thisCharacterData.BeginThisCharacterTurn();
+        //thisButtonManager.makeButtons();
     }
     int TurnLoop = 1;
     public void endTurn()
@@ -82,7 +94,7 @@ public class TurnManager : MonoBehaviour
 
     void recalculateOrder()
     {
-
+        PositionToGameObjectCopy = mapManager.PositionToGameObject;//after SetDictionary
         foreach (var position in PositionToGameObjectCopy)
         {
             OrderOfInteractableCharacters.Add(PositionToGameObjectCopy[position.Key]);

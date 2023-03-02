@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 732592031}
   - component: {fileID: 732592032}
   - component: {fileID: 732592033}
+  - component: {fileID: 732592034}
   m_Layer: 0
   m_Name: ScriptManager
   m_TagString: GameController
@@ -358,7 +359,7 @@ MonoBehaviour:
   characterPrefab: {fileID: 642291960666392779, guid: 86ecbaaea281cff4caa430f1a334e245, type: 3}
   numberOfCharacterToInstansitate: 2
   characterHolder: {fileID: 1608062619}
-  characterThisTurn: {fileID: 0}
+  thisCharacter: {fileID: 0}
   TurnCount: {fileID: 1309432719}
 --- !u!4 &732592029
 Transform:
@@ -424,6 +425,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf96a52dbe483ab4ebde73314693d934, type: 2}
   PositionToGameObjectVector3: []
   PositionToGameObjectGameObjects: []
+--- !u!114 &732592034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732592026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2efbe357fa1d641aaafd9b322f6234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &755500785
 GameObject:
   m_ObjectHideFlags: 0

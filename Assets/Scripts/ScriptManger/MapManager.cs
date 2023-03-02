@@ -9,7 +9,7 @@ public class MapManager : MonoBehaviour
     public List<Tilemap> OrderOfTileMaps;
     public List<TileData> listOfTileDataScriptableObjects;
     public Dictionary<TileBase, TileData> dataFromTiles;
-    public void SetDictionary()
+    public void setTileDictionary()
     {
         dataFromTiles = new Dictionary<TileBase, TileData>();
         foreach (var ScriptableObjects in listOfTileDataScriptableObjects)
