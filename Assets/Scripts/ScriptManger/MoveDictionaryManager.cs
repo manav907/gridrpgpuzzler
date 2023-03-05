@@ -67,7 +67,7 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
-        getThisCharacterData();
+        //getThisCharacterData();
         Vector3 characterPos = thisCharacter.transform.position;
         Vector3 startRange = characterPos - new Vector3(rangeOfAction, rangeOfAction);
         Vector3 endRange = characterPos + new Vector3(rangeOfAction, rangeOfAction);

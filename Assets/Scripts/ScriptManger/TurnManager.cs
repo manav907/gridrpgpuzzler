@@ -33,6 +33,7 @@ public class TurnManager : MonoBehaviour
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
 
+    //[SerializeField]
     List<GameObject> OrderOfInteractableCharacters;
     List<Vector3Int> tempSpawnPoint;
     [SerializeField] private GameObject characterHolder;
@@ -57,6 +58,7 @@ public class TurnManager : MonoBehaviour
     {
 
         turnCountTMP.text = (TurnCountInt + "");
+
         if (OrderOfInteractableCharacters[TurnCountInt])
         {
             thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence

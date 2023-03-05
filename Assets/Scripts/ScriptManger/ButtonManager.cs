@@ -35,7 +35,6 @@ public class ButtonManager : MonoBehaviour
     {
         thisCharacter = turnManager.thisCharacter;
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
-        moveDictionaryManager.getThisCharacterData();//since buttons depend on character this turn
     }
     public void InstantiateButtons(List<String> listFromCDH)
     {

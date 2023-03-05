@@ -20,6 +20,7 @@ public class characterDataHolder : MonoBehaviour
         thisButtonManager = gameController.GetComponent<ButtonManager>();
         thisMapManager = gameController.GetComponent<MapManager>();
         thisTurnManager = gameController.GetComponent<TurnManager>();
+        moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
         UpdateCharacterData();
     }
     List<string> GetCharacterMoveList()
@@ -49,7 +50,7 @@ public class characterDataHolder : MonoBehaviour
     {
         if (thisTurnManager.thisCharacter == this.gameObject)
         {
-            
+
             thisTurnManager.endTurn();
         }
         thisMapManager.PositionToGameObject.Remove(this.gameObject.transform.position);
@@ -64,10 +65,11 @@ public class characterDataHolder : MonoBehaviour
             thisAnimation.SetFloat("BlendSpeed", 1f);
     }
     public bool isPlayerCharacter = true;
+    MoveDictionaryManager moveDictionaryManager;
     public void BeginThisCharacterTurn()
     {
         ToggleCharacterTurnAnimation(true);
-
+        moveDictionaryManager.getThisCharacterData();
         thisButtonManager.clearButtons();
         if (isPlayerCharacter)
             thisButtonManager.InstantiateButtons(GetCharacterMoveList());
