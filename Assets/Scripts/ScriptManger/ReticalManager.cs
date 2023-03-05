@@ -27,5 +27,23 @@ public class ReticalManager : MonoBehaviour
         tilePos = Grid.WorldToCell(worldPos);
         return tilePos;
     }
+    [SerializeField] private Tilemap validTilesTileMap;
+    [SerializeField] private TileBase reticalTilePrefab;
+    public void reDrawValidTiles(List<Vector3Int> validTilesList)
+    {
+        if (validTilesList != null)
+        {
+            foreach (Vector3Int pos in validTilesList)
+            {
+                validTilesTileMap.SetTile(pos, reticalTilePrefab);
+            }
+            //addtiles
+        }
+        else
+        {
+            validTilesTileMap.ClearAllTiles();
+            //deletetiles
+        }
+    }
 
 }

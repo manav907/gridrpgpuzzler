@@ -32,26 +32,31 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         thisCharacter = turnManager.thisCharacter;
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
+        PositionToGameObject = mapManager.PositionToGameObject;
     }
     IEnumerator waitUntileButton(Action action, bool needsButton)
     {
         getThisCharacterData();
         if (thisCharacterCDH.isPlayerCharacter && needsButton)
         {
+            reticalManager.reDrawValidTiles(listOfValidtargets);//try this but null
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
             action();
+            reticalManager.reDrawValidTiles(null);//try this but null
         }
         else
             action();
     }
     Vector3Int tryHere;
     Dictionary<Vector3, GameObject> PositionToGameObject;
+    List<Vector3Int> listOfValidtargets;
     bool GetDataForActions(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
-        PositionToGameObject = mapManager.PositionToGameObject;
+
         if (thisCharacterCDH.isPlayerCharacter)
         {
-            List<Vector3Int> listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
+            listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
+            reticalManager.reDrawValidTiles(listOfValidtargets);//try this
             tryHere = reticalManager.getMovePoint();
             if (listOfValidtargets.Contains(tryHere))
                 return true;
@@ -123,6 +128,8 @@ public class MoveDictionaryManager : MonoBehaviour
     void MoveCharacter()
     {
         bool needsButton = true;
+        getThisCharacterData();
+        listOfValidtargets = getValidTargetList(false, true, thisCharacterCDH.rangeOfMove);
         StartCoroutine(waitUntileButton(thisAction, needsButton));//the co routine starts the action not all actions need a co routine     
         void thisAction()
         {
