@@ -36,7 +36,6 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     IEnumerator waitUntileButton(Action action, bool needsButton)
     {
-        getThisCharacterData();
         if (thisCharacterCDH.isPlayerCharacter && needsButton)
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//try this but null
@@ -52,10 +51,8 @@ public class MoveDictionaryManager : MonoBehaviour
     List<Vector3Int> listOfValidtargets;
     bool GetDataForActions()
     {
-
         if (thisCharacterCDH.isPlayerCharacter)
         {
-            reticalManager.reDrawValidTiles(listOfValidtargets);//try this
             tryHere = reticalManager.getMovePoint();
             if (listOfValidtargets.Contains(tryHere))
                 return true;
