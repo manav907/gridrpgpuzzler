@@ -28,7 +28,7 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     GameObject thisCharacter;
     characterDataHolder thisCharacterCDH;
-    void getThisCharacterData()
+    public void getThisCharacterData()//called from button manager to set character this turn
     {
         thisCharacter = turnManager.thisCharacter;
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
@@ -50,12 +50,11 @@ public class MoveDictionaryManager : MonoBehaviour
     Vector3Int tryHere;
     Dictionary<Vector3, GameObject> PositionToGameObject;
     List<Vector3Int> listOfValidtargets;
-    bool GetDataForActions(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
+    bool GetDataForActions()
     {
 
         if (thisCharacterCDH.isPlayerCharacter)
         {
-            listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
             reticalManager.reDrawValidTiles(listOfValidtargets);//try this
             tryHere = reticalManager.getMovePoint();
             if (listOfValidtargets.Contains(tryHere))
@@ -128,12 +127,11 @@ public class MoveDictionaryManager : MonoBehaviour
     void MoveCharacter()
     {
         bool needsButton = true;
-        getThisCharacterData();
         listOfValidtargets = getValidTargetList(false, true, thisCharacterCDH.rangeOfMove);
         StartCoroutine(waitUntileButton(thisAction, needsButton));//the co routine starts the action not all actions need a co routine     
         void thisAction()
         {
-            if (GetDataForActions(false, true, thisCharacterCDH.rangeOfMove))
+            if (GetDataForActions())
             {
                 Vector3 currentPosition = thisCharacter.transform.position;
                 mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
@@ -150,10 +148,11 @@ public class MoveDictionaryManager : MonoBehaviour
     void AttackHere()
     {
         bool needsButton = true;
+        listOfValidtargets = getValidTargetList(true, true || false, thisCharacterCDH.attackRange);
         StartCoroutine(waitUntileButton(thisAction, needsButton));
         void thisAction()
         {
-            if (GetDataForActions(true, true || false, thisCharacterCDH.attackRange))
+            if (GetDataForActions())
             {
                 characterDataHolder targetCharacter = PositionToGameObject[tryHere].gameObject.GetComponent<characterDataHolder>();
                 characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();

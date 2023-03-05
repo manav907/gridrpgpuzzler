@@ -18,7 +18,7 @@ public class ButtonManager : MonoBehaviour
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
-        mapManager = this.GetComponent<MapManager>();        
+        mapManager = this.GetComponent<MapManager>();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
     }
 
@@ -35,6 +35,7 @@ public class ButtonManager : MonoBehaviour
     {
         thisCharacter = turnManager.thisCharacter;
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
+        moveDictionaryManager.getThisCharacterData();//since buttons depend on character this turn
     }
     public void InstantiateButtons(List<String> listFromCDH)
     {
