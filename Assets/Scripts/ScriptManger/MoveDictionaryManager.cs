@@ -21,7 +21,7 @@ public class MoveDictionaryManager : MonoBehaviour
     void SetMoveDictionary()
     {
         aDCL = new Dictionary<String, ActionDataClass>();
-
+        //Debug.Log(thisCharacter.name);
         List<ActionDataClass> actionDataClass = new List<ActionDataClass>() {
             new ActionDataClass("Move", MoveCharacter, true, false, true, 1),
             new ActionDataClass("Attack", AttackHere, true, true, true || false, 2),
@@ -31,6 +31,8 @@ public class MoveDictionaryManager : MonoBehaviour
 
         foreach (var thisactionData in actionDataClass)
             aDCL.Add(thisactionData.NameofMove, thisactionData);
+
+
     }
     public class ActionDataClass
     {
@@ -94,7 +96,6 @@ public class MoveDictionaryManager : MonoBehaviour
             return false;
         }
     }
-    string[] listFromCDH = { "Move", "Attack", "End Turn", "FireBall" };
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
         //getThisCharacterData();
@@ -169,8 +170,6 @@ public class MoveDictionaryManager : MonoBehaviour
 
     void AttackHere()
     {
-
-
         if (GetDataForActions())
         {
             characterDataHolder targetCharacter = PositionToGameObject[tryHere].gameObject.GetComponent<characterDataHolder>();
@@ -187,7 +186,6 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     void endTurn()
     {
-
         characterDataHolder targetCharacter = thisCharacter.gameObject.GetComponent<characterDataHolder>();
         targetCharacter.ToggleCharacterTurnAnimation(false); ;
         targetCharacter.UpdateCharacterData();

@@ -61,8 +61,7 @@ public class TurnManager : MonoBehaviour
 
         if (OrderOfInteractableCharacters[TurnCountInt])
         {
-            thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
-            thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
+
             beginTurnThisCharacter();
         }
         else if (thisCharacter == null)
@@ -74,6 +73,8 @@ public class TurnManager : MonoBehaviour
     }
     void beginTurnThisCharacter()
     {
+        thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
+        thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
         thisCharacterData.BeginThisCharacterTurn();
         //thisButtonManager.makeButtons();
     }
