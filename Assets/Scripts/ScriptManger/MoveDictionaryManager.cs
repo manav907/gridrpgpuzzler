@@ -18,6 +18,7 @@ public class MoveDictionaryManager : MonoBehaviour
         SetMoveDictionary();
     }
     public Dictionary<string, Action> MoveNameToActionDictionary;
+    public Dictionary<string, ActionDataClass> aDCL;
     void SetMoveDictionary()
     {
         MoveNameToActionDictionary = new Dictionary<String, Action>();
@@ -25,6 +26,50 @@ public class MoveDictionaryManager : MonoBehaviour
         MoveNameToActionDictionary.Add("Attack", AttackHere);
         MoveNameToActionDictionary.Add("End Turn", endTurn);
         MoveNameToActionDictionary.Add("FireBall", ThrowFireBall);
+
+        //for ADC
+        doADCStuff();
+
+    }
+    void doADCStuff()
+    {
+        aDCL = new Dictionary<String, ActionDataClass>();
+
+        List<ActionDataClass> actionDataClass = new List<ActionDataClass>()
+                    {
+                        new ActionDataClass("Move", MoveCharacter, true, false, true, 1),
+                        new ActionDataClass("Attack", AttackHere, true, true, true || false, 2),
+                        new ActionDataClass("End Turn", endTurn, false, false, false, 0),
+                        new ActionDataClass("FireBall", ThrowFireBall, true, false, true, 2)
+                    }
+
+        ;
+
+        foreach (var thisactionData in actionDataClass)
+            aDCL.Add(thisactionData.NameofMove, thisactionData);
+    }
+    public class ActionDataClass
+    {
+        public string NameofMove;
+        public Action actionOfMove;
+        public bool needsButton;
+        public bool GameObjectHere;
+        public bool WalkableTileHere;
+        public int rangeOfAction;
+        public ActionDataClass()
+        {
+
+        }
+        public ActionDataClass(string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
+        {
+            this.NameofMove = NameofMove;
+            this.actionOfMove = actionOfMove;
+            this.needsButton = needsButton;
+            this.GameObjectHere = GameObjectHere;
+            this.WalkableTileHere = WalkableTileHere;
+            this.rangeOfAction = rangeOfAction;
+        }
+
     }
     GameObject thisCharacter;
     characterDataHolder thisCharacterCDH;
@@ -34,8 +79,9 @@ public class MoveDictionaryManager : MonoBehaviour
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
         PositionToGameObject = mapManager.PositionToGameObject;
     }
-    IEnumerator waitUntileButton(Action action, bool needsButton)
+    IEnumerator waitUntileButton(Action action, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
+        listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
         if (thisCharacterCDH.isPlayerCharacter && needsButton)
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//try this but null
@@ -65,6 +111,7 @@ public class MoveDictionaryManager : MonoBehaviour
             return false;
         }
     }
+    string[] listFromCDH = { "Move", "Attack", "End Turn", "FireBall" };
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
         //getThisCharacterData();
@@ -123,9 +170,9 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     void MoveCharacter()
     {
-        bool needsButton = true;
-        listOfValidtargets = getValidTargetList(false, true, thisCharacterCDH.rangeOfMove);
-        StartCoroutine(waitUntileButton(thisAction, needsButton));//the co routine starts the action not all actions need a co routine     
+
+        //StartCoroutine(waitUntileButton(thisAction, true, false, true, thisCharacterCDH.rangeOfMove));//the co routine starts the action not all actions need a co routine     
+        StartCoroutine(waitUntileButton(thisAction, aDCL[listFromCDH[0]].needsButton, aDCL[listFromCDH[0]].GameObjectHere, aDCL[listFromCDH[0]].WalkableTileHere, aDCL[listFromCDH[0]].rangeOfAction));
         void thisAction()
         {
             if (GetDataForActions())
@@ -144,9 +191,8 @@ public class MoveDictionaryManager : MonoBehaviour
 
     void AttackHere()
     {
-        bool needsButton = true;
-        listOfValidtargets = getValidTargetList(true, true || false, thisCharacterCDH.attackRange);
-        StartCoroutine(waitUntileButton(thisAction, needsButton));
+
+        StartCoroutine(waitUntileButton(thisAction, true, true, true || false, thisCharacterCDH.attackRange));
         void thisAction()
         {
             if (GetDataForActions())
@@ -166,8 +212,8 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     void endTurn()
     {
-        bool needsButton = false;
-        StartCoroutine(waitUntileButton(thisAction, needsButton));
+
+        StartCoroutine(waitUntileButton(thisAction, false, false, false, 0));
         void thisAction()
         {
             characterDataHolder targetCharacter = thisCharacter.gameObject.GetComponent<characterDataHolder>();
