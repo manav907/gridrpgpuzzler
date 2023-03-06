@@ -40,6 +40,7 @@ public class ButtonManager : MonoBehaviour
     {
 
         getThisCharacterData();
+        var Dictionary = moveDictionaryManager.aDCL;
         for (int i = 0; i < listFromCDH.Count; i++)
         {
             ActionButtons.Add(Instantiate(ButtonPrefab));//Just Instanting
@@ -49,16 +50,29 @@ public class ButtonManager : MonoBehaviour
             //getting TMP to assign Text
             TMPro.TextMeshProUGUI TMPthis;
             TMPthis = ActionButtons[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
-            TMPthis.text = listFromCDH[i];
-            ActionButtons[i].name = listFromCDH[i] + " Button";
+            // getting cache for captured variables
+            int captured = i;
+            string listCDHTEXT = listFromCDH[captured];
+            // using variables to set text
+            TMPthis.text = listCDHTEXT;
+            ActionButtons[i].name = listCDHTEXT + " Button";
 
             //Assigning On Click Functions
-            int captured = i;
+
             //if (!MoveNameToActionDictionary.ContainsKey(basicList[captured])) Debug.Log(basicList[captured]+" not Found in Dictionary"); //for Debugging
 
             ActionButtons[i].GetComponent<Button>().onClick.AddListener(delegate
             {
-                moveDictionaryManager.MoveNameToActionDictionary[listFromCDH[captured]]();//Takes string from basicList and gets the Meathod from Dictionary
+                //Takes string from basicList and gets the Meathod from Dictionary                
+                StartCoroutine(moveDictionaryManager.waitUntileButton
+                (
+                    Dictionary[listCDHTEXT].actionOfMove,
+                    Dictionary[listCDHTEXT].needsButton,
+                    Dictionary[listCDHTEXT].GameObjectHere,
+                    Dictionary[listCDHTEXT].WalkableTileHere,
+                    Dictionary[listCDHTEXT].rangeOfAction)
+                )
+                ;
             });
         }
     }

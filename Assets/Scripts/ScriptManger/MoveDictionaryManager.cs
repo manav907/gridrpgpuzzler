@@ -5,7 +5,6 @@ using System;
 
 public class MoveDictionaryManager : MonoBehaviour
 {
-
     TurnManager turnManager;
     ReticalManager reticalManager;
     MapManager mapManager;
@@ -17,33 +16,18 @@ public class MoveDictionaryManager : MonoBehaviour
         mapManager = this.GetComponent<MapManager>();
         SetMoveDictionary();
     }
-    public Dictionary<string, Action> MoveNameToActionDictionary;
+
     public Dictionary<string, ActionDataClass> aDCL;
     void SetMoveDictionary()
     {
-        MoveNameToActionDictionary = new Dictionary<String, Action>();
-        MoveNameToActionDictionary.Add("Move", MoveCharacter);
-        MoveNameToActionDictionary.Add("Attack", AttackHere);
-        MoveNameToActionDictionary.Add("End Turn", endTurn);
-        MoveNameToActionDictionary.Add("FireBall", ThrowFireBall);
-
-        //for ADC
-        doADCStuff();
-
-    }
-    void doADCStuff()
-    {
         aDCL = new Dictionary<String, ActionDataClass>();
 
-        List<ActionDataClass> actionDataClass = new List<ActionDataClass>()
-                    {
-                        new ActionDataClass("Move", MoveCharacter, true, false, true, 1),
-                        new ActionDataClass("Attack", AttackHere, true, true, true || false, 2),
-                        new ActionDataClass("End Turn", endTurn, false, false, false, 0),
-                        new ActionDataClass("FireBall", ThrowFireBall, true, false, true, 2)
-                    }
-
-        ;
+        List<ActionDataClass> actionDataClass = new List<ActionDataClass>() {
+            new ActionDataClass("Move", MoveCharacter, true, false, true, 1),
+            new ActionDataClass("Attack", AttackHere, true, true, true || false, 2),
+            new ActionDataClass("End Turn", endTurn, false, false, false, 0),
+            new ActionDataClass("FireBall", ThrowFireBall, true, false, true, 2)
+            };
 
         foreach (var thisactionData in actionDataClass)
             aDCL.Add(thisactionData.NameofMove, thisactionData);
@@ -69,7 +53,6 @@ public class MoveDictionaryManager : MonoBehaviour
             this.WalkableTileHere = WalkableTileHere;
             this.rangeOfAction = rangeOfAction;
         }
-
     }
     GameObject thisCharacter;
     characterDataHolder thisCharacterCDH;
@@ -79,7 +62,7 @@ public class MoveDictionaryManager : MonoBehaviour
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
         PositionToGameObject = mapManager.PositionToGameObject;
     }
-    IEnumerator waitUntileButton(Action action, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
+    public IEnumerator waitUntileButton(Action action, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
         listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
         if (thisCharacterCDH.isPlayerCharacter && needsButton)
@@ -170,56 +153,45 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     void MoveCharacter()
     {
-
-        //StartCoroutine(waitUntileButton(thisAction, true, false, true, thisCharacterCDH.rangeOfMove));//the co routine starts the action not all actions need a co routine     
-        StartCoroutine(waitUntileButton(thisAction, aDCL[listFromCDH[0]].needsButton, aDCL[listFromCDH[0]].GameObjectHere, aDCL[listFromCDH[0]].WalkableTileHere, aDCL[listFromCDH[0]].rangeOfAction));
-        void thisAction()
+        if (GetDataForActions())
         {
-            if (GetDataForActions())
-            {
-                Vector3 currentPosition = thisCharacter.transform.position;
-                mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
-                thisCharacter.transform.position = tryHere;
-            }
-            else
-            {
-                //Action Failed
-                //Debug.Log("MoveCharacter");
-            }
+            Vector3 currentPosition = thisCharacter.transform.position;
+            mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
+            thisCharacter.transform.position = tryHere;
         }
+        else
+        {
+            //Action Failed
+            //Debug.Log("MoveCharacter");
+        }
+
     }
 
     void AttackHere()
     {
 
-        StartCoroutine(waitUntileButton(thisAction, true, true, true || false, thisCharacterCDH.attackRange));
-        void thisAction()
+
+        if (GetDataForActions())
         {
-            if (GetDataForActions())
-            {
-                characterDataHolder targetCharacter = PositionToGameObject[tryHere].gameObject.GetComponent<characterDataHolder>();
-                characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
-                targetCharacter.health -= attackingCharacter.AttackDamage;
-                targetCharacter.UpdateCharacterData();
-            }
-            //else
-            {
-                //problem
-                //Debug.Log("AttackHere");
-            }
+            characterDataHolder targetCharacter = PositionToGameObject[tryHere].gameObject.GetComponent<characterDataHolder>();
+            characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
+            targetCharacter.health -= attackingCharacter.AttackDamage;
+            targetCharacter.UpdateCharacterData();
+        }
+        //else
+        {
+            //problem
+            //Debug.Log("AttackHere");
         }
 
     }
     void endTurn()
     {
 
-        StartCoroutine(waitUntileButton(thisAction, false, false, false, 0));
-        void thisAction()
-        {
-            characterDataHolder targetCharacter = thisCharacter.gameObject.GetComponent<characterDataHolder>();
-            targetCharacter.ToggleCharacterTurnAnimation(false); ;
-            targetCharacter.UpdateCharacterData();
-            this.GetComponent<TurnManager>().endTurn();
-        }
+        characterDataHolder targetCharacter = thisCharacter.gameObject.GetComponent<characterDataHolder>();
+        targetCharacter.ToggleCharacterTurnAnimation(false); ;
+        targetCharacter.UpdateCharacterData();
+        this.GetComponent<TurnManager>().endTurn();
+
     }
 }
