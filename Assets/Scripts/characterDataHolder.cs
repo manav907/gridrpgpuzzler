@@ -50,7 +50,6 @@ public class characterDataHolder : MonoBehaviour
     {
         if (thisTurnManager.thisCharacter == this.gameObject)
         {
-
             thisTurnManager.endTurn();
         }
         thisMapManager.PositionToGameObject.Remove(this.gameObject.transform.position);

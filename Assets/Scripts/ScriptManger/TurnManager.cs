@@ -32,8 +32,7 @@ public class TurnManager : MonoBehaviour
     }
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
-
-    //[SerializeField]
+    [SerializeField]
     List<GameObject> OrderOfInteractableCharacters;
     List<Vector3Int> tempSpawnPoint;
     [SerializeField] private GameObject characterHolder;
@@ -58,12 +57,11 @@ public class TurnManager : MonoBehaviour
     {
 
         turnCountTMP.text = (TurnCountInt + "");
-
         if (OrderOfInteractableCharacters[TurnCountInt])
         {
-
             beginTurnThisCharacter();
         }
+
         else if (thisCharacter == null)
         {
             Debug.Log(TurnCountInt + " has been Skipped");
@@ -81,15 +79,16 @@ public class TurnManager : MonoBehaviour
     int TurnLoop = 1;
     public void endTurn()
     {
+        //PositionToGameObjectCopy = mapManager.PositionToGameObject;
         TurnCountInt++;
-        if (TurnCountInt / TurnLoop == PositionToGameObjectCopy.Count)
+        if (TurnCountInt / TurnLoop >= PositionToGameObjectCopy.Count)
         {
             recalculateOrder();
             TurnLoop++;
         }
         else
         {
-            //Debug.Log(TurnCountInt + " " + TurnLoop);
+            //Debug.Log(TurnCountInt + " " + TurnLoop + " " + PositionToGameObjectCopy.Count);
         }
         beginTurn();
     }
@@ -97,11 +96,11 @@ public class TurnManager : MonoBehaviour
 
     void recalculateOrder()
     {
-        PositionToGameObjectCopy = mapManager.PositionToGameObject;//after SetDictionary
+        PositionToGameObjectCopy = mapManager.PositionToGameObject;
         foreach (var position in PositionToGameObjectCopy)
         {
-            OrderOfInteractableCharacters.Add(PositionToGameObjectCopy[position.Key]);
+            OrderOfInteractableCharacters.Add(position.Value);
+            //OrderOfInteractableCharacters.Add(PositionToGameObjectCopy[position.Key]);
         }
     }
-
 }
