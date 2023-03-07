@@ -64,18 +64,32 @@ public class MoveDictionaryManager : MonoBehaviour
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
         PositionToGameObject = mapManager.PositionToGameObject;
     }
-    public IEnumerator waitUntileButton(Action action, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
+
+    public void doAction(string thisActionName)
     {
-        listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
-        if (thisCharacterCDH.isPlayerCharacter && needsButton)
+        ActionDataClass thisADL = aDCL[thisActionName];
+        Action actionOfMove = thisADL.actionOfMove;
+        bool needsButton = thisADL.needsButton;
+        bool GameObjectHere = thisADL.GameObjectHere;
+        bool WalkableTileHere = thisADL.WalkableTileHere;
+        int rangeOfAction = thisADL.rangeOfAction;
+
+        StartCoroutine(waitUntileButton());
+
+        IEnumerator waitUntileButton()
         {
-            reticalManager.reDrawValidTiles(listOfValidtargets);//try this but null
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-            action();
-            reticalManager.reDrawValidTiles(null);//try this but null
+            listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
+            if (thisCharacterCDH.isPlayerCharacter && needsButton)
+            {
+                reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
+                yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+                actionOfMove();
+                reticalManager.reDrawValidTiles(null);//this clears out the Valid Tiles Overlay
+            }
+            else
+                actionOfMove();
         }
-        else
-            action();
+
     }
     Vector3Int tryHere;
     Dictionary<Vector3, GameObject> PositionToGameObject;

@@ -21,14 +21,12 @@ public class ButtonManager : MonoBehaviour
         mapManager = this.GetComponent<MapManager>();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
     }
-
     public void clearButtons()
     {
         for (int i = 0; i < ActionButtons.Count; i++)
             Destroy(ActionButtons[i]);
         ActionButtons.Clear();
     }
-
     GameObject thisCharacter;
     characterDataHolder thisCharacterCDH;
     void getThisCharacterData()
@@ -38,7 +36,6 @@ public class ButtonManager : MonoBehaviour
     }
     public void InstantiateButtons(List<String> listFromCDH)
     {
-
         getThisCharacterData();
         var Dictionary = moveDictionaryManager.aDCL;
         for (int i = 0; i < listFromCDH.Count; i++)
@@ -63,16 +60,7 @@ public class ButtonManager : MonoBehaviour
 
             ActionButtons[i].GetComponent<Button>().onClick.AddListener(delegate
             {
-                //Takes string from basicList and gets the Meathod from Dictionary                
-                StartCoroutine(moveDictionaryManager.waitUntileButton
-                (
-                    Dictionary[listCDHTEXT].actionOfMove,
-                    Dictionary[listCDHTEXT].needsButton,
-                    Dictionary[listCDHTEXT].GameObjectHere,
-                    Dictionary[listCDHTEXT].WalkableTileHere,
-                    Dictionary[listCDHTEXT].rangeOfAction)
-                )
-                ;
+                moveDictionaryManager.doAction(listCDHTEXT);
             });
         }
     }
