@@ -48,8 +48,8 @@ public class ButtonManager : MonoBehaviour
             TMPro.TextMeshProUGUI TMPthis;
             TMPthis = ActionButtons[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
             // getting cache for captured variables
-            int captured = i;
-            string listCDHTEXT = listFromCDH[captured];
+            //int captured = i;//no Longer needed
+            string listCDHTEXT = listFromCDH[i];//This is the cache now
             // using variables to set text
             TMPthis.text = listCDHTEXT;
             ActionButtons[i].name = listCDHTEXT + " Button";

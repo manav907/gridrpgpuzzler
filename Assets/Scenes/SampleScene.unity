@@ -358,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 642291960666392779, guid: 86ecbaaea281cff4caa430f1a334e245, type: 3}
   numberOfCharacterToInstansitate: 2
+  OrderOfInteractableCharacters: []
   characterHolder: {fileID: 1608062619}
   thisCharacter: {fileID: 0}
   TurnCount: {fileID: 1309432719}

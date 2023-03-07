@@ -50,10 +50,16 @@ public class characterDataHolder : MonoBehaviour
     {
         if (thisTurnManager.thisCharacter == this.gameObject)
         {
+
+            thisMapManager.PositionToGameObject.Remove(this.gameObject.transform.position);
+            Destroy(this.gameObject);
             thisTurnManager.endTurn();
         }
-        thisMapManager.PositionToGameObject.Remove(this.gameObject.transform.position);
-        Destroy(this.gameObject);
+        else
+        {
+            thisMapManager.PositionToGameObject.Remove(this.gameObject.transform.position);
+            Destroy(this.gameObject);
+        }
     }
     [SerializeField] Animator thisAnimation;
     public void ToggleCharacterTurnAnimation(bool isCharacterTurn)

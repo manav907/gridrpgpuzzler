@@ -26,9 +26,9 @@ public class MoveDictionaryManager : MonoBehaviour
             new ActionDataClass("Move", MoveCharacter, true, false, true, 1),
             new ActionDataClass("Attack", AttackHere, true, true, true || false, 2),
             new ActionDataClass("End Turn", endTurn, false, false, false, 0),
-            new ActionDataClass("FireBall", ThrowFireBall, true, false, true, 2)
+            new ActionDataClass("FireBall", ThrowFireBall, false, false, true, 2)
             };
-
+        //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)    
         foreach (var thisactionData in actionDataClass)
             aDCL.Add(thisactionData.NameofMove, thisactionData);
 

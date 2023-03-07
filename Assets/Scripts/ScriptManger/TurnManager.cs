@@ -57,17 +57,26 @@ public class TurnManager : MonoBehaviour
     {
 
         turnCountTMP.text = (TurnCountInt + "");
+        if (OrderOfInteractableCharacters.Count == TurnCountInt)//this works because Count Starts from 1 not 0
+        {
+            //Debug.Log(OrderOfInteractableCharacters.Count + " " + TurnCountInt);
+            Debug.Log("Game Over");
+            thisButtonManager.clearButtons();
+
+        }
+        else
+            beginTurnThisCharacter();
+        /*
         if (OrderOfInteractableCharacters[TurnCountInt])
         {
             beginTurnThisCharacter();
         }
-
         else if (thisCharacter == null)
         {
             Debug.Log(TurnCountInt + " has been Skipped");
             endTurn();
-
         }
+        */
     }
     void beginTurnThisCharacter()
     {
@@ -102,5 +111,6 @@ public class TurnManager : MonoBehaviour
             OrderOfInteractableCharacters.Add(position.Value);
             //OrderOfInteractableCharacters.Add(PositionToGameObjectCopy[position.Key]);
         }
+
     }
 }
