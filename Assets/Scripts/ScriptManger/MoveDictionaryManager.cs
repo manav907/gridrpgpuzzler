@@ -179,7 +179,6 @@ public class MoveDictionaryManager : MonoBehaviour
             //Action Failed
             //Debug.Log("MoveCharacter");
         }
-
     }
 
     void AttackHere()
