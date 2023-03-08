@@ -13,28 +13,5 @@ MonoBehaviour:
   m_Name: Walkable
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: b49d3205eb834bd4f98a733c6c1fc923, type: 2}
-  - {fileID: 11400000, guid: c2b94a09b6df17f46abbdfb2ed619b8a, type: 2}
-  - {fileID: 11400000, guid: 6efdbcb7c6c6dde489003b7e9e73afb5, type: 2}
-  - {fileID: 11400000, guid: dafcd10eb1723b943a052cd8e235794d, type: 2}
-  - {fileID: 11400000, guid: 092f349619375a7479d1f8c3334b911a, type: 2}
-  - {fileID: 11400000, guid: 36e8588da3febcd4ea00d7ac29268784, type: 2}
-  - {fileID: 11400000, guid: b1c9b30a09dced5428898565f4ec1dcb, type: 2}
-  - {fileID: 11400000, guid: 3fd747fefa65853448acfb40594b77ca, type: 2}
-  - {fileID: 11400000, guid: fe0b8e857fb3797498757bd6fbb65abd, type: 2}
-  - {fileID: 11400000, guid: 819c82cb8edc9f04886c3fe1f3d49359, type: 2}
-  - {fileID: 11400000, guid: a6bf3399aa2b0ec44b35e18f785b92d0, type: 2}
-  - {fileID: 11400000, guid: a3aedb5ac53aef541bd5a174e770126e, type: 2}
-  - {fileID: 11400000, guid: e5869938f2af15941b06d01d04eb29e4, type: 2}
-  - {fileID: 11400000, guid: 98d4c1792fbbb4744a6c45b76a3c682f, type: 2}
-  - {fileID: 11400000, guid: 674abc55d1e53db48a490fc6de51c4cc, type: 2}
-  - {fileID: 11400000, guid: 7e4806084a9a8a74792a351598553816, type: 2}
-  - {fileID: 11400000, guid: 5ace7b8b79b4afa41a5804b6d5242b3a, type: 2}
-  - {fileID: 11400000, guid: 1ff05ce6bd21d0b4d8026fb6aee3c1ac, type: 2}
-  - {fileID: 11400000, guid: 28cf38a11fb31bb458c38de31310ce18, type: 2}
-  - {fileID: 11400000, guid: d29863923d6e2b1499b7e38e17b1e051, type: 2}
-  - {fileID: 11400000, guid: 27de03d50511e6e4088ed1e0725da627, type: 2}
-  - {fileID: 11400000, guid: 89353e722d69b8d4c8dd14eb2c3326c4, type: 2}
-  - {fileID: 11400000, guid: cecd8cdc975701d4889af7e39893c950, type: 2}
-  - {fileID: 11400000, guid: 11acb7d4a4fe2d14aa1a23173cf78372, type: 2}
+  - {fileID: 11400000, guid: 120ba3c476167314e8bf25e6ca85488a, type: 2}
   isWalkable: 1
