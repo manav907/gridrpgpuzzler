@@ -145,7 +145,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 153
+        y: 85
         width: 16
         height: 16
       alignment: 0
@@ -166,7 +166,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 17
-        y: 153
+        y: 85
         width: 16
         height: 16
       alignment: 0
@@ -187,7 +187,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 34
-        y: 153
+        y: 85
         width: 16
         height: 16
       alignment: 0
@@ -208,7 +208,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 51
-        y: 153
+        y: 85
         width: 16
         height: 16
       alignment: 0
@@ -229,7 +229,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 68
-        y: 153
+        y: 85
         width: 16
         height: 16
       alignment: 0
@@ -250,7 +250,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 85
-        y: 153
+        y: 85
         width: 16
         height: 16
       alignment: 0
@@ -271,7 +271,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 102
-        y: 153
+        y: 85
         width: 16
         height: 16
       alignment: 0
@@ -292,7 +292,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 119
-        y: 153
+        y: 85
         width: 16
         height: 16
       alignment: 0
@@ -312,8 +312,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_8
       rect:
         serializedVersion: 2
-        x: 136
-        y: 153
+        x: 0
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -333,8 +333,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_9
       rect:
         serializedVersion: 2
-        x: 153
-        y: 153
+        x: 34
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -354,8 +354,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_10
       rect:
         serializedVersion: 2
-        x: 170
-        y: 153
+        x: 51
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -375,8 +375,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_11
       rect:
         serializedVersion: 2
-        x: 187
-        y: 153
+        x: 68
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -396,8 +396,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_12
       rect:
         serializedVersion: 2
-        x: 204
-        y: 153
+        x: 85
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -417,8 +417,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_13
       rect:
         serializedVersion: 2
-        x: 221
-        y: 153
+        x: 102
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -438,8 +438,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_14
       rect:
         serializedVersion: 2
-        x: 238
-        y: 153
+        x: 119
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -459,8 +459,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_15
       rect:
         serializedVersion: 2
-        x: 255
-        y: 153
+        x: 0
+        y: 51
         width: 16
         height: 16
       alignment: 0
@@ -480,8 +480,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_16
       rect:
         serializedVersion: 2
-        x: 0
-        y: 136
+        x: 17
+        y: 51
         width: 16
         height: 16
       alignment: 0
@@ -501,8 +501,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_17
       rect:
         serializedVersion: 2
-        x: 17
-        y: 136
+        x: 34
+        y: 51
         width: 16
         height: 16
       alignment: 0
@@ -522,8 +522,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_18
       rect:
         serializedVersion: 2
-        x: 34
-        y: 136
+        x: 51
+        y: 51
         width: 16
         height: 16
       alignment: 0
@@ -543,8 +543,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_19
       rect:
         serializedVersion: 2
-        x: 51
-        y: 136
+        x: 68
+        y: 51
         width: 16
         height: 16
       alignment: 0
@@ -564,8 +564,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_20
       rect:
         serializedVersion: 2
-        x: 68
-        y: 136
+        x: 85
+        y: 51
         width: 16
         height: 16
       alignment: 0
@@ -585,8 +585,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_21
       rect:
         serializedVersion: 2
-        x: 85
-        y: 136
+        x: 102
+        y: 51
         width: 16
         height: 16
       alignment: 0
@@ -606,8 +606,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_22
       rect:
         serializedVersion: 2
-        x: 102
-        y: 136
+        x: 119
+        y: 51
         width: 16
         height: 16
       alignment: 0
@@ -627,8 +627,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_23
       rect:
         serializedVersion: 2
-        x: 119
-        y: 136
+        x: 0
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -648,8 +648,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_24
       rect:
         serializedVersion: 2
-        x: 136
-        y: 136
+        x: 17
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -669,8 +669,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_25
       rect:
         serializedVersion: 2
-        x: 170
-        y: 136
+        x: 34
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -690,8 +690,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_26
       rect:
         serializedVersion: 2
-        x: 187
-        y: 136
+        x: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -711,8 +711,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_27
       rect:
         serializedVersion: 2
-        x: 204
-        y: 136
+        x: 68
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -732,8 +732,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_28
       rect:
         serializedVersion: 2
-        x: 221
-        y: 136
+        x: 85
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -753,8 +753,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_29
       rect:
         serializedVersion: 2
-        x: 238
-        y: 136
+        x: 102
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -774,8 +774,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_30
       rect:
         serializedVersion: 2
-        x: 255
-        y: 136
+        x: 119
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -796,7 +796,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 119
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -816,8 +816,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_32
       rect:
         serializedVersion: 2
-        x: 17
-        y: 119
+        x: 34
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -837,8 +837,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_33
       rect:
         serializedVersion: 2
-        x: 34
-        y: 119
+        x: 51
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -858,8 +858,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_34
       rect:
         serializedVersion: 2
-        x: 51
-        y: 119
+        x: 68
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -879,8 +879,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_35
       rect:
         serializedVersion: 2
-        x: 68
-        y: 119
+        x: 85
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -900,8 +900,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_36
       rect:
         serializedVersion: 2
-        x: 85
-        y: 119
+        x: 102
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -921,8 +921,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_37
       rect:
         serializedVersion: 2
-        x: 102
-        y: 119
+        x: 119
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -942,8 +942,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_38
       rect:
         serializedVersion: 2
-        x: 119
-        y: 119
+        x: 0
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -963,8 +963,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_39
       rect:
         serializedVersion: 2
-        x: 136
-        y: 119
+        x: 17
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -984,8 +984,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_40
       rect:
         serializedVersion: 2
-        x: 153
-        y: 119
+        x: 34
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -1005,8 +1005,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_41
       rect:
         serializedVersion: 2
-        x: 170
-        y: 119
+        x: 51
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -1026,8 +1026,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_42
       rect:
         serializedVersion: 2
-        x: 187
-        y: 119
+        x: 68
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -1047,8 +1047,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_43
       rect:
         serializedVersion: 2
-        x: 204
-        y: 119
+        x: 85
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -1068,8 +1068,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_44
       rect:
         serializedVersion: 2
-        x: 221
-        y: 119
+        x: 102
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -1089,8 +1089,8 @@ TextureImporter:
       name: tilemapModdedPar1-04mar_45
       rect:
         serializedVersion: 2
-        x: 238
-        y: 119
+        x: 119
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -1102,1539 +1102,6 @@ TextureImporter:
       bones: []
       spriteID: f3c9ae9640b62074da17093045b56651
       internalID: -1076171398
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_46
-      rect:
-        serializedVersion: 2
-        x: 255
-        y: 119
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b786df4d4023a843a122c2a137edbea
-      internalID: -975416491
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_47
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f320815914f6322499e8c6214be39e75
-      internalID: 1724384899
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_48
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 870ee6b3b342b634d8347ee92f168901
-      internalID: 34811312
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_49
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a181765a3c2bc7438c6bfce7b37575a
-      internalID: 51563607
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_50
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed0d1c4921b623f4ca614f9acea5a5af
-      internalID: 2126299172
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_51
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 71003672fccef5c4f966f2e057763444
-      internalID: 1977354490
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_52
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 65df9b5cee384be4598efe9331a71d9a
-      internalID: -976342094
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_53
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 62af722107c3c004b91611c9d4062a96
-      internalID: 1072490292
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_54
-      rect:
-        serializedVersion: 2
-        x: 119
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bd7e08ae847db5446aaec78093eef354
-      internalID: -852329520
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_55
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 23308f84bbc2f9343a127b14fe3ca777
-      internalID: 1629440041
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_56
-      rect:
-        serializedVersion: 2
-        x: 153
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8bf4ab9411e65bc4296e7cea77d6bf5c
-      internalID: -934681972
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_57
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 25401757e100bd84e97faeae48a7f3f1
-      internalID: -1649716362
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_58
-      rect:
-        serializedVersion: 2
-        x: 187
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 11b5c9c07704b0f4ebcae8dfa814a102
-      internalID: -1734806938
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_59
-      rect:
-        serializedVersion: 2
-        x: 204
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e1ac9dae6a5f5f4c9fd0a525970af93
-      internalID: -1601659744
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_60
-      rect:
-        serializedVersion: 2
-        x: 221
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 18ce56b081a24f940a3317f601f517d3
-      internalID: -1591454739
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_61
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4746e5b965d46304f86f863a8ddb5942
-      internalID: 661361561
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_62
-      rect:
-        serializedVersion: 2
-        x: 255
-        y: 102
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6063415881376de4189eb6a258ecfb85
-      internalID: -212314282
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_63
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dcf82596951983c44870b62e368eb673
-      internalID: -965247609
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_64
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a105ea804851af4da5a3725208a10b1
-      internalID: -1276353714
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_65
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3fa122bf039590f4bae77307b9832a23
-      internalID: 2110070475
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_66
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 209df5c232bc76f4abaaa94d64bf8be9
-      internalID: 1078890901
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_67
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ef6f3332c79f0884d91e3b7f7f100ae1
-      internalID: -1450071436
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_68
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 767b573e50542304586185df9838d274
-      internalID: -1027814706
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_69
-      rect:
-        serializedVersion: 2
-        x: 119
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09f6f7300c4da1449bf87fcf69768b13
-      internalID: -214199101
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_70
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5756795922ec75242b9e44482a2ab88f
-      internalID: 742950499
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_71
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f7aa381a41543d0498c597e0acdbd332
-      internalID: 462777536
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_72
-      rect:
-        serializedVersion: 2
-        x: 187
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 904eeb2386e179f4982ef84a47a8971d
-      internalID: 651616836
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_73
-      rect:
-        serializedVersion: 2
-        x: 204
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60193c922fd8f854186d2f1d4ea62ff4
-      internalID: -2042928435
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_74
-      rect:
-        serializedVersion: 2
-        x: 221
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab024f1c08d01f845b0bf97f0bcb8304
-      internalID: 1641916355
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_75
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0b456a979c383554187e8c78d76bebde
-      internalID: -1023245335
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_76
-      rect:
-        serializedVersion: 2
-        x: 255
-        y: 85
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b7cfc49b900c35543b2546b2a64b1c79
-      internalID: 838444227
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_77
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b65fb168ad625bc4ca2b4f260daee9c7
-      internalID: 1764936105
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_78
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d25f07ebcef2c5641bbfa4e7c3297cee
-      internalID: 1832030636
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_79
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7f2ebf82562f37d4e90ed71eae34e357
-      internalID: -990162302
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_80
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 14d192a7e9911dc46b40523f649707ea
-      internalID: -1652209461
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_81
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 361791e739938d149aca02053543a9c1
-      internalID: -218393062
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_82
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d6c94b01b571f4f4db0c51925abedb37
-      internalID: 2094957710
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_83
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 88d9d057936496143a466d4a5560190c
-      internalID: -362603021
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_84
-      rect:
-        serializedVersion: 2
-        x: 119
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 44355c8b0b723bb4ba2b3fa5abf1e269
-      internalID: -379456279
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_85
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5be04b04478c269419ce49892adfd51e
-      internalID: 543158898
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_86
-      rect:
-        serializedVersion: 2
-        x: 153
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 08ed7c3ecd976fa44a3aeca16009c10b
-      internalID: 1359423598
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_87
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e39077917512a424589ed22539639383
-      internalID: -2081064501
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_88
-      rect:
-        serializedVersion: 2
-        x: 187
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e157e04061e1b2b4d86d779c3f65e0d8
-      internalID: 272637514
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_89
-      rect:
-        serializedVersion: 2
-        x: 204
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2790da865f17b1642a662a7f307bf766
-      internalID: 163362398
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_90
-      rect:
-        serializedVersion: 2
-        x: 221
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8329d6be66c568445a6e76e621f486f4
-      internalID: 1068574645
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_91
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9e27172a5ba2654ebbd527de38ef9dc
-      internalID: 1085446427
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_92
-      rect:
-        serializedVersion: 2
-        x: 255
-        y: 68
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 92eea039c19294b41ab3fe44d72ea9f2
-      internalID: 365807033
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_93
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 51
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7efcaa75d53524d40aa554ce83c00a7f
-      internalID: -582807026
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_94
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 51
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a8d13eeb0b9c54347be62df9c1e7b55a
-      internalID: 1870642949
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_95
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 51
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ac1f6b5776bd1d4799f2a0ebabe000e
-      internalID: -802135935
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_96
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 51
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 77e0713e47ee8e845901f433e57322a5
-      internalID: 1261925616
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_97
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 51
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ac41d7ef504bb1409eac4f7ce696ea2
-      internalID: -243674773
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_98
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 51
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5abccf21117dca845884a04aca6be40a
-      internalID: 1135076125
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_99
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 51
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 59375612ab4683b439cd2158c8be5b88
-      internalID: 276092160
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_100
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 34
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 469aac4310d521646a2de63d75695526
-      internalID: 683115036
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_101
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 34
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f03375955cb8a23478ad5420ab404e5b
-      internalID: -665725041
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_102
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 34
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e8e967711970f94fa7e201b1034ca13
-      internalID: -1653918483
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_103
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 34
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 81ea9be2a55e4cc47b9de6e82923d55e
-      internalID: 1862949371
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_104
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 34
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 86fa9d68b17343942a2b141b868295f5
-      internalID: -1945392647
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_105
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 34
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 48c09173306c66946b8d09305049b708
-      internalID: -2073050404
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_106
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 34
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ffd9f355a088695409ba6d9f4cb6d7a1
-      internalID: 556332533
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_107
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cc517600a1f859a4d934fce079acb51a
-      internalID: 2118751456
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_108
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ea48ad7a2683fac4c8c63db945dbea7b
-      internalID: -512513572
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_109
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3ed22eac745bd104486d189cf8b93f3a
-      internalID: 1232269179
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_110
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6812ece2761133a448b146dbb46621ae
-      internalID: 1271267990
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_111
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f18872218a4c1b04aad4043b29483dd9
-      internalID: -1515845821
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_112
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 25fa312c6149e0c488002f9e526f9b77
-      internalID: 1479482769
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_113
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8b55a0b69c8bf874d8bf53de0105c3c4
-      internalID: -1046762240
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_114
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4b4ddd13a593113478b775257debd281
-      internalID: 1180128314
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_115
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b18910934f256394e8611f69118e52e6
-      internalID: 2094456380
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_116
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 046c4ea2e60137a4291ca88be31192e9
-      internalID: -502287926
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_117
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab8f960b76d5b2d40872dad21fa5218d
-      internalID: 1516835500
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tilemapModdedPar1-04mar_118
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: edf35394ec892da4dbe9051c52773943
-      internalID: 1423055348
       vertices: []
       indices: 
       edges: []
@@ -2651,123 +1118,50 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       tilemapModdedPar1-04mar_21: -1947493851
-      tilemapModdedPar1-04mar_77: 1764936105
       tilemapModdedPar1-04mar_41: 1929659251
-      tilemapModdedPar1-04mar_57: -1649716362
       tilemapModdedPar1-04mar_2: -1678695102
-      tilemapModdedPar1-04mar_92: 365807033
-      tilemapModdedPar1-04mar_60: -1591454739
-      tilemapModdedPar1-04mar_65: 2110070475
-      tilemapModdedPar1-04mar_82: 2094957710
+      tilemapModdedPar1-04mar_34: 1700662789
+      tilemapModdedPar1-04mar_32: -2067997219
+      tilemapModdedPar1-04mar_43: 1376257609
       tilemapModdedPar1-04mar_26: -1741333825
       tilemapModdedPar1-04mar_19: 276303484
+      tilemapModdedPar1-04mar_31: -1617939629
       tilemapModdedPar1-04mar_16: 803587475
-      tilemapModdedPar1-04mar_86: 1359423598
       tilemapModdedPar1-04mar_17: -2101540493
-      tilemapModdedPar1-04mar_73: -2042928435
-      tilemapModdedPar1-04mar_104: -1945392647
+      tilemapModdedPar1-04mar_30: -515534230
+      tilemapModdedPar1-04mar_36: 1052267717
       tilemapModdedPar1-04mar_12: 320074889
-      tilemapModdedPar1-04mar_76: 838444227
-      tilemapModdedPar1-04mar_93: -582807026
+      tilemapModdedPar1-04mar_8: -473749062
       tilemapModdedPar1-04mar_24: -1363700351
       tilemapModdedPar1-04mar_28: -2138660859
-      tilemapModdedPar1-04mar_69: -214199101
       tilemapModdedPar1-04mar_7: 236112464
       tilemapModdedPar1-04mar_1: -147120986
       tilemapModdedPar1-04mar_25: -1280725606
       tilemapModdedPar1-04mar_35: 380632068
-      tilemapModdedPar1-04mar_51: 1977354490
-      tilemapModdedPar1-04mar_90: 1068574645
-      tilemapModdedPar1-04mar_111: -1515845821
-      tilemapModdedPar1-04mar_33: -218884013
-      tilemapModdedPar1-04mar_46: -975416491
-      tilemapModdedPar1-04mar_13: 913432302
-      tilemapModdedPar1-04mar_96: 1261925616
-      tilemapModdedPar1-04mar_100: 683115036
-      tilemapModdedPar1-04mar_0: 1764940919
-      tilemapModdedPar1-04mar_106: 556332533
-      tilemapModdedPar1-04mar_110: 1271267990
-      tilemapModdedPar1-04mar_108: -512513572
-      tilemapModdedPar1-04mar_22: -1662032722
-      tilemapModdedPar1-04mar_4: 1943089527
-      tilemapModdedPar1-04mar_40: 664178097
-      tilemapModdedPar1-04mar_84: -379456279
-      tilemapModdedPar1-04mar_95: -802135935
-      tilemapModdedPar1-04mar_97: -243674773
-      tilemapModdedPar1-04mar_10: -600527974
-      tilemapModdedPar1-04mar_45: -1076171398
-      tilemapModdedPar1-04mar_3: -911501095
-      tilemapModdedPar1-04mar_79: -990162302
-      tilemapModdedPar1-04mar_107: 2118751456
-      tilemapModdedPar1-04mar_103: 1862949371
-      tilemapModdedPar1-04mar_6: 412085889
-      tilemapModdedPar1-04mar_42: -845203635
-      tilemapModdedPar1-04mar_101: -665725041
-      tilemapModdedPar1-04mar_109: 1232269179
-      tilemapModdedPar1-04mar_72: 651616836
-      tilemapModdedPar1-04mar_53: 1072490292
-      tilemapModdedPar1-04mar_54: -852329520
-      tilemapModdedPar1-04mar_34: 1700662789
-      tilemapModdedPar1-04mar_91: 1085446427
-      tilemapModdedPar1-04mar_52: -976342094
-      tilemapModdedPar1-04mar_83: -362603021
-      tilemapModdedPar1-04mar_32: -2067997219
-      tilemapModdedPar1-04mar_115: 2094456380
-      tilemapModdedPar1-04mar_43: 1376257609
-      tilemapModdedPar1-04mar_94: 1870642949
-      tilemapModdedPar1-04mar_31: -1617939629
-      tilemapModdedPar1-04mar_81: -218393062
-      tilemapModdedPar1-04mar_50: 2126299172
-      tilemapModdedPar1-04mar_61: 661361561
-      tilemapModdedPar1-04mar_63: -965247609
-      tilemapModdedPar1-04mar_88: 272637514
-      tilemapModdedPar1-04mar_30: -515534230
-      tilemapModdedPar1-04mar_87: -2081064501
-      tilemapModdedPar1-04mar_36: 1052267717
-      tilemapModdedPar1-04mar_68: -1027814706
-      tilemapModdedPar1-04mar_8: -473749062
-      tilemapModdedPar1-04mar_80: -1652209461
-      tilemapModdedPar1-04mar_48: 34811312
-      tilemapModdedPar1-04mar_99: 276092160
-      tilemapModdedPar1-04mar_75: -1023245335
-      tilemapModdedPar1-04mar_58: -1734806938
-      tilemapModdedPar1-04mar_112: 1479482769
-      tilemapModdedPar1-04mar_55: 1629440041
-      tilemapModdedPar1-04mar_98: 1135076125
       tilemapModdedPar1-04mar_5: -19380943
-      tilemapModdedPar1-04mar_89: 163362398
-      tilemapModdedPar1-04mar_105: -2073050404
+      tilemapModdedPar1-04mar_33: -218884013
       tilemapModdedPar1-04mar_23: -1563657141
       tilemapModdedPar1-04mar_37: -211046107
-      tilemapModdedPar1-04mar_116: -502287926
+      tilemapModdedPar1-04mar_13: 913432302
       tilemapModdedPar1-04mar_20: -1505279270
+      tilemapModdedPar1-04mar_0: 1764940919
       tilemapModdedPar1-04mar_29: -1275854379
-      tilemapModdedPar1-04mar_47: 1724384899
-      tilemapModdedPar1-04mar_117: 1516835500
+      tilemapModdedPar1-04mar_22: -1662032722
       tilemapModdedPar1-04mar_39: -1598190178
-      tilemapModdedPar1-04mar_67: -1450071436
       tilemapModdedPar1-04mar_15: -1376862103
+      tilemapModdedPar1-04mar_4: 1943089527
+      tilemapModdedPar1-04mar_40: 664178097
       tilemapModdedPar1-04mar_18: 681150652
       tilemapModdedPar1-04mar_38: -178723913
-      tilemapModdedPar1-04mar_114: 1180128314
-      tilemapModdedPar1-04mar_64: -1276353714
-      tilemapModdedPar1-04mar_118: 1423055348
-      tilemapModdedPar1-04mar_70: 742950499
-      tilemapModdedPar1-04mar_56: -934681972
-      tilemapModdedPar1-04mar_59: -1601659744
+      tilemapModdedPar1-04mar_10: -600527974
+      tilemapModdedPar1-04mar_45: -1076171398
       tilemapModdedPar1-04mar_9: -1840576319
+      tilemapModdedPar1-04mar_3: -911501095
       tilemapModdedPar1-04mar_44: -953525220
-      tilemapModdedPar1-04mar_102: -1653918483
-      tilemapModdedPar1-04mar_62: -212314282
-      tilemapModdedPar1-04mar_113: -1046762240
       tilemapModdedPar1-04mar_14: 982309796
-      tilemapModdedPar1-04mar_85: 543158898
-      tilemapModdedPar1-04mar_78: 1832030636
-      tilemapModdedPar1-04mar_74: 1641916355
-      tilemapModdedPar1-04mar_49: 51563607
       tilemapModdedPar1-04mar_27: 2019806680
-      tilemapModdedPar1-04mar_71: 462777536
-      tilemapModdedPar1-04mar_66: 1078890901
+      tilemapModdedPar1-04mar_6: 412085889
+      tilemapModdedPar1-04mar_42: -845203635
       tilemapModdedPar1-04mar_11: -102711418
   spritePackingTag: 
   pSDRemoveMatte: 0
