@@ -1169,6 +1169,342 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_49
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5cd8b2c247a9fc40a16362665c697fb
+      internalID: -332215002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_50
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a567cb857055d5b4a8e7cc0fc9d43c41
+      internalID: 1874506947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_51
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fcb04ef8317e00428183ece8f660cf4
+      internalID: 313313360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_52
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3e041ef711c1034cac21fc88d9a1018
+      internalID: -35877745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_53
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8afce4000726bc459b012e76709d93c
+      internalID: 475655763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_54
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23af84eddb39d114c8eb8411dce0de18
+      internalID: 748378454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_55
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b6f326809f474047bcec710158885e4
+      internalID: 1714590268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_56
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87246fa65d7768e489bbbe145f2892a4
+      internalID: -1305599800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_57
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44e85f64840ef5d4aa280be55931b198
+      internalID: -1631405829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_58
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b852cae5369157e4e835f9ad99a7d282
+      internalID: 1744904019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_59
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5462a28be9d5b249941301c73b7c56a
+      internalID: -155570822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_60
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cf8540ee242b524d839b24722b4bc41
+      internalID: -440992608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_61
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8edde9c28a424d44989572d9b41e8041
+      internalID: 1791794846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_62
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0154c6b7e7a86bd43b66c4ce395a60c1
+      internalID: -1861733582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_63
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc04946ecabb12246890cdf0bc3e5c90
+      internalID: -161717616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exaustive Prototype_64
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c65a96376679c134c8f30dd4d0598cf2
+      internalID: -1058006709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1182,23 +1518,33 @@ TextureImporter:
     nameFileIdTable:
       Exaustive Prototype_24: 456756397
       Exaustive Prototype_45: 1975384053
+      Exaustive Prototype_56: -1305599800
       Exaustive Prototype_9: 1736851437
+      Exaustive Prototype_49: -332215002
+      Exaustive Prototype_57: -1631405829
       Exaustive Prototype_6: -2040995424
       Exaustive Prototype_36: -1815919167
       Exaustive Prototype_40: 1388490278
       Exaustive Prototype_17: 1129961020
+      Exaustive Prototype_54: 748378454
+      Exaustive Prototype_64: -1058006709
       Exaustive Prototype_21: 824978113
       Exaustive Prototype_25: -1679866633
       Exaustive Prototype_44: -515784208
+      Exaustive Prototype_63: -161717616
       Exaustive Prototype_33: -25933167
       Exaustive Prototype_37: -591848648
       Exaustive Prototype_3: 922712611
+      Exaustive Prototype_59: -155570822
       Exaustive Prototype_15: -507826378
+      Exaustive Prototype_55: 1714590268
       Exaustive Prototype_12: 1861872102
+      Exaustive Prototype_61: 1791794846
       Exaustive Prototype_39: 1210844303
       Exaustive Prototype_10: 1136333168
       Exaustive Prototype_4: 312183807
       Exaustive Prototype_47: -2116088720
+      Exaustive Prototype_53: 475655763
       Exaustive Prototype_22: 1680037438
       Exaustive Prototype_26: -1099907020
       Exaustive Prototype_38: -36911911
@@ -1209,22 +1555,28 @@ TextureImporter:
       Exaustive Prototype_18: 17341725
       Exaustive Prototype_20: 32191262
       Exaustive Prototype_11: -2083052901
-      Exaustive Prototype_31: 1003990152
-      Exaustive Prototype_30: 1959107609
       Exaustive Prototype_16: -602111989
-      Exaustive Prototype_5: -1589555833
       Exaustive Prototype_48: -1980742057
+      Exaustive Prototype_30: 1959107609
+      Exaustive Prototype_5: -1589555833
+      Exaustive Prototype_51: 313313360
+      Exaustive Prototype_31: 1003990152
       Exaustive Prototype_29: -429743335
       Exaustive Prototype_27: -219563271
       Exaustive Prototype_41: -1697300421
       Exaustive Prototype_32: 111958285
+      Exaustive Prototype_58: 1744904019
+      Exaustive Prototype_62: -1861733582
       Exaustive Prototype_1: 1470682364
       Exaustive Prototype_7: -945742644
+      Exaustive Prototype_60: -440992608
       Exaustive Prototype_43: -1557461097
       Exaustive Prototype_42: 919325642
       Exaustive Prototype_19: 1840747650
+      Exaustive Prototype_52: -35877745
       Exaustive Prototype_8: -1494221537
       Exaustive Prototype_2: -1207709210
+      Exaustive Prototype_50: 1874506947
       Exaustive Prototype_23: -187097161
       Exaustive Prototype_13: 609158454
       Exaustive Prototype_46: 140918225
