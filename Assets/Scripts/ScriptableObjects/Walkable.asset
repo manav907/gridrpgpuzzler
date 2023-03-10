@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Walkable
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: 120ba3c476167314e8bf25e6ca85488a, type: 2}
+  - {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
   isWalkable: 1
