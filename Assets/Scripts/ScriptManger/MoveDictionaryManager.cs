@@ -110,34 +110,43 @@ public class MoveDictionaryManager : MonoBehaviour
             return false;
         }
     }
-    List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
+    List<Vector3Int> generateRange(Vector3 start, Vector3 end)
     {
-        //getThisCharacterData();
-        Vector3 characterPos = thisCharacter.transform.position;
-        Vector3 startRange = characterPos - new Vector3(rangeOfAction, rangeOfAction);
-        Vector3 endRange = characterPos + new Vector3(rangeOfAction, rangeOfAction);
-        List<Vector3Int> listOfAttackRange = new List<Vector3Int>();
-        for (int x = (int)startRange.x; x <= endRange.x; x++)
+        List<Vector3Int> listOfRanges = new List<Vector3Int>();
+        for (int x = (int)start.x; x <= end.x; x++)
         {
-            for (int y = (int)startRange.y; y <= endRange.y; y++)
+            for (int y = (int)start.y; y <= end.y; y++)
             {
                 Vector3Int atXY = new Vector3Int(x, y, 0);
-                listOfAttackRange.Add(atXY);
+                listOfRanges.Add(atXY);
                 //Debug.Log(atXY + " ");
             }
         }
-        for (int i = 0; i < listOfAttackRange.Count; i++)
+        return listOfRanges;
+    }
+    List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
+    {
+        //getThisCharacterData();
+        Vector3 centerPos = thisCharacter.transform.position;
+        Vector3 startRange = centerPos - new Vector3(rangeOfAction, rangeOfAction);
+        Vector3 endRange = centerPos + new Vector3(rangeOfAction, rangeOfAction);
+        List<Vector3Int> listOfRanges = generateRange(startRange, endRange);
+
+        //The Following Removes Invalid Tiles
+        for (int i = 0; i < listOfRanges.Count; i++)
         {
-            bool isWalkableHere = mapManager.getIsWalkable(listOfAttackRange[i]);
-            bool isGameObjectHere = PositionToGameObject.ContainsKey(listOfAttackRange[i]);
+            bool isWalkableHere = mapManager.getIsWalkable(listOfRanges[i]);
+            bool isGameObjectHere = PositionToGameObject.ContainsKey(listOfRanges[i]);
             if (isWalkableHere == WalkableTileHere && isGameObjectHere == GameObjectHere)
             {
                 //Debug.Log(listOfAttackRange[i] + "Valid " + i);
+
+                //Do Nothing since all conditions are fine
             }
             else
             {
                 //Debug.Log(listOfAttackRange[i] + "Invalid ");
-                listOfAttackRange.RemoveAt(i);
+                listOfRanges.RemoveAt(i);
                 i--;
                 bool debugThis = false;
                 if (debugThis)
@@ -160,11 +169,12 @@ public class MoveDictionaryManager : MonoBehaviour
                 }
             }
         }
-        return listOfAttackRange;
+        return listOfRanges;
     }
     void ThrowFireBall()
     {
         Debug.Log("Throw Fire Ball");
+        reticalManager.reDrawShadows();
     }
     void MoveCharacter()
     {

@@ -45,5 +45,14 @@ public class ReticalManager : MonoBehaviour
             //deletetiles
         }
     }
+    [SerializeField] private Tilemap shadowTilemap;
+    [SerializeField] private TileBase shadowTilePrefab;
+    public void reDrawShadows()
+    {
+        var topleft = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
+        var topright = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
+        Debug.Log(topleft);
+        Debug.Log(topright);
+    }
 
 }
