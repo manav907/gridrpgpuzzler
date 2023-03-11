@@ -9,11 +9,13 @@ public class MoveDictionaryManager : MonoBehaviour
     ReticalManager reticalManager;
     MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
+    TileCalculator tileCalculator;
     public void setMoveDictionaryManagerVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
+        tileCalculator = this.GetComponent<TileCalculator>();
         SetMoveDictionary();
     }
 
@@ -110,26 +112,13 @@ public class MoveDictionaryManager : MonoBehaviour
             return false;
         }
     }
-    public List<Vector3Int> generateRange(Vector3 start, Vector3 end)
-    {
-        List<Vector3Int> listOfRanges = new List<Vector3Int>();
-        for (int x = (int)start.x; x <= end.x; x++)
-        {
-            for (int y = (int)start.y; y <= end.y; y++)
-            {
-                Vector3Int atXY = new Vector3Int(x, y, 0);
-                listOfRanges.Add(atXY);
-            }
-        }
-        return listOfRanges;
-    }
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
         //getThisCharacterData();
         Vector3 centerPos = thisCharacter.transform.position;
         Vector3 startRange = centerPos - new Vector3(rangeOfAction, rangeOfAction);
         Vector3 endRange = centerPos + new Vector3(rangeOfAction, rangeOfAction);
-        List<Vector3Int> listOfRanges = generateRange(startRange, endRange);
+        List<Vector3Int> listOfRanges = tileCalculator.generateRange(startRange, endRange);
 
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tileCalculator : MonoBehaviour
+public class TileCalculator : MonoBehaviour
 {
 
     public List<Vector3Int> generateRange(Vector3 start, Vector3 end)

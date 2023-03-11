@@ -47,8 +47,10 @@ public class ReticalManager : MonoBehaviour
     }
     [SerializeField] private Tilemap shadowTilemap;
     [SerializeField] private TileBase shadowTilePrefab;
-    [SerializeField] Vector3Int topleftoffset;
-    [SerializeField] Vector3Int downrightoffset;
+    //[SerializeField] 
+    Vector3Int topleftoffset;
+    //[SerializeField] 
+    Vector3Int downrightoffset;
     public void reDrawShadows()
     {
         //getting edges of camera
@@ -56,8 +58,8 @@ public class ReticalManager : MonoBehaviour
         var downright = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
 
         //assigning offsets
-        topleftoffset = new Vector3Int(-1, 1, 0);
-        downrightoffset = new Vector3Int(1, -1, 0);
+        topleftoffset = new Vector3Int(-2, 1, 0);
+        downrightoffset = new Vector3Int(1, -2, 0);
         topleft = topleft + topleftoffset;
         downright = downright + downrightoffset;
 
@@ -74,10 +76,10 @@ public class ReticalManager : MonoBehaviour
         }
 
     }
-    tileCalculator tileCalculator;
+    TileCalculator tileCalculator;
     public void setReticalMangerVariables()
     {
-        tileCalculator = this.GetComponent<tileCalculator>();
+        tileCalculator = this.GetComponent<TileCalculator>();
     }
 
 }
