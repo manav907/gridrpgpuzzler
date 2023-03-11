@@ -110,7 +110,7 @@ public class MoveDictionaryManager : MonoBehaviour
             return false;
         }
     }
-    List<Vector3Int> generateRange(Vector3 start, Vector3 end)
+    public List<Vector3Int> generateRange(Vector3 start, Vector3 end)
     {
         List<Vector3Int> listOfRanges = new List<Vector3Int>();
         for (int x = (int)start.x; x <= end.x; x++)
@@ -119,7 +119,6 @@ public class MoveDictionaryManager : MonoBehaviour
             {
                 Vector3Int atXY = new Vector3Int(x, y, 0);
                 listOfRanges.Add(atXY);
-                //Debug.Log(atXY + " ");
             }
         }
         return listOfRanges;

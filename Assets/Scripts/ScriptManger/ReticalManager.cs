@@ -51,8 +51,64 @@ public class ReticalManager : MonoBehaviour
     {
         var topleft = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         var topright = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
-        Debug.Log(topleft);
-        Debug.Log(topright);
+        moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();//should not be here
+        var shadowRange = generateRange(topleft, topright);
+        //shadowTilemap.ClearAllTiles();
+        foreach (Vector3Int pos in shadowRange)
+        {
+            Debug.Log(pos);
+            shadowTilemap.SetTile(pos, shadowTilePrefab);
+        }
+
+    }
+
+
+    List<Vector3Int> generateRange(Vector3 start, Vector3 end)
+    {
+
+        Debug.Log(end.y);
+
+        List<Vector3Int> listOfRanges = new List<Vector3Int>();
+
+        int startx = (int)start.x;
+        int starty = (int)start.y;
+        int endx = (int)end.x;
+        int endy = (int)end.y;
+        if (startx > endx)
+        {
+            int x = startx;
+            startx = endx;
+            endx = x;
+        }
+        if (starty > endy)
+        {
+            int x = starty;
+            starty = endy;
+            endy = x;
+        }
+        for (int x = startx; x <= endx; x++)
+        {
+
+            for (int y = starty; y <= endy; y++)// problem when y > than y
+            {
+
+                Debug.Log(y);
+
+                Vector3Int atXY = new Vector3Int(x, y, 0);
+                listOfRanges.Add(atXY);
+            }
+        }
+        return listOfRanges;
+    }
+
+
+
+
+
+    MoveDictionaryManager moveDictionaryManager;
+    public void setReticalMangerVariables()
+    {
+        MoveDictionaryManager moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
     }
 
 }

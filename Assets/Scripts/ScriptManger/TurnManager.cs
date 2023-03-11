@@ -17,6 +17,7 @@ public class TurnManager : MonoBehaviour
     private ButtonManager thisButtonManager;
     private MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
+    ReticalManager reticalManager;
 
     void GetGameObjects()
     {
@@ -29,6 +30,8 @@ public class TurnManager : MonoBehaviour
         mapManager.setTileDictionary();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
         moveDictionaryManager.setMoveDictionaryManagerVariables();
+        reticalManager = this.GetComponent<ReticalManager>();
+        reticalManager.setReticalMangerVariables();
     }
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
