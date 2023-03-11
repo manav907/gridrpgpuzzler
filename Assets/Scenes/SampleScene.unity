@@ -221,7 +221,7 @@ Tilemap:
   m_TileColorArray: []
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
   m_Origin: {x: 0, y: 0, z: 0}
   m_Size: {x: 0, y: 0, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -457,6 +457,7 @@ GameObject:
   - component: {fileID: 732592032}
   - component: {fileID: 732592033}
   - component: {fileID: 732592034}
+  - component: {fileID: 732592035}
   m_Layer: 0
   m_Name: ScriptManager
   m_TagString: GameController
@@ -561,6 +562,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b2efbe357fa1d641aaafd9b322f6234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &732592035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732592026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aedb9c6d4a464264e928dfb0c6b14ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &755500785
