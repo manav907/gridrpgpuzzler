@@ -33,15 +33,13 @@ public class ReticalManager : MonoBehaviour
     {
         if (validTilesList != null)
         {
-            foreach (Vector3Int pos in validTilesList)
-            {
-                validTilesTileMap.SetTile(pos, reticalTilePrefab);
-            }
+            SetTiles(validTilesList, validTilesTileMap, reticalTilePrefab);
             //addtiles
         }
         else
         {
-            validTilesTileMap.ClearAllTiles();
+            //validTilesTileMap.ClearAllTiles();
+            ClearAllTiles(validTilesTileMap);
             //deletetiles
         }
     }
@@ -67,14 +65,21 @@ public class ReticalManager : MonoBehaviour
         //generating ranges
         var shadowRange = tileCalculator.generateRange(topleft, downright);
         //clearing tiles
-        shadowTilemap.ClearAllTiles();
+        ClearAllTiles(shadowTilemap);
         //creating tiles
-        foreach (Vector3Int pos in shadowRange)
-        {
-            //            Debug.Log(pos);
-            shadowTilemap.SetTile(pos, shadowTilePrefab);
-        }
+        SetTiles(shadowRange, shadowTilemap, shadowTilePrefab);
 
+    }
+    void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)
+    {
+        foreach (Vector3Int pos in range)
+        {
+            thistilemap.SetTile(pos, thistile);
+        }
+    }
+    void ClearAllTiles(Tilemap thistilemap)
+    {
+        thistilemap.ClearAllTiles();
     }
     TileCalculator tileCalculator;
     public void setReticalMangerVariables()
