@@ -93,7 +93,8 @@ public class TurnManager : MonoBehaviour
     {
         //PositionToGameObjectCopy = mapManager.PositionToGameObject;
         TurnCountInt++;
-        if (TurnCountInt / TurnLoop >= PositionToGameObjectCopy.Count)
+        //if (TurnCountInt / TurnLoop >= PositionToGameObjectCopy.Count)
+        if (TurnCountInt >= OrderOfInteractableCharacters.Count)
         {
             recalculateOrder();
             TurnLoop++;
@@ -113,10 +114,14 @@ public class TurnManager : MonoBehaviour
         foreach (var position in PositionToGameObjectCopy)
         {
             if (shadowrange.Contains(position.Key))
-
-
-
+            {
                 OrderOfInteractableCharacters.Add(position.Value);
+                Debug.Log("Valid Target found called " + position.Value.name + " at Pos " + position.Key);
+            }
+            else
+            {
+                Debug.Log("invalid Target found called " + position.Value.name + " at Pos " + position.Key);
+            }
             //OrderOfInteractableCharacters.Add(PositionToGameObjectCopy[position.Key]);
         }
 
