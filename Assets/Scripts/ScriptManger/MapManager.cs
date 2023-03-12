@@ -9,8 +9,10 @@ public class MapManager : MonoBehaviour
     public List<Tilemap> OrderOfTileMaps;
     public List<TileData> listOfTileDataScriptableObjects;
     public Dictionary<TileBase, TileData> dataFromTiles;
+    TileCalculator tileCalculator;
     public void setTileDictionary()
     {
+        tileCalculator = this.gameObject.GetComponent<TileCalculator>();
         dataFromTiles = new Dictionary<TileBase, TileData>();
         foreach (var ScriptableObjects in listOfTileDataScriptableObjects)
             foreach (var tileFound in ScriptableObjects.tiles)
@@ -33,33 +35,35 @@ public class MapManager : MonoBehaviour
     }
 
 
-    public Dictionary<Vector3, GameObject> PositionToGameObject;
+    public Dictionary<Vector3Int, GameObject> PositionToGameObject;
     public void AddCharactersToDictionaryAfterInstantiating(List<GameObject> allInteractableCharacters)
     {
-        PositionToGameObject = new Dictionary<Vector3, GameObject>();
+        PositionToGameObject = new Dictionary<Vector3Int, GameObject>();
         foreach (GameObject character in allInteractableCharacters)
         {
-            PositionToGameObject.Add(character.transform.position, character);
+            Vector3Int thisPos = tileCalculator.convertToVector3Int(character.transform.position);
+            PositionToGameObject.Add(thisPos, character);
         }
     }
 
-    [SerializeField] private List<Vector3> PositionToGameObjectVector3;
+    [SerializeField] private List<Vector3Int> PositionToGameObjectVector3;
     [SerializeField] private List<GameObject> PositionToGameObjectGameObjects;
-    public void UpdateCharacterPosition(Vector3 previousPosition, Vector3 newPosition, GameObject thisCharacter)
+    public void UpdateCharacterPosition(Vector3Int previousPosition, Vector3Int newPosition, GameObject thisCharacter)
     {
         PositionToGameObject.Remove(previousPosition);
         PositionToGameObject.Add(newPosition, thisCharacter);
         PositionToGameObjectGameObjects.Clear();
         PositionToGameObjectVector3.Clear();
-        foreach (Vector3 position in PositionToGameObject.Keys)
+        foreach (Vector3Int position in PositionToGameObject.Keys)
         {
             PositionToGameObjectGameObjects.Add(PositionToGameObject[position]);
             PositionToGameObjectVector3.Add(position);
+            //PositionToGameObjectVector3.Add(new Vector3Int((int)position.x, (int)position.y, (int)position.z));
         }
     }
 
     //Getters
-    public GameObject GetGameObjectAtPos(Vector3 thisPlace)
+    public GameObject GetGameObjectAtPos(Vector3Int thisPlace)
 
     {
         if (PositionToGameObject.ContainsKey(thisPlace))

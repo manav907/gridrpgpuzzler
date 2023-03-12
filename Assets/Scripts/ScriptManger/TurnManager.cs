@@ -104,14 +104,19 @@ public class TurnManager : MonoBehaviour
         }
         beginTurn();
     }
-    Dictionary<Vector3, GameObject> PositionToGameObjectCopy;
+    Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy;
 
     void recalculateOrder()
     {
         PositionToGameObjectCopy = mapManager.PositionToGameObject;
+        var shadowrange = reticalManager.reDrawShadows();
         foreach (var position in PositionToGameObjectCopy)
         {
-            OrderOfInteractableCharacters.Add(position.Value);
+            if (shadowrange.Contains(position.Key))
+
+
+
+                OrderOfInteractableCharacters.Add(position.Value);
             //OrderOfInteractableCharacters.Add(PositionToGameObjectCopy[position.Key]);
         }
 

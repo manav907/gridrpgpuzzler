@@ -49,7 +49,7 @@ public class ReticalManager : MonoBehaviour
     Vector3Int topleftoffset;
     //[SerializeField] 
     Vector3Int downrightoffset;
-    public void reDrawShadows()
+    public List<Vector3Int> reDrawShadows()
     {
         //getting edges of camera
         var topleft = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
@@ -63,11 +63,12 @@ public class ReticalManager : MonoBehaviour
 
 
         //generating ranges
-        var shadowRange = tileCalculator.generateRange(topleft, downright);
+        List<Vector3Int> shadowRange = tileCalculator.generateRange(topleft, downright);
         //clearing tiles
         ClearAllTiles(shadowTilemap);
         //creating tiles
         SetTiles(shadowRange, shadowTilemap, shadowTilePrefab);
+        return shadowRange;
 
     }
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)

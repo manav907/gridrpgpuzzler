@@ -15,12 +15,14 @@ public class characterDataHolder : MonoBehaviour
     private ButtonManager thisButtonManager;
     private MapManager thisMapManager;
     private TurnManager thisTurnManager;
+    TileCalculator tileCalculator;
     public void InitilizeCharacter(GameObject gameController)
     {
         thisButtonManager = gameController.GetComponent<ButtonManager>();
         thisMapManager = gameController.GetComponent<MapManager>();
         thisTurnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
+        tileCalculator = gameController.GetComponent<TileCalculator>();
         UpdateCharacterData();
     }
     List<string> GetCharacterMoveList()
@@ -48,16 +50,18 @@ public class characterDataHolder : MonoBehaviour
     }
     void KillCharacter()
     {
+
+        Vector3Int thisCharPos = tileCalculator.convertToVector3Int(this.gameObject.transform.position);
         if (thisTurnManager.thisCharacter == this.gameObject)
         {
 
-            thisMapManager.PositionToGameObject.Remove(this.gameObject.transform.position);
+            thisMapManager.PositionToGameObject.Remove(thisCharPos);
             Destroy(this.gameObject);
             thisTurnManager.endTurn();
         }
         else
         {
-            thisMapManager.PositionToGameObject.Remove(this.gameObject.transform.position);
+            thisMapManager.PositionToGameObject.Remove(thisCharPos);
             Destroy(this.gameObject);
         }
     }

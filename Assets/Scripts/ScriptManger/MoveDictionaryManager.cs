@@ -94,7 +94,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
     }
     Vector3Int tryHere;
-    Dictionary<Vector3, GameObject> PositionToGameObject;
+    Dictionary<Vector3Int, GameObject> PositionToGameObject;
     List<Vector3Int> listOfValidtargets;
     bool GetDataForActions()
     {
@@ -168,7 +168,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         if (GetDataForActions())
         {
-            Vector3 currentPosition = thisCharacter.transform.position;
+            Vector3Int currentPosition = tileCalculator.convertToVector3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
             thisCharacter.transform.position = tryHere;
         }
