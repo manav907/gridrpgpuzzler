@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileCalculator : MonoBehaviour
 {
 
-    List<Vector3Int> generateRangeFrom2Vectors(Vector3 start, Vector3 end)
+    public List<Vector3Int> generateRangeFrom2Vectors(Vector3 start, Vector3 end)
     {
         List<Vector3Int> listOfRanges = new List<Vector3Int>();
 
