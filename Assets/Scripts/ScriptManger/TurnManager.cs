@@ -67,6 +67,10 @@ public class TurnManager : MonoBehaviour
         {
             triggerGameEnd();
         }
+        else if (OrderOfInteractableCharacters[TurnCountInt]==null)
+        {
+            endTurn();
+        }
         else
             beginTurnThisCharacter();
     }
@@ -83,7 +87,7 @@ public class TurnManager : MonoBehaviour
 
         var shadowrange = reticalManager.reDrawShadows();
 
-        foreach (GameObject thisChar in OrderOfInteractableCharacters)
+        foreach (GameObject thisChar in PositionToGameObjectCopy.Values)
         {
             characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
             reticalManager.setVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
@@ -135,10 +139,11 @@ public class TurnManager : MonoBehaviour
         }
         beginTurn();
     }
-    //Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy;
+    Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy;
     void recalculateOrder()
     {
-        Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy = mapManager.PositionToGameObject;
+        PositionToGameObjectCopy = mapManager.PositionToGameObject;
+        Debug.Log("updated pos game objecit dir");
         var shadowrange = reticalManager.reDrawShadows();
         foreach (var position in PositionToGameObjectCopy)
         {

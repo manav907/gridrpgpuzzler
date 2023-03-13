@@ -51,17 +51,12 @@ public class characterDataHolder : MonoBehaviour
     {
 
         Vector3Int thisCharPos = tileCalculator.convertToVector3Int(this.gameObject.transform.position);
+        thisMapManager.PositionToGameObject.Remove(thisCharPos);
+        //thisMapManager.UpdateCharacterPosition(thisCharPos, null, null);
+        Destroy(this.gameObject);
         if (thisTurnManager.thisCharacter == this.gameObject)
         {
-
-            thisMapManager.PositionToGameObject.Remove(thisCharPos);
-            Destroy(this.gameObject);
             thisTurnManager.endTurn();
-        }
-        else
-        {
-            thisMapManager.PositionToGameObject.Remove(thisCharPos);
-            Destroy(this.gameObject);
         }
     }
     [SerializeField] Animator thisAnimation;
