@@ -78,10 +78,6 @@ public class TurnManager : MonoBehaviour
 
     void beginTurnThisCharacter()
     {
-        
-
-
-
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
         thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
 
@@ -89,12 +85,13 @@ public class TurnManager : MonoBehaviour
 
         foreach (GameObject thisChar in OrderOfInteractableCharacters)
         {
-            reticalManager.setVision(tileCalculator.convertToVector3Int((thisChar.transform.position)), 3);
+            characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
+            reticalManager.setVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
         }
-
-
-        if (shadowrange.Contains(tileCalculator.convertToVector3Int(thisCharacter.transform.position)))
+        if (shadowrange.Contains(thisCharacterData.getCharV3Int()))
+        {
             thisCharacterData.BeginThisCharacterTurn();
+        }
         else
         {
             Debug.Log("Turn Skiped");
@@ -138,11 +135,10 @@ public class TurnManager : MonoBehaviour
         }
         beginTurn();
     }
-    Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy;
-
+    //Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy;
     void recalculateOrder()
     {
-        PositionToGameObjectCopy = mapManager.PositionToGameObject;
+        Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy = mapManager.PositionToGameObject;
         var shadowrange = reticalManager.reDrawShadows();
         foreach (var position in PositionToGameObjectCopy)
         {

@@ -86,4 +86,8 @@ public class characterDataHolder : MonoBehaviour
             Debug.Log("AI Needed");
         }
     }
+    public Vector3Int getCharV3Int()
+    {
+        return tileCalculator.convertToVector3Int(this.gameObject.transform.position);
+    }
 }
