@@ -115,10 +115,8 @@ public class MoveDictionaryManager : MonoBehaviour
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
         //getThisCharacterData();
-        Vector3 centerPos = thisCharacter.transform.position;
-        Vector3 startRange = centerPos - new Vector3(rangeOfAction, rangeOfAction);
-        Vector3 endRange = centerPos + new Vector3(rangeOfAction, rangeOfAction);
-        List<Vector3Int> listOfRanges = tileCalculator.generateRangeFrom2Vectors(startRange, endRange);
+        Vector3Int centerPos = tileCalculator.convertToVector3Int(thisCharacter.transform.position);
+        List<Vector3Int> listOfRanges = tileCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
 
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
