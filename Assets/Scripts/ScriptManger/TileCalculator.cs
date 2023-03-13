@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileCalculator : MonoBehaviour
 {
 
-    public List<Vector3Int> generateRange(Vector3 start, Vector3 end)
+    public List<Vector3Int> generateRangeFrom2Vectors(Vector3 start, Vector3 end)
     {
         List<Vector3Int> listOfRanges = new List<Vector3Int>();
 
@@ -34,6 +34,14 @@ public class TileCalculator : MonoBehaviour
                 listOfRanges.Add(atXY);
             }
         }
+        return listOfRanges;
+    }
+    public List<Vector3Int> generateRangeFromPoint(Vector3Int thisPoint, int rangeOfAction)
+    {
+        Vector3 centerPos = thisPoint;
+        Vector3 startRange = centerPos - new Vector3(rangeOfAction, rangeOfAction);
+        Vector3 endRange = centerPos + new Vector3(rangeOfAction, rangeOfAction);
+        List<Vector3Int> listOfRanges = generateRangeFrom2Vectors(startRange, endRange);
         return listOfRanges;
     }
     public Vector3Int convertToVector3Int(Vector3 thisVector)

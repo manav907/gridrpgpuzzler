@@ -11,7 +11,7 @@ public class ReticalManager : MonoBehaviour
     {
         setRetical();
     }
-    public GameObject characterRetical;
+    [SerializeField] GameObject characterRetical;
     void setRetical()
     {
         reticalPos = getMovePoint();
@@ -38,7 +38,6 @@ public class ReticalManager : MonoBehaviour
         }
         else
         {
-            //validTilesTileMap.ClearAllTiles();
             ClearAllTiles(validTilesTileMap);
             //deletetiles
         }
@@ -63,13 +62,17 @@ public class ReticalManager : MonoBehaviour
 
 
         //generating ranges
-        List<Vector3Int> shadowRange = tileCalculator.generateRange(topleft, downright);
+        List<Vector3Int> shadowRange = tileCalculator.generateRangeFrom2Vectors(topleft, downright);
         //clearing tiles
         ClearAllTiles(shadowTilemap);
         //creating tiles
         SetTiles(shadowRange, shadowTilemap, shadowTilePrefab);
         return shadowRange;
 
+    }
+    public void setVision(Vector3Int thisPoint, int rangeOfAction)
+    {
+        SetTiles(tileCalculator.generateRangeFromPoint(thisPoint, rangeOfAction), shadowTilemap, null);
     }
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)
     {

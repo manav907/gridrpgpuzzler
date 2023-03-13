@@ -18,6 +18,7 @@ public class TurnManager : MonoBehaviour
     private MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
     ReticalManager reticalManager;
+    TileCalculator tileCalculator;
 
     void GetGameObjects()
     {
@@ -32,6 +33,7 @@ public class TurnManager : MonoBehaviour
         moveDictionaryManager.setMoveDictionaryManagerVariables();
         reticalManager = this.GetComponent<ReticalManager>();
         reticalManager.setReticalMangerVariables();
+        tileCalculator = this.GetComponent<TileCalculator>();
     }
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
@@ -53,47 +55,78 @@ public class TurnManager : MonoBehaviour
         mapManager.AddCharactersToDictionaryAfterInstantiating(allInteractableCharacters);
     }
     public GameObject thisCharacter;
-    public GameObject TurnCount;
+    [SerializeField] GameObject TurnCount;
     characterDataHolder thisCharacterData;
     int TurnCountInt = 0;
+
     public void beginTurn()
     {
 
         turnCountTMP.text = (TurnCountInt + "");
         if (OrderOfInteractableCharacters.Count == TurnCountInt)//this works because Count Starts from 1 not 0
         {
-            //Debug.Log(OrderOfInteractableCharacters.Count + " " + TurnCountInt);
-            Debug.Log("Game Over");
-            thisButtonManager.clearButtons();
-
+            triggerGameEnd();
         }
         else
             beginTurnThisCharacter();
-        /*
-        if (OrderOfInteractableCharacters[TurnCountInt])
-        {
-            beginTurnThisCharacter();
-        }
-        else if (thisCharacter == null)
-        {
-            Debug.Log(TurnCountInt + " has been Skipped");
-            endTurn();
-        }
-        */
     }
+    void triggerGameEnd()
+    {
+        Debug.Log("Game Over");
+        thisButtonManager.clearButtons();
+    }
+
     void beginTurnThisCharacter()
     {
+        
+
+
+
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
         thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
-        thisCharacterData.BeginThisCharacterTurn();
+
+        var shadowrange = reticalManager.reDrawShadows();
+
+        foreach (GameObject thisChar in OrderOfInteractableCharacters)
+        {
+            reticalManager.setVision(tileCalculator.convertToVector3Int((thisChar.transform.position)), 3);
+        }
+
+
+        if (shadowrange.Contains(tileCalculator.convertToVector3Int(thisCharacter.transform.position)))
+            thisCharacterData.BeginThisCharacterTurn();
+        else
+        {
+            Debug.Log("Turn Skiped");
+            if (noCharactersInCamera(shadowrange))
+                triggerGameEnd();
+            else
+                endTurn();
+        }
         //thisButtonManager.makeButtons();
     }
+
+    bool noCharactersInCamera(List<Vector3Int> thislist)
+    {
+        int numberofcharactershere = 0;
+        foreach (GameObject thischar in OrderOfInteractableCharacters)
+        {
+            if (thislist.Contains(tileCalculator.convertToVector3Int(thischar.transform.position)))
+            {
+                numberofcharactershere++;
+            }
+        }
+        if (numberofcharactershere == 0)
+            return true;
+        else
+            return false;
+    }
+
+
     int TurnLoop = 1;
     public void endTurn()
     {
-        //PositionToGameObjectCopy = mapManager.PositionToGameObject;
         TurnCountInt++;
-        //if (TurnCountInt / TurnLoop >= PositionToGameObjectCopy.Count)
         if (TurnCountInt >= OrderOfInteractableCharacters.Count)
         {
             recalculateOrder();
@@ -113,16 +146,9 @@ public class TurnManager : MonoBehaviour
         var shadowrange = reticalManager.reDrawShadows();
         foreach (var position in PositionToGameObjectCopy)
         {
-            if (shadowrange.Contains(position.Key))
-            {
-                OrderOfInteractableCharacters.Add(position.Value);
-                Debug.Log("Valid Target found called " + position.Value.name + " at Pos " + position.Key);
-            }
-            else
-            {
-                Debug.Log("invalid Target found called " + position.Value.name + " at Pos " + position.Key);
-            }
-            //OrderOfInteractableCharacters.Add(PositionToGameObjectCopy[position.Key]);
+            //if (shadowrange.Contains(position.Key))
+            OrderOfInteractableCharacters.Add(position.Value);
+
         }
 
     }
