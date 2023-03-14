@@ -67,10 +67,17 @@ public class ReticalManager : MonoBehaviour
         ClearAllTiles(shadowTilemap);
         //creating tiles
         SetTiles(shadowRange, shadowTilemap, shadowTilePrefab);
+        //clearing Tiles for vision
+        var PositionToGameObjectCopy = this.gameObject.GetComponent<MapManager>().PositionToGameObject;
+        foreach (GameObject thisChar in PositionToGameObjectCopy.Values)
+        {
+            characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
+            setVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
+        }
         return shadowRange;
 
     }
-    public void setVision(Vector3Int thisPoint, int rangeOfAction)
+    void setVision(Vector3Int thisPoint, int rangeOfAction)
     {
         SetTiles(tileCalculator.generateRangeFromPoint(thisPoint, rangeOfAction), shadowTilemap, null);
     }

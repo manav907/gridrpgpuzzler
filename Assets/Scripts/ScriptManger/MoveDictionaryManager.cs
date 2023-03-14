@@ -89,7 +89,10 @@ public class MoveDictionaryManager : MonoBehaviour
                 reticalManager.reDrawValidTiles(null);//this clears out the Valid Tiles Overlay
             }
             else
-                actionOfMove();
+                {actionOfMove();
+                }
+
+                reticalManager.reDrawShadows();
         }
 
     }

@@ -39,6 +39,7 @@ public class characterDataHolder : MonoBehaviour
     }
     public void UpdateCharacterData()
     {
+        
         Heatlh.text = health + "";
         if (health <= 0)
         {

@@ -12,8 +12,6 @@ public class TurnManager : MonoBehaviour
         recalculateOrder();//can only be called after Instanstiating the Characterts
         beginTurn();
     }
-
-    private TMPro.TextMeshProUGUI turnCountTMP;
     private ButtonManager thisButtonManager;
     private MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
@@ -24,7 +22,6 @@ public class TurnManager : MonoBehaviour
     {
         OrderOfInteractableCharacters = new List<GameObject>();
         tempSpawnPoint = new List<Vector3Int>();
-        turnCountTMP = TurnCount.GetComponent<TMPro.TextMeshProUGUI>();
         thisButtonManager = this.gameObject.GetComponent<ButtonManager>();
         thisButtonManager.setButtonManagerVariables();
         mapManager = this.GetComponent<MapManager>();
@@ -55,20 +52,17 @@ public class TurnManager : MonoBehaviour
         mapManager.AddCharactersToDictionaryAfterInstantiating(allInteractableCharacters);
     }
     public GameObject thisCharacter;
-    [SerializeField] GameObject TurnCount;
     characterDataHolder thisCharacterData;
     int TurnCountInt = 0;
-
     public void beginTurn()
     {
-
-        turnCountTMP.text = (TurnCountInt + "");
         if (OrderOfInteractableCharacters.Count == TurnCountInt)//this works because Count Starts from 1 not 0
         {
             triggerGameEnd();
         }
-        else if (OrderOfInteractableCharacters[TurnCountInt]==null)
+        else if (OrderOfInteractableCharacters[TurnCountInt] == null)
         {
+            Debug.Log("Null char");
             endTurn();
         }
         else
@@ -85,13 +79,7 @@ public class TurnManager : MonoBehaviour
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
         thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
 
-        var shadowrange = reticalManager.reDrawShadows();
-
-        foreach (GameObject thisChar in PositionToGameObjectCopy.Values)
-        {
-            characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
-            reticalManager.setVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
-        }
+        var shadowrange = reticalManager.reDrawShadows();        
         if (shadowrange.Contains(thisCharacterData.getCharV3Int()))
         {
             thisCharacterData.BeginThisCharacterTurn();
@@ -104,9 +92,7 @@ public class TurnManager : MonoBehaviour
             else
                 endTurn();
         }
-        //thisButtonManager.makeButtons();
     }
-
     bool noCharactersInCamera(List<Vector3Int> thislist)
     {
         int numberofcharactershere = 0;
@@ -122,16 +108,13 @@ public class TurnManager : MonoBehaviour
         else
             return false;
     }
-
-
-    int TurnLoop = 1;
     public void endTurn()
     {
         TurnCountInt++;
         if (TurnCountInt >= OrderOfInteractableCharacters.Count)
         {
             recalculateOrder();
-            TurnLoop++;
+            TurnCountInt = 0;
         }
         else
         {
@@ -143,14 +126,12 @@ public class TurnManager : MonoBehaviour
     void recalculateOrder()
     {
         PositionToGameObjectCopy = mapManager.PositionToGameObject;
-        Debug.Log("updated pos game objecit dir");
         var shadowrange = reticalManager.reDrawShadows();
+        OrderOfInteractableCharacters.Clear();
         foreach (var position in PositionToGameObjectCopy)
         {
             //if (shadowrange.Contains(position.Key))
             OrderOfInteractableCharacters.Add(position.Value);
-
         }
-
     }
 }
