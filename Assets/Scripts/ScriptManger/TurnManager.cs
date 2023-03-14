@@ -53,7 +53,7 @@ public class TurnManager : MonoBehaviour
     }
     public GameObject thisCharacter;
     characterDataHolder thisCharacterData;
-    int TurnCountInt = 0;
+    [SerializeField]int TurnCountInt = 0;
     public void beginTurn()
     {
         if (OrderOfInteractableCharacters.Count == TurnCountInt)//this works because Count Starts from 1 not 0
