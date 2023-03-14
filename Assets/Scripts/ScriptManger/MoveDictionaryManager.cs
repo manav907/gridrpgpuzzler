@@ -89,10 +89,11 @@ public class MoveDictionaryManager : MonoBehaviour
                 reticalManager.reDrawValidTiles(null);//this clears out the Valid Tiles Overlay
             }
             else
-                {actionOfMove();
-                }
+            {
+                actionOfMove();
+            }
 
-                reticalManager.reDrawShadows();
+            reticalManager.reDrawShadows();
         }
 
     }
@@ -111,8 +112,9 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("get AI Here");
-            return false;
+            tryHere = thisCharacterCDH.moveToTarget(listOfValidtargets);
+            //Debug.Log("get AI Here");
+            return true;
         }
     }
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
@@ -163,7 +165,7 @@ public class MoveDictionaryManager : MonoBehaviour
     void ThrowFireBall()
     {
         Debug.Log("Throw Fire Ball");
-        reticalManager.reDrawShadows();
+        endTurn();
     }
     void MoveCharacter()
     {
@@ -172,6 +174,7 @@ public class MoveDictionaryManager : MonoBehaviour
             Vector3Int currentPosition = tileCalculator.convertToVector3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
             thisCharacter.transform.position = tryHere;
+            endTurn();
         }
         else
         {
@@ -188,6 +191,7 @@ public class MoveDictionaryManager : MonoBehaviour
             characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
             targetCharacter.health -= attackingCharacter.AttackDamage;
             targetCharacter.UpdateCharacterData();
+            endTurn();
         }
         //else
         {

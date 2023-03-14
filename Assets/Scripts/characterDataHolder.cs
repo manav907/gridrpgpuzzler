@@ -39,7 +39,7 @@ public class characterDataHolder : MonoBehaviour
     }
     public void UpdateCharacterData()
     {
-        
+
         Heatlh.text = health + "";
         if (health <= 0)
         {
@@ -79,11 +79,49 @@ public class characterDataHolder : MonoBehaviour
             thisButtonManager.InstantiateButtons(GetCharacterMoveList());
         else
         {
-            Debug.Log("AI Needed");
+            //Debug.Log("AI Needed");
+            moveDictionaryManager.doAction("Move");
         }
     }
     public Vector3Int getCharV3Int()
     {
         return tileCalculator.convertToVector3Int(this.gameObject.transform.position);
+    }
+    public Vector3Int moveToTarget(List<Vector3Int> validTargets)
+    {
+        Vector3Int thisCharpos = getCharV3Int();
+        var tilesInVision = tileCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision);
+        var PTGODIR = thisMapManager.PositionToGameObject;
+        PTGODIR.Remove(thisCharpos);
+        List<Vector3Int> thisList = new List<Vector3Int>();
+        foreach (Vector3Int thisPos in PTGODIR.Keys)
+        {
+            thisList.Add(thisPos);
+        }
+        var random = new System.Random();
+        Vector3Int thisTarget = thisList[random.Next(thisList.Count)];
+
+        SortedDictionary<float, Vector3Int> sortedListOfDistance = new SortedDictionary<float, Vector3Int>();
+        foreach (Vector3Int movablePoints in validTargets)
+        {
+            float thisDistance = Vector3Int.Distance(movablePoints, thisTarget);
+            if (sortedListOfDistance.ContainsKey(thisDistance))
+            {
+                sortedListOfDistance.Add(thisDistance + 0.001f, movablePoints);
+            }
+            else
+            {
+                sortedListOfDistance.Add(thisDistance, movablePoints);
+            }
+
+        }
+        List<Vector3Int> listOFDistance = new List<Vector3Int>();
+        foreach (var thisValie in sortedListOfDistance)
+        {
+
+            listOFDistance.Add(thisValie.Value);
+           // Debug.Log(thisValie.Key + " " + thisValie.Value);
+        }
+        return listOFDistance[0];
     }
 }
