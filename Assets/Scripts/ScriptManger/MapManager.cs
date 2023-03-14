@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 public class MapManager : MonoBehaviour
 {
 
-    public List<Tilemap> OrderOfTileMaps;
-    public List<TileData> listOfTileDataScriptableObjects;
-    public Dictionary<TileBase, TileData> dataFromTiles;
+    [SerializeField] List<Tilemap> OrderOfTileMaps;
+    [SerializeField] List<TileData> listOfTileDataScriptableObjects;
+    [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
     TileCalculator tileCalculator;
     public void setTileDictionary()
     {
@@ -34,7 +34,6 @@ public class MapManager : MonoBehaviour
         return false;
     }
 
-
     public Dictionary<Vector3Int, GameObject> PositionToGameObject;
     public void AddCharactersToDictionaryAfterInstantiating(List<GameObject> allInteractableCharacters)
     {
@@ -58,7 +57,6 @@ public class MapManager : MonoBehaviour
         {
             PositionToGameObjectGameObjects.Add(PositionToGameObject[position]);
             PositionToGameObjectVector3.Add(position);
-            //PositionToGameObjectVector3.Add(new Vector3Int((int)position.x, (int)position.y, (int)position.z));
         }
     }
 
