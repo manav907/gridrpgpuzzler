@@ -56,10 +56,7 @@ public class UniversalCalculator : MonoBehaviour
     }
     public void doThis()
     {
-        Debug.Log("do this invoked");
-
-
-
+        Debug.Log("do this invoked or FireBall");
     }
     public List<Vector3Int> SortListAccordingtoDistanceFromPoint(List<Vector3Int> thisV3IntList, Vector3Int thisPoint)
     {
@@ -67,20 +64,47 @@ public class UniversalCalculator : MonoBehaviour
         foreach (var element in thisV3IntList)
         {
             float thisDistance = Vector3Int.Distance(element, thisPoint);
-            if (sortedListOfDistance.ContainsKey(thisDistance))
+            while (sortedListOfDistance.ContainsKey(thisDistance))
             {
-                sortedListOfDistance.Add(thisDistance + 0.001f, element);
+                thisDistance += 0.001f;
             }
-            else
-            {
-                sortedListOfDistance.Add(thisDistance, element);
-            }
+            sortedListOfDistance.Add(thisDistance, element);
         }
-        List<Vector3Int> finalList = new List<Vector3Int>();
-        foreach (var element in sortedListOfDistance)
+        
+        
+        inputDynamicValue = sortedListOfDistance;
+        outputDynamicValue = new List<Vector3Int>();
+        convertSortedListToNormalList();
+        return outputDynamicValue;
+    }
+
+    dynamic inputDynamicValue;
+    dynamic outputDynamicValue;
+    void convertSortedListToNormalList()
+    {
+        foreach (var eachValue in inputDynamicValue.Values)
         {
-            finalList.Add(element.Value);
+            outputDynamicValue.Add(eachValue);
         }
-        return finalList;
+    }
+    public List<GameObject> SortBySpeed(List<GameObject> thisList)
+    {
+        SortedList<float, GameObject> sortedList = new SortedList<float, GameObject>();
+        foreach (GameObject thisChar in thisList)
+        {
+            float speedofChar = thisChar.GetComponent<characterDataHolder>().speedValue;
+            while (sortedList.ContainsKey(speedofChar))
+            {
+                speedofChar += 0.001f;
+            }
+            sortedList.Add(speedofChar, thisChar);
+        }
+
+
+        inputDynamicValue = sortedList;
+        outputDynamicValue = new List<GameObject>();
+        convertSortedListToNormalList();
+        outputDynamicValue.Reverse();//Only Because the list Operates in Reverse
+        return outputDynamicValue;
     }
 }

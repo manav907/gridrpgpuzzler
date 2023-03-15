@@ -133,5 +133,6 @@ public class TurnManager : MonoBehaviour
             //if (shadowrange.Contains(position.Key))
             OrderOfInteractableCharacters.Add(position.Value);
         }
+        OrderOfInteractableCharacters = universalCalculator.SortBySpeed(OrderOfInteractableCharacters);
     }
 }
