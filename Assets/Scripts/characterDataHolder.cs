@@ -90,7 +90,7 @@ public class characterDataHolder : MonoBehaviour
     public Vector3Int moveToTarget(List<Vector3Int> validTargets)
     {
         Vector3Int thisCharpos = getCharV3Int();
-        var tilesInVision = tileCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision);
+        //var tilesInVision = tileCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision);
         var PTGODIR = thisMapManager.PositionToGameObject;
         PTGODIR.Remove(thisCharpos);
         List<Vector3Int> thisList = new List<Vector3Int>();
@@ -107,7 +107,7 @@ public class characterDataHolder : MonoBehaviour
             float thisDistance = Vector3Int.Distance(movablePoints, thisTarget);
             if (sortedListOfDistance.ContainsKey(thisDistance))
             {
-                sortedListOfDistance.Add(thisDistance + 0.001f, movablePoints);
+                sortedListOfDistance.Add(thisDistance - 0.001f, movablePoints);
             }
             else
             {
@@ -118,9 +118,9 @@ public class characterDataHolder : MonoBehaviour
         List<Vector3Int> listOFDistance = new List<Vector3Int>();
         foreach (var thisValie in sortedListOfDistance)
         {
-
             listOFDistance.Add(thisValie.Value);
-           // Debug.Log(thisValie.Key + " " + thisValie.Value);
+            return thisValie.Value;
+            // Debug.Log(thisValie.Key + " " + thisValie.Value);
         }
         return listOFDistance[0];
     }
