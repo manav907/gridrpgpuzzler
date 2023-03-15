@@ -99,30 +99,6 @@ public class characterDataHolder : MonoBehaviour
             thisList.Add(thisPos);
         }
         Vector3Int thisTarget = thisList[universalCalculator.SelectRandomBetweenZeroAndInt(thisList.Count)];
-        /*
-        SortedDictionary<float, Vector3Int> sortedListOfDistance = new SortedDictionary<float, Vector3Int>();
-        foreach (Vector3Int movablePoints in validTargets)
-        {
-            float thisDistance = Vector3Int.Distance(movablePoints, thisTarget);
-            if (sortedListOfDistance.ContainsKey(thisDistance))
-            {
-                sortedListOfDistance.Add(thisDistance - 0.001f, movablePoints);
-            }
-            else
-            {
-                sortedListOfDistance.Add(thisDistance, movablePoints);
-            }
-
-        }
-        List<Vector3Int> listOFDistance = new List<Vector3Int>();
-        foreach (var thisValie in sortedListOfDistance)
-        {
-            listOFDistance.Add(thisValie.Value);
-            return thisValie.Value;
-            // Debug.Log(thisValie.Key + " " + thisValie.Value);
-        }
-        return listOFDistance[0];
-        */
         return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, thisTarget)[0];
     }
 }
