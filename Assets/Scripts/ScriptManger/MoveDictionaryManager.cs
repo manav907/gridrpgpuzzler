@@ -9,13 +9,13 @@ public class MoveDictionaryManager : MonoBehaviour
     ReticalManager reticalManager;
     MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
-    UniversalCalculator tileCalculator;
+    UniversalCalculator universalCalculator;
     public void setMoveDictionaryManagerVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
-        tileCalculator = this.GetComponent<UniversalCalculator>();
+        universalCalculator = this.GetComponent<UniversalCalculator>();
         SetMoveDictionary();
     }
 
@@ -120,8 +120,8 @@ public class MoveDictionaryManager : MonoBehaviour
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
         //getThisCharacterData();
-        Vector3Int centerPos = tileCalculator.convertToVector3Int(thisCharacter.transform.position);
-        List<Vector3Int> listOfRanges = tileCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
+        Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
+        List<Vector3Int> listOfRanges = universalCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
 
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
@@ -171,7 +171,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         if (GetDataForActions())
         {
-            Vector3Int currentPosition = tileCalculator.convertToVector3Int(thisCharacter.transform.position);
+            Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
             thisCharacter.transform.position = tryHere;
             endTurn();

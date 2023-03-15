@@ -14,14 +14,14 @@ public class characterDataHolder : MonoBehaviour
     private ButtonManager thisButtonManager;
     private MapManager thisMapManager;
     private TurnManager thisTurnManager;
-    UniversalCalculator tileCalculator;
+    UniversalCalculator universalCalculator;
     public void InitilizeCharacter(GameObject gameController)
     {
         thisButtonManager = gameController.GetComponent<ButtonManager>();
         thisMapManager = gameController.GetComponent<MapManager>();
         thisTurnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
-        tileCalculator = gameController.GetComponent<UniversalCalculator>();
+        universalCalculator = gameController.GetComponent<UniversalCalculator>();
         UpdateCharacterData();
     }
     List<string> GetCharacterMoveList()
@@ -51,7 +51,7 @@ public class characterDataHolder : MonoBehaviour
     void KillCharacter()
     {
 
-        Vector3Int thisCharPos = tileCalculator.convertToVector3Int(this.gameObject.transform.position);
+        Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
         thisMapManager.PositionToGameObject.Remove(thisCharPos);
         //thisMapManager.UpdateCharacterPosition(thisCharPos, null, null);
         Destroy(this.gameObject);
@@ -85,7 +85,7 @@ public class characterDataHolder : MonoBehaviour
     }
     public Vector3Int getCharV3Int()
     {
-        return tileCalculator.convertToVector3Int(this.gameObject.transform.position);
+        return universalCalculator.convertToVector3Int(this.gameObject.transform.position);
     }
     public Vector3Int moveToTarget(List<Vector3Int> validTargets)
     {
@@ -98,8 +98,7 @@ public class characterDataHolder : MonoBehaviour
         {
             thisList.Add(thisPos);
         }
-        var random = new System.Random();
-        Vector3Int thisTarget = thisList[random.Next(thisList.Count)];
+        Vector3Int thisTarget = thisList[universalCalculator.SelectRandomFromList(thisList.Count)];
 
         SortedDictionary<float, Vector3Int> sortedListOfDistance = new SortedDictionary<float, Vector3Int>();
         foreach (Vector3Int movablePoints in validTargets)

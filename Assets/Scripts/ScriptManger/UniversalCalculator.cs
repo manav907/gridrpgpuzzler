@@ -48,4 +48,9 @@ public class UniversalCalculator : MonoBehaviour
     {
         return new Vector3Int((int)thisVector.x, (int)thisVector.y, (int)thisVector.z);
     }
+    public int SelectRandomFromList(int ListCount)
+    {
+        var random = new System.Random();
+        return random.Next(ListCount);
+    }
 }

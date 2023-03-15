@@ -12,25 +12,25 @@ public class TurnManager : MonoBehaviour
         recalculateOrder();//can only be called after Instanstiating the Characterts
         beginTurn();
     }
-    private ButtonManager thisButtonManager;
+    private ButtonManager buttonManager;
     private MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
     ReticalManager reticalManager;
-    UniversalCalculator tileCalculator;
+    UniversalCalculator universalCalculator;
 
     void GetGameObjects()
     {
         OrderOfInteractableCharacters = new List<GameObject>();
         tempSpawnPoint = new List<Vector3Int>();
-        thisButtonManager = this.gameObject.GetComponent<ButtonManager>();
-        thisButtonManager.setButtonManagerVariables();
+        buttonManager = this.gameObject.GetComponent<ButtonManager>();
+        buttonManager.setButtonManagerVariables();
         mapManager = this.GetComponent<MapManager>();
         mapManager.setTileDictionary();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
         moveDictionaryManager.setMoveDictionaryManagerVariables();
         reticalManager = this.GetComponent<ReticalManager>();
         reticalManager.setReticalMangerVariables();
-        tileCalculator = this.GetComponent<UniversalCalculator>();
+        universalCalculator = this.GetComponent<UniversalCalculator>();
     }
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
@@ -71,7 +71,7 @@ public class TurnManager : MonoBehaviour
     void triggerGameEnd()
     {
         Debug.Log("Game Over");
-        thisButtonManager.clearButtons();
+        buttonManager.clearButtons();
     }
 
     void beginTurnThisCharacter()
@@ -98,7 +98,7 @@ public class TurnManager : MonoBehaviour
         int numberofcharactershere = 0;
         foreach (GameObject thischar in OrderOfInteractableCharacters)
         {
-            if (thislist.Contains(tileCalculator.convertToVector3Int(thischar.transform.position)))
+            if (thislist.Contains(universalCalculator.convertToVector3Int(thischar.transform.position)))
             {
                 numberofcharactershere++;
             }
