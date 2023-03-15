@@ -16,7 +16,7 @@ public class TurnManager : MonoBehaviour
     private MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
     ReticalManager reticalManager;
-    TileCalculator tileCalculator;
+    UniversalCalculator tileCalculator;
 
     void GetGameObjects()
     {
@@ -30,7 +30,7 @@ public class TurnManager : MonoBehaviour
         moveDictionaryManager.setMoveDictionaryManagerVariables();
         reticalManager = this.GetComponent<ReticalManager>();
         reticalManager.setReticalMangerVariables();
-        tileCalculator = this.GetComponent<TileCalculator>();
+        tileCalculator = this.GetComponent<UniversalCalculator>();
     }
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
@@ -53,7 +53,7 @@ public class TurnManager : MonoBehaviour
     }
     public GameObject thisCharacter;
     characterDataHolder thisCharacterData;
-    [SerializeField]int TurnCountInt = 0;
+    [SerializeField] int TurnCountInt = 0;
     public void beginTurn()
     {
         if (OrderOfInteractableCharacters.Count == TurnCountInt)//this works because Count Starts from 1 not 0
@@ -79,7 +79,7 @@ public class TurnManager : MonoBehaviour
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
         thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
 
-        var shadowrange = reticalManager.reDrawShadows();        
+        var shadowrange = reticalManager.reDrawShadows();
         if (shadowrange.Contains(thisCharacterData.getCharV3Int()))
         {
             thisCharacterData.BeginThisCharacterTurn();

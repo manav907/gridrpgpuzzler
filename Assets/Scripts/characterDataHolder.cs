@@ -14,14 +14,14 @@ public class characterDataHolder : MonoBehaviour
     private ButtonManager thisButtonManager;
     private MapManager thisMapManager;
     private TurnManager thisTurnManager;
-    TileCalculator tileCalculator;
+    UniversalCalculator tileCalculator;
     public void InitilizeCharacter(GameObject gameController)
     {
         thisButtonManager = gameController.GetComponent<ButtonManager>();
         thisMapManager = gameController.GetComponent<MapManager>();
         thisTurnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
-        tileCalculator = gameController.GetComponent<TileCalculator>();
+        tileCalculator = gameController.GetComponent<UniversalCalculator>();
         UpdateCharacterData();
     }
     List<string> GetCharacterMoveList()

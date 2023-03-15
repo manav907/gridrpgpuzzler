@@ -92,10 +92,10 @@ public class ReticalManager : MonoBehaviour
     {
         thistilemap.ClearAllTiles();
     }
-    TileCalculator tileCalculator;
+    UniversalCalculator tileCalculator;
     public void setReticalMangerVariables()
     {
-        tileCalculator = this.GetComponent<TileCalculator>();
+        tileCalculator = this.GetComponent<UniversalCalculator>();
     }
 
 }

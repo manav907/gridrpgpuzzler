@@ -9,10 +9,10 @@ public class MapManager : MonoBehaviour
     [SerializeField] List<Tilemap> OrderOfTileMaps;
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
-    TileCalculator tileCalculator;
+    UniversalCalculator tileCalculator;
     public void setTileDictionary()
     {
-        tileCalculator = this.gameObject.GetComponent<TileCalculator>();
+        tileCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         dataFromTiles = new Dictionary<TileBase, TileData>();
         foreach (var ScriptableObjects in listOfTileDataScriptableObjects)
             foreach (var tileFound in ScriptableObjects.tiles)

@@ -9,13 +9,13 @@ public class MoveDictionaryManager : MonoBehaviour
     ReticalManager reticalManager;
     MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
-    TileCalculator tileCalculator;
+    UniversalCalculator tileCalculator;
     public void setMoveDictionaryManagerVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
-        tileCalculator = this.GetComponent<TileCalculator>();
+        tileCalculator = this.GetComponent<UniversalCalculator>();
         SetMoveDictionary();
     }
 
