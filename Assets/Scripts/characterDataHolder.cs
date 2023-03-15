@@ -98,8 +98,8 @@ public class characterDataHolder : MonoBehaviour
         {
             thisList.Add(thisPos);
         }
-        Vector3Int thisTarget = thisList[universalCalculator.SelectRandomFromList(thisList.Count)];
-
+        Vector3Int thisTarget = thisList[universalCalculator.SelectRandomBetweenZeroAndInt(thisList.Count)];
+        /*
         SortedDictionary<float, Vector3Int> sortedListOfDistance = new SortedDictionary<float, Vector3Int>();
         foreach (Vector3Int movablePoints in validTargets)
         {
@@ -122,5 +122,7 @@ public class characterDataHolder : MonoBehaviour
             // Debug.Log(thisValie.Key + " " + thisValie.Value);
         }
         return listOFDistance[0];
+        */
+        return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, thisTarget)[0];
     }
 }

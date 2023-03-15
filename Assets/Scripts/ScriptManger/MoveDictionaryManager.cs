@@ -164,8 +164,9 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     void ThrowFireBall()
     {
-        Debug.Log("Throw Fire Ball");
-        endTurn();
+        universalCalculator.doThis();
+        //Debug.Log("Throw Fire Ball");
+        //endTurn();
     }
     void MoveCharacter()
     {

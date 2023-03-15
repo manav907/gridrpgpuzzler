@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,9 +49,38 @@ public class UniversalCalculator : MonoBehaviour
     {
         return new Vector3Int((int)thisVector.x, (int)thisVector.y, (int)thisVector.z);
     }
-    public int SelectRandomFromList(int ListCount)
+    public int SelectRandomBetweenZeroAndInt(int ListCount)
     {
         var random = new System.Random();
         return random.Next(ListCount);
+    }
+    public void doThis()
+    {
+        Debug.Log("do this invoked");
+
+
+
+    }
+    public List<Vector3Int> SortListAccordingtoDistanceFromPoint(List<Vector3Int> thisV3IntList, Vector3Int thisPoint)
+    {
+        SortedList<float, Vector3Int> sortedListOfDistance = new SortedList<float, Vector3Int>();
+        foreach (var element in thisV3IntList)
+        {
+            float thisDistance = Vector3Int.Distance(element, thisPoint);
+            if (sortedListOfDistance.ContainsKey(thisDistance))
+            {
+                sortedListOfDistance.Add(thisDistance + 0.001f, element);
+            }
+            else
+            {
+                sortedListOfDistance.Add(thisDistance, element);
+            }
+        }
+        List<Vector3Int> finalList = new List<Vector3Int>();
+        foreach (var element in sortedListOfDistance)
+        {
+            finalList.Add(element.Value);
+        }
+        return finalList;
     }
 }
