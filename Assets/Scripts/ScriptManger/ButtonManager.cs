@@ -14,12 +14,20 @@ public class ButtonManager : MonoBehaviour
     ReticalManager reticalManager;
     MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
-    public void setButtonManagerVariables()
+    public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
+    }
+
+    GameObject thisCharacter;
+    characterDataHolder thisCharacterCDH;
+    public void getThisCharacterData()
+    {
+        thisCharacter = turnManager.thisCharacter;
+        thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
     }
     public void clearButtons()
     {
@@ -27,16 +35,8 @@ public class ButtonManager : MonoBehaviour
             Destroy(ActionButtons[i]);
         ActionButtons.Clear();
     }
-    GameObject thisCharacter;
-    characterDataHolder thisCharacterCDH;
-    void getThisCharacterData()
-    {
-        thisCharacter = turnManager.thisCharacter;
-        thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
-    }
     public void InstantiateButtons(List<String> listFromCDH)
     {
-        getThisCharacterData();
         var Dictionary = moveDictionaryManager.aDCL;
         for (int i = 0; i < listFromCDH.Count; i++)
         {

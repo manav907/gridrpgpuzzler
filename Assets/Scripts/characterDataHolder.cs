@@ -75,7 +75,6 @@ public class characterDataHolder : MonoBehaviour
     public void BeginThisCharacterTurn()
     {
         ToggleCharacterTurnAnimation(true);
-        moveDictionaryManager.getThisCharacterData();
         thisButtonManager.clearButtons();
         if (isPlayerCharacter)
             thisButtonManager.InstantiateButtons(GetCharacterMoveList());

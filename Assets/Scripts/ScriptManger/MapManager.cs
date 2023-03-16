@@ -10,9 +10,14 @@ public class MapManager : MonoBehaviour
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
     UniversalCalculator tileCalculator;
-    public void setTileDictionary()
+    public void setVariables()
     {
         tileCalculator = this.gameObject.GetComponent<UniversalCalculator>();
+        setTilesDir();
+
+    }
+    void setTilesDir()
+    {
         dataFromTiles = new Dictionary<TileBase, TileData>();
         foreach (var ScriptableObjects in listOfTileDataScriptableObjects)
             foreach (var tileFound in ScriptableObjects.tiles)

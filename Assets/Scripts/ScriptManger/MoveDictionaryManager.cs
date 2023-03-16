@@ -5,18 +5,29 @@ using System;
 
 public class MoveDictionaryManager : MonoBehaviour
 {
+
     TurnManager turnManager;
     ReticalManager reticalManager;
     MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
     UniversalCalculator universalCalculator;
-    public void setMoveDictionaryManagerVariables()
+    public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
         //SetMoveDictionary();
+    }
+
+    GameObject thisCharacter;
+    characterDataHolder thisCharacterCDH;
+    public void getThisCharacterData()
+    {
+        thisCharacter = turnManager.thisCharacter;
+        thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
+        PositionToGameObject = mapManager.PositionToGameObject;
+        SetMoveDictionary();
     }
 
     public Dictionary<string, ActionDataClass> aDCL;
@@ -59,15 +70,6 @@ public class MoveDictionaryManager : MonoBehaviour
             this.WalkableTileHere = WalkableTileHere;
             this.rangeOfAction = rangeOfAction;
         }
-    }
-    GameObject thisCharacter;
-    characterDataHolder thisCharacterCDH;
-    public void getThisCharacterData()//called from button manager to set character this turn
-    {
-        thisCharacter = turnManager.thisCharacter;
-        thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
-        PositionToGameObject = mapManager.PositionToGameObject;
-        SetMoveDictionary();//Maybe?
     }
 
     public void doAction(string thisActionName)
@@ -122,7 +124,6 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
-        //getThisCharacterData();
         Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
         List<Vector3Int> listOfRanges = universalCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
 

@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class ReticalManager : MonoBehaviour
 {
+
+    UniversalCalculator tileCalculator;
+    public void setVariables()
+    {
+        tileCalculator = this.GetComponent<UniversalCalculator>();
+    }
     [SerializeField] Vector3 reticalPos;
     void FixedUpdate()
     {
@@ -91,11 +97,6 @@ public class ReticalManager : MonoBehaviour
     void ClearAllTiles(Tilemap thistilemap)
     {
         thistilemap.ClearAllTiles();
-    }
-    UniversalCalculator tileCalculator;
-    public void setReticalMangerVariables()
-    {
-        tileCalculator = this.GetComponent<UniversalCalculator>();
     }
 
 }

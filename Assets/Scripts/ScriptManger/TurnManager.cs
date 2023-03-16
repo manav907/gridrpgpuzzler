@@ -21,22 +21,21 @@ public class TurnManager : MonoBehaviour
     void GetGameObjects()
     {
         OrderOfInteractableCharacters = new List<GameObject>();
-        tempSpawnPoint = new List<Vector3Int>();
         buttonManager = this.gameObject.GetComponent<ButtonManager>();
-        buttonManager.setButtonManagerVariables();
         mapManager = this.GetComponent<MapManager>();
-        mapManager.setTileDictionary();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
-        moveDictionaryManager.setMoveDictionaryManagerVariables();
         reticalManager = this.GetComponent<ReticalManager>();
-        reticalManager.setReticalMangerVariables();
         universalCalculator = this.GetComponent<UniversalCalculator>();
+
+        buttonManager.setVariables();
+        mapManager.setVariables();
+        moveDictionaryManager.setVariables();
+        reticalManager.setVariables();
     }
     public GameObject characterPrefab;
     public int numberOfCharacterToInstansitate = 1;
     [SerializeField]
     List<GameObject> OrderOfInteractableCharacters;
-    List<Vector3Int> tempSpawnPoint;
     [SerializeField] private GameObject characterHolder;
     void InstantiateallIntractableCharacters()
     {
@@ -83,6 +82,7 @@ public class TurnManager : MonoBehaviour
         if (shadowrange.Contains(thisCharacterData.getCharV3Int()))
         {
             thisCharacterData.BeginThisCharacterTurn();
+            setCharacterData();
         }
         else
         {
@@ -92,6 +92,11 @@ public class TurnManager : MonoBehaviour
             else
                 endTurn();
         }
+    }
+    void setCharacterData()
+    {
+        buttonManager.getThisCharacterData();
+        moveDictionaryManager.getThisCharacterData();
     }
     bool noCharactersInCamera(List<Vector3Int> thislist)
     {
