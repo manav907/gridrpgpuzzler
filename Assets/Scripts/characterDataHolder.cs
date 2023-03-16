@@ -102,4 +102,5 @@ public class characterDataHolder : MonoBehaviour
         Vector3Int thisTarget = thisList[universalCalculator.SelectRandomBetweenZeroAndInt(thisList.Count)];
         return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, thisTarget)[0];
     }
+    
 }

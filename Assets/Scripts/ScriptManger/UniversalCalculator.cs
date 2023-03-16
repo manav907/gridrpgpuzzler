@@ -83,6 +83,7 @@ public class UniversalCalculator : MonoBehaviour
     dynamic outputDynamicValue;
     void convertSortedListToNormalList()
     {
+        outputDynamicValue.Clear();
         foreach (var eachValue in inputDynamicValue.Values)
         {
             outputDynamicValue.Add(eachValue);
@@ -94,12 +95,15 @@ public class UniversalCalculator : MonoBehaviour
         SortedList<float, GameObject> sortedList = new SortedList<float, GameObject>();
         foreach (GameObject thisChar in thisList)
         {
+            //Debug.Log(thisChar);
             float speedofChar = thisChar.GetComponent<characterDataHolder>().speedValue;
             while (sortedList.ContainsKey(speedofChar))
             {
                 speedofChar += 0.001f;
             }
             sortedList.Add(speedofChar, thisChar);
+            //Debug.Log(sortedList[speedofChar]);
+
         }
 
         inputDynamicValue = sortedList;

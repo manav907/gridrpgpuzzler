@@ -75,6 +75,7 @@ public class TurnManager : MonoBehaviour
 
     void beginTurnThisCharacter()
     {
+        //Debug.Log("here");
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
         thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
 
