@@ -25,7 +25,7 @@ public class MoveDictionaryManager : MonoBehaviour
     public void getThisCharacterData()
     {
         thisCharacter = turnManager.thisCharacter;
-        Debug.Log(thisCharacter.name);//
+        //Debug.Log(thisCharacter.name);//
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
         PositionToGameObject = mapManager.PositionToGameObject;
         SetMoveDictionary();

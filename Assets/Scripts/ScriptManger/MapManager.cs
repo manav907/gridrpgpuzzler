@@ -9,10 +9,10 @@ public class MapManager : MonoBehaviour
     [SerializeField] List<Tilemap> OrderOfTileMaps;
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
-    UniversalCalculator tileCalculator;
+    UniversalCalculator universalCalculator;
     public void setVariables()
     {
-        tileCalculator = this.gameObject.GetComponent<UniversalCalculator>();
+        universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         setTilesDir();
 
     }
@@ -45,7 +45,7 @@ public class MapManager : MonoBehaviour
         PositionToGameObject = new Dictionary<Vector3Int, GameObject>();
         foreach (GameObject character in allInteractableCharacters)
         {
-            Vector3Int thisPos = tileCalculator.convertToVector3Int(character.transform.position);
+            Vector3Int thisPos = universalCalculator.convertToVector3Int(character.transform.position);
             PositionToGameObject.Add(thisPos, character);
         }
     }
@@ -58,6 +58,12 @@ public class MapManager : MonoBehaviour
         PositionToGameObject.Add(newPosition, thisCharacter);
         PositionToGameObjectGameObjects.Clear();
         PositionToGameObjectVector3.Clear();
+        refreshDictionarySeralilizedFields();
+
+
+    }
+    void refreshDictionarySeralilizedFields()
+    {
         foreach (Vector3Int position in PositionToGameObject.Keys)
         {
             PositionToGameObjectGameObjects.Add(PositionToGameObject[position]);
@@ -78,6 +84,31 @@ public class MapManager : MonoBehaviour
             Debug.Log("Nothing Here");
             return null;
         }
+    }
+    public void fixErrors()
+    {
+        foreach (var thisPair in PositionToGameObject)
+        {
+            Vector3Int key = thisPair.Key;
+            GameObject Value = thisPair.Value.gameObject;
+            Vector3Int trueKey = universalCalculator.convertToVector3Int(Value.transform.position);
+            if (key != trueKey)
+            {
+                Debug.Log("Problem the Key Value of " + key + " Does not match with current Caracter Positon of " + trueKey + " Attemtpting Fix");
+                if (PositionToGameObject.ContainsKey(key))
+                    PositionToGameObject.Remove(key);
+                if (PositionToGameObject.ContainsKey(trueKey))
+                    PositionToGameObject.Remove(trueKey);
+                PositionToGameObject.Add(trueKey, Value);
+                fixErrors();
+                break;
+            }
+            else
+            {
+                //Debug.Log("No Errors");
+            }
+        }
+        refreshDictionarySeralilizedFields();
     }
 
 

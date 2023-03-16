@@ -96,6 +96,8 @@ public class TurnManager : MonoBehaviour
         thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
         buttonManager.getThisCharacterData();
         moveDictionaryManager.getThisCharacterData();
+
+        mapManager.fixErrors();
     }
     bool noCharactersInCamera(List<Vector3Int> thislist)
     {
