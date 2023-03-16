@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UniversalCalculator : MonoBehaviour
@@ -70,8 +71,8 @@ public class UniversalCalculator : MonoBehaviour
             }
             sortedListOfDistance.Add(thisDistance, element);
         }
-        
-        
+
+
         inputDynamicValue = sortedListOfDistance;
         outputDynamicValue = new List<Vector3Int>();
         convertSortedListToNormalList();
@@ -89,6 +90,7 @@ public class UniversalCalculator : MonoBehaviour
     }
     public List<GameObject> SortBySpeed(List<GameObject> thisList)
     {
+
         SortedList<float, GameObject> sortedList = new SortedList<float, GameObject>();
         foreach (GameObject thisChar in thisList)
         {
@@ -99,7 +101,6 @@ public class UniversalCalculator : MonoBehaviour
             }
             sortedList.Add(speedofChar, thisChar);
         }
-
 
         inputDynamicValue = sortedList;
         outputDynamicValue = new List<GameObject>();

@@ -16,7 +16,7 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
-        SetMoveDictionary();
+        //SetMoveDictionary();
     }
 
     public Dictionary<string, ActionDataClass> aDCL;
@@ -25,14 +25,16 @@ public class MoveDictionaryManager : MonoBehaviour
         aDCL = new Dictionary<String, ActionDataClass>();
         //Debug.Log(thisCharacter.name);
         List<ActionDataClass> actionDataClass = new List<ActionDataClass>() {
-            new ActionDataClass("Move", MoveCharacter, true, false, true, 1),
-            new ActionDataClass("Attack", AttackHere, true, true, true || false, 2),
+            new ActionDataClass("Move", MoveCharacter, true, false, true, thisCharacterCDH.rangeOfMove),
+            new ActionDataClass("Attack", AttackHere, true, true, true || false, thisCharacterCDH.rangeOfAttack),
             new ActionDataClass("End Turn", endTurn, false, false, false, 0),
             new ActionDataClass("FireBall", ThrowFireBall, false, false, true, 2)
             };
         //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)    
         foreach (var thisactionData in actionDataClass)
+        {
             aDCL.Add(thisactionData.NameofMove, thisactionData);
+        }
 
 
     }
@@ -65,6 +67,7 @@ public class MoveDictionaryManager : MonoBehaviour
         thisCharacter = turnManager.thisCharacter;
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
         PositionToGameObject = mapManager.PositionToGameObject;
+        SetMoveDictionary();//Maybe?
     }
 
     public void doAction(string thisActionName)

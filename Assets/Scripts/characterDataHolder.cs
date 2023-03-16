@@ -6,6 +6,8 @@ using UnityEngine;
 public class characterDataHolder : MonoBehaviour
 {
     public int health = 3;
+    public int rangeOfMove = 2;
+    public int rangeOfAttack = 2;
     public int AttackDamage = 2;
     public int speedValue = 3;
     public int rangeOfVision = 5;
