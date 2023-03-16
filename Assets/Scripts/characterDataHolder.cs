@@ -80,7 +80,6 @@ public class characterDataHolder : MonoBehaviour
             thisButtonManager.InstantiateButtons(GetCharacterMoveList());
         else
         {
-            //Debug.Log("AI Needed");
             moveDictionaryManager.doAction("Move");
         }
     }
@@ -103,4 +102,5 @@ public class characterDataHolder : MonoBehaviour
         return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, thisTarget)[0];
     }
     
+
 }

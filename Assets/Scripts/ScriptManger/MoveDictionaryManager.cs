@@ -25,6 +25,7 @@ public class MoveDictionaryManager : MonoBehaviour
     public void getThisCharacterData()
     {
         thisCharacter = turnManager.thisCharacter;
+        Debug.Log(thisCharacter.name);//
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
         PositionToGameObject = mapManager.PositionToGameObject;
         SetMoveDictionary();
@@ -117,13 +118,15 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else
         {
+
+
             tryHere = thisCharacterCDH.moveToTarget(listOfValidtargets);
-            //Debug.Log("get AI Here");
             return true;
         }
     }
     List<Vector3Int> getValidTargetList(bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
     {
+        //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
         Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
         List<Vector3Int> listOfRanges = universalCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
 
@@ -169,6 +172,7 @@ public class MoveDictionaryManager : MonoBehaviour
     void ThrowFireBall()
     {
         universalCalculator.doThis();
+        reticalManager.reDrawValidTiles(null);
         //Debug.Log("Throw Fire Ball");
         //endTurn();
     }

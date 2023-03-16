@@ -75,15 +75,11 @@ public class TurnManager : MonoBehaviour
 
     void beginTurnThisCharacter()
     {
-        //Debug.Log("here");
-        thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
-        thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
-
+        setCharacterData();
         var shadowrange = reticalManager.reDrawShadows();
         if (shadowrange.Contains(thisCharacterData.getCharV3Int()))
         {
             thisCharacterData.BeginThisCharacterTurn();
-            setCharacterData();
         }
         else
         {
@@ -96,6 +92,8 @@ public class TurnManager : MonoBehaviour
     }
     void setCharacterData()
     {
+        thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
+        thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
         buttonManager.getThisCharacterData();
         moveDictionaryManager.getThisCharacterData();
     }
