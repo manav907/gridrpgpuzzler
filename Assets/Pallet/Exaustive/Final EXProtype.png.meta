@@ -49,7 +49,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -1484,9 +1484,9 @@ TextureImporter:
       Final EXProtype_39: 2147022756
       Final EXProtype_6: 911894161
       Final EXProtype_7: 215372949
-      Final EXProtype_10: -1365190971
-      Final EXProtype_44: 1206780479
       Final EXProtype_61: 2128742472
+      Final EXProtype_44: 1206780479
+      Final EXProtype_10: -1365190971
       Final EXProtype_31: 1518778940
       Final EXProtype_18: 1067378312
       Final EXProtype_58: -800545432
