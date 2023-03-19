@@ -73,40 +73,43 @@ public class UniversalCalculator : MonoBehaviour
         thislist.Reverse();
         return thislist;
     }
-
-
-
-    public List<Vector3Int> SortListAccordingtoDistanceFromPoint(List<Vector3Int> thisV3IntList, Vector3Int thisPoint)
+    SortedList<float, T> sortListWithVar<T>(List<T> thisList, Func<T, float> thisFloat)
     {
-        SortedList<float, Vector3Int> sortedListOfDistance = new SortedList<float, Vector3Int>();
-
-        
-
-        foreach (var element in thisV3IntList)
+        SortedList<float, T> newList = new SortedList<float, T>();
+        foreach (var element in thisList)
         {
-            float thisDistance = Vector3Int.Distance(element, thisPoint);
-            while (sortedListOfDistance.ContainsKey(thisDistance))
+            float thisDistance = thisFloat(element);
+            while (newList.ContainsKey(thisDistance))
             {
                 thisDistance += 0.001f;
             }
-            sortedListOfDistance.Add(thisDistance, element);
+            newList.Add(thisDistance, element);
         }
+        return newList;
+    }
+
+    public List<Vector3Int> SortListAccordingtoDistanceFromPoint(List<Vector3Int> thisV3IntList, Vector3Int toPoint)
+    {
+        SortedList<float, Vector3Int> sortedListOfDistance = sortListWithVar(thisV3IntList, distance);
         return convertSortedListToNormalList(sortedListOfDistance);
+        //declaring necessary function to be used as a delegate
+        float distance(Vector3Int fromPoint)
+        {
+            return Vector3Int.Distance(fromPoint, toPoint);
+        }
     }
     public List<GameObject> SortBySpeed(List<GameObject> thisList)
     {
-        SortedList<float, GameObject> sortedList = new SortedList<float, GameObject>();
-        foreach (GameObject thisChar in thisList)
+        SortedList<float, GameObject> sortedList = sortListWithVar(thisList, speed);
+        return getReverseList(
+            convertSortedListToNormalList(sortedList)
+            );
+        //this list needs to be reversed as higher speed characters should move faster
+        //declaring necessary function to be used as a delegate
+        float speed(GameObject thisGameObject)
         {
-            //Debug.Log(thisChar);
-            float speedofChar = thisChar.GetComponent<characterDataHolder>().speedValue;
-            while (sortedList.ContainsKey(speedofChar))
-            {
-                speedofChar += 0.001f;
-            }
-            sortedList.Add(speedofChar, thisChar);
-            //Debug.Log(sortedList[speedofChar]);
+            return thisGameObject.GetComponent<characterDataHolder>().speedValue;
         }
-        return getReverseList(convertSortedListToNormalList(sortedList));//this list needs to be reversed as higher speed characters should move faster
+
     }
 }
