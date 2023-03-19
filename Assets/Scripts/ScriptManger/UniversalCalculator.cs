@@ -74,6 +74,9 @@ public class UniversalCalculator : MonoBehaviour
         return thislist;
     }
     SortedList<float, T> sortListWithVar<T>(List<T> thisList, Func<T, float> thisFloat)
+    // here Func<T, float> thisFloat represent a function that takes Function of the float distance or float speed 
+    //with variable T(from point or GameObject) then calculates a float value 
+    //which is representrdd by the later part of Func<T, float> thisFloat
     {
         SortedList<float, T> newList = new SortedList<float, T>();
         foreach (var element in thisList)
