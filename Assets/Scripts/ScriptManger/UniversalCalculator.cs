@@ -59,9 +59,29 @@ public class UniversalCalculator : MonoBehaviour
     {
         Debug.Log("do this invoked or FireBall");
     }
+    List<T> convertSortedListToNormalList<T>(SortedList<float, T> inputList)
+    {
+        List<T> outputList = new List<T>();
+        foreach (var eachValue in inputList.Values)
+        {
+            outputList.Add(eachValue);
+        }
+        return outputList;
+    }
+    List<T> getReverseList<T>(List<T> thislist)
+    {
+        thislist.Reverse();
+        return thislist;
+    }
+
+
+
     public List<Vector3Int> SortListAccordingtoDistanceFromPoint(List<Vector3Int> thisV3IntList, Vector3Int thisPoint)
     {
         SortedList<float, Vector3Int> sortedListOfDistance = new SortedList<float, Vector3Int>();
+
+        
+
         foreach (var element in thisV3IntList)
         {
             float thisDistance = Vector3Int.Distance(element, thisPoint);
@@ -71,27 +91,10 @@ public class UniversalCalculator : MonoBehaviour
             }
             sortedListOfDistance.Add(thisDistance, element);
         }
-
-
-        inputDynamicValue = sortedListOfDistance;
-        outputDynamicValue = new List<Vector3Int>();
-        convertSortedListToNormalList();
-        return outputDynamicValue;
-    }
-
-    dynamic inputDynamicValue;
-    dynamic outputDynamicValue;
-    void convertSortedListToNormalList()
-    {
-        outputDynamicValue.Clear();
-        foreach (var eachValue in inputDynamicValue.Values)
-        {
-            outputDynamicValue.Add(eachValue);
-        }
+        return convertSortedListToNormalList(sortedListOfDistance);
     }
     public List<GameObject> SortBySpeed(List<GameObject> thisList)
     {
-
         SortedList<float, GameObject> sortedList = new SortedList<float, GameObject>();
         foreach (GameObject thisChar in thisList)
         {
@@ -103,13 +106,7 @@ public class UniversalCalculator : MonoBehaviour
             }
             sortedList.Add(speedofChar, thisChar);
             //Debug.Log(sortedList[speedofChar]);
-
         }
-
-        inputDynamicValue = sortedList;
-        outputDynamicValue = new List<GameObject>();
-        convertSortedListToNormalList();
-        outputDynamicValue.Reverse();//Only Because the list Operates in Reverse
-        return outputDynamicValue;
+        return getReverseList(convertSortedListToNormalList(sortedList));//this list needs to be reversed as higher speed characters should move faster
     }
 }
