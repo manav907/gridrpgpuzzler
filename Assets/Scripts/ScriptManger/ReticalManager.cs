@@ -78,7 +78,8 @@ public class ReticalManager : MonoBehaviour
         foreach (GameObject thisChar in PositionToGameObjectCopy.Values)
         {
             characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
-            setVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
+            if (thisCDH.isPlayerCharacter == true)
+                setVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
         }
         return shadowRange;
 

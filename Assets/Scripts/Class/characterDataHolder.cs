@@ -55,7 +55,6 @@ public class characterDataHolder : MonoBehaviour
 
         Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
         thisMapManager.PositionToGameObject.Remove(thisCharPos);
-        //thisMapManager.UpdateCharacterPosition(thisCharPos, null, null);
         Destroy(this.gameObject);
         if (thisTurnManager.thisCharacter == this.gameObject)
         {
@@ -80,27 +79,57 @@ public class characterDataHolder : MonoBehaviour
             thisButtonManager.InstantiateButtons(GetCharacterMoveList());
         else
         {
-            moveDictionaryManager.doAction("Move");
+            determineAction();
         }
     }
+    Vector3Int currentTarget;
+    int GhostVision = 1;
+    void determineAction()
+    {
+        Vector3Int thisCharpos = getCharV3Int();
+        var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
+        var targetList = listOfPossibleTargets(VisionList);
+        if (targetList.Count == 0)
+        {
+            Debug.Log("Ideling");
+            moveDictionaryManager.doAction("End Turn");
+            return;
+        }
+        else
+        {
+            currentTarget = targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];
+            if (false)
+            {
+                //Attack Character
+            }
+            else if (true)//if character not in attack range
+            {
+                moveDictionaryManager.doAction("Move");
+            }
+
+        }
+        List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
+        {
+            var PTGODIR = thisMapManager.PositionToGameObject;
+            List<Vector3Int> thisList = new List<Vector3Int>();
+            foreach (Vector3Int thisPos in PTGODIR.Keys)
+            {
+                if (visionList.Contains(thisPos))
+                    thisList.Add(thisPos);
+            }
+            thisList.Remove(thisCharpos);
+            return thisList;
+        }
+    }
+
     public Vector3Int getCharV3Int()
     {
         return universalCalculator.convertToVector3Int(this.gameObject.transform.position);
     }
     public Vector3Int moveToTarget(List<Vector3Int> validTargets)
     {
-        Vector3Int thisCharpos = getCharV3Int();
-        //var tilesInVision = tileCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision);
-        var PTGODIR = thisMapManager.PositionToGameObject;
-        PTGODIR.Remove(thisCharpos);
-        List<Vector3Int> thisList = new List<Vector3Int>();
-        foreach (Vector3Int thisPos in PTGODIR.Keys)
-        {
-            thisList.Add(thisPos);
-        }
-        Vector3Int thisTarget = thisList[universalCalculator.SelectRandomBetweenZeroAndInt(thisList.Count)];
-        return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, thisTarget)[0];
+        return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];
     }
-    
+
 
 }
