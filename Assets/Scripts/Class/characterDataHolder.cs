@@ -133,7 +133,11 @@ public class characterDataHolder : MonoBehaviour
     }
     public Vector3Int getTarget(List<Vector3Int> validTargets)
     {
-        return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];//Need to clarify how this works
+        return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];
+        //Need to clarify how this works
+        //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
+        //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
+
     }
 
 
