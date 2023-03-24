@@ -118,8 +118,6 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else
         {
-
-
             tryHere = thisCharacterCDH.moveToTarget(listOfValidtargets);
             return true;
         }

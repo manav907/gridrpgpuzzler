@@ -42,6 +42,7 @@ public class characterDataHolder : MonoBehaviour
     public void UpdateCharacterData()
     {
 
+
         Heatlh.text = health + "";
         if (health <= 0)
         {
@@ -88,7 +89,9 @@ public class characterDataHolder : MonoBehaviour
     {
         Vector3Int thisCharpos = getCharV3Int();
         var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
+        //GhostVision for tracking after leaving Vision
         var targetList = listOfPossibleTargets(VisionList);
+        var attackRangeList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfAttack);
         if (targetList.Count == 0)
         {
             Debug.Log("Ideling");
@@ -98,8 +101,10 @@ public class characterDataHolder : MonoBehaviour
         else
         {
             currentTarget = targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];
-            if (false)
+            if (attackRangeList.Contains(currentTarget))
             {
+                moveDictionaryManager.doAction("Attack");
+                //Debug.Log("Health of " + this.gameObject.name + " is " + health + "Attacked character");
                 //Attack Character
             }
             else if (true)//if character not in attack range

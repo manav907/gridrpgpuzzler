@@ -64,6 +64,11 @@ public class TurnManager : MonoBehaviour
             Debug.Log("Null char");
             endTurn();
         }
+        else if (noPlayersRemain)
+        {
+            Debug.Log("No Players Remain");
+            triggerGameEnd();
+        }
         else
             beginTurnThisCharacter();
     }
@@ -134,11 +139,24 @@ public class TurnManager : MonoBehaviour
         PositionToGameObjectCopy = mapManager.PositionToGameObject;
         var shadowrange = reticalManager.reDrawShadows();
         OrderOfInteractableCharacters.Clear();
+
+        List<bool> isPlayerCharacter = new List<bool>();
+
+
         foreach (var position in PositionToGameObjectCopy)
         {
-            //if (shadowrange.Contains(position.Key))
+
             OrderOfInteractableCharacters.Add(position.Value);
+            bool isPlayer = position.Value.GetComponent<characterDataHolder>().isPlayerCharacter;
+            if (!isPlayer)
+                isPlayerCharacter.Add(isPlayer);
+        }
+        if (isPlayerCharacter.Count == OrderOfInteractableCharacters.Count)
+        {
+            noPlayersRemain = true;
         }
         OrderOfInteractableCharacters = universalCalculator.SortBySpeed(OrderOfInteractableCharacters);
+
     }
+    bool noPlayersRemain = false;
 }
