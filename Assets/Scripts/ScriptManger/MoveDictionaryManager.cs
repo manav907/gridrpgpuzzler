@@ -118,7 +118,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else
         {
-            tryHere = thisCharacterCDH.moveToTarget(listOfValidtargets);
+            tryHere = thisCharacterCDH.getTarget(listOfValidtargets);
             return true;
         }
     }

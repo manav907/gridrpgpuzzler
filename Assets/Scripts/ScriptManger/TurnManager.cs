@@ -10,7 +10,7 @@ public class TurnManager : MonoBehaviour
         GetGameObjects();
         InstantiateallIntractableCharacters();//Can only be called after getting game objects
         recalculateOrder();//can only be called after Instanstiating the Characterts
-        beginTurn();
+        beginTurnIfPossible();
     }
     private ButtonManager buttonManager;
     private MapManager mapManager;
@@ -53,7 +53,7 @@ public class TurnManager : MonoBehaviour
     public GameObject thisCharacter;
     characterDataHolder thisCharacterData;
     [SerializeField] int TurnCountInt = 0;
-    public void beginTurn()
+    public void beginTurnIfPossible()
     {
         if (OrderOfInteractableCharacters.Count == TurnCountInt)//this works because Count Starts from 1 not 0
         {
@@ -131,7 +131,7 @@ public class TurnManager : MonoBehaviour
         {
             //Debug.Log(TurnCountInt + " " + TurnLoop + " " + PositionToGameObjectCopy.Count);
         }
-        beginTurn();
+        beginTurnIfPossible();
     }
     Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy;
     void recalculateOrder()
