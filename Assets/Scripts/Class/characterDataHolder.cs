@@ -132,6 +132,7 @@ public class characterDataHolder : MonoBehaviour
         return universalCalculator.convertToVector3Int(this.gameObject.transform.position);
     }
     public Vector3Int getTarget(List<Vector3Int> validTargets)
+    //validTargets depends on the action being performed
     {
         return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];
         //Need to clarify how this works

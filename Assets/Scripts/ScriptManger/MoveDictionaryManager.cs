@@ -96,6 +96,8 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             else
             {
+                //Debug.Log("Waiting");
+                yield return new WaitForSeconds(0.25f);
                 actionOfMove();
             }
 
