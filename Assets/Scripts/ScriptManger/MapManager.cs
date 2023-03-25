@@ -14,7 +14,6 @@ public class MapManager : MonoBehaviour
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         setTilesDir();
-
     }
     void setTilesDir()
     {
@@ -48,6 +47,7 @@ public class MapManager : MonoBehaviour
             Vector3Int thisPos = universalCalculator.convertToVector3Int(character.transform.position);
             PositionToGameObject.Add(thisPos, character);
         }
+        refreshDictionarySeralilizedFields();
     }
 
     [SerializeField] private List<Vector3Int> PositionToGameObjectVector3;
@@ -56,14 +56,12 @@ public class MapManager : MonoBehaviour
     {
         PositionToGameObject.Remove(previousPosition);
         PositionToGameObject.Add(newPosition, thisCharacter);
-        PositionToGameObjectGameObjects.Clear();
-        PositionToGameObjectVector3.Clear();
         refreshDictionarySeralilizedFields();
-
-
     }
     void refreshDictionarySeralilizedFields()
     {
+        PositionToGameObjectGameObjects.Clear();
+        PositionToGameObjectVector3.Clear();
         foreach (Vector3Int position in PositionToGameObject.Keys)
         {
             PositionToGameObjectGameObjects.Add(PositionToGameObject[position]);
@@ -71,7 +69,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    //Getters
+    //Getter
     public GameObject GetGameObjectAtPos(Vector3Int thisPlace)
 
     {
