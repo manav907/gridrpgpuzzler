@@ -48,6 +48,16 @@ public class MapManager : MonoBehaviour
             PositionToGameObject.Add(thisPos, character);
         }
         refreshDictionarySeralilizedFields();
+        getMapData();
+    }
+    [SerializeField] Grid gameGrid;
+    void getMapData()
+    {
+        foreach (Tilemap tilemap in OrderOfTileMaps)
+        {
+            tilemap.CompressBounds();
+            Debug.Log(tilemap.size + " is the size of Tilemap called " + tilemap.gameObject.name);
+        }
     }
 
     [SerializeField] private List<Vector3Int> PositionToGameObjectVector3;
