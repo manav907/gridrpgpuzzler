@@ -5,7 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour
 {
-
     [SerializeField] List<Tilemap> OrderOfTileMaps;
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
@@ -47,36 +46,24 @@ public class MapManager : MonoBehaviour
             Vector3Int thisPos = universalCalculator.convertToVector3Int(character.transform.position);
             PositionToGameObject.Add(thisPos, character);
         }
-        refreshDictionarySeralilizedFields();
         getMapData();
     }
-    [SerializeField] Grid gameGrid;
     void getMapData()
     {
         foreach (Tilemap tilemap in OrderOfTileMaps)
         {
+
+            Debug.Log(tilemap.gameObject.name);
+            //Debug.Log(tilemap.cellBounds);
             tilemap.CompressBounds();
-            Debug.Log(tilemap.size + " is the size of Tilemap called " + tilemap.gameObject.name);
+            //Debug.Log("CompressingBounds");
+            Debug.Log(tilemap.cellBounds);
         }
     }
-
-    [SerializeField] private List<Vector3Int> PositionToGameObjectVector3;
-    [SerializeField] private List<GameObject> PositionToGameObjectGameObjects;
     public void UpdateCharacterPosition(Vector3Int previousPosition, Vector3Int newPosition, GameObject thisCharacter)
     {
         PositionToGameObject.Remove(previousPosition);
         PositionToGameObject.Add(newPosition, thisCharacter);
-        refreshDictionarySeralilizedFields();
-    }
-    void refreshDictionarySeralilizedFields()
-    {
-        PositionToGameObjectGameObjects.Clear();
-        PositionToGameObjectVector3.Clear();
-        foreach (Vector3Int position in PositionToGameObject.Keys)
-        {
-            PositionToGameObjectGameObjects.Add(PositionToGameObject[position]);
-            PositionToGameObjectVector3.Add(position);
-        }
     }
 
     //Getter
@@ -116,7 +103,6 @@ public class MapManager : MonoBehaviour
                 //Debug.Log("No Errors");
             }
         }
-        refreshDictionarySeralilizedFields();
     }
 
 
