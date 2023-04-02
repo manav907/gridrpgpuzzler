@@ -46,7 +46,7 @@ public class MapManager : MonoBehaviour
             Vector3Int thisPos = universalCalculator.convertToVector3Int(character.transform.position);
             PositionToGameObject.Add(thisPos, character);
         }
-        getMapData();
+        //getMapData();
     }
     void getMapData()
     {

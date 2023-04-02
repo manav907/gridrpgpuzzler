@@ -55,9 +55,6 @@ public class ButtonManager : MonoBehaviour
             ActionButtons[i].name = listCDHTEXT + " Button";
 
             //Assigning On Click Functions
-
-            //if (!MoveNameToActionDictionary.ContainsKey(basicList[captured])) Debug.Log(basicList[captured]+" not Found in Dictionary"); //for Debugging
-
             ActionButtons[i].GetComponent<Button>().onClick.AddListener(delegate
             {
                 moveDictionaryManager.doAction(listCDHTEXT);
