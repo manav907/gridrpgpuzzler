@@ -413,7 +413,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -563,9 +563,6 @@ MonoBehaviour:
   listOfTileDataScriptableObjects:
   - {fileID: 11400000, guid: cef59eb637bef15499926ba58c5f0c7f, type: 2}
   - {fileID: 11400000, guid: cf96a52dbe483ab4ebde73314693d934, type: 2}
-  gameGrid: {fileID: 0}
-  PositionToGameObjectVector3: []
-  PositionToGameObjectGameObjects: []
 --- !u!114 &732592034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17348,7 +17345,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &1988834098
 RectTransform:

@@ -7,27 +7,24 @@ using UnityEditor;
 
 public class ButtonManager : MonoBehaviour
 {
-    public GameObject ButtonPrefab;
-    public List<GameObject> ActionButtons;
-    public GameObject ButtonHolder;
+    [SerializeField] GameObject ButtonPrefab;
+    [SerializeField] List<GameObject> ActionButtons;
+    [SerializeField] GameObject ButtonHolder;
     TurnManager turnManager;
     ReticalManager reticalManager;
     MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
+    void Awake()
+    {
+        Debug.Log("ButtonManager Awake!");
+        setVariables();
+    }
     public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
-    }
-
-    GameObject thisCharacter;
-    characterDataHolder thisCharacterCDH;
-    public void getThisCharacterData()
-    {
-        thisCharacter = turnManager.thisCharacter;
-        thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
     }
     public void clearButtons()
     {
@@ -37,7 +34,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void InstantiateButtons(List<String> listFromCDH)
     {
-        var Dictionary = moveDictionaryManager.aDCL;
+        clearButtons();
         for (int i = 0; i < listFromCDH.Count; i++)
         {
             ActionButtons.Add(Instantiate(ButtonPrefab));//Just Instanting
@@ -55,9 +52,12 @@ public class ButtonManager : MonoBehaviour
             ActionButtons[i].name = listCDHTEXT + " Button";
 
             //Assigning On Click Functions
-            ActionButtons[i].GetComponent<Button>().onClick.AddListener(delegate
+            Button thisButton = ActionButtons[i].GetComponent<Button>();
+            thisButton.onClick.RemoveAllListeners();
+            thisButton.onClick.AddListener(delegate
             {
-                moveDictionaryManager.doAction(listCDHTEXT);
+                //moveDictionaryManager.doAction(listCDHTEXT);
+                Debug.Log("Button clicked: " + listCDHTEXT);
             });
         }
     }

@@ -99,7 +99,6 @@ public class TurnManager : MonoBehaviour
     {
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
         thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
-        buttonManager.getThisCharacterData();
         moveDictionaryManager.getThisCharacterData();
 
         mapManager.fixErrors();
