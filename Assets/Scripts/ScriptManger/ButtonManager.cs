@@ -56,8 +56,8 @@ public class ButtonManager : MonoBehaviour
             thisButton.onClick.RemoveAllListeners();
             thisButton.onClick.AddListener(delegate
             {
-                //moveDictionaryManager.doAction(listCDHTEXT);
-                Debug.Log("Button clicked: " + listCDHTEXT);
+                moveDictionaryManager.doAction(listCDHTEXT);
+                //Debug.Log("Button clicked: " + listCDHTEXT);
             });
         }
     }
