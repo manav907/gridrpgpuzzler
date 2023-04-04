@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
   m_Name: GenericCharacter
   m_EditorClassIdentifier: 
-  characterName: Ninjask
+  InstanceID: 0
+  characterName: Rapidash
+  spriteSheet:
+  - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 64736867, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 570990605, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
   health: 5
   rangeOfMove: 1
   rangeOfAttack: 2
   AttackDamage: 2
   speedValue: 3
   rangeOfVision: 5
-  InstanceID: 1

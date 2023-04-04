@@ -85,10 +85,12 @@ public class characterDataHolder : MonoBehaviour
     [SerializeField] Animator thisAnimation;
     public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
     {
-        if (!isCharacterTurn)
-            thisAnimation.SetFloat("BlendSpeed", 0f);
+        if (isCharacterTurn)
+            thisAnimation.SetTrigger("Walk");
         else
-            thisAnimation.SetFloat("BlendSpeed", 1f);
+            thisAnimation.SetTrigger("Idle");
+
+
     }
     public bool isPlayerCharacter = true;
     MoveDictionaryManager moveDictionaryManager;
