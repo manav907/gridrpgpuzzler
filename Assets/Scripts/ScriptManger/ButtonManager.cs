@@ -16,7 +16,7 @@ public class ButtonManager : MonoBehaviour
     MoveDictionaryManager moveDictionaryManager;
     void Awake()
     {
-        Debug.Log("ButtonManager Awake!");
+        //Debug.Log("ButtonManager Awake!");
         setVariables();
     }
     public void setVariables()

@@ -12,6 +12,7 @@ public class MapManager : MonoBehaviour
     public void setVariables()
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
+        PositionToGameObject = new Dictionary<Vector3Int, GameObject>();
         setTilesDir();
     }
     void setTilesDir()
@@ -38,15 +39,10 @@ public class MapManager : MonoBehaviour
     }
 
     public Dictionary<Vector3Int, GameObject> PositionToGameObject;
-    public void AddCharactersToDictionaryAfterInstantiating(List<GameObject> allInteractableCharacters)
+    public void AddCharactersToDictionaryAfterInstantiating(GameObject character)
     {
-        PositionToGameObject = new Dictionary<Vector3Int, GameObject>();
-        foreach (GameObject character in allInteractableCharacters)
-        {
-            Vector3Int thisPos = universalCalculator.convertToVector3Int(character.transform.position);
-            PositionToGameObject.Add(thisPos, character);
-        }
-        //getMapData();
+        Vector3Int thisPos = universalCalculator.convertToVector3Int(character.transform.position);
+        PositionToGameObject.Add(thisPos, character);
     }
     void getMapData()
     {

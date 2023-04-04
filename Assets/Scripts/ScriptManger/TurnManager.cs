@@ -12,11 +12,13 @@ public class TurnManager : MonoBehaviour
         recalculateOrder();//can only be called after Instanstiating the Characterts
         beginTurnIfPossible();
     }
+    GameObject gameController;
     private ButtonManager buttonManager;
     private MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
     ReticalManager reticalManager;
     UniversalCalculator universalCalculator;
+    TurnManager turnManager;
 
     void GetGameObjects()
     {
@@ -26,30 +28,39 @@ public class TurnManager : MonoBehaviour
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
+        gameController = this.gameObject;
+
 
         buttonManager.setVariables();
         mapManager.setVariables();
         moveDictionaryManager.setVariables();
         reticalManager.setVariables();
     }
-    public GameObject characterPrefab;
-    public int numberOfCharacterToInstansitate = 1;
-    [SerializeField]
-    List<GameObject> OrderOfInteractableCharacters;
-    [SerializeField] private GameObject characterHolder;
+    [SerializeField] GameObject characterPrefab;
+
+    [SerializeField] GameObject characterHolder;
+    [SerializeField] List<CharacterData> listOfCD;
     void InstantiateallIntractableCharacters()
     {
         List<GameObject> allInteractableCharacters = new List<GameObject>();
-        for (int i = 0; i < numberOfCharacterToInstansitate; i++)
+        for (int i = 0; i < listOfCD.Count; i++)
         {
             allInteractableCharacters.Add(Instantiate(characterPrefab));
-            allInteractableCharacters[i].transform.SetParent(characterHolder.transform, false);
-            allInteractableCharacters[i].transform.position += i * Vector3.right;
-            allInteractableCharacters[i].name += i;
-            allInteractableCharacters[i].GetComponent<characterDataHolder>().InitilizeCharacter(this.gameObject);
+            GameObject thisChar = allInteractableCharacters[i];
+            thisChar.transform.SetParent(characterHolder.transform, false);
+            thisChar.transform.position += i * Vector3.right;
+            thisChar.name += i;
+
+            //Assigning CharacterData
+            characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
+            thisCDH.thisCharacterData = listOfCD[i];
+            thisCDH.thisCharacterData.InstanceID = i;
+            thisCDH.InitilizeCharacter(gameController);
+            mapManager.AddCharactersToDictionaryAfterInstantiating(thisChar);
         }
-        mapManager.AddCharactersToDictionaryAfterInstantiating(allInteractableCharacters);
     }
+
+    [SerializeField] List<GameObject> OrderOfInteractableCharacters;
     public GameObject thisCharacter;
     characterDataHolder thisCharacterData;
     [SerializeField] int TurnCountInt = 0;

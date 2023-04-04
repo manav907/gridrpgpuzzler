@@ -3,14 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class characterDataHolder : MonoBehaviour
 {
+    public string characterName;
     public int health = 3;
     public int rangeOfMove = 1;
     public int rangeOfAttack = 2;
     public int AttackDamage = 2;
     public int speedValue = 3;
     public int rangeOfVision = 5;
+    public CharacterData thisCharacterData;
     [SerializeField] private TextMesh Heatlh;
 
     private ButtonManager thisButtonManager;
@@ -24,7 +27,24 @@ public class characterDataHolder : MonoBehaviour
         thisTurnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
+
+
+        setVariables();
         UpdateCharacterData();
+    }
+    void setVariables()
+    {
+        characterName = thisCharacterData.name;
+        health = thisCharacterData.health;
+        rangeOfMove = thisCharacterData.rangeOfMove;
+        rangeOfAttack = thisCharacterData.rangeOfAttack;
+        AttackDamage = thisCharacterData.AttackDamage;
+        speedValue = thisCharacterData.speedValue;
+        rangeOfVision = thisCharacterData.rangeOfVision;
+
+        //Setting Specific Name
+
+        this.name = characterName + " " + thisCharacterData.InstanceID;
     }
     List<string> GetCharacterMoveList()
     {
