@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Animations;
 
 
 public class characterDataHolder : MonoBehaviour
@@ -45,6 +46,10 @@ public class characterDataHolder : MonoBehaviour
         //Setting Specific Name
 
         this.name = characterName + " " + thisCharacterData.InstanceID;
+
+
+        //doingAnimController
+        animator.runtimeAnimatorController = animatorOverrideController;
     }
     List<string> GetCharacterMoveList()
     {
@@ -82,13 +87,16 @@ public class characterDataHolder : MonoBehaviour
             thisTurnManager.endTurn();
         }
     }
-    [SerializeField] Animator thisAnimation;
+    [SerializeField] AnimatorOverrideController animatorOverrideController;
+
+    [SerializeField] AnimationClip animationClip;
+    [SerializeField] Animator animator;
     public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
     {
         if (isCharacterTurn)
-            thisAnimation.SetTrigger("Walk");
+            animator.SetTrigger("Walk");
         else
-            thisAnimation.SetTrigger("Idle");
+            animator.SetTrigger("Idle");
 
 
     }
