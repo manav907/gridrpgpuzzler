@@ -21,6 +21,16 @@ public class CharacterData : ScriptableObject
 
 
 
+    [SerializeField] AnimatorOverrideController animatorOverrideController;
+    public void GenerateFields()
+    {
+        List<KeyValuePair<AnimationClip, AnimationClip>> overrideList = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        animatorOverrideController.GetOverrides(overrideList);
+        foreach (var overridePair in overrideList)
+        {
+            Debug.Log("Original clip: " + overridePair.Key.name + ", Override clip: " + overridePair.Value.name);
+        }
+    }
     public Sprite[] frames;
     //[MenuItem("Assets/Create/Animation Clip")]
 
@@ -45,9 +55,10 @@ public class CharacterData : ScriptableObject
 
         // Add the curve to the animation clip
         AnimationUtility.SetObjectReferenceCurve(clip, EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"), spriteFrames);
-        AnimationClipSettings aniclipSet = AnimationUtility.GetAnimationClipSettings(clip);
-        aniclipSet.loopTime = true;
-        AnimationUtility.SetAnimationClipSettings(clip, aniclipSet);
+        //AnimationClipSettings animationClipSettings = AnimationUtility.GetAnimationClipSettings(clip);
+        AnimationClipSettings animationClipSettings = new AnimationClipSettings();
+        animationClipSettings.loopTime = true;
+        AnimationUtility.SetAnimationClipSettings(clip, animationClipSettings);
 
         // Save the animation clip
         //AssetDatabase.CreateAsset(clip, "Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/NewAnimationClip.anim");

@@ -50,8 +50,6 @@ public class characterDataHolder : MonoBehaviour
 
 
         //doingAnimController
-
-
         var clip = thisCharacterData.CreateAnimation();
         animatorOverrideController[animationStateNames[0]] = clip;
 
