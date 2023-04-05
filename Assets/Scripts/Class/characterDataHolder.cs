@@ -33,6 +33,7 @@ public class characterDataHolder : MonoBehaviour
         setVariables();
         UpdateCharacterData();
     }
+    string[] animationStateNames = { "Walk", "Idle" };
     void setVariables()
     {
         characterName = thisCharacterData.name;
@@ -52,8 +53,8 @@ public class characterDataHolder : MonoBehaviour
 
 
         var clip = thisCharacterData.CreateAnimation();
-        //Debug.Log();
-        animatorOverrideController[animatorOverrideController.animationClips[1]] = clip;
+        animatorOverrideController[animationStateNames[0]] = clip;
+
         animator.runtimeAnimatorController = animatorOverrideController;
     }
     List<string> GetCharacterMoveList()

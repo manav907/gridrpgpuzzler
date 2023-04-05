@@ -23,27 +23,31 @@ public class CharacterData : ScriptableObject
 
     public Sprite[] frames;
     //[MenuItem("Assets/Create/Animation Clip")]
+
     public AnimationClip CreateAnimation()
     {
         AnimationClip clip = new AnimationClip();
+        clip.name = "Rapidash-Walk";
 
         // Set up the animation clip
-        //clip.frameRate = 60; // The animation frame rate
-        clip.wrapMode = WrapMode.ClampForever; // The animation wrap mode
+        clip.frameRate = 10; // The animation frame rate
+        //clip.wrapMode = WrapMode.ClampForever; // The animation wrap mode
+        clip.wrapMode = WrapMode.Loop;
         // Create a curve for the sprites
-
-        //int TotalFrames = 20;
-        //int FrameGap = TotalFrames / frames.Length;
         ObjectReferenceKeyframe[] spriteFrames = new ObjectReferenceKeyframe[frames.Length];
         for (int i = 0; i < frames.Length; i++)
         {
             spriteFrames[i] = new ObjectReferenceKeyframe();
-            //[i].time = i / clip.frameRate;
+            spriteFrames[i].time = i / clip.frameRate;
             spriteFrames[i].value = frames[i];
+            //Debug.Log(frames[i]);
         }
 
         // Add the curve to the animation clip
         AnimationUtility.SetObjectReferenceCurve(clip, EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"), spriteFrames);
+        AnimationClipSettings aniclipSet = AnimationUtility.GetAnimationClipSettings(clip);
+        aniclipSet.loopTime = true;
+        AnimationUtility.SetAnimationClipSettings(clip, aniclipSet);
 
         // Save the animation clip
         //AssetDatabase.CreateAsset(clip, "Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/NewAnimationClip.anim");
