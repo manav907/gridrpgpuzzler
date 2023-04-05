@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InstanceID: 0
   characterName: Rapidash
-  spriteSheet:
-  - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
-  - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
-  - {fileID: 64736867, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
-  - {fileID: 570990605, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
   health: 5
   rangeOfMove: 1
   rangeOfAttack: 2
   AttackDamage: 2
   speedValue: 3
   rangeOfVision: 5
+  frames:
+  - {fileID: -468390188, guid: c827088f025ff124e85bfa19417717b7, type: 3}
+  - {fileID: 1928790757, guid: c827088f025ff124e85bfa19417717b7, type: 3}
+  - {fileID: -1745784374, guid: c827088f025ff124e85bfa19417717b7, type: 3}
+  - {fileID: 777029606, guid: c827088f025ff124e85bfa19417717b7, type: 3}

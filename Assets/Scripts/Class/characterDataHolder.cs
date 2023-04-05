@@ -49,6 +49,11 @@ public class characterDataHolder : MonoBehaviour
 
 
         //doingAnimController
+
+
+        var clip = thisCharacterData.CreateAnimation();
+        //Debug.Log();
+        animatorOverrideController[animatorOverrideController.animationClips[1]] = clip;
         animator.runtimeAnimatorController = animatorOverrideController;
     }
     List<string> GetCharacterMoveList()
@@ -88,8 +93,6 @@ public class characterDataHolder : MonoBehaviour
         }
     }
     [SerializeField] AnimatorOverrideController animatorOverrideController;
-
-    [SerializeField] AnimationClip animationClip;
     [SerializeField] Animator animator;
     public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
     {
