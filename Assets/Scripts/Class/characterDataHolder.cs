@@ -33,7 +33,6 @@ public class characterDataHolder : MonoBehaviour
         setVariables();
         UpdateCharacterData();
     }
-    string[] animationStateNames = { "Walk", "Idle" };
     void setVariables()
     {
         characterName = thisCharacterData.name;
@@ -48,13 +47,25 @@ public class characterDataHolder : MonoBehaviour
 
         this.name = characterName + " " + thisCharacterData.InstanceID;
 
+        //creating Override
+        AnimatorController originalController = animator.runtimeAnimatorController as AnimatorController;
+
 
         //doingAnimController
-        var clip = thisCharacterData.CreateAnimation();
-        animatorOverrideController[animationStateNames[0]] = clip;
-
-        animator.runtimeAnimatorController = animatorOverrideController;
+        animator.runtimeAnimatorController = thisCharacterData.GetanimatorOverrideController(originalController);
     }
+
+    [SerializeField] Animator animator;
+    public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
+    {
+        if (isCharacterTurn)
+            animator.SetTrigger("Walk");
+        else
+            animator.SetTrigger("Idle");
+
+
+    }
+
     List<string> GetCharacterMoveList()
     {
         List<string> defaultMovesAvaliable;
@@ -90,17 +101,6 @@ public class characterDataHolder : MonoBehaviour
         {
             thisTurnManager.endTurn();
         }
-    }
-    [SerializeField] AnimatorOverrideController animatorOverrideController;
-    [SerializeField] Animator animator;
-    public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
-    {
-        if (isCharacterTurn)
-            animator.SetTrigger("Walk");
-        else
-            animator.SetTrigger("Idle");
-
-
     }
     public bool isPlayerCharacter = true;
     MoveDictionaryManager moveDictionaryManager;

@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
   m_Name: Rapidash
   m_EditorClassIdentifier: 
-  InstanceID: 0
+  InstanceID: 1
   characterName: Rapidash
   health: 5
-  rangeOfMove: 1
-  rangeOfAttack: 2
+  rangeOfMove: 2
+  rangeOfAttack: 1
   AttackDamage: 2
   speedValue: 3
   rangeOfVision: 5
-  frames:
-  - {fileID: -468390188, guid: c827088f025ff124e85bfa19417717b7, type: 3}
-  - {fileID: 1928790757, guid: c827088f025ff124e85bfa19417717b7, type: 3}
-  - {fileID: -1745784374, guid: c827088f025ff124e85bfa19417717b7, type: 3}
-  - {fileID: 777029606, guid: c827088f025ff124e85bfa19417717b7, type: 3}
+  Walk:
+  - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 64736867, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 570990605, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  Idle:
+  - {fileID: -397161805, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: -1601712476, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}

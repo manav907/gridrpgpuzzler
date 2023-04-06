@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.Animations;
 
 [CreateAssetMenu]
 public class CharacterData : ScriptableObject
@@ -20,29 +21,65 @@ public class CharacterData : ScriptableObject
     // Add other unique data fields as needed
 
 
-
-    [SerializeField] AnimatorOverrideController animatorOverrideController;
-    public void GenerateFields()
+    public AnimatorOverrideController GetanimatorOverrideController(AnimatorController originalController)
     {
+        AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(originalController);
+        animatorOverrideController.name = this.name + " OverideController";
         List<KeyValuePair<AnimationClip, AnimationClip>> overrideList = new List<KeyValuePair<AnimationClip, AnimationClip>>();
         animatorOverrideController.GetOverrides(overrideList);
-        foreach (var overridePair in overrideList)
+        List<KeyValuePair<AnimationClip, AnimationClip>> combinedList = matchOverridelist(overrideList);
+        animatorOverrideController.ApplyOverrides(combinedList);
+        return animatorOverrideController;
+    }
+    List<KeyValuePair<AnimationClip, AnimationClip>> matchOverridelist(List<KeyValuePair<AnimationClip, AnimationClip>> overrideList)
+    {
+        var OriginalNametoNewClip = GetAnimationClips();
+        List<KeyValuePair<AnimationClip, AnimationClip>> combinedList = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        foreach (var thisPair in overrideList)
         {
-            Debug.Log("Original clip: " + overridePair.Key.name + ", Override clip: " + overridePair.Value.name);
+            string thisName = thisPair.Key.name;
+            KeyValuePair<AnimationClip, AnimationClip> thisKeyPair =
+            new KeyValuePair<AnimationClip, AnimationClip>(thisPair.Key, OriginalNametoNewClip[thisName]);
+            combinedList.Add(thisKeyPair);
+        }
+        return combinedList;
+    }
+    Dictionary<String, Sprite[]> listOfSprites()
+    {
+        var thisDict = new Dictionary<String, Sprite[]>();
+        thisDict.Add(nameof(Walk), Walk);
+        thisDict.Add(nameof(Idle), Idle);
+        return thisDict;
+    }
+    public Sprite[] Walk;
+    public Sprite[] Idle;
+    Dictionary<String, AnimationClip> GetAnimationClips()
+    {
+        var thisDict = new Dictionary<string, AnimationClip>();
+        foreach (var thisPair in listOfSprites())
+        {
+            //getting data
+            var animationClip = CreateAnimation(thisPair.Value);//Getting Clip
+            animationClip.name = thisPair.Key + "-" + characterName;//setting name for Animation Clip This Help you know which clips
+            thisDict.Add(thisPair.Key, animationClip);
+            //Save the animation clip
+            SaveClip(animationClip);
+        }
+        return thisDict;
+        void SaveClip(AnimationClip animationClip)
+        {
+            AssetDatabase.CreateAsset(animationClip, "Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/" + animationClip.name + ".anim");
+            AssetDatabase.SaveAssets();
         }
     }
-    public Sprite[] frames;
-    //[MenuItem("Assets/Create/Animation Clip")]
-
-    public AnimationClip CreateAnimation()
+    AnimationClip CreateAnimation(Sprite[] frames)
     {
         AnimationClip clip = new AnimationClip();
-        clip.name = "Rapidash-Walk";
+        clip.name = "Unassigned";
 
         // Set up the animation clip
-        clip.frameRate = 10; // The animation frame rate
-        //clip.wrapMode = WrapMode.ClampForever; // The animation wrap mode
-        clip.wrapMode = WrapMode.Loop;
+        clip.frameRate = frames.Length; // The animation frame rate
+        //clip.wrapMode = WrapMode.Loop;// The animation wrap mode
         // Create a curve for the sprites
         ObjectReferenceKeyframe[] spriteFrames = new ObjectReferenceKeyframe[frames.Length];
         for (int i = 0; i < frames.Length; i++)
@@ -55,14 +92,12 @@ public class CharacterData : ScriptableObject
 
         // Add the curve to the animation clip
         AnimationUtility.SetObjectReferenceCurve(clip, EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"), spriteFrames);
-        //AnimationClipSettings animationClipSettings = AnimationUtility.GetAnimationClipSettings(clip);
+        //AnimationClipSettings Being Created
         AnimationClipSettings animationClipSettings = new AnimationClipSettings();
         animationClipSettings.loopTime = true;
+        animationClipSettings.stopTime = 1f;
+        //AnimationClipSettings Being Set
         AnimationUtility.SetAnimationClipSettings(clip, animationClipSettings);
-
-        // Save the animation clip
-        //AssetDatabase.CreateAsset(clip, "Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/NewAnimationClip.anim");
-        //AssetDatabase.SaveAssets();
         return clip;
     }
 }
