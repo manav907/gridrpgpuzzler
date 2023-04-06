@@ -38,8 +38,7 @@ public class CharacterData : ScriptableObject
         foreach (var thisPair in overrideList)
         {
             string thisName = thisPair.Key.name;
-            KeyValuePair<AnimationClip, AnimationClip> thisKeyPair =
-            new KeyValuePair<AnimationClip, AnimationClip>(thisPair.Key, OriginalNametoNewClip[thisName]);
+            var thisKeyPair = new KeyValuePair<AnimationClip, AnimationClip>(thisPair.Key, OriginalNametoNewClip[thisName]);
             combinedList.Add(thisKeyPair);
         }
         return combinedList;
@@ -51,8 +50,8 @@ public class CharacterData : ScriptableObject
         thisDict.Add(nameof(Idle), Idle);
         return thisDict;
     }
-    public Sprite[] Walk;
-    public Sprite[] Idle;
+    [SerializeField] Sprite[] Walk;
+    [SerializeField] Sprite[] Idle;
     Dictionary<String, AnimationClip> GetAnimationClips()
     {
         var thisDict = new Dictionary<string, AnimationClip>();
@@ -63,13 +62,16 @@ public class CharacterData : ScriptableObject
             animationClip.name = thisPair.Key + "-" + characterName;//setting name for Animation Clip This Help you know which clips
             thisDict.Add(thisPair.Key, animationClip);
             //Save the animation clip
-            SaveClip(animationClip);
+            SaveClip(animationClip, false);
         }
         return thisDict;
-        void SaveClip(AnimationClip animationClip)
+        void SaveClip(AnimationClip animationClip, bool SaveYN)
         {
-            AssetDatabase.CreateAsset(animationClip, "Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/" + animationClip.name + ".anim");
-            AssetDatabase.SaveAssets();
+            if (SaveYN)
+            {
+                AssetDatabase.CreateAsset(animationClip, "Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/" + animationClip.name + ".anim");
+                AssetDatabase.SaveAssets();
+            }
         }
     }
     AnimationClip CreateAnimation(Sprite[] frames)

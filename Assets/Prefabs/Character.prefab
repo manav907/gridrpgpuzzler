@@ -56,8 +56,6 @@ MonoBehaviour:
   rangeOfVision: 5
   thisCharacterData: {fileID: 0}
   Heatlh: {fileID: 1664907520338834495}
-  animatorOverrideController: {fileID: 22100000, guid: 457b0ded1d5589640925f1855e5fab0d, type: 2}
-  animationClip: {fileID: 7400000, guid: 528b0757c612b824f83483e16921ffed, type: 2}
   animator: {fileID: 2406951079378199446}
   isPlayerCharacter: 1
 --- !u!1 &1555172378576254017
@@ -133,7 +131,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
