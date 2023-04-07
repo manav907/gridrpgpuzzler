@@ -14,6 +14,7 @@ public class MapManager : MonoBehaviour
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         PositionToGameObject = new Dictionary<Vector3Int, GameObject>();
         setTilesDir();
+        getCellData();
     }
     void setTilesDir()
     {
@@ -37,24 +38,43 @@ public class MapManager : MonoBehaviour
         }
         return false;
     }
+    Dictionary<Vector3Int, List<TileData>> PostoTileDataList;
+    void getCellData()
+    {
+        PostoTileDataList = new Dictionary<Vector3Int, List<TileData>>();
+        foreach (Tilemap tilemap in OrderOfTileMaps)
+        {
+            foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
+            {
+                TileBase tile = tilemap.GetTile(pos);
+                if (tile != null)
+                {
+                    addtoDict(pos, dataFromTiles[tile]);
+                }
+            }
+        }
+        void addtoDict(Vector3Int pos, TileData tileData)
+        {
+            if (PostoTileDataList.ContainsKey(pos))
+            {
+                PostoTileDataList[pos].Add(tileData);
+            }
+            else
+            {
+                // If the dictionary does not yet contain the given position,
+                // create a new list with the TileData object and add it to the dictionary
+                List<TileData> tileDataList = new List<TileData>();
+                tileDataList.Add(tileData);
+                PostoTileDataList.Add(pos, tileDataList);
+            }
+        }
+    }
 
     public Dictionary<Vector3Int, GameObject> PositionToGameObject;
     public void AddCharactersToDictionaryAfterInstantiating(GameObject character)
     {
         Vector3Int thisPos = universalCalculator.convertToVector3Int(character.transform.position);
         PositionToGameObject.Add(thisPos, character);
-    }
-    void getMapData()
-    {
-        foreach (Tilemap tilemap in OrderOfTileMaps)
-        {
-
-            Debug.Log(tilemap.gameObject.name);
-            //Debug.Log(tilemap.cellBounds);
-            tilemap.CompressBounds();
-            //Debug.Log("CompressingBounds");
-            Debug.Log(tilemap.cellBounds);
-        }
     }
     public void UpdateCharacterPosition(Vector3Int previousPosition, Vector3Int newPosition, GameObject thisCharacter)
     {
