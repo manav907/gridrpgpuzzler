@@ -27,6 +27,28 @@ public class MapManager : MonoBehaviour
     }
     public bool getIsWalkable(Vector3Int tilePos)
     {
+        //return getIsWalkableOld(tilePos);
+        return getIsWalkableusingCellData(tilePos);
+    }
+    bool getIsWalkableusingCellData(Vector3Int tilePos)
+    {
+
+        bool allNotWalkable = true;
+        if (PostoTileDataList.ContainsKey(tilePos))//Disable Later
+        {
+            foreach (TileData tileData in PostoTileDataList[tilePos])
+            {
+                if (!tileData.isWalkable)
+                {
+                    allNotWalkable = false;
+                    break;
+                }
+            }
+        }
+        return allNotWalkable;
+    }
+    bool getIsWalkableOld(Vector3Int tilePos)
+    {
         for (int i = 0; i < OrderOfTileMaps.Count; i++)
         {
             if (OrderOfTileMaps[i].GetTile(tilePos))
@@ -53,20 +75,14 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+        //Debug.Log(PostoTileDataList.Count);
         void addtoDict(Vector3Int pos, TileData tileData)
         {
-            if (PostoTileDataList.ContainsKey(pos))
+            if (!PostoTileDataList.ContainsKey(pos))
             {
-                PostoTileDataList[pos].Add(tileData);
+                PostoTileDataList.Add(pos, new List<TileData>());
             }
-            else
-            {
-                // If the dictionary does not yet contain the given position,
-                // create a new list with the TileData object and add it to the dictionary
-                List<TileData> tileDataList = new List<TileData>();
-                tileDataList.Add(tileData);
-                PostoTileDataList.Add(pos, tileDataList);
-            }
+            PostoTileDataList[pos].Add(tileData);
         }
     }
 
@@ -84,7 +100,6 @@ public class MapManager : MonoBehaviour
 
     //Getter
     public GameObject GetGameObjectAtPos(Vector3Int thisPlace)
-
     {
         if (PositionToGameObject.ContainsKey(thisPlace))
         {
