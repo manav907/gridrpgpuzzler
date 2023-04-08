@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Animations;
 
-[CreateAssetMenu]
 public class CharacterData : ScriptableObject
 {
     public int InstanceID;
@@ -17,7 +16,10 @@ public class CharacterData : ScriptableObject
     public int AttackDamage = 2;
     public int speedValue = 3;
     public int rangeOfVision = 5;
-
+    void OnEnable()
+    {
+        //characterName = name + "Cra";
+    }
     // Add other unique data fields as needed
 
 
