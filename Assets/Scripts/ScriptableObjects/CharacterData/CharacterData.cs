@@ -16,6 +16,7 @@ public class CharacterData : ScriptableObject
     public int AttackDamage = 2;
     public int speedValue = 3;
     public int rangeOfVision = 5;
+    public List<GroundFloorType> canWalkOn;
     void OnEnable()
     {
         //characterName = name + "Cra";

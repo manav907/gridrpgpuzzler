@@ -17,7 +17,7 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
-        //SetMoveDictionary();
+        SetMoveDictionary();
     }
 
     GameObject thisCharacter;
@@ -28,7 +28,7 @@ public class MoveDictionaryManager : MonoBehaviour
         //Debug.Log(thisCharacter.name);//
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
         PositionToGameObject = mapManager.PositionToGameObject;
-        SetMoveDictionary();
+        //SetMoveDictionary();
     }
 
     public Dictionary<string, ActionDataClass> aDCL;
@@ -37,12 +37,12 @@ public class MoveDictionaryManager : MonoBehaviour
         aDCL = new Dictionary<String, ActionDataClass>();
         //Debug.Log(thisCharacter.name);
         List<ActionDataClass> actionDataClass = new List<ActionDataClass>() {
-            new ActionDataClass("Move", MoveCharacter, true, false, true, thisCharacterCDH.rangeOfMove),
-            new ActionDataClass("Attack", AttackHere, true, true, true || false, thisCharacterCDH.rangeOfAttack),
-            new ActionDataClass("End Turn", endTurn, false, false, false, 0),
-            new ActionDataClass("FireBall", ThrowFireBall, false, false, true, 2)
+            new ActionDataClass("Move", MoveCharacter, true, false, true),
+            new ActionDataClass("Attack", AttackHere, true, true, true || false),
+            new ActionDataClass("End Turn", endTurn, false, false, false),
+            new ActionDataClass("FireBall", ThrowFireBall, false, false, true)
             };
-        //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)    
+        //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)    
         foreach (var thisactionData in actionDataClass)
         {
             aDCL.Add(thisactionData.NameofMove, thisactionData);
@@ -57,19 +57,17 @@ public class MoveDictionaryManager : MonoBehaviour
         public bool needsButton;
         public bool GameObjectHere;
         public bool WalkableTileHere;
-        public int rangeOfAction;
         public ActionDataClass()
         {
 
         }
-        public ActionDataClass(string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere, int rangeOfAction)
+        public ActionDataClass(string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)
         {
             this.NameofMove = NameofMove;
             this.actionOfMove = actionOfMove;
             this.needsButton = needsButton;
             this.GameObjectHere = GameObjectHere;
             this.WalkableTileHere = WalkableTileHere;
-            this.rangeOfAction = rangeOfAction;
         }
     }
 
@@ -80,7 +78,8 @@ public class MoveDictionaryManager : MonoBehaviour
         bool needsButton = thisADL.needsButton;
         bool GameObjectHere = thisADL.GameObjectHere;
         bool WalkableTileHere = thisADL.WalkableTileHere;
-        int rangeOfAction = thisADL.rangeOfAction;
+        //int rangeOfAction = thisADL.rangeOfAction;
+        int rangeOfAction = thisCharacterCDH.MoveToRange()[thisActionName];
 
         StartCoroutine(waitUntileButton());
 
@@ -169,10 +168,10 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         return listOfRanges;
     }
+    public Vector3Int checkThisVector;
     void ThrowFireBall()
     {
-        universalCalculator.doThis();
-        reticalManager.reDrawValidTiles(null);
+        
         //Debug.Log("Throw Fire Ball");
         //endTurn();
     }

@@ -116,3 +116,11 @@ public class UniversalCalculator : MonoBehaviour
 
     }
 }
+
+//Defining Global NameSapce
+public enum GroundFloorType
+{
+    Normal,
+    Water,
+    Fire
+};
