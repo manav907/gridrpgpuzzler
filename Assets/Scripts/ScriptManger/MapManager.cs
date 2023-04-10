@@ -33,14 +33,14 @@ public class MapManager : MonoBehaviour
     bool getIsWalkableusingCellData(Vector3Int tilePos)
     {
 
-        bool allNotWalkable = true;
+        bool allNotWalkable = false;
         if (PostoTileDataList.ContainsKey(tilePos))//Disable Later
         {
             foreach (TileData tileData in PostoTileDataList[tilePos])
             {
-                if (!tileData.isWalkable)
+                if (tileData.isWalkable)
                 {
-                    allNotWalkable = false;
+                    allNotWalkable = true;
                     break;
                 }
             }
