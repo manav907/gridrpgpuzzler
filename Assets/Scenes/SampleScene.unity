@@ -562,9 +562,11 @@ MonoBehaviour:
   OrderOfTileMaps:
   - {fileID: 901888352}
   - {fileID: 1533399530}
+  - {fileID: 957306169}
   listOfTileDataScriptableObjects:
   - {fileID: 11400000, guid: cf96a52dbe483ab4ebde73314693d934, type: 2}
   - {fileID: 11400000, guid: cef59eb637bef15499926ba58c5f0c7f, type: 2}
+  - {fileID: 11400000, guid: 058d9a1f02de28e4cafb4f10cdad59a6, type: 2}
 --- !u!114 &732592034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,6 +579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b2efbe357fa1d641aaafd9b322f6234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkThisVector: {x: 0, y: 0, z: 0}
 --- !u!114 &732592035
 MonoBehaviour:
   m_ObjectHideFlags: 0

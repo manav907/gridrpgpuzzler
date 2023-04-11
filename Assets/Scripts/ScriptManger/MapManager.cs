@@ -25,42 +25,16 @@ public class MapManager : MonoBehaviour
                 dataFromTiles.Add(tileFound, ScriptableObjects);
             }
     }
-    public bool getIsWalkable(Vector3Int tilePos)
+    public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, characterDataHolder characterDataHolder)
     {
-        //return getIsWalkableOld(tilePos);
-        return getIsWalkableusingCellData(tilePos);
+        //if (PostoTileDataList.ContainsKey(tilePos))//Remove Later This is For Null Checks
+        foreach (TileData tileData in PostoTileDataList[tilePos])
+            //If This Loop Completes without returning False then that means that all tiles at this tilePos are Walkable            
+            if (!characterDataHolder.canWalkOn.Contains(tileData.floorType))//This does a does not contain check on Floor Type
+                return false;
+        return true;
     }
-    bool getIsWalkableusingCellData(Vector3Int tilePos)
-    {
-
-        bool allNotWalkable = false;
-        if (PostoTileDataList.ContainsKey(tilePos))//Disable Later
-        {
-            foreach (TileData tileData in PostoTileDataList[tilePos])
-            {
-                if (tileData.isWalkable)
-                {
-                    allNotWalkable = true;
-                    break;
-                }
-            }
-        }
-        return allNotWalkable;
-    }
-    bool getIsWalkableOld(Vector3Int tilePos)
-    {
-        for (int i = 0; i < OrderOfTileMaps.Count; i++)
-        {
-            if (OrderOfTileMaps[i].GetTile(tilePos))
-            {
-                TileBase clickedTile = OrderOfTileMaps[i].GetTile(tilePos);
-                bool isWalkable = dataFromTiles[clickedTile].isWalkable;
-                return isWalkable;
-            }
-        }
-        return false;
-    }
-    Dictionary<Vector3Int, List<TileData>> PostoTileDataList;
+    public Dictionary<Vector3Int, List<TileData>> PostoTileDataList;
     void getCellData()
     {
         PostoTileDataList = new Dictionary<Vector3Int, List<TileData>>();

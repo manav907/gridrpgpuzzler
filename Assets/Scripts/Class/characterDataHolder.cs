@@ -8,12 +8,13 @@ using UnityEditor.Animations;
 public class characterDataHolder : MonoBehaviour
 {
     public string characterName;
-    public int health = 3;
-    public int rangeOfMove = 1;
-    public int rangeOfAttack = 2;
-    public int AttackDamage = 2;
-    public int speedValue = 3;
-    public int rangeOfVision = 5;
+    public int health;
+    public int rangeOfMove;
+    public int rangeOfAttack;
+    public int AttackDamage;
+    public int speedValue;
+    public int rangeOfVision;
+    public List<GroundFloorType> canWalkOn;
     public CharacterData thisCharacterData;
     [SerializeField] private TextMesh Heatlh;
 
@@ -42,6 +43,7 @@ public class characterDataHolder : MonoBehaviour
         AttackDamage = thisCharacterData.AttackDamage;
         speedValue = thisCharacterData.speedValue;
         rangeOfVision = thisCharacterData.rangeOfVision;
+        canWalkOn = thisCharacterData.canWalkOn;
 
         //Setting Specific Name
 
@@ -64,6 +66,16 @@ public class characterDataHolder : MonoBehaviour
             animator.SetTrigger("Idle");
 
 
+    }
+    //public Dictionary <string, int> MoveToRange;
+    public Dictionary<string, int> MoveToRange()
+    {
+        var thisDir = new Dictionary<string, int>();
+        thisDir.Add("Move", rangeOfMove);
+        thisDir.Add("Attack", rangeOfAttack);
+        thisDir.Add("FireBall", 0);
+        thisDir.Add("End Turn", 0);
+        return thisDir;
     }
 
     List<string> GetCharacterMoveList()
