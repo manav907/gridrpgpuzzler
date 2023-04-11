@@ -128,6 +128,8 @@ public class MoveDictionaryManager : MonoBehaviour
         //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
         Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
         List<Vector3Int> listOfRanges = universalCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
+        List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.PostoTileDataList.Keys);
+        listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
 
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)

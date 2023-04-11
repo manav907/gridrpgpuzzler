@@ -115,6 +115,19 @@ public class UniversalCalculator : MonoBehaviour
         }
 
     }
+    public List<T> filterOutList<T>(List<T> GivenList, List<T> ListOfValidObjects)
+    {
+        var outputList = new List<T>();
+        foreach (T GivenObjectFromGivenList in GivenList)
+        {
+            if (ListOfValidObjects.Contains(GivenObjectFromGivenList))
+            {
+                outputList.Add(GivenObjectFromGivenList);
+                //Debug.Log(GivenObjectFromGivenList + " was included in the list");
+            }
+        }
+        return outputList;
+    }
 }
 
 //Defining Global NameSapce
