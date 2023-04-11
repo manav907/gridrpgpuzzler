@@ -14,7 +14,7 @@ public class MapManager : MonoBehaviour
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         PositionToGameObject = new Dictionary<Vector3Int, GameObject>();
         setTilesDir();
-        getCellData();
+        setCellData();
     }
     void setTilesDir()
     {
@@ -35,7 +35,7 @@ public class MapManager : MonoBehaviour
         return true;
     }
     public Dictionary<Vector3Int, List<TileData>> PostoTileDataList;
-    void getCellData()
+    void setCellData()
     {
         PostoTileDataList = new Dictionary<Vector3Int, List<TileData>>();
         foreach (Tilemap tilemap in OrderOfTileMaps)
@@ -57,6 +57,14 @@ public class MapManager : MonoBehaviour
             }
             PostoTileDataList[pos].Add(tileData);
         }
+    }
+    public void getCellData(Vector3Int pos)
+    {
+        Debug.Log(pos + " At Pos " + PostoTileDataList[pos]);
+    }
+    public class CellData
+    {
+        List<GroundFloorType> walkRequirements;
     }
 
     public Dictionary<Vector3Int, GameObject> PositionToGameObject;

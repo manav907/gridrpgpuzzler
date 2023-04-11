@@ -171,10 +171,9 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         return listOfRanges;
     }
-    public Vector3Int checkThisVector;
     void ThrowFireBall()
     {
-
+        
         //Debug.Log("Throw Fire Ball");
         //endTurn();
     }

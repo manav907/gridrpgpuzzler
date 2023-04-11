@@ -6,9 +6,16 @@ public class basicCameraController : MonoBehaviour
 {
 
     GameObject thisGameObject;
+    MapManager mapManager;
+    ReticalManager reticalManager;
     void Start()
     {
         thisGameObject = this.gameObject;
+    }
+    public void setVariables(GameObject gameObject)
+    {
+        mapManager = gameObject.GetComponent<MapManager>();
+        reticalManager = gameObject.GetComponent<ReticalManager>();
     }
     int speedreudce = 10;
     // Update is called once per frame
@@ -29,6 +36,10 @@ public class basicCameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             thisGameObject.transform.position = thisGameObject.transform.position + Vector3.right / speedreudce;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            mapManager.getCellData(reticalManager.getMovePoint());
         }
     }
 }
