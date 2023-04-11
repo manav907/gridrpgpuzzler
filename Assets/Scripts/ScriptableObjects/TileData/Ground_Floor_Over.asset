@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Ground_Floor_Over
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: deae00807db5f764ea0ef2695a63b383, type: 2}
   - {fileID: 11400000, guid: d095f88ac495c044d99a4723ecaa26fa, type: 2}
   - {fileID: 11400000, guid: fe4ca965ac9fa004e845bf5de1095b66, type: 2}
   - {fileID: 11400000, guid: 1402461137d3fd044b32cac4b5816fc5, type: 2}
@@ -39,3 +38,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdadfaebc9b8a004ba15cf2dbcdcbd21, type: 2}
   - {fileID: 11400000, guid: 22abbfcc7b15e964a82c336ad6d53910, type: 2}
   isWalkable: 0
+  floorType: 1

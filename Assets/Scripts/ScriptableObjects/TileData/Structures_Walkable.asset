@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c0d1ea88956459f9633cbac401be, type: 3}
   m_Name: Structures_Walkable
   m_EditorClassIdentifier: 
-  tiles: []
+  tiles:
+  - {fileID: 11400000, guid: deae00807db5f764ea0ef2695a63b383, type: 2}
   isWalkable: 1
+  floorType: 0

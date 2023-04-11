@@ -8,5 +8,5 @@ public class TileData : ScriptableObject
     public TileBase[] tiles;
     public bool isWalkable;
 
-    public List<GroundFloorType> floorTypes;
+    public GroundFloorType floorType;
 }

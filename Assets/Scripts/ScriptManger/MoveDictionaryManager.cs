@@ -132,7 +132,8 @@ public class MoveDictionaryManager : MonoBehaviour
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
         {
-            bool isWalkableHere = mapManager.getIsWalkable(listOfRanges[i]);
+            //Normal Checks         
+            bool isWalkableHere = mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], thisCharacterCDH);
             bool isGameObjectHere = PositionToGameObject.ContainsKey(listOfRanges[i]);
             if (isWalkableHere == WalkableTileHere && isGameObjectHere == GameObjectHere)
             {
@@ -171,7 +172,7 @@ public class MoveDictionaryManager : MonoBehaviour
     public Vector3Int checkThisVector;
     void ThrowFireBall()
     {
-        
+
         //Debug.Log("Throw Fire Ball");
         //endTurn();
     }

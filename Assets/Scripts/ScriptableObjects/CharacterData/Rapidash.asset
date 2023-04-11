@@ -20,6 +20,7 @@ MonoBehaviour:
   AttackDamage: 2
   speedValue: 3
   rangeOfVision: 5
+  canWalkOn: 0000000002000000
   Walk:
   - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
   - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
