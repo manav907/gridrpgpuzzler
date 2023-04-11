@@ -28,14 +28,11 @@ public class MapManager : MonoBehaviour
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, characterDataHolder characterDataHolder)
     {
         //if (PostoTileDataList.ContainsKey(tilePos))//Remove Later This is For Null Checks
-        {
-            foreach (TileData tileData in PostoTileDataList[tilePos])
-            {
-                if (characterDataHolder.canWalkOn.Contains(tileData.floorType))
-                    return true;
-            }
-        }
-        return false;
+        foreach (TileData tileData in PostoTileDataList[tilePos])
+            //If This Loop Completes without returning False then that means that all tiles at this tilePos are Walkable            
+            if (!characterDataHolder.canWalkOn.Contains(tileData.floorType))//This does a does not contain check on Floor Type
+                return false;
+        return true;
     }
     public Dictionary<Vector3Int, List<TileData>> PostoTileDataList;
     void getCellData()
