@@ -49,7 +49,6 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-        //Debug.Log(PostoTileDataList.Count);
         void addtoDict(Vector3Int pos, TileData tileData)
         {
             if (!PostoTileDataList.ContainsKey(pos))
