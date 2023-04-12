@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class MapManager : MonoBehaviour
 {
@@ -27,20 +28,13 @@ public class MapManager : MonoBehaviour
     }
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, characterDataHolder characterDataHolder)
     {
-        {
-            //if (cellDataDir.ContainsKey(tilePos))//Remove Later This is For Null Checks
-            foreach (TileData tileData in cellDataDir[tilePos].tileDatas)
-                //If This Loop Completes without returning False then that means that all tiles at this tilePos are Walkable            
-                if (!characterDataHolder.canWalkOn.Contains(tileData.groundFloorType))//This does a does not contain check on Floor Type
-                    return false;
-
-            /*
-            foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)//This Meathod Does not Work if the Scriptible Objects are changed during Run Time
-            //But This is also likely more Efficient
-                if (!characterDataHolder.canWalkOn.Contains(groundFloorType))
-                    return false;
-            */
-        }
+        foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
+            //This get data From SO
+            //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)
+            //This Gets Cached Data
+            //If This Loop Completes without returning False then that means that all tiles at this tilePos are Walkable
+            if (!characterDataHolder.canWalkOn.Contains(groundFloorType))
+                return false;
         return true;
     }
     void setCellData()
@@ -64,9 +58,9 @@ public class MapManager : MonoBehaviour
         {
             if (!cellDataDir.ContainsKey(pos))
             {
-                cellDataDir.Add(pos, new CellData());
+                cellDataDir.Add(pos, new CellData(this.gameObject));
             }
-            cellDataDir[pos].addToCellData(walkRequirements, tilesOnCell, tileData);
+            cellDataDir[pos].addToCellData(pos, walkRequirements, tilesOnCell, tileData);
         }
     }
     public Dictionary<Vector3Int, CellData> cellDataDir;
@@ -75,18 +69,59 @@ public class MapManager : MonoBehaviour
         public List<GroundFloorType> groundFloorTypeWalkRequireMents;
         public List<TileBase> tilesOnCell;
         public List<TileData> tileDatas;
-        public CellData()
+        public Vector3Int cellPos;
+        private GameObject gameController;
+        public CellData(GameObject gameObject)
         {
             groundFloorTypeWalkRequireMents = new List<GroundFloorType>();
             tilesOnCell = new List<TileBase>();
             tileDatas = new List<TileData>();
+            gameController = gameObject;
         }
-        public void addToCellData(GroundFloorType walkRequirements, TileBase tilesOnCell, TileData tileData)
+        public void addToCellData(
+            Vector3Int cellPos,
+            GroundFloorType walkRequirements,
+            TileBase tilesOnCell,
+            TileData tileData)
         {
             this.groundFloorTypeWalkRequireMents.Add(walkRequirements);
             this.tilesOnCell.Add(tilesOnCell);
             this.tileDatas.Add(tileData);
 
+        }
+        List<Tilemap> OrderOfTileMaps;
+        Dictionary<TileBase, TileData> dataFromTiles;
+        void getTileMapData()
+        {
+            MapManager mapManager = gameController.GetComponent<MapManager>();
+            OrderOfTileMaps = mapManager.OrderOfTileMaps;
+            dataFromTiles = mapManager.dataFromTiles;
+        }
+        void refreshCellData()
+        {
+            getTileMapData();
+            List<GroundFloorType> NEWgroundFloorTypeWalkRequireMents = new List<GroundFloorType>();
+            List<TileBase> NEWtilesOnCell = new List<TileBase>();
+            List<TileData> NEWtileDatas = new List<TileData>();
+            foreach (Tilemap tilemap in OrderOfTileMaps)
+            {
+                TileBase tile = tilemap.GetTile(cellPos);
+                if (tile != null)
+                {
+                    GroundFloorType walkRequirements = dataFromTiles[tile].groundFloorType;
+                    TileBase tilesOnCell = tile;
+                    TileData tileData = dataFromTiles[tile];
+
+                    NEWgroundFloorTypeWalkRequireMents.Add(walkRequirements);
+                    NEWtilesOnCell.Add(tilesOnCell);
+                    NEWtileDatas.Add(tileData);
+
+                }
+                else
+                {
+                    Debug.Log("Tile Was Null Somehow");
+                }
+            }
         }
         public void ReadInfo()
         {
