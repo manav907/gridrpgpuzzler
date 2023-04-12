@@ -27,8 +27,6 @@ public class MoveDictionaryManager : MonoBehaviour
         thisCharacter = turnManager.thisCharacter;
         //Debug.Log(thisCharacter.name);//
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
-        PositionToGameObject = mapManager.PositionToGameObject;
-        //SetMoveDictionary();
     }
 
     public Dictionary<string, ActionDataClass> aDCL;
@@ -105,7 +103,6 @@ public class MoveDictionaryManager : MonoBehaviour
 
     }
     Vector3Int tryHere;
-    Dictionary<Vector3Int, GameObject> PositionToGameObject;
     List<Vector3Int> listOfValidtargets;
     bool GetDataForActions()
     {
@@ -136,7 +133,8 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             //Normal Checks         
             bool isWalkableHere = mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], thisCharacterCDH);
-            bool isGameObjectHere = PositionToGameObject.ContainsKey(listOfRanges[i]);
+            bool isGameObjectHere = mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer();
+
             if (isWalkableHere == WalkableTileHere && isGameObjectHere == GameObjectHere)
             {
                 //Debug.Log(listOfAttackRange[i] + "Valid " + i);
@@ -183,6 +181,8 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
+            mapManager.cellDataDir[currentPosition].characterAtCell = null;
+            mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
             thisCharacter.transform.position = tryHere;
             endTurn();
         }
@@ -197,7 +197,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         if (GetDataForActions())
         {
-            characterDataHolder targetCharacter = PositionToGameObject[tryHere].gameObject.GetComponent<characterDataHolder>();
+            characterDataHolder targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<characterDataHolder>();
             characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
             targetCharacter.health -= attackingCharacter.AttackDamage;
             targetCharacter.UpdateCharacterData();

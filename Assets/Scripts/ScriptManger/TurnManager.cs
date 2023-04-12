@@ -60,6 +60,7 @@ public class TurnManager : MonoBehaviour
             thisCDH.thisCharacterData.InstanceID = i;
             thisCDH.InitilizeCharacter(gameController);
             mapManager.AddCharactersToDictionaryAfterInstantiating(thisChar);
+            mapManager.cellDataDir[universalCalculator.convertToVector3Int(thisChar.transform.position)].characterAtCell = thisChar;
         }
     }
 

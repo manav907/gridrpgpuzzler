@@ -41,7 +41,8 @@ public class basicCameraController : MonoBehaviour
         {
             //mapManager.getCellData(reticalManager.getMovePoint());
             Vector3Int thisPos = reticalManager.getMovePoint();
-            mapManager.cellDataDir[thisPos].ReadInfo();
+            Debug.Log("At Pos " + thisPos + " AnyCharacter here was = " + mapManager.cellDataDir[thisPos].isCellHoldingCharacer());
+            //mapManager.cellDataDir[thisPos].ReadInfo();
         }
     }
 }

@@ -37,6 +37,19 @@ public class MapManager : MonoBehaviour
                 return false;
         return true;
     }
+    public bool checkAtPosIfAnotherCharacterIsOccupyingSpace(Vector3Int pos)
+    {
+        if (cellDataDir.ContainsKey(pos))
+        {
+            if (cellDataDir[pos].characterAtCell != null)
+                return true;
+        }
+        else
+        {
+            Debug.Log("Cell Data Dir at " + pos + " was not in Dictionary");
+        }
+        return false;
+    }
     void setCellData()
     {
         cellDataDir = new Dictionary<Vector3Int, CellData>();
@@ -66,18 +79,33 @@ public class MapManager : MonoBehaviour
     public Dictionary<Vector3Int, CellData> cellDataDir;
     public class CellData
     {
+        //Declaring Variables for use in Script
         public List<GroundFloorType> groundFloorTypeWalkRequireMents;
         public List<TileBase> tilesOnCell;
         public List<TileData> tileDatas;
         public Vector3Int cellPos;
-        private GameObject gameController;
-        public CellData(GameObject gameObject)
+        //Declaring Scripts From Game Controller
+        UniversalCalculator universalCalculator;
+        MapManager mapManager;
+        //Declaring Objects From Game Controller
+        List<Tilemap> OrderOfTileMaps;
+        Dictionary<TileBase, TileData> dataFromTiles;
+        //Constructer For Initilizing CellData
+        public CellData(GameObject gameController)
         {
+            //Initilizing Variables
             groundFloorTypeWalkRequireMents = new List<GroundFloorType>();
             tilesOnCell = new List<TileBase>();
             tileDatas = new List<TileData>();
-            gameController = gameObject;
+            //Getting Scripts From Game Controller
+            mapManager = gameController.GetComponent<MapManager>();
+            universalCalculator = gameController.GetComponent<UniversalCalculator>();
+
+            //Getting Objects From Game Controller
+            OrderOfTileMaps = mapManager.OrderOfTileMaps;
+            dataFromTiles = mapManager.dataFromTiles;
         }
+        //Constructer for Adding Data Here
         public void addToCellData(
             Vector3Int cellPos,
             GroundFloorType walkRequirements,
@@ -92,10 +120,7 @@ public class MapManager : MonoBehaviour
         }
         void refreshCellData()
         {
-            UniversalCalculator universalCalculator = gameController.GetComponent<UniversalCalculator>();
-            ///
-
-            getTileMapData();
+            //Creating New Variables to Comapare
             List<GroundFloorType> NEWgroundFloorTypeWalkRequireMents = new List<GroundFloorType>();
             List<TileBase> NEWtilesOnCell = new List<TileBase>();
             List<TileData> NEWtileDatas = new List<TileData>();
@@ -128,25 +153,18 @@ public class MapManager : MonoBehaviour
         {
 
             refreshCellData();
-            UniversalCalculator universalCalculator = gameController.GetComponent<UniversalCalculator>();
             //universalCalculator.DebugEachItemInList(groundFloorTypeWalkRequireMents);
             //universalCalculator.DebugEachItemInList(tilesOnCell);
             //universalCalculator.DebugEachItemInList(tileDatas);
         }
 
-        List<Tilemap> OrderOfTileMaps;
-        Dictionary<TileBase, TileData> dataFromTiles;
-        void getTileMapData()
+        public GameObject characterAtCell;
+        public bool isCellHoldingCharacer()
         {
-            MapManager mapManager = gameController.GetComponent<MapManager>();
-            OrderOfTileMaps = mapManager.OrderOfTileMaps;
-            dataFromTiles = mapManager.dataFromTiles;
+            if (characterAtCell == null)
+                return false;
+            return true;
         }
-        void SetComponents()
-        {
-
-        }
-
     }
 
     public Dictionary<Vector3Int, GameObject> PositionToGameObject;
