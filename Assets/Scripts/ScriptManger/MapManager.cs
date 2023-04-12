@@ -119,7 +119,7 @@ public class MapManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Tile Was Null Somehow");
+                    Debug.Log("Tile Was Null Somehow!");
                 }
             }
         }
