@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
   m_Name: Rapidash
   m_EditorClassIdentifier: 
-  InstanceID: 1
+  InstanceID: 0
   characterName: Rapidash
   health: 5
   rangeOfMove: 2
@@ -21,6 +21,7 @@ MonoBehaviour:
   speedValue: 3
   rangeOfVision: 5
   canWalkOn: 0000000002000000
+  spriteOffsetY: 1
   Walk:
   - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
   - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}

@@ -55,6 +55,20 @@ public class characterDataHolder : MonoBehaviour
 
         //doingAnimController
         animator.runtimeAnimatorController = thisCharacterData.GetanimatorOverrideController(originalController);
+        //Setting Sprite Stuff
+        setSpriteHolderProperties();
+    }
+    void setSpriteHolderProperties()
+    {
+        Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
+        if (spriteHolder != null)
+        {
+            spriteHolder.position = new Vector3(spriteHolder.position.x, thisCharacterData.spriteOffsetY, spriteHolder.position.z);
+        }
+        else
+        {
+            Debug.Log("SpriteHolder not found.");
+        }
     }
 
     [SerializeField] Animator animator;

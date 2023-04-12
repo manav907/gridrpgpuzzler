@@ -9,6 +9,7 @@ public class CharacterData : ScriptableObject
 {
     public int InstanceID;
     public string characterName = "GenericCharacter";
+    //Stats
 
     public int health = 5;
     public int rangeOfMove = 1;
@@ -17,6 +18,8 @@ public class CharacterData : ScriptableObject
     public int speedValue = 3;
     public int rangeOfVision = 5;
     public List<GroundFloorType> canWalkOn;
+    //Sprite Stats
+    public float spriteOffsetY;
     void OnEnable()
     {
         //characterName = name + "Cra";
