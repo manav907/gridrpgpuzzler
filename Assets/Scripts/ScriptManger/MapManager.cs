@@ -28,9 +28,9 @@ public class MapManager : MonoBehaviour
     }
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, characterDataHolder characterDataHolder)
     {
-        foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
-            //This get data From SO
-            //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)
+        //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
+        //This get data From SO
+        foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)
             //This Gets Cached Data
             //If This Loop Completes without returning False then that means that all tiles at this tilePos are Walkable
             if (!characterDataHolder.canWalkOn.Contains(groundFloorType))
@@ -84,21 +84,17 @@ public class MapManager : MonoBehaviour
             TileBase tilesOnCell,
             TileData tileData)
         {
+            this.cellPos = cellPos;
             this.groundFloorTypeWalkRequireMents.Add(walkRequirements);
             this.tilesOnCell.Add(tilesOnCell);
             this.tileDatas.Add(tileData);
 
         }
-        List<Tilemap> OrderOfTileMaps;
-        Dictionary<TileBase, TileData> dataFromTiles;
-        void getTileMapData()
-        {
-            MapManager mapManager = gameController.GetComponent<MapManager>();
-            OrderOfTileMaps = mapManager.OrderOfTileMaps;
-            dataFromTiles = mapManager.dataFromTiles;
-        }
         void refreshCellData()
         {
+            UniversalCalculator universalCalculator = gameController.GetComponent<UniversalCalculator>();
+            ///
+
             getTileMapData();
             List<GroundFloorType> NEWgroundFloorTypeWalkRequireMents = new List<GroundFloorType>();
             List<TileBase> NEWtilesOnCell = new List<TileBase>();
@@ -106,6 +102,7 @@ public class MapManager : MonoBehaviour
             foreach (Tilemap tilemap in OrderOfTileMaps)
             {
                 TileBase tile = tilemap.GetTile(cellPos);
+                //Debug.Log("Checking Tilemap " + tilemap + " and the tile was " + tile + " :: on th position of" + cellPos);
                 if (tile != null)
                 {
                     GroundFloorType walkRequirements = dataFromTiles[tile].groundFloorType;
@@ -119,24 +116,35 @@ public class MapManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Tile Was Null Somehow!");
+                    //Debug.Log("Tile Was Null Somehow! On TileMap " + tilemap);
                 }
+
             }
+            groundFloorTypeWalkRequireMents = universalCalculator.CompareAndReplace(groundFloorTypeWalkRequireMents, NEWgroundFloorTypeWalkRequireMents, false);
+            tilesOnCell = universalCalculator.CompareAndReplace(tilesOnCell, NEWtilesOnCell, false);
+            tileDatas = universalCalculator.CompareAndReplace(tileDatas, NEWtileDatas, false);
         }
         public void ReadInfo()
         {
-            foreach (GroundFloorType groundFloorType in groundFloorTypeWalkRequireMents)
-            {
-                Debug.Log(groundFloorType);
-            }
-            foreach (TileBase tileBase in tilesOnCell)
-            {
-                Debug.Log(tileBase);
-            }
-            foreach (TileData tileData in tileDatas)
-            {
-                Debug.Log(tileData);
-            }
+
+            refreshCellData();
+            UniversalCalculator universalCalculator = gameController.GetComponent<UniversalCalculator>();
+            //universalCalculator.DebugEachItemInList(groundFloorTypeWalkRequireMents);
+            //universalCalculator.DebugEachItemInList(tilesOnCell);
+            //universalCalculator.DebugEachItemInList(tileDatas);
+        }
+
+        List<Tilemap> OrderOfTileMaps;
+        Dictionary<TileBase, TileData> dataFromTiles;
+        void getTileMapData()
+        {
+            MapManager mapManager = gameController.GetComponent<MapManager>();
+            OrderOfTileMaps = mapManager.OrderOfTileMaps;
+            dataFromTiles = mapManager.dataFromTiles;
+        }
+        void SetComponents()
+        {
+
         }
 
     }
