@@ -180,7 +180,6 @@ public class MoveDictionaryManager : MonoBehaviour
         if (GetDataForActions())
         {
             Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
-            mapManager.UpdateCharacterPosition(currentPosition, tryHere, thisCharacter);
             mapManager.cellDataDir[currentPosition].characterAtCell = null;
             mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
             thisCharacter.transform.position = tryHere;

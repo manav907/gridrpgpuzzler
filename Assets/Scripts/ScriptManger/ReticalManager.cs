@@ -50,9 +50,7 @@ public class ReticalManager : MonoBehaviour
     }
     [SerializeField] private Tilemap shadowTilemap;
     [SerializeField] private TileBase shadowTilePrefab;
-    //[SerializeField] 
     Vector3Int topleftoffset;
-    //[SerializeField] 
     Vector3Int downrightoffset;
     public List<Vector3Int> reDrawShadows()
     {
@@ -74,8 +72,8 @@ public class ReticalManager : MonoBehaviour
         //creating tiles
         SetTiles(shadowRange, shadowTilemap, shadowTilePrefab);
         //clearing Tiles for vision
-        var PositionToGameObjectCopy = this.gameObject.GetComponent<MapManager>().PositionToGameObject;
-        foreach (GameObject thisChar in PositionToGameObjectCopy.Values)
+        var OrderOfInteractableCharacters = this.gameObject.GetComponent<TurnManager>().OrderOfInteractableCharacters;
+        foreach (GameObject thisChar in OrderOfInteractableCharacters)
         {
             characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
             if (thisCDH.isPlayerCharacter == true)
@@ -91,9 +89,7 @@ public class ReticalManager : MonoBehaviour
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)
     {
         foreach (Vector3Int pos in range)
-        {
             thistilemap.SetTile(pos, thistile);
-        }
     }
     void ClearAllTiles(Tilemap thistilemap)
     {

@@ -24,6 +24,7 @@ public class TurnManager : MonoBehaviour
 
     void GetGameObjects()
     {
+        CurrentlyAliveCharacters = new List<GameObject>();
         OrderOfInteractableCharacters = new List<GameObject>();
         buttonManager = this.gameObject.GetComponent<ButtonManager>();
         mapManager = this.GetComponent<MapManager>();
@@ -59,12 +60,15 @@ public class TurnManager : MonoBehaviour
             thisCDH.thisCharacterData = listOfCD[i];
             thisCDH.thisCharacterData.InstanceID = i;
             thisCDH.InitilizeCharacter(gameController);
-            mapManager.AddCharactersToDictionaryAfterInstantiating(thisChar);
-            mapManager.cellDataDir[universalCalculator.convertToVector3Int(thisChar.transform.position)].characterAtCell = thisChar;
+            CurrentlyAliveCharacters.Add(thisChar);
+
+            Vector3Int thisPos = universalCalculator.convertToVector3Int(thisChar.transform.position);
+            mapManager.cellDataDir[thisPos].characterAtCell = thisChar;
         }
     }
 
-    [SerializeField] List<GameObject> OrderOfInteractableCharacters;
+    [SerializeField] List<GameObject> CurrentlyAliveCharacters;
+    public List<GameObject> OrderOfInteractableCharacters;
     public GameObject thisCharacter;
     characterDataHolder thisCharacterData;
     [SerializeField] int TurnCountInt = 0;
@@ -115,8 +119,6 @@ public class TurnManager : MonoBehaviour
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
         thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
         moveDictionaryManager.getThisCharacterData();
-
-        mapManager.fixErrors();
     }
     bool noCharactersInCamera(List<Vector3Int> thislist)
     {
@@ -147,21 +149,15 @@ public class TurnManager : MonoBehaviour
         }
         beginTurnIfPossible();
     }
-    Dictionary<Vector3Int, GameObject> PositionToGameObjectCopy;
     void recalculateOrder()
     {
-        PositionToGameObjectCopy = mapManager.PositionToGameObject;
         var shadowrange = reticalManager.reDrawShadows();
         OrderOfInteractableCharacters.Clear();
-
         List<bool> isPlayerCharacter = new List<bool>();
-
-
-        foreach (var position in PositionToGameObjectCopy)
+        foreach (GameObject character in CurrentlyAliveCharacters)
         {
-
-            OrderOfInteractableCharacters.Add(position.Value);
-            bool isPlayer = position.Value.GetComponent<characterDataHolder>().isPlayerCharacter;
+            OrderOfInteractableCharacters.Add(character);
+            bool isPlayer = character.GetComponent<characterDataHolder>().isPlayerCharacter;
             if (!isPlayer)
                 isPlayerCharacter.Add(isPlayer);
         }
