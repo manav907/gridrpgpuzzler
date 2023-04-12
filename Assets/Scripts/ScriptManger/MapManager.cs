@@ -60,20 +60,12 @@ public class MapManager : MonoBehaviour
                 TileBase tile = tilemap.GetTile(pos);
                 if (tile != null)
                 {
-                    GroundFloorType walkRequirements = dataFromTiles[tile].groundFloorType;
-                    TileBase tilesOnCell = tile;
-                    TileData tileData = dataFromTiles[tile];
-                    addCellDatatoDir(pos, walkRequirements, tilesOnCell, tileData);
+                    if (!cellDataDir.ContainsKey(pos))
+                    {
+                        cellDataDir.Add(pos, new CellData(this.gameObject, pos));
+                    }
                 }
             }
-        }
-        void addCellDatatoDir(Vector3Int pos, GroundFloorType walkRequirements, TileBase tilesOnCell, TileData tileData)
-        {
-            if (!cellDataDir.ContainsKey(pos))
-            {
-                cellDataDir.Add(pos, new CellData(this.gameObject));
-            }
-            cellDataDir[pos].addToCellData(pos, walkRequirements, tilesOnCell, tileData);
         }
     }
     public Dictionary<Vector3Int, CellData> cellDataDir;
@@ -91,12 +83,14 @@ public class MapManager : MonoBehaviour
         List<Tilemap> OrderOfTileMaps;
         Dictionary<TileBase, TileData> dataFromTiles;
         //Constructer For Initilizing CellData
-        public CellData(GameObject gameController)
+        public CellData(GameObject gameController, Vector3Int pos)
         {
             //Initilizing Variables
             groundFloorTypeWalkRequireMents = new List<GroundFloorType>();
             tilesOnCell = new List<TileBase>();
             tileDatas = new List<TileData>();
+            //Setting pos this is Very Important
+            this.cellPos = pos;
             //Getting Scripts From Game Controller
             mapManager = gameController.GetComponent<MapManager>();
             universalCalculator = gameController.GetComponent<UniversalCalculator>();
@@ -104,19 +98,8 @@ public class MapManager : MonoBehaviour
             //Getting Objects From Game Controller
             OrderOfTileMaps = mapManager.OrderOfTileMaps;
             dataFromTiles = mapManager.dataFromTiles;
-        }
-        //Constructer for Adding Data Here
-        public void addToCellData(
-            Vector3Int cellPos,
-            GroundFloorType walkRequirements,
-            TileBase tilesOnCell,
-            TileData tileData)
-        {
-            this.cellPos = cellPos;
-            this.groundFloorTypeWalkRequireMents.Add(walkRequirements);
-            this.tilesOnCell.Add(tilesOnCell);
-            this.tileDatas.Add(tileData);
-
+            //Populating CellData Here
+            refreshCellData();
         }
         void refreshCellData()
         {
