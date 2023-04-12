@@ -10,24 +10,25 @@ public class MapManagerEditor : Editor
     {
         mapManager = target as MapManager;
     }
-
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        GUILayout.Space(10);
-
-        if (mapManager.PositionToGameObject != null)
+    /*
+        public override void OnInspectorGUI()
         {
-            EditorGUILayout.LabelField("Position To GameObject Dictionary:");
-            foreach (var pair in mapManager.PositionToGameObject)
+            DrawDefaultInspector();
+
+            GUILayout.Space(10);
+
+            if (mapManager.PositionToGameObject != null)
             {
-                //EditorGUILayout.LabelField($"Key: {pair.Key}, Value: {pair.Value.name}");
-                GUILayout.BeginHorizontal();
-                GUILayout.Label(pair.Key.ToString());
-                GUILayout.Label(pair.Value.name);
-                GUILayout.EndHorizontal();
+                EditorGUILayout.LabelField("Position To GameObject Dictionary:");
+                foreach (var pair in mapManager.PositionToGameObject)
+                {
+                    //EditorGUILayout.LabelField($"Key: {pair.Key}, Value: {pair.Value.name}");
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(pair.Key.ToString());
+                    GUILayout.Label(pair.Value.name);
+                    GUILayout.EndHorizontal();
+                }
             }
         }
-    }
+    */
 }

@@ -107,7 +107,7 @@ public class characterDataHolder : MonoBehaviour
     {
 
         Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
-        thisMapManager.PositionToGameObject.Remove(thisCharPos);
+        thisTurnManager.CurrentlyAliveCharacters.Remove(gameObject);
         Destroy(this.gameObject);
         if (thisTurnManager.thisCharacter == this.gameObject)
         {
@@ -159,10 +159,11 @@ public class characterDataHolder : MonoBehaviour
         }
         List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
         {
-            var PTGODIR = thisMapManager.PositionToGameObject;
+            var OrderOfInteractableCharacters = thisTurnManager.OrderOfInteractableCharacters;
             List<Vector3Int> thisList = new List<Vector3Int>();
-            foreach (Vector3Int thisPos in PTGODIR.Keys)
+            foreach (GameObject thisCharacter in OrderOfInteractableCharacters)
             {
+                var thisPos = thisCharacter.GetComponent<characterDataHolder>().getCharV3Int();
                 if (visionList.Contains(thisPos))
                     thisList.Add(thisPos);
             }

@@ -67,7 +67,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    [SerializeField] List<GameObject> CurrentlyAliveCharacters;
+    public List<GameObject> CurrentlyAliveCharacters;
     public List<GameObject> OrderOfInteractableCharacters;
     public GameObject thisCharacter;
     characterDataHolder thisCharacterData;
