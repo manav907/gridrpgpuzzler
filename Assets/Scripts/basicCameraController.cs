@@ -39,7 +39,8 @@ public class basicCameraController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            mapManager.getCellData(reticalManager.getMovePoint());
+            //mapManager.getCellData(reticalManager.getMovePoint());
+            mapManager.cellDataDir[reticalManager.getMovePoint()].ReadInfo();
         }
     }
 }

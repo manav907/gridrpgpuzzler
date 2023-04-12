@@ -490,11 +490,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74e6401d72ec7b41a81825338b98272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basicCameraController: {fileID: 519420033}
   characterPrefab: {fileID: 642291960666392779, guid: 86ecbaaea281cff4caa430f1a334e245, type: 3}
   characterHolder: {fileID: 1608062619}
   listOfCD:
   - {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
-  - {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
   OrderOfInteractableCharacters: []
   thisCharacter: {fileID: 0}
   TurnCountInt: 0
@@ -579,7 +579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b2efbe357fa1d641aaafd9b322f6234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkThisVector: {x: 0, y: 0, z: 0}
 --- !u!114 &732592035
 MonoBehaviour:
   m_ObjectHideFlags: 0

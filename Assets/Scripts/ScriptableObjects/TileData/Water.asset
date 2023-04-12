@@ -37,5 +37,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5c370c5f0c379be44ad815f4e6b90fcc, type: 2}
   - {fileID: 11400000, guid: bdadfaebc9b8a004ba15cf2dbcdcbd21, type: 2}
   - {fileID: 11400000, guid: 22abbfcc7b15e964a82c336ad6d53910, type: 2}
-  isWalkable: 0
-  floorType: 1
+  groundFloorType: 1
