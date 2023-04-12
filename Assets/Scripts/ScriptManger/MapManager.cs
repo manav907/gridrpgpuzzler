@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class MapManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class MapManager : MonoBehaviour
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         PositionToGameObject = new Dictionary<Vector3Int, GameObject>();
         setTilesDir();
-        getCellData();
+        setCellData();
     }
     void setTilesDir()
     {
@@ -27,17 +28,18 @@ public class MapManager : MonoBehaviour
     }
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, characterDataHolder characterDataHolder)
     {
-        //if (PostoTileDataList.ContainsKey(tilePos))//Remove Later This is For Null Checks
-        foreach (TileData tileData in PostoTileDataList[tilePos])
-            //If This Loop Completes without returning False then that means that all tiles at this tilePos are Walkable            
-            if (!characterDataHolder.canWalkOn.Contains(tileData.floorType))//This does a does not contain check on Floor Type
+        foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
+            //This get data From SO
+            //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)
+            //This Gets Cached Data
+            //If This Loop Completes without returning False then that means that all tiles at this tilePos are Walkable
+            if (!characterDataHolder.canWalkOn.Contains(groundFloorType))
                 return false;
         return true;
     }
-    public Dictionary<Vector3Int, List<TileData>> PostoTileDataList;
-    void getCellData()
+    void setCellData()
     {
-        PostoTileDataList = new Dictionary<Vector3Int, List<TileData>>();
+        cellDataDir = new Dictionary<Vector3Int, CellData>();
         foreach (Tilemap tilemap in OrderOfTileMaps)
         {
             foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
@@ -45,18 +47,98 @@ public class MapManager : MonoBehaviour
                 TileBase tile = tilemap.GetTile(pos);
                 if (tile != null)
                 {
-                    addtoDict(pos, dataFromTiles[tile]);
+                    GroundFloorType walkRequirements = dataFromTiles[tile].groundFloorType;
+                    TileBase tilesOnCell = tile;
+                    TileData tileData = dataFromTiles[tile];
+                    addCellDatatoDir(pos, walkRequirements, tilesOnCell, tileData);
                 }
             }
         }
-        void addtoDict(Vector3Int pos, TileData tileData)
+        void addCellDatatoDir(Vector3Int pos, GroundFloorType walkRequirements, TileBase tilesOnCell, TileData tileData)
         {
-            if (!PostoTileDataList.ContainsKey(pos))
+            if (!cellDataDir.ContainsKey(pos))
             {
-                PostoTileDataList.Add(pos, new List<TileData>());
+                cellDataDir.Add(pos, new CellData(this.gameObject));
             }
-            PostoTileDataList[pos].Add(tileData);
+            cellDataDir[pos].addToCellData(pos, walkRequirements, tilesOnCell, tileData);
         }
+    }
+    public Dictionary<Vector3Int, CellData> cellDataDir;
+    public class CellData
+    {
+        public List<GroundFloorType> groundFloorTypeWalkRequireMents;
+        public List<TileBase> tilesOnCell;
+        public List<TileData> tileDatas;
+        public Vector3Int cellPos;
+        private GameObject gameController;
+        public CellData(GameObject gameObject)
+        {
+            groundFloorTypeWalkRequireMents = new List<GroundFloorType>();
+            tilesOnCell = new List<TileBase>();
+            tileDatas = new List<TileData>();
+            gameController = gameObject;
+        }
+        public void addToCellData(
+            Vector3Int cellPos,
+            GroundFloorType walkRequirements,
+            TileBase tilesOnCell,
+            TileData tileData)
+        {
+            this.groundFloorTypeWalkRequireMents.Add(walkRequirements);
+            this.tilesOnCell.Add(tilesOnCell);
+            this.tileDatas.Add(tileData);
+
+        }
+        List<Tilemap> OrderOfTileMaps;
+        Dictionary<TileBase, TileData> dataFromTiles;
+        void getTileMapData()
+        {
+            MapManager mapManager = gameController.GetComponent<MapManager>();
+            OrderOfTileMaps = mapManager.OrderOfTileMaps;
+            dataFromTiles = mapManager.dataFromTiles;
+        }
+        void refreshCellData()
+        {
+            getTileMapData();
+            List<GroundFloorType> NEWgroundFloorTypeWalkRequireMents = new List<GroundFloorType>();
+            List<TileBase> NEWtilesOnCell = new List<TileBase>();
+            List<TileData> NEWtileDatas = new List<TileData>();
+            foreach (Tilemap tilemap in OrderOfTileMaps)
+            {
+                TileBase tile = tilemap.GetTile(cellPos);
+                if (tile != null)
+                {
+                    GroundFloorType walkRequirements = dataFromTiles[tile].groundFloorType;
+                    TileBase tilesOnCell = tile;
+                    TileData tileData = dataFromTiles[tile];
+
+                    NEWgroundFloorTypeWalkRequireMents.Add(walkRequirements);
+                    NEWtilesOnCell.Add(tilesOnCell);
+                    NEWtileDatas.Add(tileData);
+
+                }
+                else
+                {
+                    Debug.Log("Tile Was Null Somehow");
+                }
+            }
+        }
+        public void ReadInfo()
+        {
+            foreach (GroundFloorType groundFloorType in groundFloorTypeWalkRequireMents)
+            {
+                Debug.Log(groundFloorType);
+            }
+            foreach (TileBase tileBase in tilesOnCell)
+            {
+                Debug.Log(tileBase);
+            }
+            foreach (TileData tileData in tileDatas)
+            {
+                Debug.Log(tileData);
+            }
+        }
+
     }
 
     public Dictionary<Vector3Int, GameObject> PositionToGameObject;

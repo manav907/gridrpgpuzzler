@@ -13,12 +13,14 @@ public class TurnManager : MonoBehaviour
         beginTurnIfPossible();
     }
     GameObject gameController;
-    private ButtonManager buttonManager;
-    private MapManager mapManager;
+    ButtonManager buttonManager;
+    MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
     ReticalManager reticalManager;
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
+    [SerializeField] basicCameraController basicCameraController;
+
 
     void GetGameObjects()
     {
@@ -35,6 +37,7 @@ public class TurnManager : MonoBehaviour
         mapManager.setVariables();
         moveDictionaryManager.setVariables();
         reticalManager.setVariables();
+        basicCameraController.setVariables(gameController);
     }
     [SerializeField] GameObject characterPrefab;
 

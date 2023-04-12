@@ -6,7 +6,5 @@ using UnityEngine.Tilemaps;
 public class TileData : ScriptableObject
 {
     public TileBase[] tiles;
-    //public bool isWalkable;
-
-    public GroundFloorType floorType;
+    public GroundFloorType groundFloorType;
 }
