@@ -32,7 +32,7 @@ public class characterDataHolder : MonoBehaviour
 
 
         setVariables();
-        UpdateCharacterData();
+        CheckIfCharacterIsDead();
     }
     void setVariables()
     {
@@ -105,23 +105,21 @@ public class characterDataHolder : MonoBehaviour
         });
         return defaultMovesAvaliable;
     }
-    public void UpdateCharacterData()
+    public bool CheckIfCharacterIsDead()
     {
-
-
         Heatlh.text = health + "";
         if (health <= 0)
         {
             Debug.Log("I am dying");
             KillCharacter();
-            //Destroy(this.gameObject);
+            return true;
         }
+        return false;
     }
     void KillCharacter()
     {
-
         Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
-        thisTurnManager.CurrentlyAliveCharacters.Remove(gameObject);
+        thisTurnManager.OrderOfInteractableCharacters.Remove(gameObject);
         Destroy(this.gameObject);
         if (thisTurnManager.thisCharacter == this.gameObject)
         {

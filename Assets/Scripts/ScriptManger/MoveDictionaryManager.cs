@@ -199,8 +199,9 @@ public class MoveDictionaryManager : MonoBehaviour
             characterDataHolder targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<characterDataHolder>();
             characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
             targetCharacter.health -= attackingCharacter.AttackDamage;
-            targetCharacter.UpdateCharacterData();
-            endTurn();
+
+            if (targetCharacter.CheckIfCharacterIsDead() == false)
+                endTurn();
         }
         //else
         {
@@ -213,7 +214,6 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         characterDataHolder targetCharacter = thisCharacter.gameObject.GetComponent<characterDataHolder>();
         targetCharacter.ToggleCharacterTurnAnimation(false); ;
-        targetCharacter.UpdateCharacterData();
         this.GetComponent<TurnManager>().endTurn();
 
     }

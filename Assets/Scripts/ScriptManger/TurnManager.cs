@@ -24,7 +24,6 @@ public class TurnManager : MonoBehaviour
 
     void GetGameObjects()
     {
-        CurrentlyAliveCharacters = new List<GameObject>();
         OrderOfInteractableCharacters = new List<GameObject>();
         buttonManager = this.gameObject.GetComponent<ButtonManager>();
         mapManager = this.GetComponent<MapManager>();
@@ -60,14 +59,12 @@ public class TurnManager : MonoBehaviour
             thisCDH.thisCharacterData = listOfCD[i];
             thisCDH.thisCharacterData.InstanceID = i;
             thisCDH.InitilizeCharacter(gameController);
-            CurrentlyAliveCharacters.Add(thisChar);
+            OrderOfInteractableCharacters.Add(thisChar);
 
             Vector3Int thisPos = universalCalculator.convertToVector3Int(thisChar.transform.position);
             mapManager.cellDataDir[thisPos].characterAtCell = thisChar;
         }
     }
-
-    public List<GameObject> CurrentlyAliveCharacters;
     public List<GameObject> OrderOfInteractableCharacters;
     public GameObject thisCharacter;
     characterDataHolder thisCharacterData;
@@ -82,11 +79,6 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Null char");
             endTurn();
-        }
-        else if (noPlayersRemain)
-        {
-            Debug.Log("No Players Remain");
-            triggerGameEnd();
         }
         else
             beginTurnThisCharacter();
@@ -152,21 +144,6 @@ public class TurnManager : MonoBehaviour
     void recalculateOrder()
     {
         var shadowrange = reticalManager.reDrawShadows();
-        OrderOfInteractableCharacters.Clear();
-        List<bool> isPlayerCharacter = new List<bool>();
-        foreach (GameObject character in CurrentlyAliveCharacters)
-        {
-            OrderOfInteractableCharacters.Add(character);
-            bool isPlayer = character.GetComponent<characterDataHolder>().isPlayerCharacter;
-            if (!isPlayer)
-                isPlayerCharacter.Add(isPlayer);
-        }
-        if (isPlayerCharacter.Count == OrderOfInteractableCharacters.Count)
-        {
-            noPlayersRemain = true;
-        }
         OrderOfInteractableCharacters = universalCalculator.SortBySpeed(OrderOfInteractableCharacters);
-
     }
-    bool noPlayersRemain = false;
 }
