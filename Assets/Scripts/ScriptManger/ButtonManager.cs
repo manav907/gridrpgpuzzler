@@ -32,10 +32,10 @@ public class ButtonManager : MonoBehaviour
             Destroy(ActionButtons[i]);
         ActionButtons.Clear();
     }
-    public void InstantiateButtons(List<AbilityName> listFromCDH)
+    public void InstantiateButtons(List<AbilityName> listOfAbilitesFromCDH)
     {
         clearButtons();
-        for (int i = 0; i < listFromCDH.Count; i++)
+        for (int i = 0; i < listOfAbilitesFromCDH.Count; i++)
         {
             ActionButtons.Add(Instantiate(ButtonPrefab));//Just Instanting
             //Setting Transforms
@@ -46,7 +46,8 @@ public class ButtonManager : MonoBehaviour
             TMPthis = ActionButtons[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
             // getting cache for captured variables
             //int captured = i;//no Longer needed
-            string listCDHTEXT = listFromCDH[i].ToString();//This is the cache now
+            string listCDHTEXT = listOfAbilitesFromCDH[i].ToString();//This is the cache now
+            AbilityName abilityName = listOfAbilitesFromCDH[i];
             // using variables to set text
             TMPthis.text = listCDHTEXT;
             ActionButtons[i].name = listCDHTEXT + " Button";
@@ -56,7 +57,7 @@ public class ButtonManager : MonoBehaviour
             thisButton.onClick.RemoveAllListeners();
             thisButton.onClick.AddListener(delegate
             {
-                moveDictionaryManager.doAction(listCDHTEXT);
+                moveDictionaryManager.doAction(abilityName);
                 //Debug.Log("Button clicked: " + listCDHTEXT);
             });
         }

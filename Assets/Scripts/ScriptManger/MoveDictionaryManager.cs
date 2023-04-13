@@ -29,28 +29,27 @@ public class MoveDictionaryManager : MonoBehaviour
         thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
     }
 
-    public Dictionary<string, ActionDataClass> aDCL;
+    public Dictionary<AbilityName, ActionDataClass> aDCL;
     void SetMoveDictionary()
     {
-        aDCL = new Dictionary<String, ActionDataClass>();
+        aDCL = new Dictionary<AbilityName, ActionDataClass>();
         //Debug.Log(thisCharacter.name);
         List<ActionDataClass> actionDataClass = new List<ActionDataClass>() {
-            new ActionDataClass("Move", MoveCharacter, true, false, true, AbilityName.Move),
-            new ActionDataClass("Attack", AttackHere, true, true, true || false,AbilityName.Attack),
-            new ActionDataClass("EndTurn", endTurn, false, false, false,AbilityName.EndTurn),
-            new ActionDataClass("FireBall", ThrowFireBall, false, false, true,AbilityName.FireBall)
+            new ActionDataClass(AbilityName.Move,MoveCharacter, true, false, true ),
+            new ActionDataClass(AbilityName.Attack,AttackHere, true, true, true || false),
+            new ActionDataClass(AbilityName.EndTurn,endTurn, false, false, false),
+            new ActionDataClass(AbilityName.FireBall,ThrowFireBall, false, false, true)
             };
         //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)    
         foreach (var thisactionData in actionDataClass)
         {
-            aDCL.Add(thisactionData.nameofMove, thisactionData);
+            aDCL.Add(thisactionData.abilityName, thisactionData);
         }
 
 
     }
     public class ActionDataClass
     {
-        public string nameofMove;
         public AbilityName abilityName;
         public Action actionOfMove;
         public bool needsButton;
@@ -60,9 +59,8 @@ public class MoveDictionaryManager : MonoBehaviour
         {
 
         }
-        public ActionDataClass(string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere, AbilityName abilityName)
+        public ActionDataClass(AbilityName abilityName, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)
         {
-            this.nameofMove = NameofMove;
             this.abilityName = abilityName;
             this.actionOfMove = actionOfMove;
             this.needsButton = needsButton;
@@ -71,15 +69,15 @@ public class MoveDictionaryManager : MonoBehaviour
         }
     }
 
-    public void doAction(string thisActionName)
+    public void doAction(AbilityName abilityName)
     {
-        ActionDataClass thisADL = aDCL[thisActionName];
+        ActionDataClass thisADL = aDCL[abilityName];
         Action actionOfMove = thisADL.actionOfMove;
         bool needsButton = thisADL.needsButton;
         bool GameObjectHere = thisADL.gameObjectHere;
         bool WalkableTileHere = thisADL.walkableTileHere;
         //int rangeOfAction = thisADL.rangeOfAction;
-        int rangeOfAction = thisCharacterCDH.MoveToRange()[thisActionName];
+        int rangeOfAction = thisCharacterCDH.MoveToRange()[abilityName];
 
         StartCoroutine(waitUntileButton());
 

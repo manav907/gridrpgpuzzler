@@ -82,13 +82,13 @@ public class characterDataHolder : MonoBehaviour
 
     }
     //public Dictionary <string, int> MoveToRange;
-    public Dictionary<string, int> MoveToRange()
+    public Dictionary<AbilityName, int> MoveToRange()
     {
-        var thisDir = new Dictionary<string, int>();
-        thisDir.Add("Move", rangeOfMove);
-        thisDir.Add("Attack", rangeOfAttack);
-        thisDir.Add("FireBall", 0);
-        thisDir.Add("EndTurn", 0);
+        var thisDir = new Dictionary<AbilityName, int>();
+        thisDir.Add(AbilityName.Move, rangeOfMove);
+        thisDir.Add(AbilityName.Attack, rangeOfAttack);
+        thisDir.Add(AbilityName.FireBall, 0);
+        thisDir.Add(AbilityName.EndTurn, 0);
         return thisDir;
     }
 
@@ -151,7 +151,7 @@ public class characterDataHolder : MonoBehaviour
         if (targetList.Count == 0)
         {
             Debug.Log("Ideling");
-            moveDictionaryManager.doAction("End Turn");
+            moveDictionaryManager.doAction(AbilityName.EndTurn);
             return;
         }
         else
@@ -159,13 +159,13 @@ public class characterDataHolder : MonoBehaviour
             currentTarget = targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];
             if (attackRangeList.Contains(currentTarget))
             {
-                moveDictionaryManager.doAction("Attack");
+                moveDictionaryManager.doAction(AbilityName.Attack);
                 //Debug.Log("Health of " + this.gameObject.name + " is " + health + "Attacked character");
                 //Attack Character
             }
             else if (true)//if character not in attack range
             {
-                moveDictionaryManager.doAction("Move");
+                moveDictionaryManager.doAction(AbilityName.Move);
             }
 
         }
