@@ -21,12 +21,12 @@ public class MoveDictionaryManager : MonoBehaviour
     }
 
     GameObject thisCharacter;
-    characterDataHolder thisCharacterCDH;
+    CharacterControllerScript thisCharacterCDH;
     public void getThisCharacterData()
     {
         thisCharacter = turnManager.thisCharacter;
         //Debug.Log(thisCharacter.name);//
-        thisCharacterCDH = thisCharacter.GetComponent<characterDataHolder>();
+        thisCharacterCDH = thisCharacter.GetComponent<CharacterControllerScript>();
     }
 
     public Dictionary<AbilityName, ActionDataClass> aDCL;
@@ -196,8 +196,8 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         if (GetDataForActions())
         {
-            characterDataHolder targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<characterDataHolder>();
-            characterDataHolder attackingCharacter = thisCharacter.GetComponent<characterDataHolder>();
+            CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+            CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
             targetCharacter.health -= attackingCharacter.AttackDamage;
 
             if (targetCharacter.CheckIfCharacterIsDead() == false)
@@ -212,7 +212,7 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     void endTurn()
     {
-        characterDataHolder targetCharacter = thisCharacter.gameObject.GetComponent<characterDataHolder>();
+        CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
         targetCharacter.ToggleCharacterTurnAnimation(false); ;
         this.GetComponent<TurnManager>().endTurn();
 

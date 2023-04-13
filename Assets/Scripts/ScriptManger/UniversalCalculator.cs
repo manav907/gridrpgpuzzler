@@ -111,7 +111,7 @@ public class UniversalCalculator : MonoBehaviour
         //declaring necessary function to be used as a delegate
         float speed(GameObject thisGameObject)
         {
-            return thisGameObject.GetComponent<characterDataHolder>().speedValue;
+            return thisGameObject.GetComponent<CharacterControllerScript>().speedValue;
         }
 
     }

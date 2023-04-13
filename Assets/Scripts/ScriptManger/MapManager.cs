@@ -25,7 +25,7 @@ public class MapManager : MonoBehaviour
                 dataFromTiles.Add(tileFound, ScriptableObjects);
             }
     }
-    public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, characterDataHolder characterDataHolder)
+    public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, CharacterControllerScript characterDataHolder)
     {
         //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
         //This get data From SO

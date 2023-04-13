@@ -55,7 +55,7 @@ public class TurnManager : MonoBehaviour
             thisChar.name += i;
 
             //Assigning CharacterData
-            characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
+            CharacterControllerScript thisCDH = thisChar.GetComponent<CharacterControllerScript>();
             thisCDH.thisCharacterData = listOfCD[i];
             thisCDH.thisCharacterData.InstanceID = i;
             thisCDH.InitilizeCharacter(gameController);
@@ -67,7 +67,7 @@ public class TurnManager : MonoBehaviour
     }
     public List<GameObject> OrderOfInteractableCharacters;
     public GameObject thisCharacter;
-    characterDataHolder thisCharacterData;
+    CharacterControllerScript thisCharacterData;
     [SerializeField] int TurnCountInt = 0;
     public void beginTurnIfPossible()
     {
@@ -109,7 +109,7 @@ public class TurnManager : MonoBehaviour
     void setCharacterData()
     {
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
-        thisCharacterData = thisCharacter.gameObject.GetComponent<characterDataHolder>();
+        thisCharacterData = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
         moveDictionaryManager.getThisCharacterData();
     }
     bool noCharactersInCamera(List<Vector3Int> thislist)

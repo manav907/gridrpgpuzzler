@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor.Animations;
 
 
-public class characterDataHolder : MonoBehaviour
+public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
     public int health;
@@ -175,7 +175,7 @@ public class characterDataHolder : MonoBehaviour
             List<Vector3Int> thisList = new List<Vector3Int>();
             foreach (GameObject thisCharacter in OrderOfInteractableCharacters)
             {
-                var thisPos = thisCharacter.GetComponent<characterDataHolder>().getCharV3Int();
+                var thisPos = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
                 if (visionList.Contains(thisPos))
                     thisList.Add(thisPos);
             }

@@ -75,7 +75,7 @@ public class ReticalManager : MonoBehaviour
         var OrderOfInteractableCharacters = this.gameObject.GetComponent<TurnManager>().OrderOfInteractableCharacters;
         foreach (GameObject thisChar in OrderOfInteractableCharacters)
         {
-            characterDataHolder thisCDH = thisChar.GetComponent<characterDataHolder>();
+            CharacterControllerScript thisCDH = thisChar.GetComponent<CharacterControllerScript>();
             if (thisCDH.isPlayerCharacter == true)
                 setVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
         }
