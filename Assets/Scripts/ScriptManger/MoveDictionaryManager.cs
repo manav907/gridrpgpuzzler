@@ -35,37 +35,39 @@ public class MoveDictionaryManager : MonoBehaviour
         aDCL = new Dictionary<String, ActionDataClass>();
         //Debug.Log(thisCharacter.name);
         List<ActionDataClass> actionDataClass = new List<ActionDataClass>() {
-            new ActionDataClass("Move", MoveCharacter, true, false, true),
-            new ActionDataClass("Attack", AttackHere, true, true, true || false),
-            new ActionDataClass("End Turn", endTurn, false, false, false),
-            new ActionDataClass("FireBall", ThrowFireBall, false, false, true)
+            new ActionDataClass("Move", MoveCharacter, true, false, true, AbilityName.Move),
+            new ActionDataClass("Attack", AttackHere, true, true, true || false,AbilityName.Attack),
+            new ActionDataClass("EndTurn", endTurn, false, false, false,AbilityName.EndTurn),
+            new ActionDataClass("FireBall", ThrowFireBall, false, false, true,AbilityName.FireBall)
             };
         //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)    
         foreach (var thisactionData in actionDataClass)
         {
-            aDCL.Add(thisactionData.NameofMove, thisactionData);
+            aDCL.Add(thisactionData.nameofMove, thisactionData);
         }
 
 
     }
     public class ActionDataClass
     {
-        public string NameofMove;
+        public string nameofMove;
+        public AbilityName abilityName;
         public Action actionOfMove;
         public bool needsButton;
-        public bool GameObjectHere;
-        public bool WalkableTileHere;
+        public bool gameObjectHere;
+        public bool walkableTileHere;
         public ActionDataClass()
         {
 
         }
-        public ActionDataClass(string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)
+        public ActionDataClass(string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere, AbilityName abilityName)
         {
-            this.NameofMove = NameofMove;
+            this.nameofMove = NameofMove;
+            this.abilityName = abilityName;
             this.actionOfMove = actionOfMove;
             this.needsButton = needsButton;
-            this.GameObjectHere = GameObjectHere;
-            this.WalkableTileHere = WalkableTileHere;
+            this.gameObjectHere = GameObjectHere;
+            this.walkableTileHere = WalkableTileHere;
         }
     }
 
@@ -74,8 +76,8 @@ public class MoveDictionaryManager : MonoBehaviour
         ActionDataClass thisADL = aDCL[thisActionName];
         Action actionOfMove = thisADL.actionOfMove;
         bool needsButton = thisADL.needsButton;
-        bool GameObjectHere = thisADL.GameObjectHere;
-        bool WalkableTileHere = thisADL.WalkableTileHere;
+        bool GameObjectHere = thisADL.gameObjectHere;
+        bool WalkableTileHere = thisADL.walkableTileHere;
         //int rangeOfAction = thisADL.rangeOfAction;
         int rangeOfAction = thisCharacterCDH.MoveToRange()[thisActionName];
 
@@ -217,4 +219,12 @@ public class MoveDictionaryManager : MonoBehaviour
         this.GetComponent<TurnManager>().endTurn();
 
     }
+}
+
+public enum AbilityName
+{
+    Move,
+    Attack,
+    EndTurn,
+    FireBall
 }

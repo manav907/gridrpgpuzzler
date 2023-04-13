@@ -68,6 +68,7 @@ public class MapManager : MonoBehaviour
             }
         }
     }
+
     public Dictionary<Vector3Int, CellData> cellDataDir;
     public class CellData
     {
@@ -150,3 +151,12 @@ public class MapManager : MonoBehaviour
         }
     }
 }
+
+
+//Defining Global NameSapce
+public enum GroundFloorType
+{
+    Normal,
+    Water,
+    Fire
+};

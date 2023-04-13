@@ -32,7 +32,7 @@ public class ButtonManager : MonoBehaviour
             Destroy(ActionButtons[i]);
         ActionButtons.Clear();
     }
-    public void InstantiateButtons(List<String> listFromCDH)
+    public void InstantiateButtons(List<AbilityName> listFromCDH)
     {
         clearButtons();
         for (int i = 0; i < listFromCDH.Count; i++)
@@ -46,7 +46,7 @@ public class ButtonManager : MonoBehaviour
             TMPthis = ActionButtons[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
             // getting cache for captured variables
             //int captured = i;//no Longer needed
-            string listCDHTEXT = listFromCDH[i];//This is the cache now
+            string listCDHTEXT = listFromCDH[i].ToString();//This is the cache now
             // using variables to set text
             TMPthis.text = listCDHTEXT;
             ActionButtons[i].name = listCDHTEXT + " Button";

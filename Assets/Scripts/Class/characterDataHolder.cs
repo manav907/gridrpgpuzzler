@@ -88,20 +88,20 @@ public class characterDataHolder : MonoBehaviour
         thisDir.Add("Move", rangeOfMove);
         thisDir.Add("Attack", rangeOfAttack);
         thisDir.Add("FireBall", 0);
-        thisDir.Add("End Turn", 0);
+        thisDir.Add("EndTurn", 0);
         return thisDir;
     }
 
-    List<string> GetCharacterMoveList()
+    List<AbilityName> GetCharacterMoveList()
     {
-        List<string> defaultMovesAvaliable;
-        defaultMovesAvaliable = new List<string>();
-        defaultMovesAvaliable.AddRange(new List<string>
+        List<AbilityName> defaultMovesAvaliable;
+        defaultMovesAvaliable = new List<AbilityName>();
+        defaultMovesAvaliable.AddRange(new List<AbilityName>
         {
-            "Move",
-            "Attack",
-            "FireBall",
-            "End Turn"
+            AbilityName.Move,
+            AbilityName.Attack,
+            AbilityName.FireBall,
+            AbilityName.EndTurn
         });
         return defaultMovesAvaliable;
     }
