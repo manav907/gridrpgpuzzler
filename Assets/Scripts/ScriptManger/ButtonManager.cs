@@ -25,6 +25,9 @@ public class ButtonManager : MonoBehaviour
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
+
+        buttonHight = ButtonPrefab.GetComponent<RectTransform>().rect.height;
+
     }
     public void clearButtons()
     {
@@ -32,6 +35,8 @@ public class ButtonManager : MonoBehaviour
             Destroy(ActionButtons[i]);
         ActionButtons.Clear();
     }
+    [SerializeField] float buttonSpacing = 0;
+    float buttonHight;
     public void InstantiateButtons(List<AbilityName> listOfAbilitesFromCDH)
     {
         clearButtons();
@@ -40,7 +45,7 @@ public class ButtonManager : MonoBehaviour
             ActionButtons.Add(Instantiate(ButtonPrefab));//Just Instanting
             //Setting Transforms
             ActionButtons[i].transform.SetParent(ButtonHolder.transform, false);
-            ActionButtons[i].transform.localPosition = new Vector3(ActionButtons[i].transform.localPosition.x, -50 * i);
+            ActionButtons[i].transform.localPosition = new Vector3(0, -i * (buttonHight + buttonSpacing), 0);
             //getting TMP to assign Text
             TMPro.TextMeshProUGUI TMPthis;
             TMPthis = ActionButtons[i].transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
