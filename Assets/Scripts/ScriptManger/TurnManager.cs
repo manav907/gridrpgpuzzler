@@ -71,41 +71,29 @@ public class TurnManager : MonoBehaviour
     [SerializeField] int TurnCountInt = 0;
     public void beginTurnIfPossible()
     {
-        if (OrderOfInteractableCharacters.Count == TurnCountInt)//this works because Count Starts from 1 not 0
-        {
+        var shadowrange = reticalManager.reDrawShadows();
+        if (noCharactersInCamera(shadowrange))
             triggerGameEnd();
-        }
-        else if (OrderOfInteractableCharacters[TurnCountInt] == null)
-        {
-            Debug.Log("Null char");
-            endTurn();
-        }
         else
-            beginTurnThisCharacter();
-    }
-    void triggerGameEnd()
-    {
-        Debug.Log("Game Over");
-        buttonManager.clearButtons();
+        {
+            setCharacterData();
+            if (shadowrange.Contains(thisCharacterData.getCharV3Int()))
+            {
+                thisCharacterData.BeginThisCharacterTurn();
+            }
+            else
+            {
+                Debug.Log("Turn Skiped");
+                endTurn();
+            }
+        }
+        void triggerGameEnd()
+        {
+            Debug.Log("Game Over");
+            buttonManager.clearButtons();
+        }
     }
 
-    void beginTurnThisCharacter()
-    {
-        setCharacterData();
-        var shadowrange = reticalManager.reDrawShadows();
-        if (shadowrange.Contains(thisCharacterData.getCharV3Int()))
-        {
-            thisCharacterData.BeginThisCharacterTurn();
-        }
-        else
-        {
-            Debug.Log("Turn Skiped");
-            if (noCharactersInCamera(shadowrange))
-                triggerGameEnd();
-            else
-                endTurn();
-        }
-    }
     void setCharacterData()
     {
         thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
