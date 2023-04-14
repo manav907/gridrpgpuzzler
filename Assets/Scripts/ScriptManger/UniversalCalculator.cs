@@ -29,7 +29,6 @@ public class UniversalCalculator : MonoBehaviour
         }
         for (int x = startx; x <= endx; x++)
         {
-
             for (int y = starty; y <= endy; y++)// problem when y > than y
             {
                 Vector3Int atXY = new Vector3Int(x, y, 0);
@@ -61,19 +60,16 @@ public class UniversalCalculator : MonoBehaviour
     }
     List<T> convertSortedListToNormalList<T>(SortedList<float, T> inputList)
     {
-        List<T> outputList = new List<T>();
-        foreach (var eachValue in inputList.Values)
-        {
-            outputList.Add(eachValue);
-        }
-        return outputList;
+        return inputList.Values.ToList();
     }
     List<T> getReverseList<T>(List<T> thislist)
     {
         thislist.Reverse();
         return thislist;
     }
-    SortedList<float, T> sortListWithVar<T>(List<T> thisList, Func<T, float> thisFloat)
+
+    System.Random rand = new System.Random(64);
+    public SortedList<float, T> sortListWithVar<T>(List<T> thisList, Func<T, float> thisFloat)
     // here Func<T, float> thisFloat represent a function that takes Function of the float distance or float speed 
     //with variable T(from point or GameObject) then calculates a float value 
     //which is representrdd by the later part of Func<T, float> thisFloat
@@ -84,7 +80,9 @@ public class UniversalCalculator : MonoBehaviour
             float thisDistance = thisFloat(element);
             while (newList.ContainsKey(thisDistance))
             {
-                thisDistance += 0.001f;
+                //thisDistance += 0.001f;
+                // add a small random value to the distance
+                thisDistance += rand.Next(1, 100) / 1000.0f;
             }
             newList.Add(thisDistance, element);
         }
@@ -100,20 +98,6 @@ public class UniversalCalculator : MonoBehaviour
         {
             return Vector3Int.Distance(fromPoint, toPoint);
         }
-    }
-    public List<GameObject> SortBySpeed(List<GameObject> thisList)
-    {
-        SortedList<float, GameObject> sortedList = sortListWithVar(thisList, speed);
-        return getReverseList(
-            convertSortedListToNormalList(sortedList)
-            );
-        //this list needs to be reversed as higher speed characters should move faster
-        //declaring necessary function to be used as a delegate
-        float speed(GameObject thisGameObject)
-        {
-            return thisGameObject.GetComponent<CharacterControllerScript>().speedValue;
-        }
-
     }
     public List<T> filterOutList<T>(List<T> GivenList, List<T> ListOfValidObjects)
     {

@@ -120,6 +120,7 @@ public class CharacterControllerScript : MonoBehaviour
     {
         Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
         thisTurnManager.OrderOfInteractableCharacters.Remove(gameObject);
+        thisTurnManager.ListOfInteractableCharacters.Remove(gameObject);
         Destroy(this.gameObject);
         if (thisTurnManager.thisCharacter == this.gameObject)
         {

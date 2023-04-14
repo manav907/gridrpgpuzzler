@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class TurnManager : MonoBehaviour
     void GetGameObjects()
     {
         OrderOfInteractableCharacters = new List<GameObject>();
+        ListOfInteractableCharacters = new List<GameObject>();
         buttonManager = this.gameObject.GetComponent<ButtonManager>();
         mapManager = this.GetComponent<MapManager>();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
@@ -59,13 +61,14 @@ public class TurnManager : MonoBehaviour
             thisCDH.thisCharacterData = listOfCD[i];
             thisCDH.thisCharacterData.InstanceID = i;
             thisCDH.InitilizeCharacter(gameController);
-            OrderOfInteractableCharacters.Add(thisChar);
+            ListOfInteractableCharacters.Add(thisChar);
 
             Vector3Int thisPos = universalCalculator.convertToVector3Int(thisChar.transform.position);
             mapManager.cellDataDir[thisPos].characterAtCell = thisChar;
         }
     }
     public List<GameObject> OrderOfInteractableCharacters;
+    public List<GameObject> ListOfInteractableCharacters;
     public GameObject thisCharacter;
     CharacterControllerScript thisCharacterData;
     [SerializeField] int TurnCountInt = 0;
@@ -132,6 +135,23 @@ public class TurnManager : MonoBehaviour
     void recalculateOrder()
     {
         var shadowrange = reticalManager.reDrawShadows();
-        OrderOfInteractableCharacters = universalCalculator.SortBySpeed(OrderOfInteractableCharacters);
+        OrderOfInteractableCharacters = SortBySpeed(ListOfInteractableCharacters);
+
+        List<GameObject> SortBySpeed(List<GameObject> thisList)
+        {
+            SortedList<float, GameObject> sortedList = universalCalculator.sortListWithVar(thisList, speed);
+            thisList = sortedList.Values.ToList();
+            thisList.Reverse();
+            return thisList;
+            //this list needs to be reversed as higher speed characters should move faster
+            //declaring necessary function to be used as a delegate
+            float speed(GameObject thisGameObject)
+            {
+                return thisGameObject.GetComponent<CharacterControllerScript>().speedValue;
+            }
+
+        }
     }
 }
+
+
