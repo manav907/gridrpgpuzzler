@@ -7,9 +7,7 @@ using UnityEditor;
 
 public class ButtonManager : MonoBehaviour
 {
-    [SerializeField] GameObject ButtonPrefab;
     [SerializeField] List<GameObject> ActionButtons;
-    [SerializeField] GameObject ButtonHolder;
     TurnManager turnManager;
     ReticalManager reticalManager;
     MapManager mapManager;
@@ -35,6 +33,9 @@ public class ButtonManager : MonoBehaviour
             Destroy(ActionButtons[i]);
         ActionButtons.Clear();
     }
+    [SerializeField] GameObject ButtonPrefab;
+    [SerializeField] GameObject ButtonHolder;
+
     [SerializeField] float buttonSpacing = 0;
     float buttonHight;
     public void InstantiateButtons(List<AbilityName> listOfAbilitesFromCDH)

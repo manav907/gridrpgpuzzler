@@ -87,24 +87,14 @@ public class CharacterControllerScript : MonoBehaviour
         var thisDir = new Dictionary<AbilityName, int>();
         thisDir.Add(AbilityName.Move, rangeOfMove);
         thisDir.Add(AbilityName.Attack, rangeOfAttack);
-        thisDir.Add(AbilityName.FireBall, 0);
+        thisDir.Add(AbilityName.OpenInventory, 0);
+        thisDir.Add(AbilityName.CloseInventory, 0);
         thisDir.Add(AbilityName.EndTurn, 0);
+        thisDir.Add(AbilityName.FireBall, 0);
         return thisDir;
     }
-
-    List<AbilityName> GetCharacterMoveList()
-    {
-        List<AbilityName> defaultMovesAvaliable;
-        defaultMovesAvaliable = new List<AbilityName>();
-        defaultMovesAvaliable.AddRange(new List<AbilityName>
-        {
-            AbilityName.Move,
-            AbilityName.Attack,
-            AbilityName.FireBall,
-            AbilityName.EndTurn
-        });
-        return defaultMovesAvaliable;
-    }
+    public List<AbilityName> CharacterMoveList;
+    public List<AbilityName> CharacterInventoryList;
     public bool CheckIfCharacterIsDead()
     {
         Heatlh.text = health + "";
@@ -134,7 +124,7 @@ public class CharacterControllerScript : MonoBehaviour
         ToggleCharacterTurnAnimation(true);
         thisButtonManager.clearButtons();
         if (isPlayerCharacter)
-            thisButtonManager.InstantiateButtons(GetCharacterMoveList());
+            thisButtonManager.InstantiateButtons(CharacterMoveList);
         else
         {
             determineAction();

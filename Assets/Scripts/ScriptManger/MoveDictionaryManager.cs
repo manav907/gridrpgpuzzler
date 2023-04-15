@@ -11,12 +11,14 @@ public class MoveDictionaryManager : MonoBehaviour
     MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
     UniversalCalculator universalCalculator;
+    ButtonManager buttonManager;
     public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
+        buttonManager = this.GetComponent<ButtonManager>();
         SetMoveDictionary();
     }
 
@@ -38,6 +40,8 @@ public class MoveDictionaryManager : MonoBehaviour
             new ActionDataClass(AbilityName.Move,MoveCharacter, true, false, true ),
             new ActionDataClass(AbilityName.Attack,AttackHere, true, true, true || false),
             new ActionDataClass(AbilityName.EndTurn,endTurn, false, false, false),
+            new ActionDataClass(AbilityName.OpenInventory,OpenInventory, false, false, true),
+            new ActionDataClass(AbilityName.CloseInventory,CloseInventory, false, false, true),
             new ActionDataClass(AbilityName.FireBall,ThrowFireBall, false, false, true)
             };
         //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)    
@@ -45,8 +49,6 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             aDCL.Add(thisactionData.abilityName, thisactionData);
         }
-
-
     }
     public class ActionDataClass
     {
@@ -169,12 +171,6 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         return listOfRanges;
     }
-    void ThrowFireBall()
-    {
-
-        //Debug.Log("Throw Fire Ball");
-        //endTurn();
-    }
     void MoveCharacter()
     {
         if (GetDataForActions())
@@ -217,6 +213,24 @@ public class MoveDictionaryManager : MonoBehaviour
         this.GetComponent<TurnManager>().endTurn();
 
     }
+    void OpenInventory()
+    {
+        Debug.Log("Open Inv");
+        buttonManager.InstantiateButtons(thisCharacterCDH.CharacterInventoryList);
+
+    }
+    void CloseInventory()
+    {
+        Debug.Log("Close Inv");
+        buttonManager.InstantiateButtons(thisCharacterCDH.CharacterMoveList);
+    }
+
+    void ThrowFireBall()
+    {
+
+        //Debug.Log("Throw Fire Ball");
+        //endTurn();
+    }
 }
 
 public enum AbilityName
@@ -224,5 +238,7 @@ public enum AbilityName
     Move,
     Attack,
     EndTurn,
+    OpenInventory,
+    CloseInventory,
     FireBall
 }
