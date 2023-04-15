@@ -29,66 +29,70 @@ public class MoveDictionaryManager : MonoBehaviour
         //Debug.Log(thisCharacter.name);//
         thisCharacterCDH = thisCharacter.GetComponent<CharacterControllerScript>();
     }
-    Dictionary<AbilityName, ActionDataClass> aDCL;
+    Dictionary<AbilityName, Action> ANtoA;
+
     void SetMoveDictionary()
     {
-        aDCL = new Dictionary<AbilityName, ActionDataClass>();
-        //Debug.Log(thisCharacter.name);
-        List<ActionDataClass> actionDataClass = new List<ActionDataClass>() {
-            new ActionDataClass(AbilityName.Move,MoveCharacter, true, false, true ),
-            new ActionDataClass(AbilityName.Attack,AttackHere, true, true, true || false),
-            new ActionDataClass(AbilityName.EndTurn,endTurn, false, false, false),
-            new ActionDataClass(AbilityName.OpenInventory,OpenInventory, false, false, true),
-            new ActionDataClass(AbilityName.CloseInventory,CloseInventory, false, false, true),
-            new ActionDataClass(AbilityName.FireBall,ThrowFireBall, false, false, true),
-            new ActionDataClass(AbilityName.HeartPickup,HeartPickup,false,false,true)
-            };
-        //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)    
-        aDCL = actionDataClass.ToDictionary(ad => ad.abilityName, ad => ad);
+        ANtoA = new Dictionary<AbilityName, Action>();
+        ANtoA.Add(AbilityName.Move, MoveCharacter);
+        ANtoA.Add(AbilityName.Attack, AttackHere);
+        ANtoA.Add(AbilityName.EndTurn, endTurn);
+        ANtoA.Add(AbilityName.OpenInventory, OpenInventory);
+        ANtoA.Add(AbilityName.CloseInventory, CloseInventory);
+        ANtoA.Add(AbilityName.FireBall, ThrowFireBall);
+        ANtoA.Add(AbilityName.HeartPickup, HeartPickup);
         void MoveCharacter()
         {
-            if (GetDataForActions())
+            List<IEnumerator> coroutines = new List<IEnumerator>()
             {
-                Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
-                mapManager.cellDataDir[currentPosition].characterAtCell = null;
-                mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
-                thisCharacter.transform.position = tryHere;
-                endTurn();
-            }
-            else
-            {
-                //Action Failed
-                //Debug.Log("MoveCharacter");
-            }
+                getInput(simpleMoveAction,false,true,true,AbilityName.Move),
+                endTurnCoroutine()
+            };
+            StartCoroutine(StartSequence(coroutines));
+        }
+        void simpleMoveAction()
+        {
+            Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
+            mapManager.cellDataDir[currentPosition].characterAtCell = null;
+            mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
+            thisCharacter.transform.position = tryHere;
         }
         void AttackHere()
         {
-            if (GetDataForActions())
+            List<IEnumerator> coroutines = new List<IEnumerator>()
             {
-                CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
-                CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-                targetCharacter.health -= attackingCharacter.AttackDamage;
-                if (targetCharacter.CheckIfCharacterIsDead() == false)
-                    endTurn();
-            }
-            //else
-            {
-                //problem
-                //Debug.Log("AttackHere");
-            }
+                getInput(simpleAttackAction,true,true||false,true,AbilityName.Attack),
+                endTurnCoroutine()
+            };
+            StartCoroutine(StartSequence(coroutines));
+        }
+        void simpleAttackAction()
+        {
+            CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+            CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
+            targetCharacter.health -= attackingCharacter.AttackDamage;
+            checkCharacters(targetCharacter);
         }
         void endTurn()
         {
+            StartCoroutine(endTurnCoroutine());
+
+        }
+        IEnumerator endTurnCoroutine()
+        {
+            yield return null;
             CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
             targetCharacter.ToggleCharacterTurnAnimation(false); ;
             this.GetComponent<TurnManager>().endTurn();
-
+        }
+        void checkCharacters(CharacterControllerScript targetCharacter)
+        {
+            targetCharacter.CheckIfCharacterIsDead();
         }
         void OpenInventory()
         {
             //Debug.Log("Open Inv");
             buttonManager.InstantiateButtons(thisCharacterCDH.CharacterInventoryList);
-
         }
         void CloseInventory()
         {
@@ -98,40 +102,29 @@ public class MoveDictionaryManager : MonoBehaviour
         void ThrowFireBall()
         {
             Debug.Log("Throw Fire Ball");
-            void simpleMoveAction()
-            {
-                Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
-                mapManager.cellDataDir[currentPosition].characterAtCell = null;
-                mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
-                thisCharacter.transform.position = tryHere;
-            }
-            StartCoroutine(StartSqequence());
-            IEnumerator StartSqequence()
-            {
-                Debug.Log("Starting Corotine");
-                yield return StartCoroutine(getInput(simpleMoveAction, aDCL[AbilityName.Move]));
-                yield return null;//This is the Line i want to remove
-                Debug.Log("First Completed Corotine");
-                yield return StartCoroutine(getInput(simpleMoveAction, aDCL[AbilityName.Move]));
-                Debug.Log("Last");
-            }
-
         }
-
         void HeartPickup()
         {
-            Debug.Log(thisCharacterCDH.health);
+            //Debug.Log(thisCharacterCDH.health);
             thisCharacterCDH.health += 3;
             if (thisCharacterCDH.CheckIfCharacterIsDead() == false)
                 endTurn();
         }
     }
+    IEnumerator StartSequence(List<IEnumerator> coroutines)
+    {
+        foreach (IEnumerator coroutine in coroutines)
+        {
+            yield return StartCoroutine(coroutine);
+            yield return null;
+        }
+    }
 
-    IEnumerator getInput(Action doThisAction, ActionDataClass thisADL)
+    IEnumerator getInput(Action doThisAction, bool gameObjectHere, bool walkableTileHere, bool needsButton, AbilityName abilityName)
     {
         //Debug.Log("Get Input Works");
-        listOfValidtargets = getValidTargetList(thisADL.gameObjectHere, thisADL.walkableTileHere, thisCharacterCDH.GetAbilityRange(thisADL.abilityName));
-        if (thisCharacterCDH.isPlayerCharacter && thisADL.needsButton)
+        listOfValidtargets = getValidTargetList(gameObjectHere, walkableTileHere, thisCharacterCDH.GetAbilityRange(abilityName));
+        if (thisCharacterCDH.isPlayerCharacter && needsButton)
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
 
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
@@ -143,56 +136,9 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager.reDrawShadows();
     }
 
-    class ActionDataClass
-    {
-        public AbilityName abilityName;
-        public Action actionOfMove;
-        public bool needsButton;
-        public bool gameObjectHere;
-        public bool walkableTileHere;
-        public ActionDataClass()
-        {
-        }
-        public ActionDataClass(AbilityName abilityName, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)
-        {
-            this.abilityName = abilityName;
-            this.actionOfMove = actionOfMove;
-            this.needsButton = needsButton;
-            this.gameObjectHere = GameObjectHere;
-            this.walkableTileHere = WalkableTileHere;
-        }
-    }
-
     public void doAction(AbilityName abilityName)
     {
-        ActionDataClass thisADL = aDCL[abilityName];
-        Action actionOfMove = thisADL.actionOfMove;
-        bool needsButton = thisADL.needsButton;
-        bool GameObjectHere = thisADL.gameObjectHere;
-        bool WalkableTileHere = thisADL.walkableTileHere;
-        //int rangeOfAction = thisADL.rangeOfAction;
-        int rangeOfAction = thisCharacterCDH.GetAbilityRange(abilityName);
-
-        StartCoroutine(waitUntileButton());
-
-        IEnumerator waitUntileButton()
-        {
-            listOfValidtargets = getValidTargetList(GameObjectHere, WalkableTileHere, rangeOfAction);
-            if (thisCharacterCDH.isPlayerCharacter && needsButton)
-            {
-                reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-                yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
-                actionOfMove();
-                reticalManager.reDrawValidTiles(null);//this clears out the Valid Tiles Overlay
-            }
-            else
-            {
-                //Debug.Log("Waiting");
-                yield return new WaitForSeconds(0.25f);
-                actionOfMove();
-            }
-            reticalManager.reDrawShadows();
-        }
+        ANtoA[abilityName]();
     }
     Vector3Int tryHere;
     List<Vector3Int> listOfValidtargets;
@@ -219,7 +165,6 @@ public class MoveDictionaryManager : MonoBehaviour
         List<Vector3Int> listOfRanges = universalCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
-
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
         {
@@ -254,7 +199,6 @@ public class MoveDictionaryManager : MonoBehaviour
                         //Debug.Log(needConditon + "Game Object Here " + " but isGameObjectHere is " + isGameObjectHere);
                         Debug.Log(needConditon + "Game Object Here ");
                     }
-
                 }
             }
         }

@@ -121,13 +121,11 @@ public class MapManager : MonoBehaviour
                     NEWgroundFloorTypeWalkRequireMents.Add(walkRequirements);
                     NEWtilesOnCell.Add(tilesOnCell);
                     NEWtileDatas.Add(tileData);
-
                 }
                 else
                 {
                     //Debug.Log("Tile Was Null Somehow! On TileMap " + tilemap);
                 }
-
             }
             groundFloorTypeWalkRequireMents = universalCalculator.CompareAndReplace(groundFloorTypeWalkRequireMents, NEWgroundFloorTypeWalkRequireMents, false);
             tilesOnCell = universalCalculator.CompareAndReplace(tilesOnCell, NEWtilesOnCell, false);
@@ -141,7 +139,6 @@ public class MapManager : MonoBehaviour
             //universalCalculator.DebugEachItemInList(tilesOnCell);
             //universalCalculator.DebugEachItemInList(tileDatas);
         }
-
         public GameObject characterAtCell;
         public bool isCellHoldingCharacer()
         {
@@ -151,8 +148,6 @@ public class MapManager : MonoBehaviour
         }
     }
 }
-
-
 //Defining Global NameSapce
 public enum GroundFloorType
 {
