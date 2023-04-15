@@ -97,14 +97,27 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void ThrowFireBall()
         {
-            //Debug.Log("Throw Fire Ball");
-            StartCoroutine(getInput(delegate
+            Debug.Log("Throw Fire Ball");
+            void simpleMoveAction()
             {
-                MoveCharacter();
-            }, aDCL[AbilityName.Move]
-            ));
+                Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
+                mapManager.cellDataDir[currentPosition].characterAtCell = null;
+                mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
+                thisCharacter.transform.position = tryHere;
+            }
+            StartCoroutine(StartSqequence());
+            IEnumerator StartSqequence()
+            {
+                Debug.Log("Starting Corotine");
+                yield return StartCoroutine(getInput(simpleMoveAction, aDCL[AbilityName.Move]));
+                yield return null;//This is the Line i want to remove
+                Debug.Log("First Completed Corotine");
+                yield return StartCoroutine(getInput(simpleMoveAction, aDCL[AbilityName.Move]));
+                Debug.Log("Last");
+            }
 
         }
+
         void HeartPickup()
         {
             Debug.Log(thisCharacterCDH.health);
@@ -113,6 +126,23 @@ public class MoveDictionaryManager : MonoBehaviour
                 endTurn();
         }
     }
+
+    IEnumerator getInput(Action doThisAction, ActionDataClass thisADL)
+    {
+        //Debug.Log("Get Input Works");
+        listOfValidtargets = getValidTargetList(thisADL.gameObjectHere, thisADL.walkableTileHere, thisCharacterCDH.GetAbilityRange(thisADL.abilityName));
+        if (thisCharacterCDH.isPlayerCharacter && thisADL.needsButton)
+            reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
+
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+        if (GetDataForActions())
+        {
+            doThisAction();
+        }
+        reticalManager.reDrawValidTiles(null);
+        reticalManager.reDrawShadows();
+    }
+
     class ActionDataClass
     {
         public AbilityName abilityName;
@@ -163,22 +193,6 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             reticalManager.reDrawShadows();
         }
-    }
-    IEnumerator getInput(Action doThisAction, ActionDataClass thisADL)
-    {
-        //Debug.Log("Get Input Works");
-        listOfValidtargets = getValidTargetList(thisADL.gameObjectHere, thisADL.walkableTileHere, thisCharacterCDH.GetAbilityRange(thisADL.abilityName));
-        if (thisCharacterCDH.isPlayerCharacter && thisADL.needsButton)
-            reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
-        if (GetDataForActions())
-        {
-            doThisAction();
-
-        }
-        reticalManager.reDrawValidTiles(null);
-        reticalManager.reDrawShadows();
     }
     Vector3Int tryHere;
     List<Vector3Int> listOfValidtargets;
