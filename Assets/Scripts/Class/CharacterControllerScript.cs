@@ -33,41 +33,37 @@ public class CharacterControllerScript : MonoBehaviour
 
         setVariables();
         CheckIfCharacterIsDead();
-    }
-    void setVariables()
-    {
-        characterName = thisCharacterData.name;
-        health = thisCharacterData.health;
-        rangeOfMove = thisCharacterData.rangeOfMove;
-        rangeOfAttack = thisCharacterData.rangeOfAttack;
-        AttackDamage = thisCharacterData.AttackDamage;
-        speedValue = thisCharacterData.speedValue;
-        rangeOfVision = thisCharacterData.rangeOfVision;
-        canWalkOn = thisCharacterData.canWalkOn;
-
-        //Setting Specific Name
-
-        this.name = characterName + " " + thisCharacterData.InstanceID;
-
-        //creating Override
-        AnimatorController originalController = animator.runtimeAnimatorController as AnimatorController;
-
-
-        //doingAnimController
-        animator.runtimeAnimatorController = thisCharacterData.GetanimatorOverrideController(originalController);
-        //Setting Sprite Stuff
-        setSpriteHolderProperties();
-    }
-    void setSpriteHolderProperties()
-    {
-        Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
-        if (spriteHolder != null)
+        void setVariables()
         {
-            spriteHolder.position = new Vector3(spriteHolder.position.x, thisCharacterData.spriteOffsetY, spriteHolder.position.z);
-        }
-        else
-        {
-            Debug.Log("SpriteHolder not found.");
+            characterName = thisCharacterData.name;
+            health = thisCharacterData.health;
+            rangeOfMove = thisCharacterData.rangeOfMove;
+            rangeOfAttack = thisCharacterData.rangeOfAttack;
+            AttackDamage = thisCharacterData.AttackDamage;
+            speedValue = thisCharacterData.speedValue;
+            rangeOfVision = thisCharacterData.rangeOfVision;
+            canWalkOn = thisCharacterData.canWalkOn;
+
+            //Setting Specific Name
+            this.name = characterName + " " + thisCharacterData.InstanceID;
+            //creating Override
+            AnimatorController originalController = animator.runtimeAnimatorController as AnimatorController;
+            //doingAnimController
+            animator.runtimeAnimatorController = thisCharacterData.GetanimatorOverrideController(originalController);
+            //Setting Sprite Stuff
+            setSpriteHolderProperties();
+            void setSpriteHolderProperties()
+            {
+                Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
+                if (spriteHolder != null)
+                {
+                    spriteHolder.position = new Vector3(spriteHolder.position.x, thisCharacterData.spriteOffsetY, spriteHolder.position.z);
+                }
+                else
+                {
+                    Debug.Log("SpriteHolder not found.");
+                }
+            }
         }
     }
 
@@ -78,21 +74,28 @@ public class CharacterControllerScript : MonoBehaviour
             animator.SetTrigger("Walk");
         else
             animator.SetTrigger("Idle");
-
-
     }
     //public Dictionary <string, int> MoveToRange;
-    public Dictionary<AbilityName, int> MoveToRange()
+    public int GetAbilityRange(AbilityName abilityName)
     {
-        var thisDir = new Dictionary<AbilityName, int>();
-        thisDir.Add(AbilityName.Move, rangeOfMove);
-        thisDir.Add(AbilityName.Attack, rangeOfAttack);
-        thisDir.Add(AbilityName.OpenInventory, 0);
-        thisDir.Add(AbilityName.CloseInventory, 0);
-        thisDir.Add(AbilityName.EndTurn, 0);
-        thisDir.Add(AbilityName.FireBall, 0);
-        return thisDir;
+        Dictionary<AbilityName, int> MoveToRangeDir = MoveToRange();
+        if (MoveToRangeDir.ContainsKey(abilityName))
+        {
+            return MoveToRangeDir[abilityName];
+        }
+        else
+        {
+            return 0;
+        }
+        Dictionary<AbilityName, int> MoveToRange()
+        {
+            var thisDir = new Dictionary<AbilityName, int>();
+            thisDir.Add(AbilityName.Move, rangeOfMove);
+            thisDir.Add(AbilityName.Attack, rangeOfAttack);
+            return thisDir;
+        }
     }
+
     public List<AbilityName> CharacterMoveList;
     public List<AbilityName> CharacterInventoryList;
     public bool CheckIfCharacterIsDead()
@@ -105,18 +108,19 @@ public class CharacterControllerScript : MonoBehaviour
             return true;
         }
         return false;
-    }
-    void KillCharacter()
-    {
-        Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
-        thisTurnManager.OrderOfInteractableCharacters.Remove(gameObject);
-        thisTurnManager.ListOfInteractableCharacters.Remove(gameObject);
-        Destroy(this.gameObject);
-        if (thisTurnManager.thisCharacter == this.gameObject)
+        void KillCharacter()
         {
-            thisTurnManager.endTurn();
+            Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
+            thisTurnManager.OrderOfInteractableCharacters.Remove(gameObject);
+            thisTurnManager.ListOfInteractableCharacters.Remove(gameObject);
+            Destroy(this.gameObject);
+            if (thisTurnManager.thisCharacter == this.gameObject)
+            {
+                thisTurnManager.endTurn();
+            }
         }
     }
+
     public bool isPlayerCharacter = true;
     MoveDictionaryManager moveDictionaryManager;
     public void BeginThisCharacterTurn()
@@ -186,7 +190,6 @@ public class CharacterControllerScript : MonoBehaviour
         //Need to clarify how this works
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
-
     }
 
 

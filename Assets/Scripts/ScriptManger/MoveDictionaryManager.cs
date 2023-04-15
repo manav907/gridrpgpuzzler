@@ -79,7 +79,7 @@ public class MoveDictionaryManager : MonoBehaviour
         bool GameObjectHere = thisADL.gameObjectHere;
         bool WalkableTileHere = thisADL.walkableTileHere;
         //int rangeOfAction = thisADL.rangeOfAction;
-        int rangeOfAction = thisCharacterCDH.MoveToRange()[abilityName];
+        int rangeOfAction = thisCharacterCDH.GetAbilityRange(abilityName);
 
         StartCoroutine(waitUntileButton());
 
