@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class MoveDictionaryManager : MonoBehaviour
 {
-
     TurnManager turnManager;
     ReticalManager reticalManager;
     MapManager mapManager;
@@ -21,7 +21,6 @@ public class MoveDictionaryManager : MonoBehaviour
         buttonManager = this.GetComponent<ButtonManager>();
         SetMoveDictionary();
     }
-
     GameObject thisCharacter;
     CharacterControllerScript thisCharacterCDH;
     public void getThisCharacterData()
@@ -30,8 +29,7 @@ public class MoveDictionaryManager : MonoBehaviour
         //Debug.Log(thisCharacter.name);//
         thisCharacterCDH = thisCharacter.GetComponent<CharacterControllerScript>();
     }
-
-    public Dictionary<AbilityName, ActionDataClass> aDCL;
+    Dictionary<AbilityName, ActionDataClass> aDCL;
     void SetMoveDictionary()
     {
         aDCL = new Dictionary<AbilityName, ActionDataClass>();
@@ -42,15 +40,80 @@ public class MoveDictionaryManager : MonoBehaviour
             new ActionDataClass(AbilityName.EndTurn,endTurn, false, false, false),
             new ActionDataClass(AbilityName.OpenInventory,OpenInventory, false, false, true),
             new ActionDataClass(AbilityName.CloseInventory,CloseInventory, false, false, true),
-            new ActionDataClass(AbilityName.FireBall,ThrowFireBall, false, false, true)
+            new ActionDataClass(AbilityName.FireBall,ThrowFireBall, false, false, true),
+            new ActionDataClass(AbilityName.HeartPickup,HeartPickup,false,false,true)
             };
         //This is for Refference (string NameofMove, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)    
-        foreach (var thisactionData in actionDataClass)
+        aDCL = actionDataClass.ToDictionary(ad => ad.abilityName, ad => ad);
+        void MoveCharacter()
         {
-            aDCL.Add(thisactionData.abilityName, thisactionData);
+            if (GetDataForActions())
+            {
+                Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
+                mapManager.cellDataDir[currentPosition].characterAtCell = null;
+                mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
+                thisCharacter.transform.position = tryHere;
+                endTurn();
+            }
+            else
+            {
+                //Action Failed
+                //Debug.Log("MoveCharacter");
+            }
+        }
+        void AttackHere()
+        {
+            if (GetDataForActions())
+            {
+                CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+                CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
+                targetCharacter.health -= attackingCharacter.AttackDamage;
+                if (targetCharacter.CheckIfCharacterIsDead() == false)
+                    endTurn();
+            }
+            //else
+            {
+                //problem
+                //Debug.Log("AttackHere");
+            }
+        }
+        void endTurn()
+        {
+            CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
+            targetCharacter.ToggleCharacterTurnAnimation(false); ;
+            this.GetComponent<TurnManager>().endTurn();
+
+        }
+        void OpenInventory()
+        {
+            //Debug.Log("Open Inv");
+            buttonManager.InstantiateButtons(thisCharacterCDH.CharacterInventoryList);
+
+        }
+        void CloseInventory()
+        {
+            //Debug.Log("Close Inv");
+            buttonManager.InstantiateButtons(thisCharacterCDH.CharacterMoveList);
+        }
+        void ThrowFireBall()
+        {
+            //Debug.Log("Throw Fire Ball");
+            StartCoroutine(getInput(delegate
+            {
+                MoveCharacter();
+            }, aDCL[AbilityName.Move]
+            ));
+
+        }
+        void HeartPickup()
+        {
+            Debug.Log(thisCharacterCDH.health);
+            thisCharacterCDH.health += 3;
+            if (thisCharacterCDH.CheckIfCharacterIsDead() == false)
+                endTurn();
         }
     }
-    public class ActionDataClass
+    class ActionDataClass
     {
         public AbilityName abilityName;
         public Action actionOfMove;
@@ -59,7 +122,6 @@ public class MoveDictionaryManager : MonoBehaviour
         public bool walkableTileHere;
         public ActionDataClass()
         {
-
         }
         public ActionDataClass(AbilityName abilityName, Action actionOfMove, bool needsButton, bool GameObjectHere, bool WalkableTileHere)
         {
@@ -99,10 +161,24 @@ public class MoveDictionaryManager : MonoBehaviour
                 yield return new WaitForSeconds(0.25f);
                 actionOfMove();
             }
-
             reticalManager.reDrawShadows();
         }
+    }
+    IEnumerator getInput(Action doThisAction, ActionDataClass thisADL)
+    {
+        //Debug.Log("Get Input Works");
+        listOfValidtargets = getValidTargetList(thisADL.gameObjectHere, thisADL.walkableTileHere, thisCharacterCDH.GetAbilityRange(thisADL.abilityName));
+        if (thisCharacterCDH.isPlayerCharacter && thisADL.needsButton)
+            reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
 
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+        if (GetDataForActions())
+        {
+            doThisAction();
+
+        }
+        reticalManager.reDrawValidTiles(null);
+        reticalManager.reDrawShadows();
     }
     Vector3Int tryHere;
     List<Vector3Int> listOfValidtargets;
@@ -140,7 +216,6 @@ public class MoveDictionaryManager : MonoBehaviour
             if (isWalkableHere == WalkableTileHere && isGameObjectHere == GameObjectHere)
             {
                 //Debug.Log(listOfAttackRange[i] + "Valid " + i);
-
                 //Do Nothing since all conditions are fine
             }
             else
@@ -171,68 +246,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         return listOfRanges;
     }
-    void MoveCharacter()
-    {
-        if (GetDataForActions())
-        {
-            Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
-            mapManager.cellDataDir[currentPosition].characterAtCell = null;
-            mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
-            thisCharacter.transform.position = tryHere;
-            endTurn();
-        }
-        else
-        {
-            //Action Failed
-            //Debug.Log("MoveCharacter");
-        }
-    }
-
-    void AttackHere()
-    {
-        if (GetDataForActions())
-        {
-            CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
-            CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-            targetCharacter.health -= attackingCharacter.AttackDamage;
-
-            if (targetCharacter.CheckIfCharacterIsDead() == false)
-                endTurn();
-        }
-        //else
-        {
-            //problem
-            //Debug.Log("AttackHere");
-        }
-
-    }
-    void endTurn()
-    {
-        CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-        targetCharacter.ToggleCharacterTurnAnimation(false); ;
-        this.GetComponent<TurnManager>().endTurn();
-
-    }
-    void OpenInventory()
-    {
-        Debug.Log("Open Inv");
-        buttonManager.InstantiateButtons(thisCharacterCDH.CharacterInventoryList);
-
-    }
-    void CloseInventory()
-    {
-        Debug.Log("Close Inv");
-        buttonManager.InstantiateButtons(thisCharacterCDH.CharacterMoveList);
-    }
-
-    void ThrowFireBall()
-    {
-
-        //Debug.Log("Throw Fire Ball");
-        //endTurn();
-    }
 }
-
 public enum AbilityName
 {
     Move,
@@ -240,5 +254,6 @@ public enum AbilityName
     EndTurn,
     OpenInventory,
     CloseInventory,
-    FireBall
+    FireBall,
+    HeartPickup
 }

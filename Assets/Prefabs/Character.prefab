@@ -59,7 +59,7 @@ MonoBehaviour:
   Heatlh: {fileID: 1664907520338834495}
   animator: {fileID: 2406951079378199446}
   CharacterMoveList: 00000000010000000200000003000000
-  CharacterInventoryList: 0500000004000000
+  CharacterInventoryList: 050000000400000006000000
   isPlayerCharacter: 1
 --- !u!1 &1555172378576254017
 GameObject:

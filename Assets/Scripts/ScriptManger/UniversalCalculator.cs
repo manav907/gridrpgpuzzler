@@ -3,10 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Text;
 
 public class UniversalCalculator : MonoBehaviour
 {
 
+    ///String handeling
+    public string CamelCaseToSpaces(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return input;
+        }
+
+        StringBuilder output = new StringBuilder();
+        output.Append(input[0]);
+
+        for (int i = 1; i < input.Length; i++)
+        {
+            if (char.IsUpper(input[i]))
+            {
+                output.Append(' ');
+            }
+            output.Append(input[i]);
+        }
+
+        return output.ToString();
+    }
+
+    //Vector handeling
     public List<Vector3Int> generateRangeFrom2Vectors(Vector3 start, Vector3 end)
     {
         List<Vector3Int> listOfRanges = new List<Vector3Int>();
@@ -54,10 +79,7 @@ public class UniversalCalculator : MonoBehaviour
         var random = new System.Random();
         return random.Next(ListCount);
     }
-    public void doThis()
-    {
-        Debug.Log("do this invoked or FireBall");
-    }
+    ///List Handeling
     List<T> convertSortedListToNormalList<T>(SortedList<float, T> inputList)
     {
         return inputList.Values.ToList();
