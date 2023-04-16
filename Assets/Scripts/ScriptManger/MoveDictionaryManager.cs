@@ -47,6 +47,7 @@ public class MoveDictionaryManager : MonoBehaviour
             foreach (IEnumerator coroutine in coroutines)
             {
                 yield return StartCoroutine(coroutine);
+                //Debug.Log("This Action was with result: " + (bool)coroutine.Current);
                 yield return null;
             }
         }
@@ -123,24 +124,32 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         bool needsButton = rangeOfAction == 0 ? false : true;
         listOfValidtargets = getValidTargetList(requireCharacter, requireWalkability, rangeOfAction);
-        if (thisCharacterCDH.isPlayerCharacter && needsButton)
-            reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
-        if (GetDataForActions())
+        bool succesfullyCompleted = false;
+        while (!succesfullyCompleted)
         {
-            doThisAction();
-        }
-        reticalManager.reDrawValidTiles(null);
-        reticalManager.reDrawShadows();
+            if (thisCharacterCDH.isPlayerCharacter && needsButton)
+                reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
 
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+            if (GetDataForActions())
+            {
+                doThisAction();
+                //doAction(AbilityName.EndTurn);
+                succesfullyCompleted = true;
+            }
+            reticalManager.reDrawValidTiles(null);
+            reticalManager.reDrawShadows();
+        }
         bool GetDataForActions()
         {
             if (thisCharacterCDH.isPlayerCharacter)
             {
                 tryHere = reticalManager.getMovePoint();
                 if (listOfValidtargets.Contains(tryHere))
+                {
+
                     return true;
+                }
                 else if (listOfValidtargets.Count == 0)
                 {
                     Debug.Log("No Valid Tiles Exist; Ending GetData");
