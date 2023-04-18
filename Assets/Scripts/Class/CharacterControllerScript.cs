@@ -95,7 +95,6 @@ public class CharacterControllerScript : MonoBehaviour
             return thisDir;
         }
     }
-
     public List<AbilityName> CharacterMoveList;
     public List<AbilityName> CharacterInventoryList;
     public bool CheckIfCharacterIsDead()
@@ -113,12 +112,28 @@ public class CharacterControllerScript : MonoBehaviour
             Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
             thisTurnManager.OrderOfInteractableCharacters.Remove(gameObject);
             thisTurnManager.ListOfInteractableCharacters.Remove(gameObject);
-            Destroy(this.gameObject);
             if (thisTurnManager.thisCharacter == this.gameObject)
             {
                 thisTurnManager.endTurn();
             }
+            Destroy(this.gameObject);
         }
+    }
+    public int actionPoints = 1;
+    public bool doActionPointsRemainAfterAbility()
+    {
+        actionPoints--;
+        if (actionPoints == 0)
+            return false;
+        else
+        {
+            determineAction();
+            return true;
+        }
+    }
+    public void forceRepeteAction(AbilityName abilityName)
+    {
+        actionPoints++;
     }
 
     public bool isPlayerCharacter = true;
@@ -126,6 +141,7 @@ public class CharacterControllerScript : MonoBehaviour
     public void BeginThisCharacterTurn()
     {
         ToggleCharacterTurnAnimation(true);
+        actionPoints = 1;//Remove This later
         thisButtonManager.clearButtons();
         if (isPlayerCharacter)
             thisButtonManager.InstantiateButtons(CharacterMoveList);

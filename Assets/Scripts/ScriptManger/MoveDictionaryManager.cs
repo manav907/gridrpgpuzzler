@@ -34,35 +34,27 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction = new Dictionary<AbilityName, Action>();
         abilityNameToAction.Add(AbilityName.Move, MoveCharacter);
         abilityNameToAction.Add(AbilityName.Attack, AttackHere);
+        abilityNameToAction.Add(AbilityName.DoubleAttack, DoubleAttack);
         abilityNameToAction.Add(AbilityName.EndTurn, endTurn);
         abilityNameToAction.Add(AbilityName.OpenInventory, OpenInventory);
         abilityNameToAction.Add(AbilityName.CloseInventory, CloseInventory);
         abilityNameToAction.Add(AbilityName.FireBall, ThrowFireBall);
         abilityNameToAction.Add(AbilityName.HeartPickup, HeartPickup);
+        abilityNameToAction.Add(AbilityName.DoubleTeam, DoubleTeam);
 
-        //Co-RoutineStuff
-        IEnumerator StartSequence(List<IEnumerator> coroutines)
-        {
-            coroutines.Add(endTurnCoroutine());
-            foreach (IEnumerator coroutine in coroutines)
-            {
-                yield return StartCoroutine(coroutine);
-                //Debug.Log("This Action was with result: " + (bool)coroutine.Current);
-                yield return null;
-            }
-        }
+
         //ablity Actions
         void MoveCharacter()
         {
-            var coroutines = new List<IEnumerator>();
-            coroutines.Add(getInput(simpleMoveAction, thisCharacterCDH.GetAbilityRange(AbilityName.Move), false, true));
-            StartCoroutine(StartSequence(coroutines));
+            StartCoroutine(getInput(simpleMoveAction, thisCharacterCDH.GetAbilityRange(AbilityName.Move), false, true));
         }
         void AttackHere()
         {
-            var coroutines = new List<IEnumerator>();
-            coroutines.Add(getInput(simpleAttackAction, thisCharacterCDH.GetAbilityRange(AbilityName.Attack), true, true || false));
-            StartCoroutine(StartSequence(coroutines));
+            StartCoroutine(getInput(simpleAttackAction, thisCharacterCDH.GetAbilityRange(AbilityName.Attack), true, true || false));
+        }
+        void DoubleAttack()
+        {
+            StartCoroutine(getInput(simpleAttackAction, thisCharacterCDH.GetAbilityRange(AbilityName.Attack), true, true || false, AbilityName.Attack));
         }
         void endTurn()
         {
@@ -81,12 +73,20 @@ public class MoveDictionaryManager : MonoBehaviour
         void ThrowFireBall()
         {
             Debug.Log("Throw Fire Ball");
+            CloseInventory();
         }
         void HeartPickup()
         {
             thisCharacterCDH.health += 3;
+            CloseInventory();
             if (thisCharacterCDH.CheckIfCharacterIsDead() == false)
                 endTurn();
+
+        }
+        void DoubleTeam()
+        {
+            thisCharacterCDH.actionPoints += 1;
+            CloseInventory();
         }
         //Simple Action and Co-routines that will be used for ablity Actions
         void simpleMoveAction()
@@ -120,26 +120,24 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction[abilityName]();
     }
     Vector3Int tryHere;
-    IEnumerator getInput(Action doThisAction, int rangeOfAction, bool requireCharacter, bool requireWalkability)
+    IEnumerator getInput(Action doThisAction, int rangeOfAction, bool requireCharacter, bool requireWalkability, AbilityName? forceRepeteAction = null)
     {
         bool needsButton = rangeOfAction == 0 ? false : true;
         listOfValidtargets = getValidTargetList(requireCharacter, requireWalkability, rangeOfAction);
-        bool succesfullyCompleted = false;
-        while (!succesfullyCompleted)
+        if (thisCharacterCDH.isPlayerCharacter && needsButton)
+            reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
+        yield return null;
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+        if (GetDataForActions())
         {
-            if (thisCharacterCDH.isPlayerCharacter && needsButton)
-                reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
-            if (GetDataForActions())
+            doThisAction();
+            if (thisCharacterCDH.doActionPointsRemainAfterAbility() == false)
             {
-                doThisAction();
-                //doAction(AbilityName.EndTurn);
-                succesfullyCompleted = true;
+                doAction(AbilityName.EndTurn);
             }
-            reticalManager.reDrawValidTiles(null);
-            reticalManager.reDrawShadows();
         }
+        reticalManager.reDrawValidTiles(null);
+        reticalManager.reDrawShadows();
         bool GetDataForActions()
         {
             if (thisCharacterCDH.isPlayerCharacter)
@@ -147,7 +145,6 @@ public class MoveDictionaryManager : MonoBehaviour
                 tryHere = reticalManager.getMovePoint();
                 if (listOfValidtargets.Contains(tryHere))
                 {
-
                     return true;
                 }
                 else if (listOfValidtargets.Count == 0)
@@ -165,8 +162,6 @@ public class MoveDictionaryManager : MonoBehaviour
             }
         }
     }
-
-
 
     List<Vector3Int> listOfValidtargets;
     [SerializeField] bool debugValidActionTiles = false;
@@ -223,9 +218,11 @@ public enum AbilityName
 {
     Move,
     Attack,
+    DoubleAttack,
     EndTurn,
     OpenInventory,
     CloseInventory,
     FireBall,
-    HeartPickup
+    HeartPickup,
+    DoubleTeam
 }
