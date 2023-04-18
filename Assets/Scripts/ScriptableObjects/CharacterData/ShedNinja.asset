@@ -21,6 +21,7 @@ MonoBehaviour:
   speedValue: 3
   rangeOfVision: 5
   canWalkOn: 00000000
+  specialAblitiesAvailable: 02000000
   spriteOffsetY: 0.5
   Walk:
   - {fileID: -468390188, guid: c827088f025ff124e85bfa19417717b7, type: 3}

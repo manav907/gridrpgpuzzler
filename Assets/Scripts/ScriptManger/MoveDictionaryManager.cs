@@ -131,7 +131,15 @@ public class MoveDictionaryManager : MonoBehaviour
         if (GetDataForActions())
         {
             doThisAction();
-            if (thisCharacterCDH.doActionPointsRemainAfterAbility() == false)
+            if (forceRepeteAction.HasValue)
+            {
+                var list = new List<AbilityName>(){
+                    forceRepeteAction.Value,
+                    AbilityName.EndTurn
+                };
+                buttonManager.InstantiateButtons(list);
+            }
+            else if (thisCharacterCDH.doActionPointsRemainAfterAbility() == false)
             {
                 doAction(AbilityName.EndTurn);
             }

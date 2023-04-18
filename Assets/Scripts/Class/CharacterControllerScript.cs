@@ -43,6 +43,8 @@ public class CharacterControllerScript : MonoBehaviour
             speedValue = thisCharacterData.speedValue;
             rangeOfVision = thisCharacterData.rangeOfVision;
             canWalkOn = thisCharacterData.canWalkOn;
+            //ListStuff
+            CharacterMoveList.AddRange(thisCharacterData.specialAblitiesAvailable);
 
             //Setting Specific Name
             this.name = characterName + " " + thisCharacterData.InstanceID;
@@ -102,7 +104,7 @@ public class CharacterControllerScript : MonoBehaviour
         Heatlh.text = health + "";
         if (health <= 0)
         {
-            Debug.Log("I am dying");
+            Debug.Log(this.name + " Character has Died");
             KillCharacter();
             return true;
         }
@@ -131,11 +133,6 @@ public class CharacterControllerScript : MonoBehaviour
             return true;
         }
     }
-    public void forceRepeteAction(AbilityName abilityName)
-    {
-        actionPoints++;
-    }
-
     public bool isPlayerCharacter = true;
     MoveDictionaryManager moveDictionaryManager;
     public void BeginThisCharacterTurn()
