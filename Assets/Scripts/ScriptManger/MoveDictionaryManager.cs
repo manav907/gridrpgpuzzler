@@ -21,12 +21,12 @@ public class MoveDictionaryManager : MonoBehaviour
         SetMoveDictionary();
     }
     GameObject thisCharacter;
-    CharacterControllerScript thisCharacterCDH;
+    CharacterControllerScript characterCS;
     public void getThisCharacterData()
     {
         thisCharacter = turnManager.thisCharacter;
         //Debug.Log(thisCharacter.name);//
-        thisCharacterCDH = thisCharacter.GetComponent<CharacterControllerScript>();
+        characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
     }
     Dictionary<AbilityName, Action> abilityNameToAction;
     void SetMoveDictionary()
@@ -35,7 +35,7 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction.Add(AbilityName.Move, MoveCharacter);
         abilityNameToAction.Add(AbilityName.Attack, AttackHere);
         abilityNameToAction.Add(AbilityName.DoubleAttack, DoubleAttack);
-        abilityNameToAction.Add(AbilityName.EndTurn, endTurn);
+        abilityNameToAction.Add(AbilityName.EndTurn, EndTurn);
         abilityNameToAction.Add(AbilityName.OpenInventory, OpenInventory);
         abilityNameToAction.Add(AbilityName.CloseInventory, CloseInventory);
         abilityNameToAction.Add(AbilityName.FireBall, ThrowFireBall);
@@ -46,29 +46,33 @@ public class MoveDictionaryManager : MonoBehaviour
         //ablity Actions
         void MoveCharacter()
         {
-            StartCoroutine(getInput(simpleMoveAction, thisCharacterCDH.GetAbilityRange(AbilityName.Move), false, true));
+            //Ability ability = new Ability(AbilityName.Move, ValidTargetData.OnOccupiable, DirectionOfAction.complete);
+            StartCoroutine(getInput
+            (simpleMoveAction, characterCS.GetAbilityRange(AbilityName.Move), false, true));
         }
         void AttackHere()
         {
-            StartCoroutine(getInput(simpleAttackAction, thisCharacterCDH.GetAbilityRange(AbilityName.Attack), true, true || false));
+            StartCoroutine(getInput
+            (simpleAttackAction, characterCS.GetAbilityRange(AbilityName.Attack), true, true || false));
         }
         void DoubleAttack()
         {
-            StartCoroutine(getInput(simpleAttackAction, thisCharacterCDH.GetAbilityRange(AbilityName.Attack), true, true || false, AbilityName.Attack));
+            StartCoroutine(getInput
+            (simpleAttackAction, characterCS.GetAbilityRange(AbilityName.Attack), true, true || false, AbilityName.Attack));
         }
-        void endTurn()
+        void EndTurn()
         {
-            StartCoroutine(endTurnCoroutine());
+            CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
+            targetCharacter.ToggleCharacterTurnAnimation(false); ;
+            this.GetComponent<TurnManager>().endTurn();
         }
         void OpenInventory()
         {
-            //Debug.Log("Open Inv");
-            buttonManager.InstantiateButtons(thisCharacterCDH.CharacterInventoryList);
+            buttonManager.InstantiateButtons(characterCS.CharacterInventoryList);
         }
         void CloseInventory()
         {
-            //Debug.Log("Close Inv");
-            buttonManager.InstantiateButtons(thisCharacterCDH.CharacterMoveList);
+            buttonManager.InstantiateButtons(characterCS.CharacterMoveList);
         }
         void ThrowFireBall()
         {
@@ -77,17 +81,14 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void HeartPickup()
         {
-            thisCharacterCDH.health += 3;
+            characterCS.health += 3;
             CloseInventory();
-            if (thisCharacterCDH.CheckIfCharacterIsDead() == false)
-                endTurn();
+            if (characterCS.CheckIfCharacterIsDead() == false)
+                EndTurn();
 
         }
         void DoubleTeam()
-        {
-            thisCharacterCDH.actionPoints += 1;
-            CloseInventory();
-        }
+        { characterCS.actionPoints += 1; }
         //Simple Action and Co-routines that will be used for ablity Actions
         void simpleMoveAction()
         {
@@ -103,13 +104,6 @@ public class MoveDictionaryManager : MonoBehaviour
             targetCharacter.health -= attackingCharacter.AttackDamage;
             checkCharacters(targetCharacter);
         }
-        IEnumerator endTurnCoroutine()
-        {
-            yield return null;
-            CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-            targetCharacter.ToggleCharacterTurnAnimation(false); ;
-            this.GetComponent<TurnManager>().endTurn();
-        }
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
             targetCharacter.CheckIfCharacterIsDead();
@@ -120,35 +114,41 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction[abilityName]();
     }
     Vector3Int tryHere;
-    IEnumerator getInput(Action doThisAction, int rangeOfAction, bool requireCharacter, bool requireWalkability, AbilityName? forceRepeteAction = null)
+    [SerializeField] bool checkValidActionTiles = false;
+    [SerializeField] DirectionOfAction directionofAction;
+    IEnumerator getInput
+    (Action doThisAction, int rangeOfAction, bool requireCharacter, bool requireWalkability, AbilityName? forceNextAbility = null)
     {
-        bool needsButton = rangeOfAction == 0 ? false : true;
-        listOfValidtargets = getValidTargetList(requireCharacter, requireWalkability, rangeOfAction);
-        if (thisCharacterCDH.isPlayerCharacter && needsButton)
+        if (rangeOfAction == 0)
+            Debug.Log(rangeOfAction);
+        //bool needsButton = rangeOfAction == 0 ? false : true;
+        List<Vector3Int> listOfValidtargets = getValidTargetList();
+        if (characterCS.isPlayerCharacter)
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
         yield return null;
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
         if (GetDataForActions())
         {
             doThisAction();
-            if (forceRepeteAction.HasValue)
+            if (forceNextAbility.HasValue)
             {
                 var list = new List<AbilityName>(){
-                    forceRepeteAction.Value,
+                    forceNextAbility.Value,
                     AbilityName.EndTurn
                 };
                 buttonManager.InstantiateButtons(list);
             }
-            else if (thisCharacterCDH.doActionPointsRemainAfterAbility() == false)
+            else if (characterCS.doActionPointsRemainAfterAbility() == false)
             {
                 doAction(AbilityName.EndTurn);
             }
         }
         reticalManager.reDrawValidTiles(null);
         reticalManager.reDrawShadows();
+        //Methods
         bool GetDataForActions()
         {
-            if (thisCharacterCDH.isPlayerCharacter)
+            if (characterCS.isPlayerCharacter)
             {
                 tryHere = reticalManager.getMovePoint();
                 if (listOfValidtargets.Contains(tryHere))
@@ -165,61 +165,60 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             else
             {
-                tryHere = thisCharacterCDH.getTarget(listOfValidtargets);
+                tryHere = characterCS.getTarget(listOfValidtargets);
                 return true;
             }
         }
-    }
-
-    List<Vector3Int> listOfValidtargets;
-    [SerializeField] bool debugValidActionTiles = false;
-    List<Vector3Int> getValidTargetList(bool requireCharacter, bool requireWalkability, int rangeOfAction)
-    {
-        //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
-        Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
-        List<Vector3Int> listOfRanges = universalCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
-        List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
-        listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
-        //The Following Removes Invalid Tiles
-        for (int i = 0; i < listOfRanges.Count; i++)
+        List<Vector3Int> getValidTargetList()
         {
-            //Normal Checks         
-            bool hasWalkability = mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], thisCharacterCDH);
-            bool hasCharacter = mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer();
+            //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
+            Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
+            List<Vector3Int> listOfRanges = universalCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
+            if (directionofAction == DirectionOfAction.Taxi)
+            {
+                //listOfRanges = universalCalculator.generateWay4RangeFromPoint(centerPos, rangeOfAction);
+                listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
+            }
+            List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
+            listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
+            //The Following Removes Invalid Tiles
+            for (int i = 0; i < listOfRanges.Count; i++)
+            {
+                //Normal Checks         
+                bool hasWalkability = mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
+                bool hasCharacter = mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer();
 
-            if (hasWalkability == requireWalkability && hasCharacter == requireCharacter)
-            {
-                //Debug.Log(listOfAttackRange[i] + "Valid " + i);
-                //Do Nothing since all conditions are fine
-            }
-            else
-            {
-                //For Debugging
-                if (debugValidActionTiles)
+                if (hasWalkability == requireWalkability && hasCharacter == requireCharacter)
+                {/*Do Nothing since all conditions are fine*/}
+                else
                 {
-                    bool condtion = false;//Will be reassigned later
-                    string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
-                    string debugLine = "Point " + listOfRanges[i] + " was Invalid as Tile ";
-                    if (hasWalkability != requireWalkability)
+                    //For Debugging
+                    if (checkValidActionTiles)
                     {
-                        condtion = requireWalkability;
-                        debugLine += needConditon + "Ability to Walk ";
+                        bool condtion = false;//Will be reassigned later
+                        string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
+                        string debugLine = "Point " + listOfRanges[i] + " was Invalid as Tile ";
+                        if (hasWalkability != requireWalkability)
+                        {
+                            condtion = requireWalkability;
+                            debugLine += needConditon + "Ability to Walk ";
+                        }
+                        if (hasCharacter != requireCharacter)
+                        {
+                            condtion = requireCharacter;
+                            debugLine += needConditon + "Character Here ";
+                        }
+                        if (rangeOfAction == 0)
+                            debugLine += "and The Range of Action was " + rangeOfAction;
+                        Debug.Log(debugLine);
                     }
-                    if (hasCharacter != requireCharacter)
-                    {
-                        condtion = requireCharacter;
-                        debugLine += needConditon + "Character Here ";
-                    }
-                    if (rangeOfAction == 0)
-                        debugLine += "and The Range of Action was " + rangeOfAction;
-                    Debug.Log(debugLine);
+                    //Actual Code 
+                    listOfRanges.RemoveAt(i);
+                    i--;
                 }
-                //Actual Code 
-                listOfRanges.RemoveAt(i);
-                i--;
             }
+            return listOfRanges;
         }
-        return listOfRanges;
     }
 }
 public enum AbilityName
@@ -233,4 +232,23 @@ public enum AbilityName
     FireBall,
     HeartPickup,
     DoubleTeam
+}
+public enum ValidTargetData
+{
+    OnAny,
+    OnOccupiable,
+    OnOccuipied,
+    OnCharacter
+}
+public enum DirectionOfAction
+{
+    complete,
+    Taxi
+}
+[Serializable]
+class Ability
+{
+    public AbilityName abilityName;
+    public ValidTargetData validTargetData;
+    public DirectionOfAction directionOfAction;
 }

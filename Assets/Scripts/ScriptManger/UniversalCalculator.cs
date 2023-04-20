@@ -70,6 +70,20 @@ public class UniversalCalculator : MonoBehaviour
         List<Vector3Int> listOfRanges = generateRangeFrom2Vectors(startRange, endRange);
         return listOfRanges;
     }
+    public List<Vector3Int> generateTaxiRangeFromPoint(Vector3Int thisPoint, int rangeOfAction)
+    {
+        List<Vector3Int> listOfRanges = generateRangeFromPoint(thisPoint, rangeOfAction);
+        List<Vector3Int> outputList = new List<Vector3Int>();
+        foreach (Vector3Int point in listOfRanges)
+        {
+            float distance = Vector3Int.Distance(thisPoint, point);
+            if (distance <= rangeOfAction)
+            {
+                outputList.Add(point);
+            }
+        }
+        return outputList;
+    }
     public Vector3Int convertToVector3Int(Vector3 thisVector)
     {
         return new Vector3Int((int)thisVector.x, (int)thisVector.y, (int)thisVector.z);

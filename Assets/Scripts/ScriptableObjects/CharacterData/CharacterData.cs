@@ -19,6 +19,7 @@ public class CharacterData : ScriptableObject
     public int rangeOfVision = 5;
     public List<GroundFloorType> canWalkOn;
     public List<AbilityName> specialAblitiesAvailable;
+    [SerializeField] List<Ability> ability;
     //Sprite Stats
     public float spriteOffsetY;
     void OnEnable()
