@@ -21,6 +21,17 @@ MonoBehaviour:
   speedValue: 3
   rangeOfVision: 5
   canWalkOn: 0000000002000000
+  specialAblitiesAvailable: 
+  ability:
+  - abilityName: 0
+    validTargetData: 2
+    directionOfAction: 1
+  - abilityName: 1
+    validTargetData: 3
+    directionOfAction: 0
+  - abilityName: 3
+    validTargetData: 0
+    directionOfAction: 0
   spriteOffsetY: 1
   Walk:
   - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}

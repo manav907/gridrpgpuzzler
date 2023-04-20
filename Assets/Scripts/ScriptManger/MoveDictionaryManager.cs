@@ -48,17 +48,17 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             //Ability ability = new Ability(AbilityName.Move, ValidTargetData.OnOccupiable, DirectionOfAction.complete);
             StartCoroutine(getInput
-            (simpleMoveAction, characterCS.GetAbilityRange(AbilityName.Move), false, true));
+            (simpleMoveAction, characterCS.GetAbilityRange(AbilityName.Move), AbilityName.Move));
         }
         void AttackHere()
         {
             StartCoroutine(getInput
-            (simpleAttackAction, characterCS.GetAbilityRange(AbilityName.Attack), true, true || false));
+            (simpleAttackAction, characterCS.GetAbilityRange(AbilityName.Attack), AbilityName.Attack));
         }
         void DoubleAttack()
         {
             StartCoroutine(getInput
-            (simpleAttackAction, characterCS.GetAbilityRange(AbilityName.Attack), true, true || false, AbilityName.Attack));
+            (simpleAttackAction, characterCS.GetAbilityRange(AbilityName.Attack), AbilityName.Attack, AbilityName.Attack));
         }
         void EndTurn()
         {
@@ -115,13 +115,14 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     Vector3Int tryHere;
     [SerializeField] bool checkValidActionTiles = false;
-    [SerializeField] DirectionOfAction directionofAction;
     IEnumerator getInput
-    (Action doThisAction, int rangeOfAction, bool requireCharacter, bool requireWalkability, AbilityName? forceNextAbility = null)
+    (Action doThisAction, int rangeOfAction, AbilityName forAbilityData, AbilityName? forceNextAbility = null)
     {
+        Ability ability = characterCS.AbilityNameToAbilityDataDIR[forAbilityData];
+        bool requireCharacter = ability.requireCharacter();
+        bool requireWalkability = ability.requireWalkability();
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction);
-        //bool needsButton = rangeOfAction == 0 ? false : true;
         List<Vector3Int> listOfValidtargets = getValidTargetList();
         if (characterCS.isPlayerCharacter)
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
@@ -174,7 +175,7 @@ public class MoveDictionaryManager : MonoBehaviour
             //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
             Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
             List<Vector3Int> listOfRanges = universalCalculator.generateRangeFromPoint(centerPos, rangeOfAction);
-            if (directionofAction == DirectionOfAction.Taxi)
+            if (ability.directionOfAction == DirectionOfAction.Taxi)
             {
                 //listOfRanges = universalCalculator.generateWay4RangeFromPoint(centerPos, rangeOfAction);
                 listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
@@ -233,22 +234,46 @@ public enum AbilityName
     HeartPickup,
     DoubleTeam
 }
-public enum ValidTargetData
-{
-    OnAny,
-    OnOccupiable,
-    OnOccuipied,
-    OnCharacter
-}
 public enum DirectionOfAction
 {
     complete,
     Taxi
 }
 [Serializable]
-class Ability
+public class Ability
 {
     public AbilityName abilityName;
-    public ValidTargetData validTargetData;
+    public BoolEnum requireCharacterBoolEnum = BoolEnum.False;
+    public BoolEnum requireWalkabilityBoolEnum = BoolEnum.False;
+    public bool requireCharacter()
+    {
+        return convertToBool(requireCharacterBoolEnum);
+    }
+    public bool requireWalkability()
+    {
+        return convertToBool(requireWalkabilityBoolEnum);
+    }
     public DirectionOfAction directionOfAction;
+    bool convertToBool(BoolEnum boolEnum)
+    {
+        if (boolEnum == BoolEnum.True)
+            return true;
+        if (boolEnum == BoolEnum.False)
+            return false;
+        if (boolEnum == BoolEnum.TrueOrFalse)
+            return true || false;
+        if (boolEnum == BoolEnum.TrueAndFalse)
+            return true && false;
+        return false;
+    }
+
+}
+public enum BoolEnum
+{
+    True,
+    False,
+    TrueOrFalse,
+    TrueAndFalse
+
+
 }

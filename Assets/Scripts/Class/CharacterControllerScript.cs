@@ -17,11 +17,11 @@ public class CharacterControllerScript : MonoBehaviour
     public List<GroundFloorType> canWalkOn;
     public CharacterData thisCharacterData;
     [SerializeField] private TextMesh Heatlh;
-
     private ButtonManager thisButtonManager;
     private MapManager thisMapManager;
     private TurnManager thisTurnManager;
     UniversalCalculator universalCalculator;
+    public List<Ability> ability;
     public void InitilizeCharacter(GameObject gameController)
     {
         thisButtonManager = gameController.GetComponent<ButtonManager>();
@@ -43,8 +43,15 @@ public class CharacterControllerScript : MonoBehaviour
             speedValue = thisCharacterData.speedValue;
             rangeOfVision = thisCharacterData.rangeOfVision;
             canWalkOn = thisCharacterData.canWalkOn;
+            ability = thisCharacterData.ability;
+
             //ListStuff
             CharacterMoveList.AddRange(thisCharacterData.specialAblitiesAvailable);
+
+            //Setting Data
+            MoveToRangeDir = MoveToRange();
+            AbilityNameToAbilityDataDIR = AbilityNameToAbilityData();
+
 
             //Setting Specific Name
             this.name = characterName + " " + thisCharacterData.InstanceID;
@@ -66,21 +73,32 @@ public class CharacterControllerScript : MonoBehaviour
                     Debug.Log("SpriteHolder not found.");
                 }
             }
+            //Methods
+            Dictionary<AbilityName, int> MoveToRange()
+            {
+                var thisDir = new Dictionary<AbilityName, int>();
+                thisDir.Add(AbilityName.Move, rangeOfMove);
+                thisDir.Add(AbilityName.Attack, rangeOfAttack);
+                return thisDir;
+            }
+            Dictionary<AbilityName, Ability> AbilityNameToAbilityData()
+            {
+                var thisDir = new Dictionary<AbilityName, Ability>();
+                foreach (Ability ability in ability)
+                {
+                    thisDir.Add(ability.abilityName, ability);
+                }
+                return thisDir;
+            }
         }
     }
+    public Dictionary<AbilityName, Ability> AbilityNameToAbilityDataDIR;
 
-    [SerializeField] Animator animator;
-    public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
-    {
-        if (isCharacterTurn)
-            animator.SetTrigger("Walk");
-        else
-            animator.SetTrigger("Idle");
-    }
-    //public Dictionary <string, int> MoveToRange;
+
+    Dictionary<AbilityName, int> MoveToRangeDir;
     public int GetAbilityRange(AbilityName abilityName)
     {
-        Dictionary<AbilityName, int> MoveToRangeDir = MoveToRange();
+
         if (MoveToRangeDir.ContainsKey(abilityName))
         {
             return MoveToRangeDir[abilityName];
@@ -88,13 +106,6 @@ public class CharacterControllerScript : MonoBehaviour
         else
         {
             return 0;
-        }
-        Dictionary<AbilityName, int> MoveToRange()
-        {
-            var thisDir = new Dictionary<AbilityName, int>();
-            thisDir.Add(AbilityName.Move, rangeOfMove);
-            thisDir.Add(AbilityName.Attack, rangeOfAttack);
-            return thisDir;
         }
     }
     public List<AbilityName> CharacterMoveList;
@@ -203,6 +214,14 @@ public class CharacterControllerScript : MonoBehaviour
         //Need to clarify how this works
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
+    }
+    [SerializeField] Animator animator;
+    public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
+    {
+        if (isCharacterTurn)
+            animator.SetTrigger("Walk");
+        else
+            animator.SetTrigger("Idle");
     }
 
 
