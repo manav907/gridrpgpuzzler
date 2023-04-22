@@ -8,6 +8,7 @@ using UnityEditor.Animations;
 public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
+    public bool isPlayerCharacter = true;
     public int health;
     public int AttackDamage;
     public int speedValue;
@@ -20,6 +21,7 @@ public class CharacterControllerScript : MonoBehaviour
     private TurnManager thisTurnManager;
     UniversalCalculator universalCalculator;
     [SerializeField] List<Ability> abilityList;
+
     public void InitilizeCharacter(GameObject gameController)
     {
         thisButtonManager = gameController.GetComponent<ButtonManager>();
@@ -133,7 +135,6 @@ public class CharacterControllerScript : MonoBehaviour
             return true;
         }
     }
-    public bool isPlayerCharacter = true;
     MoveDictionaryManager moveDictionaryManager;
     public void BeginThisCharacterTurn()
     {
@@ -155,8 +156,7 @@ public class CharacterControllerScript : MonoBehaviour
         var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
         //GhostVision for tracking after leaving Vision
         var targetList = listOfPossibleTargets(VisionList);
-        var attackRangeList = 
-        universalCalculator.generateTaxiRangeFromPoint(thisCharpos, AbilityNameToAbilityDataDIR[AbilityName.Attack].GetRangeOfAction());
+        var attackRangeList = moveDictionaryManager.getValidTargetList(AbilityNameToAbilityDataDIR[AbilityName.Attack]);
         if (targetList.Count == 0)
         {
             Debug.Log("Ideling");
@@ -168,12 +168,14 @@ public class CharacterControllerScript : MonoBehaviour
             currentTarget = targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];
             if (attackRangeList.Contains(currentTarget))
             {
+                //Debug.Log("Attacking");
                 moveDictionaryManager.doAction(AbilityName.Attack);
                 //Debug.Log("Health of " + this.gameObject.name + " is " + health + "Attacked character");
                 //Attack Character
             }
             else if (true)//if character not in attack range
             {
+                //Debug.Log("Moving");
                 moveDictionaryManager.doAction(AbilityName.Move);
             }
 

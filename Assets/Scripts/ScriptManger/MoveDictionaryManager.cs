@@ -121,16 +121,17 @@ public class MoveDictionaryManager : MonoBehaviour
         Ability ability = characterCS.AbilityNameToAbilityDataDIR[forAbilityData];
         //int rangeOfAction = characterCS.GetAbilityRange(ability.abilityName);
         float rangeOfAction = ability.GetRangeOfAction();
-        bool requireCharacter = ability.requireCharacter();
         AbilityName forceNextAbility = ability.forceAbility;
         //Executing Script
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction);
-        List<Vector3Int> listOfValidtargets = getValidTargetList();
+        List<Vector3Int> listOfValidtargets = getValidTargetList(ability);
         if (characterCS.isPlayerCharacter)
+        {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-        yield return null;
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+            yield return null;
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+        }
         if (GetDataForActions())//if Getting tryHere was at a Valid Tile
         {
             doThisAction();
@@ -163,7 +164,7 @@ public class MoveDictionaryManager : MonoBehaviour
                     if (checkValidActionTiles == false)
                     {
                         checkValidActionTiles = true;
-                        getValidTargetList();
+                        getValidTargetList(ability);
                         checkValidActionTiles = false;
                     }
                     return false;
@@ -177,45 +178,48 @@ public class MoveDictionaryManager : MonoBehaviour
                 return true;
             }
         }
-        List<Vector3Int> getValidTargetList()
+
+    }
+    public List<Vector3Int> getValidTargetList(Ability ability)
+    {
+        float rangeOfAction = ability.GetRangeOfAction();
+        bool requireCharacter = ability.requireCharacter();
+        //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
+        Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
+        List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
+        List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
+        listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
+        //The Following Removes Invalid Tiles
+        for (int i = 0; i < listOfRanges.Count; i++)
         {
-            //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
-            Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
-            List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
-            List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
-            listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
-            //The Following Removes Invalid Tiles
-            for (int i = 0; i < listOfRanges.Count; i++)
+            //Normal Checks         
+            bool hasWalkability = ability.disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
+            bool hasCharacter = mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer();
+            if (hasWalkability && hasCharacter == requireCharacter)
+            {/*Do Nothing since all conditions are fine*/}
+            else
             {
-                //Normal Checks         
-                bool hasWalkability = ability.disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
-                bool hasCharacter = mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer();
-                if (hasWalkability && hasCharacter == requireCharacter)
-                {/*Do Nothing since all conditions are fine*/}
-                else
+                //For Debugging
+                if (checkValidActionTiles)
                 {
-                    //For Debugging
-                    if (checkValidActionTiles)
+                    bool condtion = false;//Will be reassigned later                        
+                    string debugLine = "For Action " + ability.abilityName + " Point " + listOfRanges[i] + " was Invalid as Tile ";
+                    string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
+                    if (hasCharacter != requireCharacter)
                     {
-                        bool condtion = false;//Will be reassigned later                        
-                        string debugLine = "Point " + listOfRanges[i] + " was Invalid as Tile ";
-                        string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
-                        if (hasCharacter != requireCharacter)
-                        {
-                            condtion = requireCharacter;
-                            debugLine += needConditon + "Character Here; ";
-                        }
-                        if (rangeOfAction == 0)
-                            debugLine += "The Range of Action was " + rangeOfAction;
-                        Debug.Log(debugLine);
+                        condtion = requireCharacter;
+                        debugLine += needConditon + "Character Here; ";
                     }
-                    //Actual Code 
-                    listOfRanges.RemoveAt(i);
-                    i--;
+                    if (rangeOfAction == 0)
+                        debugLine += "The Range of Action was " + rangeOfAction;
+                    Debug.Log(debugLine);
                 }
+                //Actual Code 
+                listOfRanges.RemoveAt(i);
+                i--;
             }
-            return listOfRanges;
         }
+        return listOfRanges;
     }
 }
 public enum AbilityName
