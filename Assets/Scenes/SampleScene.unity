@@ -583,7 +583,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkValidActionTiles: 0
-  directionofAction: 0
 --- !u!114 &732592035
 MonoBehaviour:
   m_ObjectHideFlags: 0

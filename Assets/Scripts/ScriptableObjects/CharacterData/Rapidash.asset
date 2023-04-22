@@ -15,8 +15,6 @@ MonoBehaviour:
   InstanceID: 0
   characterName: Rapidash
   health: 5
-  rangeOfMove: 2
-  rangeOfAttack: 1
   AttackDamage: 2
   speedValue: 3
   rangeOfVision: 5
@@ -25,14 +23,14 @@ MonoBehaviour:
   ability:
   - abilityName: 0
     forceAbility: 3
-    requireCharacterBoolEnum: 1
-    requireWalkabilityBoolEnum: 0
-    directionOfAction: 1
+    rangeOfActionEnum: 3
+    requireCharacterBoolEnum: 2
+    disregardWalkablity: 0
   - abilityName: 1
     forceAbility: 3
-    requireCharacterBoolEnum: 0
-    requireWalkabilityBoolEnum: 2
-    directionOfAction: 0
+    rangeOfActionEnum: 1
+    requireCharacterBoolEnum: 1
+    disregardWalkablity: 0
   spriteOffsetY: 1
   Walk:
   - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}

@@ -29,8 +29,7 @@ public class CharacterControllerScript : MonoBehaviour
         thisTurnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
-
-
+        //Initilizing
         setVariables();
         CheckIfCharacterIsDead();
         void setVariables()
@@ -41,16 +40,11 @@ public class CharacterControllerScript : MonoBehaviour
             speedValue = thisCharacterData.speedValue;
             rangeOfVision = thisCharacterData.rangeOfVision;
             canWalkOn = thisCharacterData.canWalkOn;
-
-
             //ListStuff
             CharacterMoveList.AddRange(thisCharacterData.specialAblitiesAvailable);
             abilityList.AddRange(thisCharacterData.ability);
-
             //Setting Data
             AbilityNameToAbilityDataDIR = AbilityNameToAbilityData();
-
-
             //Setting Specific Name
             this.name = characterName + " " + thisCharacterData.InstanceID;
             //creating Override
@@ -58,19 +52,8 @@ public class CharacterControllerScript : MonoBehaviour
             //doingAnimController
             animator.runtimeAnimatorController = thisCharacterData.GetanimatorOverrideController(originalController);
             //Setting Sprite Stuff
-            setSpriteHolderProperties();
-            void setSpriteHolderProperties()
-            {
-                Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
-                if (spriteHolder != null)
-                {
-                    spriteHolder.position = new Vector3(spriteHolder.position.x, thisCharacterData.spriteOffsetY, spriteHolder.position.z);
-                }
-                else
-                {
-                    Debug.Log("SpriteHolder not found.");
-                }
-            }
+            //Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
+            spriteHolder.position = new Vector3(spriteHolder.position.x, thisCharacterData.spriteOffsetY, spriteHolder.position.z);
             //Methods
             Dictionary<AbilityName, Ability> AbilityNameToAbilityData()
             {
@@ -84,21 +67,6 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
     public Dictionary<AbilityName, Ability> AbilityNameToAbilityDataDIR;
-
-
-    Dictionary<AbilityName, int> MoveToRangeDir;
-    public int GetAbilityRange(AbilityName abilityName)
-    {
-
-        if (MoveToRangeDir.ContainsKey(abilityName))
-        {
-            return MoveToRangeDir[abilityName];
-        }
-        else
-        {
-            return 0;
-        }
-    }
     public List<AbilityName> CharacterMoveList;
     public List<AbilityName> CharacterInventoryList;
     public bool CheckIfCharacterIsDead()
@@ -165,20 +133,15 @@ public class CharacterControllerScript : MonoBehaviour
         }
         else
         {
-            currentTarget = targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];
+            currentTarget = targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];//Setting Current Target for later use
             if (attackRangeList.Contains(currentTarget))
             {
-                //Debug.Log("Attacking");
                 moveDictionaryManager.doAction(AbilityName.Attack);
-                //Debug.Log("Health of " + this.gameObject.name + " is " + health + "Attacked character");
-                //Attack Character
             }
             else if (true)//if character not in attack range
             {
-                //Debug.Log("Moving");
                 moveDictionaryManager.doAction(AbilityName.Move);
             }
-
         }
         List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
         {
@@ -194,7 +157,6 @@ public class CharacterControllerScript : MonoBehaviour
             return thisList;
         }
     }
-
     public Vector3Int getCharV3Int()
     {
         return universalCalculator.convertToVector3Int(this.gameObject.transform.position);
@@ -203,11 +165,11 @@ public class CharacterControllerScript : MonoBehaviour
     //validTargets depends on the action being performed
     {
         return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];
-        //Need to clarify how this works
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
     }
     [SerializeField] Animator animator;
+    [SerializeField] Transform spriteHolder;
     public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
     {
         if (isCharacterTurn)

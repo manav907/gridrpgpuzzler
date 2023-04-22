@@ -13,15 +13,26 @@ public class ReticalManager : MonoBehaviour
         tileCalculator = this.GetComponent<UniversalCalculator>();
     }
     [SerializeField] Vector3 reticalPos;
+    [SerializeField] GameObject characterRetical;
+    Vector3 lastMovePoint;
+    void Start()
+    {
+        lastMovePoint = getMovePoint();
+        characterRetical.transform.position = lastMovePoint;
+    }
     void FixedUpdate()
     {
-        setRetical();
+        setMovePoint();
     }
-    [SerializeField] GameObject characterRetical;
-    void setRetical()
+    void setMovePoint()
     {
-        reticalPos = getMovePoint();
-        characterRetical.transform.position = reticalPos;
+        Vector3 currentMovePoint = getMovePoint();
+        if (currentMovePoint != lastMovePoint)
+        {
+            reticalPos = currentMovePoint;
+            characterRetical.transform.position = reticalPos;
+            lastMovePoint = currentMovePoint;
+        }
     }
     public Tilemap Grid;
     Vector3 worldPos;

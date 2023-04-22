@@ -48,20 +48,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: 
+  isPlayerCharacter: 1
   health: 3
-  rangeOfMove: 1
-  rangeOfAttack: 2
   AttackDamage: 2
   speedValue: 3
   rangeOfVision: 5
   canWalkOn: 
   thisCharacterData: {fileID: 0}
   Heatlh: {fileID: 1664907520338834495}
-  animator: {fileID: 2406951079378199446}
+  abilityList: []
   CharacterMoveList: 00000000010000000400000003000000
   CharacterInventoryList: 05000000
   actionPoints: 1
-  isPlayerCharacter: 1
+  animator: {fileID: 2406951079378199446}
+  spriteHolder: {fileID: 5487882985969914086}
 --- !u!1 &1555172378576254017
 GameObject:
   m_ObjectHideFlags: 0

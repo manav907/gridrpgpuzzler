@@ -234,11 +234,6 @@ public enum AbilityName
     HeartPickup,
     DoubleTeam
 }
-public enum DirectionOfAction
-{
-    complete,
-    Taxi
-}
 
 [Serializable]
 public class Ability

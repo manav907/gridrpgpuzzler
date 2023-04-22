@@ -15,29 +15,27 @@ MonoBehaviour:
   InstanceID: 1
   characterName: Ninjask
   health: 5
-  rangeOfMove: 1
-  rangeOfAttack: 2
   AttackDamage: 2
   speedValue: 3
   rangeOfVision: 5
-  canWalkOn: 00000000
+  canWalkOn: 0000000001000000
   specialAblitiesAvailable: 02000000
   ability:
   - abilityName: 0
     forceAbility: 3
-    requireCharacterBoolEnum: 1
-    requireWalkabilityBoolEnum: 0
-    directionOfAction: 0
+    rangeOfActionEnum: 2
+    requireCharacterBoolEnum: 2
+    disregardWalkablity: 0
   - abilityName: 2
     forceAbility: 1
-    requireCharacterBoolEnum: 0
-    requireWalkabilityBoolEnum: 2
-    directionOfAction: 0
+    rangeOfActionEnum: 4
+    requireCharacterBoolEnum: 1
+    disregardWalkablity: 1
   - abilityName: 1
     forceAbility: 3
-    requireCharacterBoolEnum: 0
-    requireWalkabilityBoolEnum: 2
-    directionOfAction: 0
+    rangeOfActionEnum: 4
+    requireCharacterBoolEnum: 1
+    disregardWalkablity: 0
   spriteOffsetY: 0.5
   Walk:
   - {fileID: -468390188, guid: c827088f025ff124e85bfa19417717b7, type: 3}
