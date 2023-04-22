@@ -29,9 +29,22 @@ public class ReticalManager : MonoBehaviour
             lastMovePoint = currentMovePoint;
             //Setting Retical Tiles
             //characterRetical.transform.position = reticalPos;
-            var retiacalTiles = new List<Vector3Int>() { currentMovePoint };
-            reDrawReticalTiles(retiacalTiles);
+
+            reDrawReticalTiles(generateShape(currentMovePoint));
         }
+    }
+    [SerializeField] ReticalShapes reticalShapes;
+    List<Vector3Int> generateShape(Vector3Int fromPoint)
+    {
+        var retiacalTiles = new List<Vector3Int>();
+        retiacalTiles.Add(fromPoint);
+        if (reticalShapes == ReticalShapes.SSweep)
+        {
+            retiacalTiles.Add(fromPoint);
+            retiacalTiles.Add(fromPoint + Vector3Int.left);
+            retiacalTiles.Add(fromPoint + Vector3Int.right);
+        }
+        return retiacalTiles;
     }
     [Header("Grid References")]
     public Tilemap Grid;
@@ -115,4 +128,12 @@ public class ReticalManager : MonoBehaviour
     {
         thistilemap.ClearAllTiles();
     }
+}
+enum ReticalShapes
+{
+    SSingle,
+    S3x3,
+    SSweep,
+    SArrow
+
 }
