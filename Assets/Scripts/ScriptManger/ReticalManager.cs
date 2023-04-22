@@ -6,19 +6,15 @@ using UnityEngine.UI;
 
 public class ReticalManager : MonoBehaviour
 {
-
     UniversalCalculator tileCalculator;
     public void setVariables()
     {
         tileCalculator = this.GetComponent<UniversalCalculator>();
     }
-    [SerializeField] Vector3 reticalPos;
-    [SerializeField] GameObject characterRetical;
-    Vector3 lastMovePoint;
     void Start()
     {
         lastMovePoint = getMovePoint();
-        characterRetical.transform.position = lastMovePoint;
+        //characterRetical.transform.position = lastMovePoint;
     }
     void FixedUpdate()
     {
@@ -26,14 +22,18 @@ public class ReticalManager : MonoBehaviour
     }
     void setMovePoint()
     {
-        Vector3 currentMovePoint = getMovePoint();
+        Vector3Int currentMovePoint = getMovePoint();
         if (currentMovePoint != lastMovePoint)
         {
             reticalPos = currentMovePoint;
-            characterRetical.transform.position = reticalPos;
             lastMovePoint = currentMovePoint;
+            //Setting Retical Tiles
+            //characterRetical.transform.position = reticalPos;
+            var retiacalTiles = new List<Vector3Int>() { currentMovePoint };
+            reDrawReticalTiles(retiacalTiles);
         }
     }
+    [Header("Grid References")]
     public Tilemap Grid;
     Vector3 worldPos;
     Vector3Int tilePos;
@@ -44,23 +44,25 @@ public class ReticalManager : MonoBehaviour
         tilePos = Grid.WorldToCell(worldPos);
         return tilePos;
     }
+    [Header("Retical References")]
+    [SerializeField] Vector3 reticalPos;
+    [SerializeField] Vector3 lastMovePoint;
+    //[SerializeField] GameObject characterRetical;
+    [SerializeField] TileBase reticalTilePrefab;
+    [SerializeField] Tilemap validReticalTilesTilemap;
+    void reDrawReticalTiles(List<Vector3Int> validReticalTiles)
+    {
+        reDrawTiles(validReticalTiles, validReticalTilesTilemap, reticalTilePrefab);
+    }
+    [Header("Valid Tilemap References")]
     [SerializeField] private Tilemap validTilesTileMap;
-    [SerializeField] private TileBase reticalTilePrefab;
     public void reDrawValidTiles(List<Vector3Int> validTilesList)
     {
-        if (validTilesList != null)
-        {
-            SetTiles(validTilesList, validTilesTileMap, reticalTilePrefab);
-            //addtiles
-        }
-        else
-        {
-            ClearAllTiles(validTilesTileMap);
-            //deletetiles
-        }
+        reDrawTiles(validTilesList, validTilesTileMap, reticalTilePrefab);
     }
-    [SerializeField] private Tilemap shadowTilemap;
-    [SerializeField] private TileBase shadowTilePrefab;
+    [Header("Shadow References")]
+    [SerializeField] Tilemap shadowTilemap;
+    [SerializeField] TileBase shadowTilePrefab;
     Vector3Int topleftoffset;
     Vector3Int downrightoffset;
     public List<Vector3Int> reDrawShadows()
@@ -68,34 +70,41 @@ public class ReticalManager : MonoBehaviour
         //getting edges of camera
         var topleft = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         var downright = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
-
         //assigning offsets
         topleftoffset = new Vector3Int(-2, 1, 0);
         downrightoffset = new Vector3Int(1, -2, 0);
         topleft = topleft + topleftoffset;
         downright = downright + downrightoffset;
-
-
         //generating ranges
         List<Vector3Int> shadowRange = tileCalculator.generateRangeFrom2Vectors(topleft, downright);
-        //clearing tiles
-        ClearAllTiles(shadowTilemap);
-        //creating tiles
-        SetTiles(shadowRange, shadowTilemap, shadowTilePrefab);
-        //clearing Tiles for vision
+        reDrawTiles(shadowRange, shadowTilemap, shadowTilePrefab);
         var OrderOfInteractableCharacters = this.gameObject.GetComponent<TurnManager>().OrderOfInteractableCharacters;
         foreach (GameObject thisChar in OrderOfInteractableCharacters)
         {
             CharacterControllerScript thisCDH = thisChar.GetComponent<CharacterControllerScript>();
             if (thisCDH.isPlayerCharacter == true)
-                setVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
+                SetVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
         }
         return shadowRange;
-
     }
-    void setVision(Vector3Int thisPoint, int rangeOfAction)
+    //Methods
+    void SetVision(Vector3Int thisPoint, int rangeOfAction)
     {
         SetTiles(tileCalculator.generateRangeFromPoint(thisPoint, rangeOfAction), shadowTilemap, null);
+    }
+    void reDrawTiles(List<Vector3Int> theseTiles, Tilemap onTileMap, TileBase thisTile)
+    {
+        ClearAllTiles(onTileMap);
+        if (theseTiles != null)
+        {
+            SetTiles(theseTiles, onTileMap, thisTile);
+            //addtiles
+        }
+        else
+        {
+            ClearAllTiles(onTileMap);
+            //deletetiles
+        }
     }
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)
     {
@@ -106,5 +115,4 @@ public class ReticalManager : MonoBehaviour
     {
         thistilemap.ClearAllTiles();
     }
-
 }
