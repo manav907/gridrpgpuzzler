@@ -24,13 +24,19 @@ MonoBehaviour:
   specialAblitiesAvailable: 02000000
   ability:
   - abilityName: 0
-    validTargetData: 1
+    forceAbility: 3
+    requireCharacterBoolEnum: 1
+    requireWalkabilityBoolEnum: 0
     directionOfAction: 0
   - abilityName: 2
-    validTargetData: 3
+    forceAbility: 1
+    requireCharacterBoolEnum: 0
+    requireWalkabilityBoolEnum: 2
     directionOfAction: 0
   - abilityName: 1
-    validTargetData: 3
+    forceAbility: 3
+    requireCharacterBoolEnum: 0
+    requireWalkabilityBoolEnum: 2
     directionOfAction: 0
   spriteOffsetY: 0.5
   Walk:

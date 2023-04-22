@@ -12,8 +12,6 @@ public class CharacterData : ScriptableObject
     //Stats
 
     public int health = 5;
-    public int rangeOfMove = 1;
-    public int rangeOfAttack = 2;
     public int AttackDamage = 2;
     public int speedValue = 3;
     public int rangeOfVision = 5;

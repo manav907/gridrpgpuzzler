@@ -9,8 +9,6 @@ public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
     public int health;
-    public int rangeOfMove;
-    public int rangeOfAttack;
     public int AttackDamage;
     public int speedValue;
     public int rangeOfVision;
@@ -21,7 +19,7 @@ public class CharacterControllerScript : MonoBehaviour
     private MapManager thisMapManager;
     private TurnManager thisTurnManager;
     UniversalCalculator universalCalculator;
-    public List<Ability> ability;
+    [SerializeField] List<Ability> abilityList;
     public void InitilizeCharacter(GameObject gameController)
     {
         thisButtonManager = gameController.GetComponent<ButtonManager>();
@@ -37,19 +35,17 @@ public class CharacterControllerScript : MonoBehaviour
         {
             characterName = thisCharacterData.name;
             health = thisCharacterData.health;
-            rangeOfMove = thisCharacterData.rangeOfMove;
-            rangeOfAttack = thisCharacterData.rangeOfAttack;
             AttackDamage = thisCharacterData.AttackDamage;
             speedValue = thisCharacterData.speedValue;
             rangeOfVision = thisCharacterData.rangeOfVision;
             canWalkOn = thisCharacterData.canWalkOn;
-            ability = thisCharacterData.ability;
+
 
             //ListStuff
             CharacterMoveList.AddRange(thisCharacterData.specialAblitiesAvailable);
+            abilityList.AddRange(thisCharacterData.ability);
 
             //Setting Data
-            MoveToRangeDir = MoveToRange();
             AbilityNameToAbilityDataDIR = AbilityNameToAbilityData();
 
 
@@ -74,17 +70,10 @@ public class CharacterControllerScript : MonoBehaviour
                 }
             }
             //Methods
-            Dictionary<AbilityName, int> MoveToRange()
-            {
-                var thisDir = new Dictionary<AbilityName, int>();
-                thisDir.Add(AbilityName.Move, rangeOfMove);
-                thisDir.Add(AbilityName.Attack, rangeOfAttack);
-                return thisDir;
-            }
             Dictionary<AbilityName, Ability> AbilityNameToAbilityData()
             {
-                var thisDir = new Dictionary<AbilityName, Ability>();
-                foreach (Ability ability in ability)
+                Dictionary<AbilityName, Ability> thisDir = new Dictionary<AbilityName, Ability>();
+                foreach (Ability ability in abilityList)
                 {
                     thisDir.Add(ability.abilityName, ability);
                 }
@@ -166,7 +155,8 @@ public class CharacterControllerScript : MonoBehaviour
         var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
         //GhostVision for tracking after leaving Vision
         var targetList = listOfPossibleTargets(VisionList);
-        var attackRangeList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfAttack);
+        var attackRangeList = 
+        universalCalculator.generateTaxiRangeFromPoint(thisCharpos, AbilityNameToAbilityDataDIR[AbilityName.Attack].GetRangeOfAction());
         if (targetList.Count == 0)
         {
             Debug.Log("Ideling");

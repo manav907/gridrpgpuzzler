@@ -24,13 +24,14 @@ MonoBehaviour:
   specialAblitiesAvailable: 
   ability:
   - abilityName: 0
-    validTargetData: 2
+    forceAbility: 3
+    requireCharacterBoolEnum: 1
+    requireWalkabilityBoolEnum: 0
     directionOfAction: 1
   - abilityName: 1
-    validTargetData: 3
-    directionOfAction: 0
-  - abilityName: 3
-    validTargetData: 0
+    forceAbility: 3
+    requireCharacterBoolEnum: 0
+    requireWalkabilityBoolEnum: 2
     directionOfAction: 0
   spriteOffsetY: 1
   Walk:

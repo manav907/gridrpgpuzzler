@@ -62,7 +62,7 @@ public class UniversalCalculator : MonoBehaviour
         }
         return listOfRanges;
     }
-    public List<Vector3Int> generateRangeFromPoint(Vector3Int thisPoint, int rangeOfAction)
+    public List<Vector3Int> generateRangeFromPoint(Vector3Int thisPoint, float rangeOfAction)
     {
         Vector3 centerPos = thisPoint;
         Vector3 startRange = centerPos - new Vector3(rangeOfAction, rangeOfAction);
@@ -70,7 +70,7 @@ public class UniversalCalculator : MonoBehaviour
         List<Vector3Int> listOfRanges = generateRangeFrom2Vectors(startRange, endRange);
         return listOfRanges;
     }
-    public List<Vector3Int> generateTaxiRangeFromPoint(Vector3Int thisPoint, int rangeOfAction)
+    public List<Vector3Int> generateTaxiRangeFromPoint(Vector3Int thisPoint, float rangeOfAction)
     {
         List<Vector3Int> listOfRanges = generateRangeFromPoint(thisPoint, rangeOfAction);
         List<Vector3Int> outputList = new List<Vector3Int>();
