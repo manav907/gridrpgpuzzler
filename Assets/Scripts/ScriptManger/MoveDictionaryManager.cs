@@ -12,6 +12,14 @@ public class MoveDictionaryManager : MonoBehaviour
     MapManager mapManager;
     UniversalCalculator universalCalculator;
     ButtonManager buttonManager;
+    [Header("Character Data")]
+    GameObject thisCharacter;
+    [SerializeField] CharacterControllerScript characterCS;
+    [Header("Retical And Tile Data")]
+    Vector3Int tryHere;
+    [SerializeField] bool checkValidActionTiles = false;
+    [Header("Current Ablity")]
+    [SerializeField] Ability currentAblity;
     public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
@@ -21,8 +29,7 @@ public class MoveDictionaryManager : MonoBehaviour
         buttonManager = this.GetComponent<ButtonManager>();
         SetMoveDictionary();
     }
-    GameObject thisCharacter;
-    CharacterControllerScript characterCS;
+
     public void getThisCharacterData()
     {
         thisCharacter = turnManager.thisCharacter;
@@ -113,12 +120,12 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         abilityNameToAction[abilityName]();
     }
-    Vector3Int tryHere;
-    [SerializeField] bool checkValidActionTiles = false;
+
     IEnumerator getInput(Action doThisAction, AbilityName forAbilityData)
     {
         //Declaring Variables
         Ability ability = characterCS.AbilityNameToAbilityDataDIR[forAbilityData];
+        currentAblity = ability;
         //int rangeOfAction = characterCS.GetAbilityRange(ability.abilityName);
         float rangeOfAction = ability.GetRangeOfAction();
         AbilityName forceNextAbility = ability.forceAbility;

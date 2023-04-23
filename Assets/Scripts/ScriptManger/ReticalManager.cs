@@ -6,15 +6,16 @@ using UnityEngine.UI;
 
 public class ReticalManager : MonoBehaviour
 {
-    UniversalCalculator tileCalculator;
+    UniversalCalculator universalCalculator;
+    TurnManager turnManager;
     public void setVariables()
     {
-        tileCalculator = this.GetComponent<UniversalCalculator>();
+        universalCalculator = this.GetComponent<UniversalCalculator>();
+        turnManager = GetComponent<TurnManager>();
     }
     void Start()
     {
         lastMovePoint = getMovePoint();
-        //characterRetical.transform.position = lastMovePoint;
     }
     void FixedUpdate()
     {
@@ -28,21 +29,28 @@ public class ReticalManager : MonoBehaviour
             reticalPos = currentMovePoint;
             lastMovePoint = currentMovePoint;
             //Setting Retical Tiles
-            //characterRetical.transform.position = reticalPos;
-
             reDrawReticalTiles(generateShape(currentMovePoint));
         }
     }
     [SerializeField] ReticalShapes reticalShapes;
-    List<Vector3Int> generateShape(Vector3Int fromPoint)
+    [SerializeField] float rangeOfAction;
+    List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
-        retiacalTiles.Add(fromPoint);
-        if (reticalShapes == ReticalShapes.SSweep)
+        if (reticalShapes == ReticalShapes.SSingle)
+            retiacalTiles.Add(atPoint);
+        else if (reticalShapes == ReticalShapes.SSweep)
         {
-            retiacalTiles.Add(fromPoint);
-            retiacalTiles.Add(fromPoint + Vector3Int.left);
-            retiacalTiles.Add(fromPoint + Vector3Int.right);
+            Vector3Int fromPoint = universalCalculator.convertToVector3Int(turnManager.thisCharacter.transform.position);
+            //retiacalTiles.AddRange(universalCalculator.getSmallAxeArc(fromPoint, atPoint));
+            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, rangeOfAction));
+            retiacalTiles.Remove(fromPoint);
+        }
+        else if (reticalShapes == ReticalShapes.S3x3)
+        {
+            retiacalTiles.AddRange(
+                universalCalculator.generateRangeFrom2Vectors(
+                atPoint + Vector3Int.up + Vector3Int.left, atPoint + Vector3Int.right + Vector3Int.down));
         }
         return retiacalTiles;
     }
@@ -89,7 +97,7 @@ public class ReticalManager : MonoBehaviour
         topleft = topleft + topleftoffset;
         downright = downright + downrightoffset;
         //generating ranges
-        List<Vector3Int> shadowRange = tileCalculator.generateRangeFrom2Vectors(topleft, downright);
+        List<Vector3Int> shadowRange = universalCalculator.generateRangeFrom2Vectors(topleft, downright);
         reDrawTiles(shadowRange, shadowTilemap, shadowTilePrefab);
         var OrderOfInteractableCharacters = this.gameObject.GetComponent<TurnManager>().OrderOfInteractableCharacters;
         foreach (GameObject thisChar in OrderOfInteractableCharacters)
@@ -103,7 +111,7 @@ public class ReticalManager : MonoBehaviour
     //Methods
     void SetVision(Vector3Int thisPoint, int rangeOfAction)
     {
-        SetTiles(tileCalculator.generateRangeFromPoint(thisPoint, rangeOfAction), shadowTilemap, null);
+        SetTiles(universalCalculator.generateRangeFromPoint(thisPoint, rangeOfAction), shadowTilemap, null);
     }
     void reDrawTiles(List<Vector3Int> theseTiles, Tilemap onTileMap, TileBase thisTile)
     {

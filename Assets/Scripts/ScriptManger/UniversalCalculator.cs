@@ -32,6 +32,10 @@ public class UniversalCalculator : MonoBehaviour
     }
 
     //Vector handeling
+    public Vector3Int convertToVector3Int(Vector3 thisVector)
+    {
+        return new Vector3Int((int)thisVector.x, (int)thisVector.y, (int)thisVector.z);
+    }
     public List<Vector3Int> generateRangeFrom2Vectors(Vector3 start, Vector3 end)
     {
         List<Vector3Int> listOfRanges = new List<Vector3Int>();
@@ -84,16 +88,103 @@ public class UniversalCalculator : MonoBehaviour
         }
         return outputList;
     }
-    public Vector3Int convertToVector3Int(Vector3 thisVector)
+    public List<Vector3Int> getSimpleArc(Vector3Int fromPoint, Vector3Int atPoint)
     {
-        return new Vector3Int((int)thisVector.x, (int)thisVector.y, (int)thisVector.z);
+        var retiacalTiles = new List<Vector3Int>();
+        Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
+        if (direction == Vector3Int.up)
+        {
+            retiacalTiles.Add(atPoint + Vector3Int.left);
+            retiacalTiles.Add(atPoint + Vector3Int.right);
+        }
+        if (direction == Vector3Int.down)
+        {
+            retiacalTiles.Add(atPoint + Vector3Int.left);
+            retiacalTiles.Add(atPoint + Vector3Int.right);
+        }
+        if (direction == Vector3Int.up + Vector3Int.right)
+        {
+            retiacalTiles.Add(atPoint + Vector3Int.left);
+            retiacalTiles.Add(atPoint + Vector3Int.down);
+        }
+        if (direction == Vector3Int.right)
+        {
+            retiacalTiles.Add(atPoint + Vector3Int.up);
+            retiacalTiles.Add(atPoint + Vector3Int.down);
+        }
+        if (direction == Vector3Int.right + Vector3Int.down)
+        {
+            retiacalTiles.Add(atPoint + Vector3Int.left);
+            retiacalTiles.Add(atPoint + Vector3Int.up);
+        }
+        if (direction == Vector3Int.left + Vector3Int.down)
+        {
+            retiacalTiles.Add(atPoint + Vector3Int.right);
+            retiacalTiles.Add(atPoint + Vector3Int.up);
+        }
+        if (direction == Vector3Int.left)
+        {
+            retiacalTiles.Add(atPoint + Vector3Int.up);
+            retiacalTiles.Add(atPoint + Vector3Int.down);
+        }
+        if (direction == Vector3Int.left + Vector3Int.up)
+        {
+            retiacalTiles.Add(atPoint + Vector3Int.right);
+            retiacalTiles.Add(atPoint + Vector3Int.down);
+        }
+        return retiacalTiles;
     }
+    public List<Vector3Int> getSmallAxeArc(Vector3Int fromPoint, Vector3Int atPoint)
+    {
+        var retiacalTiles = new List<Vector3Int>();
+        Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
+        Vector3Int first = new Vector3Int();
+        Vector3Int second = new Vector3Int();
+        if (direction.x != 0 && direction.y != 0)
+        {
+            first = direction + new Vector3Int(direction.x, 0, 0);
+            second = direction + new Vector3Int(0, direction.y, 0);
+        }
+        else
+        {
+            first = direction + new Vector3Int(direction.y, direction.x, 0);
+            second = direction + new Vector3Int(-direction.y, -direction.x, 0);
+        }
+        retiacalTiles.Add(first);
+        retiacalTiles.Add(second);
+        retiacalTiles.Add(direction);
+        return retiacalTiles;
+    }
+    public List<Vector3Int> generateComplexArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction, bool doAxeCheck = false)
+    {
+        var arcTiles = new List<Vector3Int>();
+        //Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
+        Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
+        int xDirection = direction.x;
+        int yDirection = direction.y;
+        foreach (Vector3Int pos in generateTaxiRangeFromPoint(fromPoint, rangeOfAction))
+        {
+            Vector3Int consideredDirection = Vector3Int.RoundToInt(Vector3.Normalize(pos - fromPoint));
+            bool SpearCheck = consideredDirection.x == xDirection || consideredDirection.y == yDirection;
+            bool AxeCheck;
+            if (doAxeCheck)//This is smaller
+            { AxeCheck = (consideredDirection.x != -xDirection && consideredDirection.y != -yDirection) || direction == consideredDirection; }
+            else//This is Larger
+            { AxeCheck = (consideredDirection.x != -xDirection || consideredDirection.y != -yDirection) || direction == consideredDirection; }
+            if (SpearCheck)//Spear Condition
+                if (AxeCheck)//Axe Condition
+                { arcTiles.Add(pos); }
+        }
+        return arcTiles;
+
+    }
+
+    ///List Handeling
     public int SelectRandomBetweenZeroAndInt(int ListCount)
     {
         var random = new System.Random();
         return random.Next(ListCount);
     }
-    ///List Handeling
     List<T> convertSortedListToNormalList<T>(SortedList<float, T> inputList)
     {
         return inputList.Values.ToList();
