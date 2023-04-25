@@ -156,15 +156,20 @@ public class MoveDictionaryManager : MonoBehaviour
             Debug.Log(rangeOfAction);
         List<Vector3Int> listOfValidtargets = getValidTargetList(ability);
         reticalManager.fromPoint = characterCS.getCharV3Int();
-        if (characterCS.isPlayerCharacter)
+        if (!characterCS.isPlayerCharacter)//if Non Player Character
+        {
+            tryHere = characterCS.getTarget(listOfValidtargets);
+        }
+        else//if it is the player character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
             reticalManager.reticalShapes = ability.reticalShapes;
             yield return null;
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+            tryHere = reticalManager.getMovePoint();
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
-        if (GetDataForActions())//if Getting tryHere was at a Valid Tile
+        if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
             doThisAction();
             if (forceNextAbility == AbilityName.EndTurn)
@@ -181,36 +186,26 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager.reDrawValidTiles(null);
         reticalManager.reDrawShadows();
         //Methods
-        bool GetDataForActions()
+        bool CheckMovePoint()
         {
-            if (characterCS.isPlayerCharacter)
+            if (listOfValidtargets.Contains(tryHere))
             {
-                tryHere = reticalManager.getMovePoint();
-                if (listOfValidtargets.Contains(tryHere))
-                {
-                    return true;
-                }
-                else if (listOfValidtargets.Count == 0)
-                {
-                    Debug.Log("No Valid Tiles Exist; Ending GetData");
-                    if (checkValidActionTiles == false)
-                    {
-                        checkValidActionTiles = true;
-                        getValidTargetList(ability);
-                        checkValidActionTiles = false;
-                    }
-                    return false;
-                }
-                else
-                    return false;
-            }
-            else
-            {
-                tryHere = characterCS.getTarget(listOfValidtargets);
                 return true;
             }
+            else if (listOfValidtargets.Count == 0)
+            {
+                Debug.Log("No Valid Tiles Exist; Ending GetData");
+                if (checkValidActionTiles == false)
+                {
+                    checkValidActionTiles = true;
+                    getValidTargetList(ability);
+                    checkValidActionTiles = false;
+                }
+                return false;
+            }
+            else
+                return false;
         }
-
     }
     public List<Vector3Int> getValidTargetList(Ability ability)
     {
