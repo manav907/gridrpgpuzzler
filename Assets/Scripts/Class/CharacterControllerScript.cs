@@ -38,11 +38,11 @@ public class CharacterControllerScript : MonoBehaviour
             health = thisCharacterData.health;
             AttackDamage = thisCharacterData.attackDamage;
             speedValue = thisCharacterData.speedValue;
-            //rangeOfVision = thisCharacterData.rangeOfVision;
             rangeOfVision = thisCharacterData.rangeOfVision;
-            canWalkOn = thisCharacterData.canWalkOn;
+
             //ListStuff
-            abilityList.AddRange(thisCharacterData.listOfAbility);
+            canWalkOn = thisCharacterData.canWalkOn;
+            abilityList.AddRange(GlobalCal.createCopyListUsingConstructor(thisCharacterData.listOfAbility));
             //Setting Data
             AbilityNameToAbilityDataDIR = AbilityNameToAbilityData();
             //Setting Specific Name

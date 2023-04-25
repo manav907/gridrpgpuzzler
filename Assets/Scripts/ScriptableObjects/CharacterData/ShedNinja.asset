@@ -16,17 +16,10 @@ MonoBehaviour:
   characterName: Ninjask
   health: 5
   attackDamage: 2
-  speedValue: 3
-  RangeOfVision: 2
-  CanWalkOn: 0000000001000000
-  ListOfAbility:
-  - abilityString: Move
-    abilityName: 0
-    forceAbility: 3
-    rangeOfActionEnum: 2
-    reticalShapes: 0
-    requireCharacterBoolEnum: 2
-    disregardWalkablity: 0
+  speedValue: 5
+  rangeOfVision: 5
+  canWalkOn: 
+  listOfAbility: []
   spriteOffsetY: 0.5
   Walk:
   - {fileID: -468390188, guid: c827088f025ff124e85bfa19417717b7, type: 3}

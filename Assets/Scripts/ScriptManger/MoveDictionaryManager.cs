@@ -235,10 +235,10 @@ public class MoveDictionaryManager : MonoBehaviour
 }
 public enum AbilityName
 {
+    EndTurn,
     Move,
     Attack,
     DoubleAttack,
-    EndTurn,
     OpenInventory,
     CloseInventory,
     FireBall,

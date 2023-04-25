@@ -248,3 +248,17 @@ public class UniversalCalculator : MonoBehaviour
         return CompareToList;
     }
 }
+
+public static class GlobalCal
+{
+    public static List<T> createCopyListUsingConstructor<T>(List<T> GivenList)
+    {
+        var newList = new List<T>();
+        foreach (T item in GivenList)
+        {
+            T newItem = (T)Activator.CreateInstance(typeof(T), item);
+            newList.Add(newItem);
+        }
+        return newList;
+    }
+}

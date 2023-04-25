@@ -12,25 +12,11 @@ public class CharacterData : ScriptableObject
     //Stats
     public int health = 5;
     public int attackDamage = 2;
-    [SerializeField] public int speedValue = 3;
-    [SerializeField] public int rangeOfVision { get { return RangeOfVision; } }
-    [SerializeField] private int RangeOfVision;
-    [SerializeField] public List<GroundFloorType> canWalkOn { get { return CanWalkOn; } }
-    [SerializeField] private List<GroundFloorType> CanWalkOn;
-    [SerializeField]
-    public List<Ability> listOfAbility
-    {
-        get
-        {
-            List<Ability> newList = new List<Ability>();
-            foreach (Ability ability in ListOfAbility)
-            {
-                newList.Add(new Ability(ability));
-            }
-            return newList;
-        }
-    }
-    [SerializeField] private List<Ability> ListOfAbility;
+    public int speedValue = 3;
+    public int rangeOfVision = 2;
+    //Custom Data Types
+    public List<GroundFloorType> canWalkOn;
+    public List<Ability> listOfAbility;
     //Sprite Stats
     public float spriteOffsetY;
     void OnEnable()
@@ -38,8 +24,6 @@ public class CharacterData : ScriptableObject
         //characterName = name + "Cra";
     }
     // Add other unique data fields as needed
-
-
     public AnimatorOverrideController GetanimatorOverrideController(AnimatorController originalController)
     {
         AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(originalController);
