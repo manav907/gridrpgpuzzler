@@ -50,6 +50,7 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction.Add(AbilityName.FireBall, ThrowFireBall);
         abilityNameToAction.Add(AbilityName.HeartPickup, HeartPickup);
         abilityNameToAction.Add(AbilityName.DoubleTeam, DoubleTeam);
+        abilityNameToAction.Add(AbilityName.AxeSweep, AxeSweep);
 
         //ablity Actions
         void MoveCharacter()
@@ -97,6 +98,12 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void DoubleTeam()
         { characterCS.actionPoints += 1; }
+        void AxeSweep()
+        {
+            StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.AxeSweep));
+
+
+        }
         //Simple Action and Co-routines that will be used for ablity Actions
         void simpleMoveAction()
         {
@@ -111,6 +118,20 @@ public class MoveDictionaryManager : MonoBehaviour
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
             targetCharacter.health -= attackingCharacter.AttackDamage;
             checkCharacters(targetCharacter);
+        }
+        void simpleAoeAttackAction()
+        {
+            reticalManager.reticalShapes = ReticalShapes.SSweep;
+            List<Vector3Int> aoeTargeted = reticalManager.generateShape(tryHere);
+            reticalManager.reticalShapes = ReticalShapes.SSingle;
+            foreach (Vector3Int point in aoeTargeted)
+            {
+                if (mapManager.cellDataDir[point].isCellHoldingCharacer())
+                {
+                    tryHere = point;
+                    simpleAttackAction();
+                }
+            }
         }
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
@@ -243,7 +264,8 @@ public enum AbilityName
     CloseInventory,
     FireBall,
     HeartPickup,
-    DoubleTeam
+    DoubleTeam,
+    AxeSweep
 }
 
 [Serializable]
