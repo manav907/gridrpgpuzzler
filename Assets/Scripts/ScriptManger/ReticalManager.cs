@@ -44,9 +44,9 @@ public class ReticalManager : MonoBehaviour
             retiacalTiles.Add(atPoint);
         else if (reticalShapes == ReticalShapes.SSweep)
         {
-            //retiacalTiles.AddRange(universalCalculator.getSmallAxeArc(fromPoint, atPoint));
-            retiacalTiles.AddRange(universalCalculator.getSimpleArc(fromPoint, atPoint, rangeOfAction));
-            //retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, rangeOfAction, AxeCheck));
+            
+            //retiacalTiles.AddRange(universalCalculator.getSimpleArc(fromPoint, atPoint, rangeOfAction));
+            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, rangeOfAction, AxeCheck));
             retiacalTiles.Remove(fromPoint);
         }
         else if (reticalShapes == ReticalShapes.S3x3)

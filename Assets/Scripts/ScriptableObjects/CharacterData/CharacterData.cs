@@ -17,6 +17,7 @@ public class CharacterData : ScriptableObject
     //Custom Data Types
     public List<GroundFloorType> canWalkOn;
     public List<Ability> listOfAbility;
+    [Header("Animation Stuff")]
     //Sprite Stats
     public float spriteOffsetY;
     void OnEnable()

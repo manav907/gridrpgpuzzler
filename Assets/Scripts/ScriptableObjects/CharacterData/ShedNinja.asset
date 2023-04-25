@@ -18,8 +18,22 @@ MonoBehaviour:
   attackDamage: 2
   speedValue: 5
   rangeOfVision: 5
-  canWalkOn: 
-  listOfAbility: []
+  canWalkOn: 0000000001000000
+  listOfAbility:
+  - abilityString: Move
+    abilityName: 1
+    forceAbility: 0
+    rangeOfActionEnum: 2
+    reticalShapes: 0
+    requireCharacterBoolEnum: 2
+    disregardWalkablity: 0
+  - abilityString: Attack
+    abilityName: 2
+    forceAbility: 0
+    rangeOfActionEnum: 2
+    reticalShapes: 2
+    requireCharacterBoolEnum: 1
+    disregardWalkablity: 0
   spriteOffsetY: 0.5
   Walk:
   - {fileID: -468390188, guid: c827088f025ff124e85bfa19417717b7, type: 3}

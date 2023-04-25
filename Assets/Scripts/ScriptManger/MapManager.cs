@@ -153,5 +153,6 @@ public enum GroundFloorType
 {
     Normal,
     Water,
-    Fire
+    Fire,
+    StructuresNonWalkable
 };
