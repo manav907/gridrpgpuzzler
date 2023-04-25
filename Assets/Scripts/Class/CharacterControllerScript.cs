@@ -36,13 +36,13 @@ public class CharacterControllerScript : MonoBehaviour
         {
             characterName = thisCharacterData.name;
             health = thisCharacterData.health;
-            AttackDamage = thisCharacterData.AttackDamage;
+            AttackDamage = thisCharacterData.attackDamage;
             speedValue = thisCharacterData.speedValue;
+            //rangeOfVision = thisCharacterData.rangeOfVision;
             rangeOfVision = thisCharacterData.rangeOfVision;
             canWalkOn = thisCharacterData.canWalkOn;
             //ListStuff
-            CharacterMoveList.AddRange(thisCharacterData.specialAblitiesAvailable);
-            abilityList.AddRange(thisCharacterData.ability);
+            abilityList.AddRange(thisCharacterData.listOfAbility);
             //Setting Data
             AbilityNameToAbilityDataDIR = AbilityNameToAbilityData();
             //Setting Specific Name
@@ -61,6 +61,7 @@ public class CharacterControllerScript : MonoBehaviour
                 foreach (Ability ability in abilityList)
                 {
                     thisDir.Add(ability.abilityName, ability);
+                    CharacterMoveList.Add(ability.abilityName);
                 }
                 return thisDir;
             }

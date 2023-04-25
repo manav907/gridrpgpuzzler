@@ -15,21 +15,17 @@ MonoBehaviour:
   InstanceID: 0
   characterName: Rapidash
   health: 5
-  AttackDamage: 2
+  attackDamage: 2
   speedValue: 3
-  rangeOfVision: 5
-  canWalkOn: 0000000002000000
-  specialAblitiesAvailable: 
-  ability:
-  - abilityName: 0
+  RangeOfVision: 2
+  CanWalkOn: 0000000002000000
+  ListOfAbility:
+  - abilityString: Move
+    abilityName: 0
     forceAbility: 3
     rangeOfActionEnum: 3
+    reticalShapes: 0
     requireCharacterBoolEnum: 2
-    disregardWalkablity: 0
-  - abilityName: 1
-    forceAbility: 3
-    rangeOfActionEnum: 1
-    requireCharacterBoolEnum: 1
     disregardWalkablity: 0
   spriteOffsetY: 1
   Walk:

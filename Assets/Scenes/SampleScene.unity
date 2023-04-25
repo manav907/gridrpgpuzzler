@@ -379,6 +379,7 @@ MonoBehaviour:
   characterHolder: {fileID: 1608062619}
   listOfCD:
   - {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
+  - {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
   OrderOfInteractableCharacters: []
   ListOfInteractableCharacters: []
   thisCharacter: {fileID: 0}
@@ -426,7 +427,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f14ff5b3c9a43d4b9581c18cdd5ee88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reticalShapes: 2
+  reticalShapes: 0
+  fromPoint: {x: 0, y: 0, z: 0}
+  AxeCheck: 1
   rangeOfAction: 1.5
   Grid: {fileID: 898572565}
   reticalPos: {x: 0, y: 0, z: 0}
@@ -469,11 +472,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterCS: {fileID: 0}
+  tryHere: {x: 0, y: 0, z: 0}
   checkValidActionTiles: 0
   currentAblity:
+    abilityString: 
     abilityName: 0
     forceAbility: 3
     rangeOfActionEnum: 1
+    reticalShapes: 0
     requireCharacterBoolEnum: 0
     disregardWalkablity: 0
 --- !u!114 &732592035
@@ -488,6 +494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedb9c6d4a464264e928dfb0c6b14ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thatDirection: {x: 0, y: 0, z: 0}
+  thatlist: []
 --- !u!1 &898572561
 GameObject:
   m_ObjectHideFlags: 0

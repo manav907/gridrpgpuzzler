@@ -12,11 +12,12 @@ public class MoveDictionaryManager : MonoBehaviour
     MapManager mapManager;
     UniversalCalculator universalCalculator;
     ButtonManager buttonManager;
+    [Header("Read Only Data")]
     [Header("Character Data")]
     GameObject thisCharacter;
     [SerializeField] CharacterControllerScript characterCS;
     [Header("Retical And Tile Data")]
-    Vector3Int tryHere;
+    [SerializeField] private Vector3Int tryHere;
     [SerializeField] bool checkValidActionTiles = false;
     [Header("Current Ablity")]
     [SerializeField] Ability currentAblity;
@@ -133,11 +134,14 @@ public class MoveDictionaryManager : MonoBehaviour
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction);
         List<Vector3Int> listOfValidtargets = getValidTargetList(ability);
+        reticalManager.fromPoint = characterCS.getCharV3Int();
         if (characterCS.isPlayerCharacter)
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
+            reticalManager.reticalShapes = ability.reticalShapes;
             yield return null;
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+            reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
         if (GetDataForActions())//if Getting tryHere was at a Valid Tile
         {
@@ -245,11 +249,23 @@ public enum AbilityName
 [Serializable]
 public class Ability
 {
+    public String abilityString;
     public AbilityName abilityName;
     public AbilityName forceAbility = AbilityName.EndTurn;
-    [SerializeField] RangeOfActionEnum rangeOfActionEnum = RangeOfActionEnum.r10;
+    public RangeOfActionEnum rangeOfActionEnum = RangeOfActionEnum.r10;
+    public ReticalShapes reticalShapes = ReticalShapes.SSingle;
     public BoolEnum requireCharacterBoolEnum = BoolEnum.TrueOrFalse;
     public bool disregardWalkablity = false;
+    public Ability(Ability ability)
+    {
+        abilityString = ability.abilityString;
+        abilityName = ability.abilityName;
+        forceAbility = ability.forceAbility;
+        rangeOfActionEnum = ability.rangeOfActionEnum;
+        reticalShapes = ability.reticalShapes;
+        requireCharacterBoolEnum = ability.requireCharacterBoolEnum;
+        disregardWalkablity = ability.disregardWalkablity;
+    }
     public bool requireCharacter()
     {
         return convertToBool(requireCharacterBoolEnum);

@@ -32,7 +32,10 @@ public class ReticalManager : MonoBehaviour
             reDrawReticalTiles(generateShape(currentMovePoint));
         }
     }
-    [SerializeField] ReticalShapes reticalShapes;
+    [Header("Retical Shape")]
+    public ReticalShapes reticalShapes = ReticalShapes.SSingle;
+    public Vector3Int fromPoint = Vector3Int.zero;
+    public bool AxeCheck = true;
     [SerializeField] float rangeOfAction;
     List<Vector3Int> generateShape(Vector3Int atPoint)
     {
@@ -41,9 +44,9 @@ public class ReticalManager : MonoBehaviour
             retiacalTiles.Add(atPoint);
         else if (reticalShapes == ReticalShapes.SSweep)
         {
-            Vector3Int fromPoint = universalCalculator.convertToVector3Int(turnManager.thisCharacter.transform.position);
             //retiacalTiles.AddRange(universalCalculator.getSmallAxeArc(fromPoint, atPoint));
-            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, rangeOfAction));
+            retiacalTiles.AddRange(universalCalculator.getSimpleArc(fromPoint, atPoint, rangeOfAction));
+            //retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, rangeOfAction, AxeCheck));
             retiacalTiles.Remove(fromPoint);
         }
         else if (reticalShapes == ReticalShapes.S3x3)
@@ -137,7 +140,7 @@ public class ReticalManager : MonoBehaviour
         thistilemap.ClearAllTiles();
     }
 }
-enum ReticalShapes
+public enum ReticalShapes
 {
     SSingle,
     S3x3,
