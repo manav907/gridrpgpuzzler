@@ -261,4 +261,19 @@ public static class GlobalCal
         }
         return newList;
     }
+    public static bool compareBool(bool compareWith, BoolEnum compareTo)
+    {
+        switch (compareTo)
+        {
+            case BoolEnum.TrueOrFalse:
+                return true;
+            case BoolEnum.True:
+                return compareWith == true;
+            case BoolEnum.False:
+                return compareWith == false;
+            default:
+                return false;
+        }
+    }
+
 }

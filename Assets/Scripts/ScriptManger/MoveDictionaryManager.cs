@@ -148,14 +148,15 @@ public class MoveDictionaryManager : MonoBehaviour
         //Declaring Variables
         Ability ability = characterCS.AbilityNameToAbilityDataDIR[forAbilityData];
         currentAblity = ability;
-        //int rangeOfAction = characterCS.GetAbilityRange(ability.abilityName);
         float rangeOfAction = ability.GetRangeOfAction();
         AbilityName forceNextAbility = ability.forceAbility;
-        //Executing Script
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction);
         List<Vector3Int> listOfValidtargets = getValidTargetList(ability);
         reticalManager.fromPoint = characterCS.getCharV3Int();
+        bool ShouldContinue = false;
+
+        //Executing Script
         if (!characterCS.isPlayerCharacter)//if Non Player Character
         {
             tryHere = characterCS.getTarget(listOfValidtargets);
@@ -164,8 +165,9 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
             reticalManager.reticalShapes = ability.reticalShapes;
+
             yield return null;
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));//this waits for MB1 to be pressed before processeding
+            yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
@@ -176,7 +178,8 @@ public class MoveDictionaryManager : MonoBehaviour
             { doAction(AbilityName.EndTurn); }
             else
             {
-                var list = new List<AbilityName>(){
+                var list = new List<AbilityName>()
+                {
                     forceNextAbility,
                     AbilityName.EndTurn
                 };
@@ -186,9 +189,24 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager.reDrawValidTiles(null);
         reticalManager.reDrawShadows();
         //Methods
+
+        bool CheckContinue()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                ShouldContinue = true;
+                return true;
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                ShouldContinue = false;
+                return true;
+            }
+            return false;
+        }
         bool CheckMovePoint()
         {
-            if (listOfValidtargets.Contains(tryHere))
+            if (ShouldContinue && listOfValidtargets.Contains(tryHere))
             {
                 return true;
             }
@@ -210,7 +228,6 @@ public class MoveDictionaryManager : MonoBehaviour
     public List<Vector3Int> getValidTargetList(Ability ability)
     {
         float rangeOfAction = ability.GetRangeOfAction();
-        bool requireCharacter = ability.requireCharacter();
         //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
         Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
@@ -222,7 +239,8 @@ public class MoveDictionaryManager : MonoBehaviour
             //Normal Checks         
             bool hasWalkability = ability.disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
             bool hasCharacter = mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer();
-            if (hasWalkability && hasCharacter == requireCharacter)
+            bool requireCharacterCondition = GlobalCal.compareBool(hasCharacter, ability.requireCharacterBoolEnum);
+            if (hasWalkability && requireCharacterCondition)
             {/*Do Nothing since all conditions are fine*/}
             else
             {
@@ -232,9 +250,9 @@ public class MoveDictionaryManager : MonoBehaviour
                     bool condtion = false;//Will be reassigned later                        
                     string debugLine = "For Action " + ability.abilityName + " Point " + listOfRanges[i] + " was Invalid as Tile ";
                     string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
-                    if (hasCharacter != requireCharacter)
+                    if (!requireCharacterCondition)
                     {
-                        condtion = requireCharacter;
+                        condtion = requireCharacterCondition;
                         debugLine += needConditon + "Character Here; ";
                     }
                     if (rangeOfAction == 0)
@@ -283,27 +301,12 @@ public class Ability
         requireCharacterBoolEnum = ability.requireCharacterBoolEnum;
         disregardWalkablity = ability.disregardWalkablity;
     }
-    public bool requireCharacter()
-    {
-        return convertToBool(requireCharacterBoolEnum);
-    }
     public float GetRangeOfAction()
     {
         string rangeString = rangeOfActionEnum.ToString();
         rangeString = rangeString.Replace("r", "");
         return float.Parse(rangeString) / 10;
     }
-    bool convertToBool(BoolEnum boolEnum)
-    {
-        if (boolEnum == BoolEnum.TrueOrFalse)
-            return true || false;
-        if (boolEnum == BoolEnum.True)
-            return true;
-        if (boolEnum == BoolEnum.False)
-            return false;
-        return false;
-    }
-
 }
 public enum BoolEnum
 {
@@ -314,4 +317,10 @@ public enum BoolEnum
 public enum RangeOfActionEnum
 {
     r0, r10, r15, r20, r25, r30
+}
+public enum ValidTileType
+{
+    PointTargeted,
+    UnitTargeted,
+    EmptyCellTargeted
 }
