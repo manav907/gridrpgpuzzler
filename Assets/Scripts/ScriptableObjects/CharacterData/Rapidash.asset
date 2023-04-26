@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
   m_Name: Rapidash
   m_EditorClassIdentifier: 
-  InstanceID: 0
+  InstanceID: 2
   characterName: Rapidash
   health: 5
   attackDamage: 2
@@ -34,7 +34,7 @@ MonoBehaviour:
     reticalShapes: 0
     requireCharacterBoolEnum: 1
     disregardWalkablity: 0
-  spriteOffsetY: 1
+  spriteOffsetY: 0.5
   Walk:
   - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
   - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}

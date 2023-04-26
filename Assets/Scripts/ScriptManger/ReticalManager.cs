@@ -35,7 +35,7 @@ public class ReticalManager : MonoBehaviour
     [Header("Retical Shape")]
     public ReticalShapes reticalShapes = ReticalShapes.SSingle;
     public Vector3Int fromPoint = Vector3Int.zero;
-    [SerializeField] float rangeOfAction;
+    public float rangeOfAction;
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
@@ -54,8 +54,18 @@ public class ReticalManager : MonoBehaviour
                 universalCalculator.generateRangeFrom2Vectors(
                 atPoint + Vector3Int.up + Vector3Int.left, atPoint + Vector3Int.right + Vector3Int.down));
         }
+        else if (reticalShapes == ReticalShapes.SEndTurn)
+        {
+            retiacalTiles.Add(fromPoint);
+        }
         return retiacalTiles;
     }
+    [Header("Retical References")]
+    [SerializeField] Vector3 reticalPos;
+    [SerializeField] Vector3 lastMovePoint;
+    //[SerializeField] GameObject characterRetical;
+
+
     [Header("Grid References")]
     public Tilemap Grid;
     Vector3 worldPos;
@@ -67,21 +77,18 @@ public class ReticalManager : MonoBehaviour
         tilePos = Grid.WorldToCell(worldPos);
         return tilePos;
     }
-    [Header("Retical References")]
-    [SerializeField] Vector3 reticalPos;
-    [SerializeField] Vector3 lastMovePoint;
-    //[SerializeField] GameObject characterRetical;
-    [SerializeField] TileBase reticalTilePrefab;
+    [Header("Retical Tilemap Reffrences")]
+    [SerializeField] TileBase reticalTile;
     [SerializeField] Tilemap validReticalTilesTilemap;
     void reDrawReticalTiles(List<Vector3Int> validReticalTiles)
     {
-        reDrawTiles(validReticalTiles, validReticalTilesTilemap, reticalTilePrefab);
+        reDrawTiles(validReticalTiles, validReticalTilesTilemap, reticalTile);
     }
     [Header("Valid Tilemap References")]
     [SerializeField] private Tilemap validTilesTileMap;
     public void reDrawValidTiles(List<Vector3Int> validTilesList)
     {
-        reDrawTiles(validTilesList, validTilesTileMap, reticalTilePrefab);
+        reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
     }
     [Header("Shadow References")]
     [SerializeField] Tilemap shadowTilemap;
@@ -144,6 +151,7 @@ public enum ReticalShapes
     SSingle,
     S3x3,
     SSweep,
-    SArrow
+    SArrow,
+    SEndTurn
 
 }

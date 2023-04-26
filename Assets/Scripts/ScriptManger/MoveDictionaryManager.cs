@@ -13,6 +13,7 @@ public class MoveDictionaryManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     ButtonManager buttonManager;
     [Header("Read Only Data")]
+    [SerializeField] private float moveTimeSpeed = 0.45f;
     [Header("Character Data")]
     GameObject thisCharacter;
     [SerializeField] CharacterControllerScript characterCS;
@@ -94,15 +95,12 @@ public class MoveDictionaryManager : MonoBehaviour
             CloseInventory();
             if (characterCS.CheckIfCharacterIsDead() == false)
                 EndTurn();
-
         }
         void DoubleTeam()
         { characterCS.actionPoints += 1; }
         void AxeSweep()
         {
             StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.AxeSweep));
-
-
         }
         //Simple Action and Co-routines that will be used for ablity Actions
         void simpleMoveAction()
@@ -110,7 +108,8 @@ public class MoveDictionaryManager : MonoBehaviour
             Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
             mapManager.cellDataDir[currentPosition].characterAtCell = null;
             mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
-            thisCharacter.transform.position = tryHere;
+            StartCoroutine(MoveCharacterBetweenPoints(thisCharacter.transform, tryHere, moveTimeSpeed));
+            //thisCharacter.transform.position = tryHere;
         }
         void simpleAttackAction()
         {
@@ -121,21 +120,39 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void simpleAoeAttackAction()
         {
+
             reticalManager.reticalShapes = ReticalShapes.SSweep;
             List<Vector3Int> aoeTargeted = reticalManager.generateShape(tryHere);
             reticalManager.reticalShapes = ReticalShapes.SSingle;
             foreach (Vector3Int point in aoeTargeted)
             {
-                if (mapManager.cellDataDir[point].isCellHoldingCharacer())
-                {
-                    tryHere = point;
-                    simpleAttackAction();
-                }
+                if (mapManager.cellDataDir.ContainsKey(point))
+                    if (mapManager.cellDataDir[point].isCellHoldingCharacer())
+                    {
+                        tryHere = point;
+                        simpleAttackAction();
+                    }
             }
         }
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
             targetCharacter.CheckIfCharacterIsDead();
+        }
+        IEnumerator MoveCharacterBetweenPoints(Transform character, Vector3 newPosition, float moveTime)
+        {
+            float elapsedTime = 0;
+            Vector3 startingPosition = character.position;
+
+            while (elapsedTime < moveTime)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / moveTime);
+                character.position = Vector3.Lerp(startingPosition, newPosition, t);
+                yield return null;
+            }
+            character.position = newPosition;
+            reticalManager.reDrawValidTiles(null);
+            reticalManager.reDrawShadows();
         }
     }
     public void doAction(AbilityName abilityName)
@@ -165,8 +182,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
             reticalManager.reticalShapes = ability.reticalShapes;
-
-            yield return null;
+            reticalManager.rangeOfAction = rangeOfAction;
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
             reticalManager.reticalShapes = ReticalShapes.SSingle;
