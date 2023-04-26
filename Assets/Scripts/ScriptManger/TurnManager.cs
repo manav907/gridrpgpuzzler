@@ -48,12 +48,13 @@ public class TurnManager : MonoBehaviour
     void InstantiateallIntractableCharacters()
     {
         List<GameObject> allInteractableCharacters = new List<GameObject>();
+
         for (int i = 0; i < listOfCD.Count; i++)
         {
             allInteractableCharacters.Add(Instantiate(characterPrefab));
             GameObject thisChar = allInteractableCharacters[i];
             thisChar.transform.SetParent(characterHolder.transform, false);
-            thisChar.transform.position += i * Vector3.right;
+            thisChar.transform.position = mapManager.getUniqueSpawnPoint(i);
             thisChar.name += i;
 
             //Assigning CharacterData

@@ -10,6 +10,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
     UniversalCalculator universalCalculator;
+    [Header("SpawnPoints")]
+    [SerializeField] List<Vector3Int> spawnPoints;
     public void setVariables()
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
@@ -24,6 +26,20 @@ public class MapManager : MonoBehaviour
             {
                 dataFromTiles.Add(tileFound, ScriptableObjects);
             }
+    }
+    public Vector3Int getUniqueSpawnPoint(int i)
+    {
+        var newSet = new List<Vector3Int>();
+        foreach (Vector3Int point in spawnPoints)
+        {
+            if (!newSet.Contains(point))
+                newSet.Add(point);
+        }
+        if (i! < newSet.Count)
+        {
+            newSet.Add(new Vector3Int(i, 0, 0));
+        }
+        return newSet[i];
     }
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, CharacterControllerScript characterDataHolder)
     {

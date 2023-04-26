@@ -189,7 +189,6 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager.reDrawValidTiles(null);
         reticalManager.reDrawShadows();
         //Methods
-
         bool CheckContinue()
         {
             if (Input.GetMouseButtonDown(0))
@@ -212,7 +211,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             else if (listOfValidtargets.Count == 0)
             {
-                Debug.Log("No Valid Tiles Exist; Ending GetData");
+                Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
                 if (checkValidActionTiles == false)
                 {
                     checkValidActionTiles = true;
@@ -233,13 +232,15 @@ public class MoveDictionaryManager : MonoBehaviour
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
+        listOfRanges.Remove(centerPos);
+        //For Debugging
+        string debugText = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
         {
             //Normal Checks         
             bool hasWalkability = ability.disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
-            bool hasCharacter = mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer();
-            bool requireCharacterCondition = GlobalCal.compareBool(hasCharacter, ability.requireCharacterBoolEnum);
+            bool requireCharacterCondition = GlobalCal.compareBool(mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer(), ability.requireCharacterBoolEnum);
             if (hasWalkability && requireCharacterCondition)
             {/*Do Nothing since all conditions are fine*/}
             else
@@ -257,13 +258,15 @@ public class MoveDictionaryManager : MonoBehaviour
                     }
                     if (rangeOfAction == 0)
                         debugLine += "The Range of Action was " + rangeOfAction;
-                    Debug.Log(debugLine);
+                    debugText += debugLine + "\n";
                 }
                 //Actual Code 
                 listOfRanges.RemoveAt(i);
                 i--;
             }
         }
+        if (checkValidActionTiles)
+            Debug.Log(debugText);
         return listOfRanges;
     }
 }

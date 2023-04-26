@@ -35,7 +35,6 @@ public class ReticalManager : MonoBehaviour
     [Header("Retical Shape")]
     public ReticalShapes reticalShapes = ReticalShapes.SSingle;
     public Vector3Int fromPoint = Vector3Int.zero;
-    public bool AxeCheck = true;
     [SerializeField] float rangeOfAction;
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
@@ -46,7 +45,7 @@ public class ReticalManager : MonoBehaviour
         {
 
             //retiacalTiles.AddRange(universalCalculator.getSimpleArc(fromPoint, atPoint, rangeOfAction));
-            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, rangeOfAction, AxeCheck));
+            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, rangeOfAction));
             retiacalTiles.Remove(fromPoint);
         }
         else if (reticalShapes == ReticalShapes.S3x3)

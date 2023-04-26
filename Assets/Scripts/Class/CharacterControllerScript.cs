@@ -53,7 +53,7 @@ public class CharacterControllerScript : MonoBehaviour
             animator.runtimeAnimatorController = thisCharacterData.GetanimatorOverrideController(originalController);
             //Setting Sprite Stuff
             //Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
-            spriteHolder.position = new Vector3(spriteHolder.position.x, thisCharacterData.spriteOffsetY, spriteHolder.position.z);
+            spriteHolder.position = new Vector3(spriteHolder.position.x, spriteHolder.position.y + thisCharacterData.spriteOffsetY, spriteHolder.position.z);
             //Methods
             Dictionary<AbilityName, Ability> AbilityNameToAbilityData()
             {
