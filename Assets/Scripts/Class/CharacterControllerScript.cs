@@ -9,6 +9,7 @@ public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
     public bool isPlayerCharacter = true;
+    [SerializeField] private bool checkAI = false;
     public int health;
     public int AttackDamage;
     public int speedValue;
@@ -121,6 +122,9 @@ public class CharacterControllerScript : MonoBehaviour
     int GhostVision = 1;
     void determineAction()
     {
+
+        if (checkAI)
+            Debug.Log("Determining Action");
         Vector3Int thisCharpos = getCharV3Int();
         var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
         //GhostVision for tracking after leaving Vision
@@ -137,10 +141,14 @@ public class CharacterControllerScript : MonoBehaviour
             currentTarget = targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];//Setting Current Target for later use
             if (attackRangeList.Contains(currentTarget))
             {
+                if (checkAI)
+                    Debug.Log("Attacking");
                 moveDictionaryManager.doAction(AbilityName.Attack);
             }
             else if (true)//if character not in attack range
             {
+                if (checkAI)
+                    Debug.Log("Moving");
                 moveDictionaryManager.doAction(AbilityName.Move);
             }
         }
@@ -165,7 +173,12 @@ public class CharacterControllerScript : MonoBehaviour
     public Vector3Int getTarget(List<Vector3Int> validTargets)
     //validTargets depends on the action being performed
     {
-        return universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];
+        Vector3Int target = universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];
+        if (checkAI)
+        {
+            Debug.Log("Chosen Target " + target);
+        }
+        return target;
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
     }

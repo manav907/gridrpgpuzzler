@@ -177,6 +177,7 @@ public class MoveDictionaryManager : MonoBehaviour
         if (!characterCS.isPlayerCharacter)//if Non Player Character
         {
             tryHere = characterCS.getTarget(listOfValidtargets);
+            ShouldContinue = true;
         }
         else//if it is the player character
         {

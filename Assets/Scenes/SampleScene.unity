@@ -380,7 +380,6 @@ MonoBehaviour:
   listOfCD:
   - {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
   - {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
-  - {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
   OrderOfInteractableCharacters: []
   ListOfInteractableCharacters: []
   thisCharacter: {fileID: 0}
