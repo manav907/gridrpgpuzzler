@@ -13,7 +13,7 @@ public class MoveDictionaryManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     ButtonManager buttonManager;
     [Header("Read Only Data")]
-    [SerializeField] private float moveTimeSpeed = 0.45f;
+    [SerializeField] private float moveTimeSpeed = 0.12f;
     [Header("Character Data")]
     GameObject thisCharacter;
     [SerializeField] CharacterControllerScript characterCS;
@@ -108,7 +108,9 @@ public class MoveDictionaryManager : MonoBehaviour
             Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
             mapManager.cellDataDir[currentPosition].characterAtCell = null;
             mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
-            StartCoroutine(MoveCharacterBetweenPoints(thisCharacter.transform, tryHere, moveTimeSpeed));
+            var ListOfMovePoints = new List<Vector3Int>();
+            ListOfMovePoints.Add(tryHere);
+            StartCoroutine(MoveCharacterBetweenPoints(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed));
             //thisCharacter.transform.position = tryHere;
         }
         void simpleAttackAction()
@@ -117,6 +119,10 @@ public class MoveDictionaryManager : MonoBehaviour
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
             targetCharacter.health -= attackingCharacter.AttackDamage;
             checkCharacters(targetCharacter);
+            var ListOfMovePoints = new List<Vector3Int>();
+            ListOfMovePoints.Add(tryHere);
+            ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
+            StartCoroutine(MoveCharacterBetweenPoints(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed));
         }
         void simpleAoeAttackAction()
         {
@@ -138,21 +144,26 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             targetCharacter.CheckIfCharacterIsDead();
         }
-        IEnumerator MoveCharacterBetweenPoints(Transform character, Vector3 newPosition, float moveTime)
+        IEnumerator MoveCharacterBetweenPoints(Transform character, List<Vector3Int> movePoints, float moveTime)
         {
-            float elapsedTime = 0;
-            Vector3 startingPosition = character.position;
-
-            while (elapsedTime < moveTime)
+            yield return new WaitForSeconds(moveTime);
+            foreach (Vector3Int movePoint in movePoints)
             {
-                elapsedTime += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsedTime / moveTime);
-                character.position = Vector3.Lerp(startingPosition, newPosition, t);
-                yield return null;
+                float elapsedTime = 0;
+                Vector3 startingPosition = character.position;
+                //Debug.Log(startingPosition + " from to " + movePoint);
+                while (elapsedTime < moveTime)
+                {
+                    elapsedTime += Time.deltaTime;
+                    float t = Mathf.Clamp01(elapsedTime / moveTime);
+                    character.position = Vector3.Lerp(startingPosition, movePoint, t);
+                    //yield return null;
+                    yield return new WaitForSeconds(0.01f);
+                }
             }
-            character.position = newPosition;
             reticalManager.reDrawValidTiles(null);
             reticalManager.reDrawShadows();
+            character.position = movePoints.Last();
         }
     }
     public void doAction(AbilityName abilityName)
