@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 
 public class ReticalManager : MonoBehaviour
 {
@@ -96,7 +97,6 @@ public class ReticalManager : MonoBehaviour
     }
     public void doOnClick()
     {
-
         Action thiAction = delegate { Debug.Log("This "); };
         StartCoroutine(onClick());
         IEnumerator onClick()
