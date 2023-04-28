@@ -324,8 +324,13 @@ public class Ability
     public ReticalShapes reticalShapes = ReticalShapes.SSingle;
     public BoolEnum requireCharacterBoolEnum = BoolEnum.TrueOrFalse;
     public bool disregardWalkablity = false;
+    public Ability()
+    {
+        
+    }
     public Ability(Ability ability)
     {
+        Debug.Log(ability);
         abilityString = ability.abilityString;
         abilityName = ability.abilityName;
         forceAbility = ability.forceAbility;

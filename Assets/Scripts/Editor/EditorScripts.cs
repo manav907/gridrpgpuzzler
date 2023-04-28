@@ -35,7 +35,40 @@ public class MapManagerEditor : Editor
         }
     */
 }
-
+[CustomEditor(typeof(LevelDataSO))]
+public class LevelDataSOEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        GUILayout.Space(10);
+        LevelDataSO levelDataSO = target as LevelDataSO;
+        if (levelDataSO.levelData != null)
+        {
+            EditorGUILayout.LabelField("Position To GameObject Dictionary:");
+            foreach (var pair in levelDataSO.levelData.posToCharacterData)
+            {
+                //EditorGUILayout.LabelField($"Key: {pair.Key}, Value: {pair.Value.name}");
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(pair.Key.ToString());
+                GUILayout.Label(pair.Value.name);
+                GUILayout.EndHorizontal();
+            }
+        }
+        if (GUILayout.Button("addToDictionary"))
+        {
+            levelDataSO.addToDictionary();
+        }
+        if (GUILayout.Button("SaveData"))
+        {
+            levelDataSO.SaveData();
+        }
+        if (GUILayout.Button("LoadData"))
+        {
+            levelDataSO.LoadData();
+        }
+    }
+}
 [CustomEditor(typeof(CharacterData))]
 public class CharacterDataEditor : Editor
 {

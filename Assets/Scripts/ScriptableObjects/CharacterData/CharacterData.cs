@@ -20,10 +20,6 @@ public class CharacterData : ScriptableObject
     [Header("Animation Stuff")]
     //Sprite Stats
     public float spriteOffsetY;
-    void OnEnable()
-    {
-        //characterName = name + "Cra";
-    }
     // Add other unique data fields as needed
     public AnimatorOverrideController GetanimatorOverrideController(AnimatorController originalController)
     {

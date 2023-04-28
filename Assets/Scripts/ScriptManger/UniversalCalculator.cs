@@ -267,5 +267,6 @@ public static class GlobalCal
                 return false;
         }
     }
+    public static string persistantDataPath = Application.dataPath + "/SaveData/LevelData";
 
 }
