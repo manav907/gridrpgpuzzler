@@ -3,11 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using System;
 
 public class ReticalManager : MonoBehaviour
 {
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
+
+    [Header("Retical Shape")]
+    public ReticalShapes reticalShapes = ReticalShapes.SSingle;
+    public Vector3Int fromPoint = Vector3Int.zero;
+    public float rangeOfAction;
+
+    [Header("Retical References")]
+    [SerializeField] Vector3 reticalPos;
+    [SerializeField] Vector3 lastMovePoint;
+    [Header("Grid References")]
+    public Tilemap Grid;
+
+    [Header("Retical Tilemap Reffrences")]
+    [SerializeField] TileBase reticalTile;
+    [SerializeField] Tilemap validReticalTilesTilemap;
+    void reDrawReticalTiles(List<Vector3Int> validReticalTiles)
+    {
+        reDrawTiles(validReticalTiles, validReticalTilesTilemap, reticalTile);
+    }
+    [Header("Valid Tilemap References")]
+    [SerializeField] private Tilemap validTilesTileMap;
+    public void reDrawValidTiles(List<Vector3Int> validTilesList)
+    {
+        reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
+    }
+    [Header("Shadow References")]
+    [SerializeField] Tilemap shadowTilemap;
+    [SerializeField] TileBase shadowTilePrefab;
+    Vector3Int topleftoffset;
+    Vector3Int downrightoffset;
+
     public void setVariables()
     {
         universalCalculator = this.GetComponent<UniversalCalculator>();
@@ -32,10 +64,6 @@ public class ReticalManager : MonoBehaviour
             reDrawReticalTiles(generateShape(currentMovePoint));
         }
     }
-    [Header("Retical Shape")]
-    public ReticalShapes reticalShapes = ReticalShapes.SSingle;
-    public Vector3Int fromPoint = Vector3Int.zero;
-    public float rangeOfAction;
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
@@ -60,41 +88,35 @@ public class ReticalManager : MonoBehaviour
         }
         return retiacalTiles;
     }
-    [Header("Retical References")]
-    [SerializeField] Vector3 reticalPos;
-    [SerializeField] Vector3 lastMovePoint;
-    //[SerializeField] GameObject characterRetical;
-
-
-    [Header("Grid References")]
-    public Tilemap Grid;
-    Vector3 worldPos;
-    Vector3Int tilePos;
     public Vector3Int getMovePoint()
     {
-        worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
-        tilePos = Grid.WorldToCell(worldPos);
-        return tilePos;
+        return Grid.WorldToCell(worldPos);
     }
-    [Header("Retical Tilemap Reffrences")]
-    [SerializeField] TileBase reticalTile;
-    [SerializeField] Tilemap validReticalTilesTilemap;
-    void reDrawReticalTiles(List<Vector3Int> validReticalTiles)
+    public void doOnClick()
     {
-        reDrawTiles(validReticalTiles, validReticalTilesTilemap, reticalTile);
+
+        Action thiAction = delegate { Debug.Log("This "); };
+        StartCoroutine(onClick());
+        IEnumerator onClick()
+        {
+            yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1      
+            bool CheckContinue()
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    thiAction();
+                    return true;
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
-    [Header("Valid Tilemap References")]
-    [SerializeField] private Tilemap validTilesTileMap;
-    public void reDrawValidTiles(List<Vector3Int> validTilesList)
-    {
-        reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
-    }
-    [Header("Shadow References")]
-    [SerializeField] Tilemap shadowTilemap;
-    [SerializeField] TileBase shadowTilePrefab;
-    Vector3Int topleftoffset;
-    Vector3Int downrightoffset;
     public List<Vector3Int> reDrawShadows()
     {
         //getting edges of camera
@@ -117,12 +139,18 @@ public class ReticalManager : MonoBehaviour
         }
         return shadowRange;
     }
+    public void setReticalToFromPoint()
+    {
+        List<Vector3Int> thisPos = new List<Vector3Int>() { };
+        thisPos.Add(fromPoint);
+        reDrawReticalTiles(thisPos);
+    }
     //Methods
     void SetVision(Vector3Int thisPoint, int rangeOfAction)
     {
         SetTiles(universalCalculator.generateRangeFromPoint(thisPoint, rangeOfAction), shadowTilemap, null);
     }
-    void reDrawTiles(List<Vector3Int> theseTiles, Tilemap onTileMap, TileBase thisTile)
+    public void reDrawTiles(List<Vector3Int> theseTiles, Tilemap onTileMap, TileBase thisTile)
     {
         ClearAllTiles(onTileMap);
         if (theseTiles != null)

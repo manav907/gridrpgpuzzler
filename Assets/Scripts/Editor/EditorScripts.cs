@@ -1,6 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 [CustomEditor(typeof(MapManager))]
 public class MapManagerEditor : Editor
@@ -51,5 +53,36 @@ public class CharacterDataEditor : Editor
             }
         }
         //EditorGUILayout.PropertyField(serializedObject.FindProperty("ListOfAbility"), true);
+    }
+}
+[CustomEditor(typeof(ReticalManager))]
+public class ReticalManagerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        ReticalManager reticalManager = target as ReticalManager;
+        DrawDefaultInspector();
+        //Creating a Syle
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.MiddleCenter;
+        style.normal.textColor = Color.white;
+        style.fontStyle = FontStyle.Bold;
+        //Drawing said Style
+        EditorGUILayout.LabelField("Inspector Stuff", style);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Draw Retical at Point"))
+        {
+            reticalManager.setReticalToFromPoint();
+        }
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("fromPoint"), true);
+        serializedObject.ApplyModifiedProperties();
+        GUILayout.EndHorizontal();
+
+
+        if (GUILayout.Button("do Action"))
+        {
+            reticalManager.doOnClick();
+        }
+
     }
 }

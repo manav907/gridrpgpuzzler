@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+ using UnityEngine;
 using System;
 using System.Linq;
 using UnityEngine.UI;
@@ -19,9 +19,12 @@ public class MoveDictionaryManager : MonoBehaviour
     [SerializeField] CharacterControllerScript characterCS;
     [Header("Retical And Tile Data")]
     [SerializeField] private Vector3Int tryHere;
-    [SerializeField] bool checkValidActionTiles = false;
     [Header("Current Ablity")]
     [SerializeField] Ability currentAblity;
+    [Header("Debug Data")]
+    [SerializeField] bool checkValidActionTiles = false;
+    [TextArea][SerializeField] string ValidTargetListDebugInfo;
+    bool ShouldContinue;
     public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
@@ -182,7 +185,7 @@ public class MoveDictionaryManager : MonoBehaviour
             Debug.Log(rangeOfAction);
         List<Vector3Int> listOfValidtargets = getValidTargetList(ability);
         reticalManager.fromPoint = characterCS.getCharV3Int();
-        bool ShouldContinue = false;
+        ShouldContinue = false;
 
         //Executing Script
         if (!characterCS.isPlayerCharacter)//if Non Player Character
@@ -261,8 +264,7 @@ public class MoveDictionaryManager : MonoBehaviour
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
         listOfRanges.Remove(centerPos);
-        //For Debugging
-        string debugText = "Data for Invalid Tiles \n";
+        ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
         {
@@ -286,7 +288,7 @@ public class MoveDictionaryManager : MonoBehaviour
                     }
                     if (rangeOfAction == 0)
                         debugLine += "The Range of Action was " + rangeOfAction;
-                    debugText += debugLine + "\n";
+                    ValidTargetListDebugInfo += debugLine + "\n";
                 }
                 //Actual Code 
                 listOfRanges.RemoveAt(i);
@@ -294,7 +296,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
         }
         if (checkValidActionTiles)
-            Debug.Log(debugText);
+            Debug.Log(ValidTargetListDebugInfo);
         return listOfRanges;
     }
 }
