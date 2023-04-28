@@ -8,27 +8,27 @@ using Newtonsoft.Json;
 [CreateAssetMenu(fileName = "New LevelData", menuName = "Level Data")]
 public class LevelDataSO : ScriptableObject
 {
-    public LevelData levelData;
+    public Dictionary<int, CharacterData> posToCharacterData;
     public int atPos;
     public CharacterData thisCharData;
     public void addToDictionary()//Called from Custom Inspector Button
     {
-
-        if (levelData == null)
-            levelData = new LevelData();
-        if (levelData.posToCharacterData == null)
-            levelData.posToCharacterData = new Dictionary<int, CharacterData>();
-        if (levelData.posToCharacterData.ContainsKey(atPos) || thisCharData == null)
+        if (posToCharacterData == null)
+        {
+            posToCharacterData = new Dictionary<int, CharacterData>();
+            Debug.Log("Never Trigger");
+        }
+        if (posToCharacterData.ContainsKey(atPos) || thisCharData == null)
         {
             Debug.Log("Cannot Add Key as \n" + atPos + thisCharData);
             return;
         }
-        levelData.posToCharacterData.Add(atPos, thisCharData);
+        posToCharacterData.Add(atPos, thisCharData);
     }
     public void SaveData()
     {
         var settings = new JsonSerializerSettings { Converters = new[] { new Vector3IntConverter() } };
-        string json = JsonConvert.SerializeObject(levelData, settings);
+        string json = JsonConvert.SerializeObject(posToCharacterData, settings);
         File.WriteAllText(GlobalCal.persistantDataPath + "/levelData.json", json);
     }
 
@@ -38,20 +38,21 @@ public class LevelDataSO : ScriptableObject
         {
             string json = File.ReadAllText(GlobalCal.persistantDataPath + "/levelData.json");
             var settings = new JsonSerializerSettings { Converters = new[] { new Vector3IntConverter() } };
-            levelData = JsonConvert.DeserializeObject<LevelData>(json, settings);
+            var data = JsonConvert.DeserializeObject<Dictionary<int, CharacterData>>(json, settings);
+            foreach (var kvp in data)
+            {
+                // Instantiate a new CharacterData instance using the constructor that takes a string parameter
+                var characterData = new CharacterData(kvp.Value);
+                // Add the new instance to the posToCharacterData dictionary
+                posToCharacterData.Remove(kvp.Key);
+                posToCharacterData.Add(kvp.Key, characterData);
+            }
+
         }
         else
         {
             Debug.Log("File not found!");
         }
-    }
-}
-public class LevelData
-{
-    public Dictionary<int, CharacterData> posToCharacterData;
-    public LevelData()
-    {
-
     }
 }
 

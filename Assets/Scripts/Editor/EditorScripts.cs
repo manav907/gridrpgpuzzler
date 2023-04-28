@@ -43,10 +43,10 @@ public class LevelDataSOEditor : Editor
         DrawDefaultInspector();
         GUILayout.Space(10);
         LevelDataSO levelDataSO = target as LevelDataSO;
-        if (levelDataSO.levelData != null)
+        if (levelDataSO.posToCharacterData != null)
         {
             EditorGUILayout.LabelField("Position To GameObject Dictionary:");
-            foreach (var pair in levelDataSO.levelData.posToCharacterData)
+            foreach (var pair in levelDataSO.posToCharacterData)
             {
                 //EditorGUILayout.LabelField($"Key: {pair.Key}, Value: {pair.Value.name}");
                 GUILayout.BeginHorizontal();
@@ -91,6 +91,7 @@ public class CharacterDataEditor : Editor
 [CustomEditor(typeof(ReticalManager))]
 public class ReticalManagerEditor : Editor
 {
+    /*
     public override void OnInspectorGUI()
     {
         ReticalManager reticalManager = target as ReticalManager;
@@ -108,7 +109,7 @@ public class ReticalManagerEditor : Editor
             reticalManager.setReticalToFromPoint();
         }
         EditorGUILayout.PropertyField(serializedObject.FindProperty("fromPoint"), true);
-        serializedObject.ApplyModifiedProperties();
+        //serializedObject.ApplyModifiedProperties();
         GUILayout.EndHorizontal();
 
 
@@ -118,4 +119,5 @@ public class ReticalManagerEditor : Editor
         }
 
     }
+    */
 }

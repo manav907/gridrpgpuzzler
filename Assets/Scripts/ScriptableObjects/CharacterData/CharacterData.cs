@@ -21,6 +21,23 @@ public class CharacterData : ScriptableObject
     //Sprite Stats
     public float spriteOffsetY;
     // Add other unique data fields as needed
+    public CharacterData()
+    {
+
+    }
+    public CharacterData(CharacterData characterData)
+    {
+        InstanceID = characterData.InstanceID;
+        characterName = characterData.characterName;
+        health = characterData.health;
+        attackDamage = characterData.attackDamage;
+        speedValue = characterData.speedValue;
+        rangeOfVision = characterData.rangeOfVision;
+        canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
+        listOfAbility = new List<Ability>(characterData.listOfAbility);
+        spriteOffsetY = characterData.spriteOffsetY;
+
+    }
     public AnimatorOverrideController GetanimatorOverrideController(AnimatorController originalController)
     {
         AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(originalController);
