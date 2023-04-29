@@ -43,8 +43,10 @@ public class LevelDataSOEditor : Editor
         DrawDefaultInspector();
         GUILayout.Space(10);
         LevelDataSO levelDataSO = target as LevelDataSO;
+
         if (levelDataSO.posToCharacterData != null)
         {
+            levelDataSO.loadDataifNotLoaded();
             EditorGUILayout.LabelField("Position To GameObject Dictionary:");
             foreach (var pair in levelDataSO.posToCharacterData)
             {

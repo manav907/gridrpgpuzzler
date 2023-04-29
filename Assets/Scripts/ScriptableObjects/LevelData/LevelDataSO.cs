@@ -59,6 +59,19 @@ public class LevelDataSO : ScriptableObject
             Debug.Log("File not found!");
         }
     }
+    public bool loadDataifNotLoaded()
+    {
+        foreach (var thisvar in posToCharacterData)
+        {
+            if (thisvar.Value == null)
+            {
+                LoadData();
+                Debug.Log("Values Loaded");
+            }
+            break;
+        }
+        return true;
+    }
     [SerializeField] string tryThis;
     public void tryDiagonose()
     {
@@ -86,7 +99,7 @@ public class DictionaryConverter : JsonConverter<Dictionary<Vector3Int, Characte
         foreach (var kvp in jObject)
         {
             var key = JsonConvert.DeserializeObject<Vector3Int>(kvp.Key);
-            var value = JsonConvert.DeserializeObject<CharacterData>(kvp.Value.ToString(),settings);
+            var value = JsonConvert.DeserializeObject<CharacterData>(kvp.Value.ToString(), settings);
             dict.Add(key, value);
         }
 

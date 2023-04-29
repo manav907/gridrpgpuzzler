@@ -49,7 +49,7 @@ public class TurnManager : MonoBehaviour
     void InstantiateallIntractableCharacters()
     {
         List<GameObject> allInteractableCharacters = new List<GameObject>();
-        loadThisLevel.addToDictionary();
+        loadThisLevel.LoadData();
         foreach (var characterDataPair in loadThisLevel.posToCharacterData)
         {
             listOfCD.Add(characterDataPair.Value);

@@ -526,10 +526,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cef59eb637bef15499926ba58c5f0c7f, type: 2}
   - {fileID: 11400000, guid: 058d9a1f02de28e4cafb4f10cdad59a6, type: 2}
   - {fileID: 11400000, guid: 3fca5c45e50d3234c9c4531fb8678f1e, type: 2}
-  spawnPoints:
-  - {x: 3, y: 2, z: 0}
-  - {x: 5, y: 0, z: 0}
-  - {x: 0, y: 3, z: 0}
+  spawnPoints: []
 --- !u!114 &732592034
 MonoBehaviour:
   m_ObjectHideFlags: 0
