@@ -71,6 +71,10 @@ public class LevelDataSOEditor : Editor
         {
             levelDataSO.LoadData();
         }
+        if (GUILayout.Button("tryDiagonose"))
+        {
+            levelDataSO.tryDiagonose();
+        }
     }
 }
 [CustomEditor(typeof(CharacterData))]
