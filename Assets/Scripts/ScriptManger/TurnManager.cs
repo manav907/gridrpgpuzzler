@@ -45,9 +45,16 @@ public class TurnManager : MonoBehaviour
 
     [SerializeField] GameObject characterHolder;
     [SerializeField] List<CharacterData> listOfCD;
+    [SerializeField] LevelDataSO loadThisLevel;
     void InstantiateallIntractableCharacters()
     {
         List<GameObject> allInteractableCharacters = new List<GameObject>();
+        loadThisLevel.addToDictionary();
+        foreach (var characterDataPair in loadThisLevel.posToCharacterData)
+        {
+            listOfCD.Add(characterDataPair.Value);
+            mapManager.addUniqueSpawnPoin(characterDataPair.Key);
+        }
 
         for (int i = 0; i < listOfCD.Count; i++)
         {

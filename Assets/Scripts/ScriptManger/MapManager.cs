@@ -41,6 +41,10 @@ public class MapManager : MonoBehaviour
         }
         return newSet[i];
     }
+    public void addUniqueSpawnPoin(Vector3Int thisPoint)
+    {
+        spawnPoints.Add(thisPoint);
+    }
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, CharacterControllerScript characterDataHolder)
     {
         //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())

@@ -445,9 +445,8 @@ MonoBehaviour:
   basicCameraController: {fileID: 519420033}
   characterPrefab: {fileID: 642291960666392779, guid: 86ecbaaea281cff4caa430f1a334e245, type: 3}
   characterHolder: {fileID: 1608062619}
-  listOfCD:
-  - {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
-  - {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
+  listOfCD: []
+  loadThisLevel: {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
   OrderOfInteractableCharacters: []
   ListOfInteractableCharacters: []
   thisCharacter: {fileID: 0}
