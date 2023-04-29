@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 [CreateAssetMenu(fileName = "New LevelData", menuName = "Level Data")]
 public class LevelDataSO : ScriptableObject
@@ -25,9 +26,28 @@ public class LevelDataSO : ScriptableObject
         }
         posToCharacterData.Add(atPos, thisCharData);
     }
+    public void RemoveKeyFromDictionary()
+    {
+        posToCharacterData.Remove(atPos);
+    }
+    JsonSerializerSettings settings = new JsonSerializerSettings
+    {
+        Converters = new JsonConverter[] {
+        new Vector3IntConverter(),
+        new CharacterDataConverter()
+    }
+    };
     public void SaveData()
     {
-        var settings = new JsonSerializerSettings { Converters = new[] { new Vector3IntConverter() } };
+        JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            Converters = new JsonConverter[] {
+        new Vector3IntConverter(),
+    }
+        };
+
+
+
         string json = JsonConvert.SerializeObject(posToCharacterData, settings);
         File.WriteAllText(GlobalCal.persistantDataPath + "/levelData.json", json);
     }
@@ -37,8 +57,9 @@ public class LevelDataSO : ScriptableObject
         if (File.Exists(GlobalCal.persistantDataPath + "/levelData.json"))
         {
             string json = File.ReadAllText(GlobalCal.persistantDataPath + "/levelData.json");
-            var settings = new JsonSerializerSettings { Converters = new[] { new Vector3IntConverter() } };
             var data = JsonConvert.DeserializeObject<Dictionary<int, CharacterData>>(json, settings);
+            posToCharacterData = data;
+            /*
             foreach (var kvp in data)
             {
                 // Instantiate a new CharacterData instance using the constructor that takes a string parameter
@@ -47,6 +68,7 @@ public class LevelDataSO : ScriptableObject
                 posToCharacterData.Remove(kvp.Key);
                 posToCharacterData.Add(kvp.Key, characterData);
             }
+            */
 
         }
         else
@@ -70,7 +92,6 @@ public class Vector3IntConverter : JsonConverter<Vector3Int>
 
     public override Vector3Int ReadJson(JsonReader reader, Type objectType, Vector3Int existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        Debug.Log("Starting");
         reader.Read();
         int x = (int)(long)reader.Value;
         reader.Read();
@@ -80,5 +101,19 @@ public class Vector3IntConverter : JsonConverter<Vector3Int>
         reader.Read();
         return new Vector3Int(x, y, z);
     }
+}
+public class CharacterDataConverter : JsonConverter<CharacterData>
+{
+    public override CharacterData ReadJson(JsonReader reader, Type objectType, CharacterData existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        var data = ScriptableObject.CreateInstance<CharacterData>();
+        var jObject = JObject.Load(reader);
+        serializer.Populate(jObject.CreateReader(), data);
+        return data;
+    }
 
+    public override void WriteJson(JsonWriter writer, CharacterData value, JsonSerializer serializer)
+    {
+        serializer.Serialize(writer, value);
+    }
 }

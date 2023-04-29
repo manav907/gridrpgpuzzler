@@ -55,9 +55,13 @@ public class LevelDataSOEditor : Editor
                 GUILayout.EndHorizontal();
             }
         }
-        if (GUILayout.Button("addToDictionary"))
+        if (GUILayout.Button("Add To Dictionary"))
         {
             levelDataSO.addToDictionary();
+        }
+        if (GUILayout.Button("Remove Key From Dictionary"))
+        {
+            levelDataSO.RemoveKeyFromDictionary();
         }
         if (GUILayout.Button("SaveData"))
         {
