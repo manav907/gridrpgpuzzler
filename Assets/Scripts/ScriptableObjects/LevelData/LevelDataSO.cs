@@ -57,6 +57,10 @@ public class LevelDataSO : ScriptableObject
             Debug.Log("File not found!");
         }
     }
+    public void ClearData()
+    {
+     posToCharacterData=new Dictionary<Vector3Int, CharacterData>();
+    }
     public bool loadDataifNotLoaded()
     {
         foreach (var thisvar in posToCharacterData)
@@ -79,6 +83,7 @@ public class DictionaryConverterV3IntCharacterData : JsonConverter<Dictionary<Ve
 {
     JsonSerializerSettings settings = new JsonSerializerSettings
     {
+        PreserveReferencesHandling = PreserveReferencesHandling.Objects,
         Converters = new JsonConverter[]
         {
             new CharacterDataConverter()
@@ -147,7 +152,6 @@ public class CharacterDataConverter : JsonConverter<CharacterData>
 {
     public override CharacterData ReadJson(JsonReader reader, Type objectType, CharacterData existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-
         var data = ScriptableObject.CreateInstance<CharacterData>();
         var jObject = JObject.Load(reader);
         serializer.Populate(jObject.CreateReader(), data);

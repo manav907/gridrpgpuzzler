@@ -73,6 +73,10 @@ public class LevelDataSOEditor : Editor
         {
             levelDataSO.LoadData();
         }
+        if (GUILayout.Button("Clear Data"))
+        {
+            levelDataSO.ClearData();
+        }
         if (GUILayout.Button("tryDiagonose"))
         {
             levelDataSO.tryDiagonose();
