@@ -13,6 +13,24 @@ MonoBehaviour:
   m_Name: Rapidash 1
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationData
   nameEnum: 0
-  spriteOffsetY: 0
-  Walk: []
-  Idle: []
+  spriteOffsetY: 0.5
+  Walk:
+  - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 64736867, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 570990605, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  Idle:
+  - {fileID: -397161805, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: -1601712476, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: -469504749, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 514078281, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 829703139, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 1514932583, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 1947736593, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 2000981252, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 1657529631, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: -215339447, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 1648033116, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 834169678, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 1176080911, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: 18949333, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}

@@ -423,6 +423,7 @@ GameObject:
   - component: {fileID: 732592033}
   - component: {fileID: 732592034}
   - component: {fileID: 732592035}
+  - component: {fileID: 732592036}
   m_Layer: 0
   m_Name: ScriptManager
   m_TagString: GameController
@@ -445,7 +446,8 @@ MonoBehaviour:
   basicCameraController: {fileID: 519420033}
   characterPrefab: {fileID: 642291960666392779, guid: 86ecbaaea281cff4caa430f1a334e245, type: 3}
   characterHolder: {fileID: 1608062619}
-  listOfCD: []
+  listOfCD:
+  - {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
   loadThisLevel: {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
   OrderOfInteractableCharacters: []
   ListOfInteractableCharacters: []
@@ -526,7 +528,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cef59eb637bef15499926ba58c5f0c7f, type: 2}
   - {fileID: 11400000, guid: 058d9a1f02de28e4cafb4f10cdad59a6, type: 2}
   - {fileID: 11400000, guid: 3fca5c45e50d3234c9c4531fb8678f1e, type: 2}
-  spawnPoints: []
+  spawnPoints:
+  - {x: 0, y: 0, z: 0}
 --- !u!114 &732592034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +567,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedb9c6d4a464264e928dfb0c6b14ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &732592036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732592026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e01eff684a788c4e987850a8c348fe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listofCAD:
+  - {fileID: 11400000, guid: 6c00feb9b63d7ce4ca5e1f722167ea01, type: 2}
 --- !u!1 &898572561
 GameObject:
   m_ObjectHideFlags: 0

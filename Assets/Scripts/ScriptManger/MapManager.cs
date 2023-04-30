@@ -35,7 +35,7 @@ public class MapManager : MonoBehaviour
             if (!newSet.Contains(point))
                 newSet.Add(point);
         }
-        if (i! < newSet.Count)
+        if (i! < newSet.Count || i == 0)
         {
             newSet.Add(new Vector3Int(i, 0, 0));
         }
