@@ -34,9 +34,7 @@ public class LevelDataSO : ScriptableObject
     {
         Converters = new JsonConverter[]
         {
-            new DictionaryConverter(),
-            new Vector3IntConverter(),
-            new CharacterDataConverter()
+            new DictionaryConverterV3IntCharacterData()
         }
     };
     public void SaveData()
@@ -77,14 +75,12 @@ public class LevelDataSO : ScriptableObject
     {
     }
 }
-public class DictionaryConverter : JsonConverter<Dictionary<Vector3Int, CharacterData>>
+public class DictionaryConverterV3IntCharacterData : JsonConverter<Dictionary<Vector3Int, CharacterData>>
 {
     JsonSerializerSettings settings = new JsonSerializerSettings
     {
         Converters = new JsonConverter[]
         {
-            //new DictionaryConverter(),
-            //new Vector3IntConverter(),
             new CharacterDataConverter()
         }
     };
@@ -163,6 +159,6 @@ public class CharacterDataConverter : JsonConverter<CharacterData>
         throw new NotImplementedException();
     }
 
-    public override bool CanRead { get { Debug.Log("CanRead"); return true; } }
-    public override bool CanWrite { get { Debug.Log("CanWrite"); return false; } }
+    public override bool CanRead { get { return true; } }
+    public override bool CanWrite { get { return false; } }
 }

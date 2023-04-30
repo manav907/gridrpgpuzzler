@@ -20,6 +20,9 @@ public class CharacterData : ScriptableObject
     [Header("Animation Stuff")]
     //Sprite Stats
     public float spriteOffsetY;
+
+    [SerializeField] Sprite[] Walk;
+    [SerializeField] Sprite[] Idle;
     // Add other unique data fields as needed
     public CharacterData()
     {
@@ -67,8 +70,6 @@ public class CharacterData : ScriptableObject
         thisDict.Add(nameof(Idle), Idle);
         return thisDict;
     }
-    [SerializeField] Sprite[] Walk;
-    [SerializeField] Sprite[] Idle;
     Dictionary<String, AnimationClip> GetAnimationClips()
     {
         var thisDict = new Dictionary<string, AnimationClip>();
