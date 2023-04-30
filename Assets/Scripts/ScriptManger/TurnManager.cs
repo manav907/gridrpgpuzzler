@@ -52,8 +52,8 @@ public class TurnManager : MonoBehaviour
         loadThisLevel.LoadData();
         foreach (var characterDataPair in loadThisLevel.posToCharacterData)
         {
-            //listOfCD.Add(characterDataPair.Value);
-            //mapManager.addUniqueSpawnPoin(characterDataPair.Key);
+            listOfCD.Add(characterDataPair.Value);
+            mapManager.addUniqueSpawnPoin(characterDataPair.Key);
         }
 
         for (int i = 0; i < listOfCD.Count; i++)

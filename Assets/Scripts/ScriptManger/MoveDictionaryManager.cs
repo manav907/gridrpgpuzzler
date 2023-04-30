@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
- using UnityEngine;
+using UnityEngine;
 using System;
 using System.Linq;
 using UnityEngine.UI;
@@ -149,21 +149,25 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         IEnumerator MoveCharacterBetweenPoints(Transform character, List<Vector3Int> movePoints, float moveTime)
         {
+            string debugLine = "";
             yield return new WaitForSeconds(moveTime);
             foreach (Vector3Int movePoint in movePoints)
             {
                 float elapsedTime = 0;
                 Vector3 startingPosition = character.position;
-                //Debug.Log(startingPosition + " from to " + movePoint);
+                debugLine = ("Character Started at " + startingPosition + " and Will Move to " + movePoint + " starting loop at time" + elapsedTime + " for time of " + moveTime) + ":\n";
                 while (elapsedTime < moveTime)
                 {
+                    debugLine += "ElapsedTime " + elapsedTime + " and Current Position" + character.position + " At the Start and :";
                     elapsedTime += Time.deltaTime;
                     float t = Mathf.Clamp01(elapsedTime / moveTime);
                     character.position = Vector3.Lerp(startingPosition, movePoint, t);
-                    //yield return null;
-                    yield return new WaitForSeconds(0.01f);
+                    yield return null;
+                    //yield return new WaitForSeconds(0.01f);
+                    debugLine += "ElapsedTime " + elapsedTime + " and Current Position" + character.position + " At the End\n";
                 }
             }
+            Debug.Log(debugLine);
             reticalManager.reDrawValidTiles(null);
             reticalManager.reDrawShadows();
             character.position = movePoints.Last();
