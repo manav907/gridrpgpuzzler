@@ -122,32 +122,6 @@ public class DictionaryConverterV3IntCharacterData : JsonConverter<Dictionary<Ve
         writer.WriteEndObject();
     }
 }
-[JsonConverter(typeof(Vector3IntConverter))]
-public class Vector3IntConverter : JsonConverter<Vector3Int>
-{
-    public override void WriteJson(JsonWriter writer, Vector3Int value, JsonSerializer serializer)
-    {
-        Debug.Log("Here wu");
-        writer.WriteStartArray();
-        writer.WriteValue((int)55);
-        writer.WriteValue((int)value.y);
-        writer.WriteValue((int)value.z);
-        writer.WriteEndArray();
-    }
-    public override bool CanRead { get { Debug.Log("CanRead"); return false; } }
-    public override bool CanWrite { get { Debug.Log("CanWrite"); return false; } }
-
-    public override Vector3Int ReadJson(JsonReader reader, Type objectType, Vector3Int existingValue, bool hasExistingValue, JsonSerializer serializer)
-    {
-        Debug.Log("Here");
-        reader.Read();
-        string[] values = reader.Value.ToString().Trim('(', ')').Split(',');
-        int x = int.Parse(values[0].Trim());
-        int y = int.Parse(values[1].Trim());
-        int z = int.Parse(values[2].Trim());
-        return new Vector3Int(x, y, z);
-    }
-}
 public class CharacterDataConverter : JsonConverter<CharacterData>
 {
     public override CharacterData ReadJson(JsonReader reader, Type objectType, CharacterData existingValue, bool hasExistingValue, JsonSerializer serializer)
