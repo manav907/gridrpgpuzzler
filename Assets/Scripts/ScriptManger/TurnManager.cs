@@ -13,6 +13,7 @@ public class TurnManager : MonoBehaviour
         recalculateOrder();//can only be called after Instanstiating the Characterts
         beginTurnIfPossible();
     }
+    [Header("Reffrences to Important Game Objects")]
     GameObject gameController;
     ButtonManager buttonManager;
     MapManager mapManager;
@@ -21,6 +22,19 @@ public class TurnManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
     [SerializeField] basicCameraController basicCameraController;
+    [Header("Character Prefab Data to Instanstace Characters")]
+    [SerializeField] GameObject characterPrefab;
+    [SerializeField] GameObject characterHolder;
+    [Header("Level Data")]
+    [SerializeField] LevelDataSO loadThisLevel;
+    [SerializeField] List<CharacterData> listOfCD;
+    [Header("List of Active Characters")]
+    public List<GameObject> ListOfInteractableCharacters;
+    public List<GameObject> OrderOfInteractableCharacters;
+    [Header("Current Turn Data")]
+    public GameObject thisCharacter;
+    CharacterControllerScript thisCharacterData;
+    [SerializeField] int TurnCountInt = 0;
 
 
     void GetGameObjects()
@@ -41,11 +55,6 @@ public class TurnManager : MonoBehaviour
         reticalManager.setVariables();
         basicCameraController.setVariables(gameController);
     }
-    [SerializeField] GameObject characterPrefab;
-
-    [SerializeField] GameObject characterHolder;
-    [SerializeField] List<CharacterData> listOfCD;
-    [SerializeField] LevelDataSO loadThisLevel;
     void InstantiateallIntractableCharacters()
     {
         List<GameObject> allInteractableCharacters = new List<GameObject>();
@@ -75,11 +84,6 @@ public class TurnManager : MonoBehaviour
             mapManager.cellDataDir[thisPos].characterAtCell = thisChar;
         }
     }
-    public List<GameObject> OrderOfInteractableCharacters;
-    public List<GameObject> ListOfInteractableCharacters;
-    public GameObject thisCharacter;
-    CharacterControllerScript thisCharacterData;
-    [SerializeField] int TurnCountInt = 0;
     public void beginTurnIfPossible()
     {
         var shadowrange = reticalManager.reDrawShadows();

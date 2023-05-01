@@ -56,7 +56,7 @@ public class LevelDataSOEditor : Editor
                 GUILayout.Label(pair.Value.name);
                 GUILayout.EndHorizontal();
             }
-        }
+        }//        if(GUILayout.Button("Get Retical Pos"))        {        }
         if (GUILayout.Button("Add To Dictionary"))
         {
             levelDataSO.addToDictionary();
@@ -98,6 +98,34 @@ public class CharacterDataEditor : Editor
                 //Debug.Log(ability.abilityString + " to " + ability.abilityName.ToString());
                 ability.abilityString = ability.abilityName.ToString();
             }
+        }
+        //EditorGUILayout.PropertyField(serializedObject.FindProperty("ListOfAbility"), true);
+    }
+}
+[CustomEditor(typeof(CharacterAnimationData))]
+public class CharacterAnimationDataEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        if (GUILayout.Button("Rename FileNames"))
+        {
+            // Modify data in the scriptable object
+            CharacterAnimationData characterAnimationData = target as CharacterAnimationData;
+            string newNameForFile = characterAnimationData.nameEnum.ToString() + " CharacterAnimationData";
+            // Rename the SO asset
+            string path = AssetDatabase.GetAssetPath(characterAnimationData);
+            string errorMsg = AssetDatabase.RenameAsset(path, newNameForFile);
+            if (string.IsNullOrEmpty(errorMsg))
+            {
+                // Refresh the editor to update the file name
+                AssetDatabase.Refresh();
+            }
+            else
+            {
+                Debug.LogWarning("Failed to rename asset: " + errorMsg);
+            }
+
         }
         //EditorGUILayout.PropertyField(serializedObject.FindProperty("ListOfAbility"), true);
     }

@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New CharacterAnimationData", menuName = "CharacterAnimationData")]
 public class CharacterAnimationData : ScriptableObject
 {
-    [Header("reffrence Data")]
+    [Header("Reffrence Data")]
     public CharacterName nameEnum;
     [Header("Animation Stuff")]
     //Sprite Stats
