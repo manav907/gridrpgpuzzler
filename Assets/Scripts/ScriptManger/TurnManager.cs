@@ -36,8 +36,6 @@ public class TurnManager : MonoBehaviour
     public GameObject thisCharacter;
     CharacterControllerScript thisCharacterData;
     [SerializeField] int TurnCountInt = 0;
-
-
     void GetGameObjects()
     {
         OrderOfInteractableCharacters = new List<GameObject>();
@@ -151,7 +149,6 @@ public class TurnManager : MonoBehaviour
             {
                 return thisGameObject.GetComponent<CharacterControllerScript>().speedValue;
             }
-
         }
     }
 }

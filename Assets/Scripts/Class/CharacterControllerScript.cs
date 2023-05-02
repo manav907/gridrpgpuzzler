@@ -157,11 +157,13 @@ public class CharacterControllerScript : MonoBehaviour
         {
             var OrderOfInteractableCharacters = thisTurnManager.OrderOfInteractableCharacters;
             List<Vector3Int> thisList = new List<Vector3Int>();
-            foreach (GameObject thisCharacter in OrderOfInteractableCharacters)
+            foreach (GameObject character in OrderOfInteractableCharacters)
             {
-                var thisPos = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
-                if (visionList.Contains(thisPos))
-                    thisList.Add(thisPos);
+                CharacterControllerScript CSS = character.GetComponent<CharacterControllerScript>();
+                Vector3Int positionofCSS = CSS.getCharV3Int();
+                if (visionList.Contains(positionofCSS))//if Character is in vision
+                    if (CSS.isPlayerCharacter)//if is Player Character
+                        thisList.Add(positionofCSS);
             }
             thisList.Remove(thisCharpos);
             return thisList;

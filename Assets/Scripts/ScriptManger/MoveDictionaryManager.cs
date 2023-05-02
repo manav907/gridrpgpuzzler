@@ -22,6 +22,8 @@ public class MoveDictionaryManager : MonoBehaviour
     [Header("Current Ablity")]
     [SerializeField] Ability currentAblity;
     [Header("Debug Data")]
+    [SerializeField] bool useAlternateRangeForAllActions;
+    [SerializeField] int alternateRange = 50;
     [SerializeField] bool checkValidActionTiles = false;
     [TextArea][SerializeField] string ValidTargetListDebugInfo;
     bool ShouldContinue;
@@ -259,7 +261,12 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     public List<Vector3Int> getValidTargetList(Ability ability)
     {
-        float rangeOfAction = ability.GetRangeOfAction();
+        float rangeOfAction;
+        if (!useAlternateRangeForAllActions)
+            rangeOfAction = ability.GetRangeOfAction();
+        else
+            rangeOfAction = alternateRange;
+
         //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
         Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
