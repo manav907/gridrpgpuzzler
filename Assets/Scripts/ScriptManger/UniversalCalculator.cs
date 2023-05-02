@@ -270,3 +270,15 @@ public static class GlobalCal
     public static string persistantDataPath = Application.dataPath + "/SaveData/LevelData";
 
 }
+
+public static class HUDStuff
+{
+    static GUIStyle style;
+    static HUDStuff()
+    {
+        style = new GUIStyle(GUI.skin.label);
+        style.alignment = TextAnchor.MiddleCenter;
+        style.normal.textColor = Color.white;
+        style.fontStyle = FontStyle.Bold;
+    }
+}

@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Rapidash CharacterAnimationData
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationData
   nameEnum: 0
-  spriteOffsetY: 0
-  Walk: []
-  Idle: []
+  spriteOffsetY: 0.5
+  Walk:
+  - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 64736867, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  - {fileID: 570990605, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
+  Idle:
+  - {fileID: -397161805, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  - {fileID: -1601712476, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}

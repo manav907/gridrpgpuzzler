@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using TMPro;
 using System.Linq;
 
@@ -63,25 +64,26 @@ public class TurnManager : MonoBehaviour
         {
             listOfCD.Add(characterDataPair.Value);
             mapManager.addUniqueSpawnPoin(characterDataPair.Key);
-        }
 
-        for (int i = 0; i < listOfCD.Count; i++)
-        {
-            allInteractableCharacters.Add(Instantiate(characterPrefab));
-            GameObject thisChar = allInteractableCharacters[i];
-            thisChar.transform.SetParent(characterHolder.transform, false);
-            thisChar.transform.position = mapManager.getUniqueSpawnPoint(i);
-            thisChar.name += i;
 
-            //Assigning CharacterData
-            CharacterControllerScript thisCDH = thisChar.GetComponent<CharacterControllerScript>();
-            thisCDH.thisCharacterData = listOfCD[i];
-            thisCDH.thisCharacterData.InstanceID = i;
-            thisCDH.InitilizeCharacter(gameController);
-            ListOfInteractableCharacters.Add(thisChar);
 
-            Vector3Int thisPos = universalCalculator.convertToVector3Int(thisChar.transform.position);
-            mapManager.cellDataDir[thisPos].characterAtCell = thisChar;
+            //Instansiateding Character
+            GameObject InstansiatedCharacter = Instantiate(characterPrefab);
+            allInteractableCharacters.Add(InstansiatedCharacter);
+            //Setting Transforms and Names
+            InstansiatedCharacter.transform.SetParent(characterHolder.transform, false);//Parent GameObjects
+
+            InstansiatedCharacter.name += InstansiatedCharacter.GetInstanceID();//Setting name 
+
+            InstansiatedCharacter.transform.position = characterDataPair.Key; //The Locatrion of Character
+            CharacterControllerScript InstansiatedCharacterDataHolder = InstansiatedCharacter.GetComponent<CharacterControllerScript>();
+            InstansiatedCharacterDataHolder.thisCharacterData = characterDataPair.Value;//The Character Data
+            InstansiatedCharacterDataHolder.thisCharacterData.InstanceID = InstansiatedCharacter.GetInstanceID();
+            InstansiatedCharacterDataHolder.InitilizeCharacter(gameController);
+            ListOfInteractableCharacters.Add(InstansiatedCharacter);
+
+            Vector3Int thisPos = universalCalculator.convertToVector3Int(InstansiatedCharacter.transform.position);
+            mapManager.cellDataDir[thisPos].characterAtCell = InstansiatedCharacter;
         }
     }
     public void beginTurnIfPossible()
@@ -107,13 +109,12 @@ public class TurnManager : MonoBehaviour
             Debug.Log("Game Over");
             buttonManager.clearButtons();
         }
-    }
-
-    void setCharacterData()
-    {
-        thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
-        thisCharacterData = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-        moveDictionaryManager.getThisCharacterData();
+        void setCharacterData()
+        {
+            thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
+            thisCharacterData = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
+            moveDictionaryManager.getThisCharacterData();
+        }
     }
     bool noCharactersInCamera(List<Vector3Int> thislist)
     {

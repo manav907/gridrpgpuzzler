@@ -10,8 +10,14 @@ public class DataManager : MonoBehaviour
     public CharacterAnimationData getFromSO(CharacterName characterName)
     {
         if (CharNameToData == null)
-            setDictionarty();
-        return CharNameToData[characterName];
+            {
+                Debug.Log("Null Dictonary Set");
+                setDictionarty();}
+        if (CharNameToData.ContainsKey(characterName))
+            return CharNameToData[characterName];
+        Debug.Log(characterName.ToString() + " was not found in dictionary");
+        return null;
+
 
     }
     void setDictionarty()
@@ -19,7 +25,12 @@ public class DataManager : MonoBehaviour
         CharNameToData = new Dictionary<CharacterName, CharacterAnimationData>();
         foreach (var CAD in listofCAD)
         {
-            CharNameToData.Add(CAD.nameEnum, CAD);
+            if (CharNameToData.ContainsKey(CAD.nameEnum))
+            {
+                Debug.Log("Dupplicate Entry Will Not Add");
+            }
+            else
+                CharNameToData.Add(CAD.nameEnum, CAD);
         }
     }
 }
