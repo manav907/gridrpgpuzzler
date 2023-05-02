@@ -58,32 +58,21 @@ public class TurnManager : MonoBehaviour
     }
     void InstantiateallIntractableCharacters()
     {
-        List<GameObject> allInteractableCharacters = new List<GameObject>();
         loadThisLevel.LoadData();
         foreach (var characterDataPair in loadThisLevel.posToCharacterData)
         {
-            listOfCD.Add(characterDataPair.Value);
-            mapManager.addUniqueSpawnPoin(characterDataPair.Key);
-
-
-
-            //Instansiateding Character
-            GameObject InstansiatedCharacter = Instantiate(characterPrefab);
-            allInteractableCharacters.Add(InstansiatedCharacter);
-            //Setting Transforms and Names
-            InstansiatedCharacter.transform.SetParent(characterHolder.transform, false);//Parent GameObjects
-
-            InstansiatedCharacter.name += InstansiatedCharacter.GetInstanceID();//Setting name 
-
+            GameObject InstansiatedCharacter = Instantiate(characterPrefab);//Instansiateding Character
+            CharacterControllerScript InstansiatedCCS = InstansiatedCharacter.GetComponent<CharacterControllerScript>();//Getting CCS
+            //Setting data
             InstansiatedCharacter.transform.position = characterDataPair.Key; //The Locatrion of Character
-            CharacterControllerScript InstansiatedCharacterDataHolder = InstansiatedCharacter.GetComponent<CharacterControllerScript>();
-            InstansiatedCharacterDataHolder.thisCharacterData = characterDataPair.Value;//The Character Data
-            InstansiatedCharacterDataHolder.thisCharacterData.InstanceID = InstansiatedCharacter.GetInstanceID();
-            InstansiatedCharacterDataHolder.InitilizeCharacter(gameController);
-            ListOfInteractableCharacters.Add(InstansiatedCharacter);
-
-            Vector3Int thisPos = universalCalculator.convertToVector3Int(InstansiatedCharacter.transform.position);
-            mapManager.cellDataDir[thisPos].characterAtCell = InstansiatedCharacter;
+            InstansiatedCCS.CharacterDataSO = characterDataPair.Value;//Setting The Character Data
+            InstansiatedCCS.CharacterDataSO.InstanceID = InstansiatedCharacter.GetInstanceID();//Setting Instance ID
+            //Adding to Lists
+            ListOfInteractableCharacters.Add(InstansiatedCharacter);//Adding Character to List
+            mapManager.cellDataDir[characterDataPair.Key].characterAtCell = InstansiatedCharacter;//Setting Mapmanager Posistion
+            InstansiatedCharacter.transform.SetParent(characterHolder.transform, false);//Setting Parent GameObjects 
+            //last step
+            InstansiatedCCS.InitilizeCharacter(gameController);//Last step Initilization
         }
     }
     public void beginTurnIfPossible()

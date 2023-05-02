@@ -15,7 +15,7 @@ public class CharacterControllerScript : MonoBehaviour
     public int speedValue;
     public int rangeOfVision;
     public List<GroundFloorType> canWalkOn;
-    public CharacterData thisCharacterData;
+    public CharacterData CharacterDataSO;
     [SerializeField] private TextMesh Heatlh;
     private ButtonManager thisButtonManager;
     private MapManager thisMapManager;
@@ -35,23 +35,23 @@ public class CharacterControllerScript : MonoBehaviour
         CheckIfCharacterIsDead();
         void setVariables()
         {
-            characterName = thisCharacterData.name;
-            health = thisCharacterData.health;
-            AttackDamage = thisCharacterData.attackDamage;
-            speedValue = thisCharacterData.speedValue;
-            rangeOfVision = thisCharacterData.rangeOfVision;
+            characterName = CharacterDataSO.name;
+            health = CharacterDataSO.health;
+            AttackDamage = CharacterDataSO.attackDamage;
+            speedValue = CharacterDataSO.speedValue;
+            rangeOfVision = CharacterDataSO.rangeOfVision;
 
             //ListStuff
-            canWalkOn = thisCharacterData.canWalkOn;
-            abilityList.AddRange(GlobalCal.createCopyListUsingConstructor(thisCharacterData.listOfAbility));
+            canWalkOn = CharacterDataSO.canWalkOn;
+            abilityList.AddRange(GlobalCal.createCopyListUsingConstructor(CharacterDataSO.listOfAbility));
             //Setting Data
             AbilityNameToAbilityDataDIR = AbilityNameToAbilityData();
             //Setting Specific Name
-            this.name = characterName + " " + thisCharacterData.InstanceID;
+            this.name = characterName + " " + CharacterDataSO.InstanceID;
             //creating Override
             AnimatorController originalController = animator.runtimeAnimatorController as AnimatorController;
             //doingAnimController
-            var SO = gameController.GetComponent<DataManager>().getFromSO(thisCharacterData.NameEnum);
+            var SO = gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum);
             animator.runtimeAnimatorController = SO.GetanimatorOverrideController(originalController);
             //Setting Sprite Stuff
             //Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
