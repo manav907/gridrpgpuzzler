@@ -22,7 +22,7 @@ public class MoveDictionaryManager : MonoBehaviour
     [Header("Current Ablity")]
     [SerializeField] Ability currentAblity;
     [Header("Debug Data")]
-    [SerializeField] bool useAlternateRangeForAllActions;
+    public bool EditMapMode;
     [SerializeField] int alternateRange = 50;
     [SerializeField] bool checkValidActionTiles = false;
     [TextArea][SerializeField] string ValidTargetListDebugInfo;
@@ -192,7 +192,7 @@ public class MoveDictionaryManager : MonoBehaviour
         ShouldContinue = false;
 
         //Executing Script
-        if (!characterCS.isPlayerCharacter)//if Non Player Character
+        if (!characterCS.controlCharacter)//if Non Player Character
         {
             tryHere = characterCS.getTarget(listOfValidtargets);
             ShouldContinue = true;
@@ -262,7 +262,7 @@ public class MoveDictionaryManager : MonoBehaviour
     public List<Vector3Int> getValidTargetList(Ability ability)
     {
         float rangeOfAction;
-        if (!useAlternateRangeForAllActions)
+        if (!EditMapMode)
             rangeOfAction = ability.GetRangeOfAction();
         else
             rangeOfAction = alternateRange;

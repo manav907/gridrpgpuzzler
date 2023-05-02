@@ -8,6 +8,15 @@ using UnityEditor.Animations;
 public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
+    public bool controlCharacter
+    {
+        get
+        {
+            if (moveDictionaryManager.EditMapMode == false)
+                return isPlayerCharacter;
+            return true;
+        }
+    }
     public bool isPlayerCharacter = true;
     [SerializeField] private bool checkAI = false;
     public int health;
@@ -36,6 +45,7 @@ public class CharacterControllerScript : MonoBehaviour
         void setVariables()
         {
             characterName = CharacterDataSO.name;
+            isPlayerCharacter = CharacterDataSO.isPlayerCharacter;
             health = CharacterDataSO.health;
             AttackDamage = CharacterDataSO.attackDamage;
             speedValue = CharacterDataSO.speedValue;
@@ -112,7 +122,7 @@ public class CharacterControllerScript : MonoBehaviour
         ToggleCharacterTurnAnimation(true);
         actionPoints = 1;//Remove This later
         thisButtonManager.clearButtons();
-        if (isPlayerCharacter)
+        if (controlCharacter)
             thisButtonManager.InstantiateButtons(CharacterMoveList);
         else
         {
@@ -162,7 +172,7 @@ public class CharacterControllerScript : MonoBehaviour
                 CharacterControllerScript CSS = character.GetComponent<CharacterControllerScript>();
                 Vector3Int positionofCSS = CSS.getCharV3Int();
                 if (visionList.Contains(positionofCSS))//if Character is in vision
-                    if (CSS.isPlayerCharacter)//if is Player Character
+                    if (CSS.controlCharacter)//if is Player Character
                         thisList.Add(positionofCSS);
             }
             thisList.Remove(thisCharpos);

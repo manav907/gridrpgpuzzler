@@ -11,6 +11,7 @@ public class CharacterData : ScriptableObject
     public int InstanceID;
     public string characterName = "GenericCharacter";
     public CharacterName NameEnum;
+    public bool isPlayerCharacter = true;
     //Stats
     public int health = 5;
     public int attackDamage = 2;

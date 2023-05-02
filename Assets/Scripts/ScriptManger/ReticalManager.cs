@@ -134,7 +134,7 @@ public class ReticalManager : MonoBehaviour
         foreach (GameObject thisChar in OrderOfInteractableCharacters)
         {
             CharacterControllerScript thisCDH = thisChar.GetComponent<CharacterControllerScript>();
-            if (thisCDH.isPlayerCharacter == true)
+            if (thisCDH.controlCharacter == true)
                 SetVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
         }
         return shadowRange;
