@@ -52,19 +52,48 @@ public class LevelDataSOEditor : Editor
             {
                 //EditorGUILayout.LabelField($"Key: {pair.Key}, Value: {pair.Value.name}");
                 GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Edit "))
+                {
+                    Selection.activeObject = pair.Value;
+                }
                 GUILayout.Label(pair.Key.ToString());
                 GUILayout.Label(pair.Value.name);
+                if (GUILayout.Button("Remove "))
+                {
+                    levelDataSO.posToCharacterData.Remove(pair.Key);
+                    break;
+                }
+                if (GUILayout.Button("Try Change Pos"))
+                {
+                    if (levelDataSO.posToCharacterData.ContainsKey(levelDataSO.CheckAtPos))
+                    {
+                        Debug.Log("The new Posisiton is alredy in dictonary cannot update posistion of this character");
+                    }
+                    else
+                    {
+                        levelDataSO.posToCharacterData.Remove(pair.Key);
+                        levelDataSO.posToCharacterData.Add(levelDataSO.CheckAtPos, pair.Value);
+                        break;
+                    }
+                }
                 GUILayout.EndHorizontal();
             }
-        }//        if(GUILayout.Button("Get Retical Pos"))        {        }
+        }
+
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("CheckAtPos"), GUIContent.none, true);
+        serializedObject.ApplyModifiedProperties();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("importThisCharData"), GUIContent.none, true);
+        serializedObject.ApplyModifiedProperties();
+
+
         if (GUILayout.Button("Add To Dictionary"))
         {
             levelDataSO.addToDictionary();
         }
-        if (GUILayout.Button("Remove Key From Dictionary"))
-        {
-            levelDataSO.RemoveKeyFromDictionary();
-        }
+        GUILayout.EndHorizontal();
+        GUILayout.Label("Manage Level Data File");
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("SaveData"))
         {
             levelDataSO.SaveData();
@@ -73,10 +102,11 @@ public class LevelDataSOEditor : Editor
         {
             levelDataSO.LoadData();
         }
-        if (GUILayout.Button("Clear Data"))
+        if (GUILayout.Button("Clear Data(no Save)"))
         {
             levelDataSO.ClearData();
         }
+        GUILayout.EndHorizontal();
         if (GUILayout.Button("tryDiagonose"))
         {
             levelDataSO.tryDiagonose();

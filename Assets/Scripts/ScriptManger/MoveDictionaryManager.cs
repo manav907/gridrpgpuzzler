@@ -122,7 +122,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-            targetCharacter.health -= attackingCharacter.AttackDamage;
+            targetCharacter.health -= attackingCharacter.attackDamage;
             checkCharacters(targetCharacter);
             var ListOfMovePoints = new List<Vector3Int>();
             ListOfMovePoints.Add(tryHere);

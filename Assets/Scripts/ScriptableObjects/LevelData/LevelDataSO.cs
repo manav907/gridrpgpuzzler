@@ -10,8 +10,8 @@ using Newtonsoft.Json.Linq;
 public class LevelDataSO : ScriptableObject
 {
     public Dictionary<Vector3Int, CharacterData> posToCharacterData;
-    public Vector3Int CheckAtPos;
-    public CharacterData importThisCharData;
+    [HideInInspector] public Vector3Int CheckAtPos;
+    [HideInInspector] public CharacterData importThisCharData;
     public void addToDictionary()//Called from Custom Inspector Button
     {
         if (posToCharacterData == null)
@@ -25,10 +25,6 @@ public class LevelDataSO : ScriptableObject
             return;
         }
         posToCharacterData.Add(CheckAtPos, importThisCharData);
-    }
-    public void RemoveKeyFromDictionary()
-    {
-        posToCharacterData.Remove(CheckAtPos);
     }
     JsonSerializerSettings settings = new JsonSerializerSettings
     {
@@ -59,7 +55,7 @@ public class LevelDataSO : ScriptableObject
     }
     public void ClearData()
     {
-     posToCharacterData=new Dictionary<Vector3Int, CharacterData>();
+        posToCharacterData = new Dictionary<Vector3Int, CharacterData>();
     }
     public bool loadDataifNotLoaded()
     {
@@ -74,7 +70,7 @@ public class LevelDataSO : ScriptableObject
         }
         return true;
     }
-    [SerializeField] string tryThis;
+    //[SerializeField] string tryThis;
     public void tryDiagonose()
     {
     }

@@ -8,6 +8,7 @@ using UnityEditor.Animations;
 public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
+    [SerializeField]
     public bool controlCharacter
     {
         get
@@ -20,7 +21,7 @@ public class CharacterControllerScript : MonoBehaviour
     public bool isPlayerCharacter = true;
     [SerializeField] private bool checkAI = false;
     public int health;
-    public int AttackDamage;
+    public int attackDamage;
     public int speedValue;
     public int rangeOfVision;
     public List<GroundFloorType> canWalkOn;
@@ -44,10 +45,10 @@ public class CharacterControllerScript : MonoBehaviour
         CheckIfCharacterIsDead();
         void setVariables()
         {
-            characterName = CharacterDataSO.name;
+            characterName = CharacterDataSO.characterName;
             isPlayerCharacter = CharacterDataSO.isPlayerCharacter;
             health = CharacterDataSO.health;
-            AttackDamage = CharacterDataSO.attackDamage;
+            attackDamage = CharacterDataSO.attackDamage;
             speedValue = CharacterDataSO.speedValue;
             rangeOfVision = CharacterDataSO.rangeOfVision;
 
@@ -78,6 +79,24 @@ public class CharacterControllerScript : MonoBehaviour
                 return thisDir;
             }
         }
+    }
+    void ReplaceCharacterData()
+    {
+        //thisTurnManager.le
+    }
+    CharacterData generateCharacterDataFromCurrentCharacter()
+    {
+        CharacterData characterData = new CharacterData();
+        characterData.InstanceID = CharacterDataSO.InstanceID;
+        characterData.characterName = characterName;
+        characterData.isPlayerCharacter = isPlayerCharacter;
+        characterData.health = health;
+        characterData.attackDamage = attackDamage;
+        characterData.speedValue = speedValue;
+        characterData.rangeOfVision = rangeOfVision;
+        characterData.canWalkOn = CharacterDataSO.canWalkOn;
+        characterData.listOfAbility = GlobalCal.createCopyListUsingConstructor(abilityList);
+        return characterData;
     }
     public Dictionary<AbilityName, Ability> AbilityNameToAbilityDataDIR;
     public List<AbilityName> CharacterMoveList;

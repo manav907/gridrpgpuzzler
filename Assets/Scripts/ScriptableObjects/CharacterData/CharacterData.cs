@@ -30,6 +30,7 @@ public class CharacterData : ScriptableObject
         InstanceID = characterData.InstanceID;
         characterName = characterData.characterName;
         NameEnum = characterData.NameEnum;
+        isPlayerCharacter = characterData.isPlayerCharacter;
         health = characterData.health;
         attackDamage = characterData.attackDamage;
         speedValue = characterData.speedValue;
