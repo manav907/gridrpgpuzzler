@@ -35,6 +35,71 @@ public class MapManagerEditor : Editor
         }
     */
 }
+[CustomEditor(typeof(DataManager))]
+public class DataManagerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        GUILayout.Space(10);
+        DataManager dataManager = target as DataManager;
+        var levelDataSO = dataManager.EditLevel;
+        if (levelDataSO.posToCharacterData != null&& Application.isPlaying)
+        {
+            foreach (var pair in levelDataSO.posToCharacterData)
+            {
+                levelDataSO.loadDataifNotLoaded();
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Edit "))
+                {
+                    Selection.activeObject = pair.Value;
+                }
+                GUILayout.Label(pair.Key.ToString());
+                GUILayout.Label(pair.Value.name + pair.Value.InstanceID);
+                if (GUILayout.Button("Remove "))
+                {
+                    levelDataSO.posToCharacterData.Remove(pair.Key);
+                    break;
+                }
+                if (GUILayout.Button("Get Current Data"))
+                {
+                    dataManager.mapManager.cellDataDir[pair.Key].characterAtCell.GetComponent<CharacterControllerScript>().saveCharacterDataToCSO();
+                }
+                GUILayout.EndHorizontal();
+            }
+
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Add To Dictionary"))
+            {
+                levelDataSO.addToDictionary();
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.Label("Manage Level Data File");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("SaveData"))
+            {
+                levelDataSO.SaveData();
+            }
+            if (GUILayout.Button("LoadData"))
+            {
+                levelDataSO.LoadData();
+            }
+            if (GUILayout.Button("Clear Data(no Save)"))
+            {
+                levelDataSO.ClearData();
+            }
+            GUILayout.EndHorizontal();
+            if (GUILayout.Button("tryDiagonose"))
+            {
+                levelDataSO.tryDiagonose();
+            }
+        }
+
+
+    }
+}
+
 [CustomEditor(typeof(LevelDataSO))]
 public class LevelDataSOEditor : Editor
 {
@@ -57,7 +122,7 @@ public class LevelDataSOEditor : Editor
                     Selection.activeObject = pair.Value;
                 }
                 GUILayout.Label(pair.Key.ToString());
-                GUILayout.Label(pair.Value.name);
+                GUILayout.Label(pair.Value.name + pair.Value.InstanceID);
                 if (GUILayout.Button("Remove "))
                 {
                     levelDataSO.posToCharacterData.Remove(pair.Key);

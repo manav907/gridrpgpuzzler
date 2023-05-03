@@ -550,9 +550,6 @@ MonoBehaviour:
     reticalShapes: 0
     requireCharacterBoolEnum: 0
     disregardWalkablity: 0
-  EditMapMode: 0
-  alternateRange: 50
-  checkValidActionTiles: 0
   ValidTargetListDebugInfo: 
 --- !u!114 &732592035
 MonoBehaviour:
@@ -578,9 +575,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e01eff684a788c4e987850a8c348fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EditLevel: {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
+  EditMapMode: 0
+  alternateRange: 25
+  checkValidActionTiles: 0
   listofCAD:
   - {fileID: 11400000, guid: 6c00feb9b63d7ce4ca5e1f722167ea01, type: 2}
   - {fileID: 11400000, guid: 98b87a1ca19e62e45a7607e4971add20, type: 2}
+  mapManager: {fileID: 0}
 --- !u!1 &898572561
 GameObject:
   m_ObjectHideFlags: 0

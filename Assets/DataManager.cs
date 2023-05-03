@@ -29,6 +29,7 @@ public class DataManager : MonoBehaviour
     [Header("Reffences")]
     TurnManager turnManager;
     MoveDictionaryManager moveDictionaryManager;
+    [HideInInspector] public MapManager mapManager;
     void setDictionarty()
     {
         CharNameToData = new Dictionary<CharacterName, CharacterAnimationData>();
@@ -47,6 +48,7 @@ public class DataManager : MonoBehaviour
     {
         turnManager = GetComponent<TurnManager>();
         moveDictionaryManager = GetComponent<MoveDictionaryManager>();
+        mapManager = GetComponent<MapManager>();
         EditLevel = turnManager.loadThisLevel;
 
         setDictionarty();

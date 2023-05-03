@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5222714fd87614146a8cf0525881ae67, type: 3}
   m_Name: Town
   m_EditorClassIdentifier: 
-  CheckAtPos: {x: 71, y: -7, z: 0}
+  CheckAtPos: {x: 4, y: 1, z: 0}
   importThisCharData: {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}

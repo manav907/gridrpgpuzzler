@@ -83,23 +83,16 @@ public class CharacterControllerScript : MonoBehaviour
             }
         }
     }
-    void ReplaceCharacterData()
+    public void saveCharacterDataToCSO()
     {
-        //thisTurnManager.le
-    }
-    CharacterData generateCharacterDataFromCurrentCharacter()
-    {
-        CharacterData characterData = new CharacterData();
-        characterData.InstanceID = CharacterDataSO.InstanceID;
-        characterData.characterName = characterName;
-        characterData.isPlayerCharacter = isPlayerCharacter;
-        characterData.health = health;
-        characterData.attackDamage = attackDamage;
-        characterData.speedValue = speedValue;
-        characterData.rangeOfVision = rangeOfVision;
-        characterData.canWalkOn = CharacterDataSO.canWalkOn;
-        characterData.listOfAbility = GlobalCal.createCopyListUsingConstructor(abilityList);
-        return characterData;
+        CharacterDataSO.characterName = characterName;
+        CharacterDataSO.isPlayerCharacter = isPlayerCharacter;
+        CharacterDataSO.health = health;
+        CharacterDataSO.attackDamage = attackDamage;
+        CharacterDataSO.speedValue = speedValue;
+        CharacterDataSO.rangeOfVision = rangeOfVision;
+        CharacterDataSO.canWalkOn = canWalkOn;
+        CharacterDataSO.listOfAbility = GlobalCal.createCopyListUsingConstructor(abilityList);
     }
     public Dictionary<AbilityName, Ability> AbilityNameToAbilityDataDIR;
     public List<AbilityName> CharacterMoveList;
