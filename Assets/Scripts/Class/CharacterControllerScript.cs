@@ -8,12 +8,13 @@ using UnityEditor.Animations;
 public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
-    [SerializeField]
+
+    [HideInInspector]
     public bool controlCharacter
     {
         get
         {
-            if (moveDictionaryManager.EditMapMode == false)
+            if (dataManager.EditMapMode == false)
                 return isPlayerCharacter;
             return true;
         }
@@ -30,6 +31,7 @@ public class CharacterControllerScript : MonoBehaviour
     private ButtonManager thisButtonManager;
     private MapManager thisMapManager;
     private TurnManager thisTurnManager;
+    DataManager dataManager;
     UniversalCalculator universalCalculator;
     [SerializeField] List<Ability> abilityList;
 
@@ -39,6 +41,7 @@ public class CharacterControllerScript : MonoBehaviour
         thisMapManager = gameController.GetComponent<MapManager>();
         thisTurnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
+        dataManager = gameController.GetComponent<DataManager>();
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
         //Initilizing
         setVariables();

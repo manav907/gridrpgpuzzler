@@ -63,7 +63,7 @@ public class LevelDataSOEditor : Editor
                     levelDataSO.posToCharacterData.Remove(pair.Key);
                     break;
                 }
-                if (GUILayout.Button("Try Change Pos"))
+                /* if (GUILayout.Button("Try Change Pos"))
                 {
                     if (levelDataSO.posToCharacterData.ContainsKey(levelDataSO.CheckAtPos))
                     {
@@ -75,7 +75,7 @@ public class LevelDataSOEditor : Editor
                         levelDataSO.posToCharacterData.Add(levelDataSO.CheckAtPos, pair.Value);
                         break;
                     }
-                }
+                } */
                 GUILayout.EndHorizontal();
             }
         }

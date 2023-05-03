@@ -22,12 +22,13 @@ public class TurnManager : MonoBehaviour
     ReticalManager reticalManager;
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
+    DataManager dataManager;
     [SerializeField] basicCameraController basicCameraController;
     [Header("Character Prefab Data to Instanstace Characters")]
     [SerializeField] GameObject characterPrefab;
     [SerializeField] GameObject characterHolder;
     [Header("Level Data")]
-    [SerializeField] LevelDataSO loadThisLevel;
+    public LevelDataSO loadThisLevel;
     [SerializeField] List<CharacterData> listOfCD;
     [Header("List of Active Characters")]
     public List<GameObject> ListOfInteractableCharacters;
@@ -45,10 +46,12 @@ public class TurnManager : MonoBehaviour
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
+        dataManager = GetComponent<DataManager>();
         gameController = this.gameObject;
 
 
         buttonManager.setVariables();
+        dataManager.setVariables();
         mapManager.setVariables();
         moveDictionaryManager.setVariables();
         reticalManager.setVariables();

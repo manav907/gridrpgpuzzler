@@ -10,6 +10,7 @@ public class MoveDictionaryManager : MonoBehaviour
     TurnManager turnManager;
     ReticalManager reticalManager;
     MapManager mapManager;
+    DataManager dataManager;
     UniversalCalculator universalCalculator;
     ButtonManager buttonManager;
     [Header("Read Only Data")]
@@ -22,10 +23,11 @@ public class MoveDictionaryManager : MonoBehaviour
     [Header("Current Ablity")]
     [SerializeField] Ability currentAblity;
     [Header("Debug Data")]
-    public bool EditMapMode;
-    [SerializeField] int alternateRange = 50;
-    [SerializeField] bool checkValidActionTiles = false;
-    [TextArea][SerializeField] string ValidTargetListDebugInfo;
+    [SerializeField][TextArea] string ValidTargetListDebugInfo;
+    bool EditMapMode { get { return dataManager.EditMapMode; } }
+    int alternateRange { get { return dataManager.alternateRange; } }
+    bool checkValidActionTiles { get { return dataManager.checkValidActionTiles; } }
+
     bool ShouldContinue;
     public void setVariables()
     {
@@ -34,6 +36,7 @@ public class MoveDictionaryManager : MonoBehaviour
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
         buttonManager = this.GetComponent<ButtonManager>();
+        dataManager = GetComponent<DataManager>();
         SetMoveDictionary();
     }
 
@@ -111,8 +114,7 @@ public class MoveDictionaryManager : MonoBehaviour
         void simpleMoveAction()
         {
             Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
-            mapManager.cellDataDir[currentPosition].characterAtCell = null;
-            mapManager.cellDataDir[tryHere].characterAtCell = thisCharacter;
+            mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
             var ListOfMovePoints = new List<Vector3Int>();
             ListOfMovePoints.Add(tryHere);
             StartCoroutine(MoveCharacterBetweenPoints(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed));
@@ -247,12 +249,7 @@ public class MoveDictionaryManager : MonoBehaviour
             else if (listOfValidtargets.Count == 0)
             {
                 Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
-                if (checkValidActionTiles == false)
-                {
-                    checkValidActionTiles = true;
-                    getValidTargetList(ability);
-                    checkValidActionTiles = false;
-                }
+                getValidTargetList(ability);
                 return false;
             }
             else

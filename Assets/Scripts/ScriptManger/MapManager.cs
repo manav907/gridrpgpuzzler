@@ -10,9 +10,11 @@ public class MapManager : MonoBehaviour
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
     UniversalCalculator universalCalculator;
+    TurnManager turnManager;
     public void setVariables()
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
+        turnManager = GetComponent<TurnManager>();
         setTilesDir();
         setCellData();
     }
@@ -25,7 +27,7 @@ public class MapManager : MonoBehaviour
                 dataFromTiles.Add(tileFound, ScriptableObjects);
             }
     }
-    
+
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, CharacterControllerScript characterDataHolder)
     {
         //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
@@ -36,6 +38,18 @@ public class MapManager : MonoBehaviour
             if (!characterDataHolder.canWalkOn.Contains(groundFloorType))
                 return false;
         return true;
+    }
+    public void UpdateCharacterPosistion(Vector3Int oldPos, Vector3Int newPos, GameObject character)
+    {
+        cellDataDir[oldPos].characterAtCell = null;
+        cellDataDir[newPos].characterAtCell = character;
+        if (turnManager.loadThisLevel.posToCharacterData.ContainsKey(newPos))
+        {
+            Debug.Log(turnManager.loadThisLevel.posToCharacterData[newPos].name + " was removed forcefully as it might have died dont save if you dont know why this happned");
+            turnManager.loadThisLevel.posToCharacterData.Remove(newPos);
+        }
+        turnManager.loadThisLevel.posToCharacterData.Add(newPos, turnManager.loadThisLevel.posToCharacterData[oldPos]);
+        turnManager.loadThisLevel.posToCharacterData.Remove(oldPos);
     }
     public bool checkAtPosIfAnotherCharacterIsOccupyingSpace(Vector3Int pos)
     {
