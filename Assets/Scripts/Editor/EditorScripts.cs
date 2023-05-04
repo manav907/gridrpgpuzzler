@@ -4,48 +4,21 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-[CustomEditor(typeof(MapManager))]
-public class MapManagerEditor : Editor
-{
-    private MapManager mapManager;
 
-    private void OnEnable()
-    {
-        mapManager = target as MapManager;
-    }
-    /*
-        public override void OnInspectorGUI()
-        {
-            DrawDefaultInspector();
-
-            GUILayout.Space(10);
-
-            if (mapManager.PositionToGameObject != null)
-            {
-                EditorGUILayout.LabelField("Position To GameObject Dictionary:");
-                foreach (var pair in mapManager.PositionToGameObject)
-                {
-                    //EditorGUILayout.LabelField($"Key: {pair.Key}, Value: {pair.Value.name}");
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(pair.Key.ToString());
-                    GUILayout.Label(pair.Value.name);
-                    GUILayout.EndHorizontal();
-                }
-            }
-        }
-    */
-}
 [CustomEditor(typeof(DataManager))]
 public class DataManagerEditor : Editor
 {
+    Vector3Int checkAtPos;
+    CharacterData characterData;
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
         GUILayout.Space(10);
         DataManager dataManager = target as DataManager;
         var levelDataSO = dataManager.EditLevel;
-        if (levelDataSO.posToCharacterData != null&& Application.isPlaying)
+        if (levelDataSO.posToCharacterData != null && Application.isPlaying)
         {
+            EditorGUILayout.LabelField("Position To Character Data Dictionary:");
             foreach (var pair in levelDataSO.posToCharacterData)
             {
                 levelDataSO.loadDataifNotLoaded();
@@ -69,12 +42,20 @@ public class DataManagerEditor : Editor
             }
 
 
+            EditorGUILayout.LabelField("ADD Data?:");
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Add To Dictionary"))
-            {
-                levelDataSO.addToDictionary();
-            }
+            checkAtPos = EditorGUILayout.Vector3IntField(GUIContent.none, checkAtPos);
+            characterData = (CharacterData)EditorGUILayout.ObjectField(GUIContent.none, characterData, typeof(CharacterData), false);
             GUILayout.EndHorizontal();
+            if (GUILayout.Button("Try Add This Data To Dictionary"))
+            {
+                if (levelDataSO.posToCharacterData.ContainsKey(checkAtPos) || characterData == null)
+                {
+                    Debug.Log("Cannot Add Key as \n" + checkAtPos + characterData);
+                    return;
+                }
+                levelDataSO.posToCharacterData.Add(checkAtPos, characterData);
+            }
             GUILayout.Label("Manage Level Data File");
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("SaveData"))
@@ -128,19 +109,6 @@ public class LevelDataSOEditor : Editor
                     levelDataSO.posToCharacterData.Remove(pair.Key);
                     break;
                 }
-                /* if (GUILayout.Button("Try Change Pos"))
-                {
-                    if (levelDataSO.posToCharacterData.ContainsKey(levelDataSO.CheckAtPos))
-                    {
-                        Debug.Log("The new Posisiton is alredy in dictonary cannot update posistion of this character");
-                    }
-                    else
-                    {
-                        levelDataSO.posToCharacterData.Remove(pair.Key);
-                        levelDataSO.posToCharacterData.Add(levelDataSO.CheckAtPos, pair.Value);
-                        break;
-                    }
-                } */
                 GUILayout.EndHorizontal();
             }
         }
