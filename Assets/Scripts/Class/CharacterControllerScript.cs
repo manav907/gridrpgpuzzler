@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
 
 
 public class CharacterControllerScript : MonoBehaviour
@@ -63,10 +62,10 @@ public class CharacterControllerScript : MonoBehaviour
             //Setting Specific Name
             this.name = characterName + " " + CharacterDataSO.InstanceID;
             //creating Override
-            AnimatorController originalController = animator.runtimeAnimatorController as AnimatorController;
+
             //doingAnimController
             var SO = gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum);
-            animator.runtimeAnimatorController = SO.GetanimatorOverrideController(originalController);
+            animator.runtimeAnimatorController = SO.GeneratedAnimatorOverrideController;
             //Setting Sprite Stuff
             //Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
             spriteHolder.position = new Vector3(spriteHolder.position.x, spriteHolder.position.y + SO.spriteOffsetY, spriteHolder.position.z);
@@ -218,6 +217,7 @@ public class CharacterControllerScript : MonoBehaviour
     [SerializeField] Transform spriteHolder;
     public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
     {
+        //Debug.Log(animator.)
         if (isCharacterTurn)
             animator.SetTrigger("Walk");
         else
