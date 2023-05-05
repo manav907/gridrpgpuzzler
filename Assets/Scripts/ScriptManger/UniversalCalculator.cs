@@ -304,8 +304,6 @@ public static class GlobalCal
 
     }
 
-    public static string persistantDataPath = Application.dataPath + "/SaveData/LevelData";
-
 }
 
 public static class HUDStuff

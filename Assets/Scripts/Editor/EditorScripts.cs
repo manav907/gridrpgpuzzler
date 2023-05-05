@@ -193,9 +193,8 @@ public class CharacterAnimationDataEditor : Editor
         }
         if (GUILayout.Button("Genereate Animation"))
         {
-            AssetDatabase.CreateAsset(GetanimatorOverrideController(), "Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/" + characterAnimationData.nameEnum.ToString() + ".overrideController");
+            AssetDatabase.CreateAsset(GetanimatorOverrideController(), "Assets/Resources/AnimationClips/" + characterAnimationData.nameEnum.ToString() + ".overrideController");
             AssetDatabase.SaveAssets();
-            characterAnimationData.GeneratedAnimatorOverrideController = AssetDatabase.LoadAssetAtPath<AnimatorOverrideController>("Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/" + characterAnimationData.nameEnum.ToString() + ".overrideController");
             AnimatorOverrideController GetanimatorOverrideController()
             {
                 string sourceAnimatorControllerPath = "Assets/Prefabs/Character.prefab";
@@ -238,7 +237,7 @@ public class CharacterAnimationDataEditor : Editor
                     {
                         if (SaveYN)
                         {
-                            AssetDatabase.CreateAsset(animationClip, "Assets/Scripts/ScriptableObjects/CharacterData/AnimationClips/" + animationClip.name + ".anim");
+                            AssetDatabase.CreateAsset(animationClip, "Assets/Resources/AnimationClips/" + animationClip.name + ".anim");
                             AssetDatabase.SaveAssets();
                         }
                     }

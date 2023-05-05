@@ -22,3 +22,4 @@ MonoBehaviour:
   Idle:
   - {fileID: -397161805, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
   - {fileID: -1601712476, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
+  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 401b28f0e09db5e4d8ca3c3d97add01d, type: 2}

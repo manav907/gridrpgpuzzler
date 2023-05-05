@@ -36,15 +36,18 @@ public class LevelDataSO : ScriptableObject
     public void SaveData()
     {
         string json = JsonConvert.SerializeObject(posToCharacterData, settings);
-        File.WriteAllText(GlobalCal.persistantDataPath + "/levelData.json", json);
+        string path = "Assets/Resources/levelData.json"; // the path of the asset relative to the Resources folder
+        File.WriteAllText(path, json);
+        UnityEditor.AssetDatabase.Refresh();
     }
 
     public void LoadData()
     {
 
-        if (File.Exists(GlobalCal.persistantDataPath + "/levelData.json"))
+        var asset = Resources.Load<TextAsset>("/levelData.json");
+        if (asset != null)
         {
-            string json = File.ReadAllText(GlobalCal.persistantDataPath + "/levelData.json");
+            string json = asset.text;
             var data = JsonConvert.DeserializeObject<Dictionary<Vector3Int, CharacterData>>(json, settings);
             posToCharacterData = data;
         }
