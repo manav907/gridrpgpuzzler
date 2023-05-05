@@ -51,11 +51,11 @@ MonoBehaviour:
   isPlayerCharacter: 1
   checkAI: 0
   health: 3
-  AttackDamage: 2
+  attackDamage: 0
   speedValue: 3
   rangeOfVision: 5
   canWalkOn: 
-  thisCharacterData: {fileID: 0}
+  CharacterDataSO: {fileID: 0}
   Heatlh: {fileID: 1664907520338834495}
   abilityList: []
   CharacterMoveList: 0000000004000000
