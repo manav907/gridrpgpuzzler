@@ -246,7 +246,7 @@ public class UniversalCalculator : MonoBehaviour
         return CompareToList;
     }
     //
-    public void MoveTransFromBetweenPoint(Transform transform, List<Vector3> movePoints, float moveTime)
+    public void MoveTransFromBetweenPoint(Transform transform, List<Vector3> movePoints, float moveTime, bool clearValidTiles = true)
     {
         StartCoroutine(MoveCoRoutine());
         IEnumerator MoveCoRoutine()
@@ -268,7 +268,8 @@ public class UniversalCalculator : MonoBehaviour
                 }
             }
             //Debug.Log(debugLine);
-            reticalManager.reDrawValidTiles(null);
+            if (clearValidTiles)
+                reticalManager.reDrawValidTiles(null);
             reticalManager.reDrawShadows();
             transform.position = movePoints.Last();
         }

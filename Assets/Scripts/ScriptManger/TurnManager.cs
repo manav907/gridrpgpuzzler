@@ -81,20 +81,12 @@ public class TurnManager : MonoBehaviour
     public void beginTurnIfPossible()
     {
         var shadowrange = reticalManager.reDrawShadows();
-        if (noCharactersInCamera(shadowrange))
+        if (noPlayerCharacterRemaining())
             triggerGameEnd();
         else
         {
             setCharacterData();
-            if (shadowrange.Contains(thisCharacterData.getCharV3Int()))
-            {
-                thisCharacterData.BeginThisCharacterTurn();
-            }
-            else
-            {
-                Debug.Log("Turn Skiped");
-                endTurn();
-            }
+            thisCharacterData.BeginThisCharacterTurn();
         }
         void triggerGameEnd()
         {
@@ -107,25 +99,21 @@ public class TurnManager : MonoBehaviour
             thisCharacterData = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
             moveDictionaryManager.getThisCharacterData();
         }
+        bool noPlayerCharacterRemaining()
+        {
+            foreach (GameObject character in ListOfInteractableCharacters)
+            {
+                if (character.GetComponent<CharacterControllerScript>().isPlayerCharacter)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
     public void setCameraPos(Vector3Int pos)
     {
         basicCameraController.setCameraPos(pos);
-    }
-    bool noCharactersInCamera(List<Vector3Int> thislist)
-    {
-        int numberofcharactershere = 0;
-        foreach (GameObject thischar in OrderOfInteractableCharacters)
-        {
-            if (thislist.Contains(universalCalculator.convertToVector3Int(thischar.transform.position)))
-            {
-                numberofcharactershere++;
-            }
-        }
-        if (numberofcharactershere == 0)
-            return true;
-        else
-            return false;
     }
     public void endTurn()
     {

@@ -140,7 +140,7 @@ public class MoveDictionaryManager : MonoBehaviour
             foreach (Vector3Int point in aoeTargeted)
             {
                 if (mapManager.cellDataDir.ContainsKey(point))
-                    if (mapManager.cellDataDir[point].isCellHoldingCharacer())
+                    if (mapManager.isCellHoldingCharacer(point))
                     {
                         tryHere = point;
                         simpleAttackAction();
@@ -245,7 +245,8 @@ public class MoveDictionaryManager : MonoBehaviour
         Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
-        listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
+        if (!ability.disregardWalkablity)
+            listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
         listOfRanges.Remove(centerPos);
         ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
@@ -253,7 +254,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             //Normal Checks         
             bool hasWalkability = ability.disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
-            bool requireCharacterCondition = GlobalCal.compareBool(mapManager.cellDataDir[listOfRanges[i]].isCellHoldingCharacer(), ability.requireCharacterBoolEnum);
+            bool requireCharacterCondition = GlobalCal.compareBool(mapManager.isCellHoldingCharacer(listOfRanges[i]), ability.requireCharacterBoolEnum);
             if (hasWalkability && requireCharacterCondition)
             {/*Do Nothing since all conditions are fine*/}
             else

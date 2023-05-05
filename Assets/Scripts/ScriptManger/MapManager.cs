@@ -51,7 +51,7 @@ public class MapManager : MonoBehaviour
         turnManager.loadThisLevel.posToCharacterData.Add(newPos, turnManager.loadThisLevel.posToCharacterData[oldPos]);
         turnManager.loadThisLevel.posToCharacterData.Remove(oldPos);
     }
-    public bool checkAtPosIfAnotherCharacterIsOccupyingSpace(Vector3Int pos)
+    public bool isCellHoldingCharacer(Vector3Int pos)
     {
         if (cellDataDir.ContainsKey(pos))
         {
@@ -60,7 +60,7 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Cell Data Dir at " + pos + " was not in Dictionary");
+            //Debug.Log("Cell Data Dir at " + pos + " was not in Dictionary");
         }
         return false;
     }
@@ -155,12 +155,6 @@ public class MapManager : MonoBehaviour
             //universalCalculator.DebugEachItemInList(tileDatas);
         }
         public GameObject characterAtCell;
-        public bool isCellHoldingCharacer()
-        {
-            if (characterAtCell == null)
-                return false;
-            return true;
-        }
     }
 }
 //Defining Global NameSapce
