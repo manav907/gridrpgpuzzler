@@ -161,7 +161,8 @@ public class CharacterControllerScript : MonoBehaviour
         var attackRangeList = moveDictionaryManager.getValidTargetList(AbilityNameToAbilityDataDIR[AbilityName.Attack]);
         if (targetList.Count == 0)
         {
-            Debug.Log("Ideling");
+            if (checkAI)
+                Debug.Log("Ideling");
             moveDictionaryManager.doAction(AbilityName.EndTurn);
             return;
         }

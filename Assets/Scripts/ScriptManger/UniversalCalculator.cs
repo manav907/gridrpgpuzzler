@@ -270,7 +270,7 @@ public class UniversalCalculator : MonoBehaviour
             //Debug.Log(debugLine);
             if (clearValidTiles)
                 reticalManager.reDrawValidTiles(null);
-            reticalManager.reDrawShadows();
+            //reticalManager.reDrawShadows();
             transform.position = movePoints.Last();
         }
     }
