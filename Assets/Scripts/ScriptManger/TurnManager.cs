@@ -23,7 +23,7 @@ public class TurnManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
     DataManager dataManager;
-    [SerializeField] basicCameraController basicCameraController;
+    [SerializeField] BasicCameraController basicCameraController;
     [Header("Character Prefab Data to Instanstace Characters")]
     [SerializeField] GameObject characterPrefab;
     [SerializeField] GameObject characterHolder;
@@ -47,6 +47,7 @@ public class TurnManager : MonoBehaviour
         reticalManager = this.GetComponent<ReticalManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
         dataManager = GetComponent<DataManager>();
+
         gameController = this.gameObject;
 
 
@@ -55,6 +56,7 @@ public class TurnManager : MonoBehaviour
         mapManager.setVariables();
         moveDictionaryManager.setVariables();
         reticalManager.setVariables();
+        universalCalculator.setVariables();
         basicCameraController.setVariables(gameController);
     }
     void InstantiateallIntractableCharacters()
@@ -105,6 +107,10 @@ public class TurnManager : MonoBehaviour
             thisCharacterData = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
             moveDictionaryManager.getThisCharacterData();
         }
+    }
+    public void setCameraPos(Vector3Int pos)
+    {
+        basicCameraController.setCameraPos(pos);
     }
     bool noCharactersInCamera(List<Vector3Int> thislist)
     {

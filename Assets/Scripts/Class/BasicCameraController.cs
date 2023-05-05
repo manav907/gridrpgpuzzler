@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class basicCameraController : MonoBehaviour
+public class BasicCameraController : MonoBehaviour
 {
 
     GameObject thisGameObject;
     MapManager mapManager;
     ReticalManager reticalManager;
+    UniversalCalculator universalCalculator;
+    [SerializeField] float moveTime;
     void Start()
     {
         thisGameObject = this.gameObject;
@@ -16,6 +18,13 @@ public class basicCameraController : MonoBehaviour
     {
         mapManager = gameObject.GetComponent<MapManager>();
         reticalManager = gameObject.GetComponent<ReticalManager>();
+        universalCalculator = gameObject.GetComponent<UniversalCalculator>();
+    }
+    public void setCameraPos(Vector3 pos)
+    {
+        var list = new List<Vector3>();
+        list.Add(new Vector3(pos.x, pos.y, this.transform.position.z));
+        universalCalculator.MoveTransFromBetweenPoint(this.transform, list, moveTime);
     }
     int speedreudce = 10;
     // Update is called once per frame

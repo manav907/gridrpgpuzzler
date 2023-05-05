@@ -28,18 +28,18 @@ public class CharacterControllerScript : MonoBehaviour
     public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
     [SerializeField] private TextMesh Heatlh;
-    private ButtonManager thisButtonManager;
-    private MapManager thisMapManager;
-    private TurnManager thisTurnManager;
+    private ButtonManager buttonManager;
+    private MapManager mapManager;
+    private TurnManager turnManager;
     DataManager dataManager;
     UniversalCalculator universalCalculator;
     [SerializeField] List<Ability> abilityList;
 
     public void InitilizeCharacter(GameObject gameController)
     {
-        thisButtonManager = gameController.GetComponent<ButtonManager>();
-        thisMapManager = gameController.GetComponent<MapManager>();
-        thisTurnManager = gameController.GetComponent<TurnManager>();
+        buttonManager = gameController.GetComponent<ButtonManager>();
+        mapManager = gameController.GetComponent<MapManager>();
+        turnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
         dataManager = gameController.GetComponent<DataManager>();
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
@@ -110,11 +110,11 @@ public class CharacterControllerScript : MonoBehaviour
         void KillCharacter()
         {
             Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
-            thisTurnManager.OrderOfInteractableCharacters.Remove(gameObject);
-            thisTurnManager.ListOfInteractableCharacters.Remove(gameObject);
-            if (thisTurnManager.thisCharacter == this.gameObject)
+            turnManager.OrderOfInteractableCharacters.Remove(gameObject);
+            turnManager.ListOfInteractableCharacters.Remove(gameObject);
+            if (turnManager.thisCharacter == this.gameObject)
             {
-                thisTurnManager.endTurn();
+                turnManager.endTurn();
             }
             Destroy(this.gameObject);
         }
@@ -136,9 +136,12 @@ public class CharacterControllerScript : MonoBehaviour
     {
         ToggleCharacterTurnAnimation(true);
         actionPoints = 1;//Remove This later
-        thisButtonManager.clearButtons();
+        buttonManager.clearButtons();
         if (controlCharacter)
-            thisButtonManager.InstantiateButtons(CharacterMoveList);
+        {
+            buttonManager.InstantiateButtons(CharacterMoveList);
+            turnManager.setCameraPos(getCharV3Int());
+        }
         else
         {
             determineAction();
@@ -180,7 +183,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
         List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
         {
-            var OrderOfInteractableCharacters = thisTurnManager.OrderOfInteractableCharacters;
+            var OrderOfInteractableCharacters = turnManager.OrderOfInteractableCharacters;
             List<Vector3Int> thisList = new List<Vector3Int>();
             foreach (GameObject character in OrderOfInteractableCharacters)
             {

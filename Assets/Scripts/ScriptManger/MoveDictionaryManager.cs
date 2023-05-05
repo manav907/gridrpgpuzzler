@@ -115,9 +115,9 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
-            var ListOfMovePoints = new List<Vector3Int>();
+            var ListOfMovePoints = new List<Vector3>();
             ListOfMovePoints.Add(tryHere);
-            StartCoroutine(MoveCharacterBetweenPoints(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed));
+            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
             //thisCharacter.transform.position = tryHere;
         }
         void simpleAttackAction()
@@ -126,10 +126,10 @@ public class MoveDictionaryManager : MonoBehaviour
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
             targetCharacter.health -= attackingCharacter.attackDamage;
             checkCharacters(targetCharacter);
-            var ListOfMovePoints = new List<Vector3Int>();
+            var ListOfMovePoints = new List<Vector3>();
             ListOfMovePoints.Add(tryHere);
             ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
-            StartCoroutine(MoveCharacterBetweenPoints(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed));
+            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
         }
         void simpleAoeAttackAction()
         {
@@ -150,29 +150,6 @@ public class MoveDictionaryManager : MonoBehaviour
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
             targetCharacter.CheckIfCharacterIsDead();
-        }
-        IEnumerator MoveCharacterBetweenPoints(Transform character, List<Vector3Int> movePoints, float moveTime)
-        {
-            string debugLine = "";
-            yield return new WaitForSeconds(0.2f);
-            foreach (Vector3Int movePoint in movePoints)
-            {
-                float elapsedTime = 0;
-                Vector3 startingPosition = character.position;
-                debugLine = ("Character Started at " + startingPosition + " and Will Move to " + movePoint + " and it will take time of " + moveTime) + ":\n";
-                while (elapsedTime < moveTime)
-                {
-                    yield return null;
-                    elapsedTime += Time.deltaTime;
-                    float percentageMoved = Mathf.Clamp01(elapsedTime / moveTime);
-                    character.position = Vector3.Lerp(startingPosition, movePoint, percentageMoved);
-                    debugLine += "ElapsedTime " + elapsedTime + " and Current Position" + character.position + " At the End\n";
-                }
-            }
-            //Debug.Log(debugLine);
-            reticalManager.reDrawValidTiles(null);
-            reticalManager.reDrawShadows();
-            character.position = movePoints.Last();
         }
     }
     public void doAction(AbilityName abilityName)
