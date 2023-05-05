@@ -38,13 +38,11 @@ public class LevelDataSO : ScriptableObject
         string json = JsonConvert.SerializeObject(posToCharacterData, settings);
         string path = "Assets/Resources/levelData.json"; // the path of the asset relative to the Resources folder
         File.WriteAllText(path, json);
-        UnityEditor.AssetDatabase.Refresh();
     }
 
     public void LoadData()
     {
-
-        var asset = Resources.Load<TextAsset>("/levelData.json");
+        var asset = Resources.Load<TextAsset>("levelData");
         if (asset != null)
         {
             string json = asset.text;
