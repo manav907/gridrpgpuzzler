@@ -12,10 +12,10 @@ public class LevelDataEditor : Editor
         GUILayout.Space(10);
         LevelDataSO levelDataSO = target as LevelDataSO;
 
-        levelDataSO.loadDataifNotLoaded();
+
         if (levelDataSO.posToCharacterData != null)
         {
-            
+            levelDataSO.loadDataifNotLoaded();
             EditorGUILayout.LabelField("Position To GameObject Dictionary:");
             foreach (var pair in levelDataSO.posToCharacterData)
             {
