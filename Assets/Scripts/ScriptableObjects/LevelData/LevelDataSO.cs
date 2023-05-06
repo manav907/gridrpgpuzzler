@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System;
@@ -33,13 +34,31 @@ public class LevelDataSO : ScriptableObject
             new DictionaryConverterV3IntCharacterData()
         }
     };
+#if UNITY_EDITOR
     public void SaveData()
     {
         string json = JsonConvert.SerializeObject(posToCharacterData, settings);
-        string path = "Assets/Resources/levelData.json"; // the path of the asset relative to the Resources folder
-        File.WriteAllText(path, json);
+        string path = "levelData"; // the name of the asset relative to the Resources folder
+        TextAsset existingAsset = Resources.Load<TextAsset>(path);
+        if (existingAsset != null)
+        {
+            // update existing asset
+            StreamWriter writer = new StreamWriter(Application.dataPath + "/Resources/" + path + ".json", false);
+            writer.Write(json);
+            writer.Close();
+            AssetDatabase.Refresh();
+        }
+        else
+        {
+            Debug.Log("New File Created");
+            // create new asset
+            StreamWriter writer = new StreamWriter(Application.dataPath + "/Resources/" + path + ".json", false);
+            writer.Write(json);
+            writer.Close();
+            AssetDatabase.Refresh();
+        }
     }
-
+#endif
     public void LoadData()
     {
         var asset = Resources.Load<TextAsset>("levelData");
