@@ -51,6 +51,10 @@ public class MapManager : MonoBehaviour
         turnManager.loadThisLevel.posToCharacterData.Add(newPos, turnManager.loadThisLevel.posToCharacterData[oldPos]);
         turnManager.loadThisLevel.posToCharacterData.Remove(oldPos);
     }
+    public void KillCharacter(Vector3Int newPos)
+    {
+        cellDataDir[newPos].characterAtCell = null;
+    }
     public bool isCellHoldingCharacer(Vector3Int pos)
     {
         if (cellDataDir.ContainsKey(pos))
@@ -98,6 +102,8 @@ public class MapManager : MonoBehaviour
         //Declaring Objects From Game Controller
         List<Tilemap> OrderOfTileMaps;
         Dictionary<TileBase, TileData> dataFromTiles;
+        //Characters
+        public GameObject characterAtCell;
         //Constructer For Initilizing CellData
         public CellData(GameObject gameController, Vector3Int pos)
         {
@@ -154,7 +160,7 @@ public class MapManager : MonoBehaviour
             //universalCalculator.DebugEachItemInList(tilesOnCell);
             //universalCalculator.DebugEachItemInList(tileDatas);
         }
-        public GameObject characterAtCell;
+
     }
 }
 //Defining Global NameSapce

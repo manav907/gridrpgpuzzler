@@ -80,7 +80,7 @@ public class TurnManager : MonoBehaviour
     }
     public void beginTurnIfPossible()
     {
-        var shadowrange = reticalManager.reDrawShadows();
+       ///reticalManager.reDrawShadows();
         if (noPlayerCharacterRemaining())
             triggerGameEnd();
         else
@@ -131,7 +131,7 @@ public class TurnManager : MonoBehaviour
     }
     void recalculateOrder()
     {
-        var shadowrange = reticalManager.reDrawShadows();
+        //reticalManager.reDrawShadows();
         OrderOfInteractableCharacters = SortBySpeed(ListOfInteractableCharacters);
 
         List<GameObject> SortBySpeed(List<GameObject> thisList)

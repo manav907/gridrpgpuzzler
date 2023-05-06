@@ -111,7 +111,7 @@ public class CharacterControllerScript : MonoBehaviour
             Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
             turnManager.ListOfInteractableCharacters.Remove(gameObject);
-            mapManager.cellDataDir.Remove(getCharV3Int());
+            mapManager.KillCharacter(getCharV3Int());
             if (turnManager.thisCharacter == this.gameObject)
             {
                 turnManager.endTurn();

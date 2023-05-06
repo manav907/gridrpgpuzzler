@@ -129,7 +129,7 @@ public class ReticalManager : MonoBehaviour
         downright = downright + downrightoffset;
         //generating ranges
         List<Vector3Int> shadowRange = universalCalculator.generateRangeFrom2Vectors(topleft, downright);
-        //reDrawTiles(shadowRange, shadowTilemap, shadowTilePrefab);
+        reDrawTiles(shadowRange, shadowTilemap, shadowTilePrefab);
         var OrderOfInteractableCharacters = this.gameObject.GetComponent<TurnManager>().OrderOfInteractableCharacters;
         foreach (GameObject thisChar in OrderOfInteractableCharacters)
         {

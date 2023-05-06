@@ -201,7 +201,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
         }
         reticalManager.reDrawValidTiles(null);
-        reticalManager.reDrawShadows();
+        //reticalManager.reDrawShadows();
         //Methods
         bool CheckContinue()
         {
