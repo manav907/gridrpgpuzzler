@@ -246,7 +246,7 @@ public class UniversalCalculator : MonoBehaviour
         return CompareToList;
     }
     //
-    public void MoveTransFromBetweenPoint(Transform transform, List<Vector3> movePoints, float moveTime, bool clearValidTiles = true)
+    public void MoveTransFromBetweenPoint(Transform transform, List<Vector3> movePoints, float moveTime)
     {
         StartCoroutine(MoveCoRoutine());
         IEnumerator MoveCoRoutine()
@@ -261,16 +261,16 @@ public class UniversalCalculator : MonoBehaviour
                 while (elapsedTime < moveTime)
                 {
                     yield return null;
+                    //yield return new WaitForFixedUpdate();//This makes stuff very laggy
                     elapsedTime += Time.deltaTime;
                     float percentageMoved = Mathf.Clamp01(elapsedTime / moveTime);
                     transform.position = Vector3.Lerp(startingPosition, movePoint, percentageMoved);
                     debugLine += "ElapsedTime " + elapsedTime + " and Current Position" + transform.position + " At the End\n";
+
                 }
+                reticalManager.reDrawShadows();
             }
             //Debug.Log(debugLine);
-            if (clearValidTiles)
-                reticalManager.reDrawValidTiles(null);
-            //reticalManager.reDrawShadows();
             transform.position = movePoints.Last();
         }
     }

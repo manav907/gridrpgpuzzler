@@ -188,6 +188,7 @@ public class MoveDictionaryManager : MonoBehaviour
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
             doThisAction();
+
             if (forceNextAbility == AbilityName.EndTurn)
             { doAction(AbilityName.EndTurn); }
             else
@@ -200,7 +201,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 buttonManager.InstantiateButtons(list);
             }
         }
-        reticalManager.reDrawValidTiles(null);
+        reticalManager.reDrawValidTiles();
         //reticalManager.reDrawShadows();
         //Methods
         bool CheckContinue()

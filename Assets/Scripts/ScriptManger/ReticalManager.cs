@@ -31,7 +31,7 @@ public class ReticalManager : MonoBehaviour
     }
     [Header("Valid Tilemap References")]
     [SerializeField] private Tilemap validTilesTileMap;
-    public void reDrawValidTiles(List<Vector3Int> validTilesList)
+    public void reDrawValidTiles(List<Vector3Int> validTilesList = null)
     {
         reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
     }
@@ -65,6 +65,7 @@ public class ReticalManager : MonoBehaviour
             reDrawReticalTiles(generateShape(currentMovePoint));
         }
     }
+    //Retical Stuff
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
@@ -117,8 +118,23 @@ public class ReticalManager : MonoBehaviour
             }
         }
     }
+    //Tile Stuff
+    void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles
+    {
+        //foreach (Vector3Int pos in range) { thistilemap.SetTile(pos, thistile); }
+        TileBase[] tileArray = new TileBase[range.Count];
+        Array.Fill(tileArray, thistile);
+        thistilemap.SetTiles(range.ToArray(), tileArray);
+    }
+    void ClearAllTiles(Tilemap thistilemap)
+    {
+        thistilemap.ClearAllTiles();
+    }
+    //Shadow Stuff
+    public bool DrawShadows = false;
     public List<Vector3Int> reDrawShadows()
     {
+
         //getting edges of camera
         var topleft = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         var downright = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
@@ -129,13 +145,17 @@ public class ReticalManager : MonoBehaviour
         downright = downright + downrightoffset;
         //generating ranges
         List<Vector3Int> shadowRange = universalCalculator.generateRangeFrom2Vectors(topleft, downright);
-        reDrawTiles(shadowRange, shadowTilemap, shadowTilePrefab);
+        if (!DrawShadows)
+        { return null; }
+        //reDrawTiles(shadowRange, shadowTilemap, shadowTilePrefab);
+        SetTiles(shadowRange, shadowTilemap, shadowTilePrefab);
+
         var OrderOfInteractableCharacters = this.gameObject.GetComponent<TurnManager>().OrderOfInteractableCharacters;
         foreach (GameObject thisChar in OrderOfInteractableCharacters)
         {
             CharacterControllerScript thisCDH = thisChar.GetComponent<CharacterControllerScript>();
-            if (thisCDH.controlCharacter == true)
-                SetVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);
+            if (thisCDH.isPlayerCharacter == true)
+                SetVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);//Need to change this otherwise animations break shadows
         }
         return shadowRange;
     }
@@ -150,30 +170,11 @@ public class ReticalManager : MonoBehaviour
     {
         SetTiles(universalCalculator.generateRangeFromPoint(thisPoint, rangeOfAction), shadowTilemap, null);
     }
-    public void reDrawTiles(List<Vector3Int> theseTiles, Tilemap onTileMap, TileBase thisTile)
+    public void reDrawTiles(List<Vector3Int> theseTiles, Tilemap onTileMap, TileBase thisTile)//Needs review
     {
         ClearAllTiles(onTileMap);
         if (theseTiles != null)
-        {
             SetTiles(theseTiles, onTileMap, thisTile);
-            //addtiles
-        }
-        else
-        {
-            ClearAllTiles(onTileMap);
-            //deletetiles
-        }
-    }
-    void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)
-    {
-        foreach (Vector3Int pos in range)
-        {
-            thistilemap.SetTile(pos, thistile);
-        }
-    }
-    void ClearAllTiles(Tilemap thistilemap)
-    {
-        thistilemap.ClearAllTiles();
     }
 }
 public enum ReticalShapes
