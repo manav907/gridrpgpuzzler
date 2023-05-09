@@ -111,7 +111,7 @@ public class TurnManager : MonoBehaviour
             return true;
         }
     }
-    public void setCameraPos(Vector3Int pos)
+    public void setCameraPos(Vector3 pos)
     {
         basicCameraController.setCameraPos(pos);
     }

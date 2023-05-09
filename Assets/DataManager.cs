@@ -42,6 +42,14 @@ public class DataManager : MonoBehaviour
                 CharNameToData.Add(CAD.nameEnum, CAD);
         }
     }
+    public void viewCurrentCharacter()
+    {
+        turnManager.setCameraPos(turnManager.thisCharacter.transform.position);
+    }
+    public void setCameraPos(Vector3Int pos)
+    {
+        turnManager.setCameraPos(pos);
+    }
 
     public void setVariables()
     {

@@ -199,7 +199,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
         Vector3Int selectOptimalTarget()
         {
-            return targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];//Setting Current Target for later use
+            return universalCalculator.SortListAccordingtoDistanceFromPoint(targetList, getCharV3Int())[0];
         }
     }
     public Vector3Int getCharV3Int()

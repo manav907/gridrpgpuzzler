@@ -21,12 +21,12 @@ public class LevelDataEditor : Editor
             {
                 //EditorGUILayout.LabelField($"Key: {pair.Key}, Value: {pair.Value.name}");
                 GUILayout.BeginHorizontal();
-                if (GUILayout.Button("Edit "))
+
+                GUILayout.Label(pair.Key.ToString());
+                if (GUILayout.Button("Edit " + pair.Value.name + pair.Value.InstanceID))
                 {
                     Selection.activeObject = pair.Value;
                 }
-                GUILayout.Label(pair.Key.ToString());
-                GUILayout.Label(pair.Value.name + pair.Value.InstanceID);
                 if (GUILayout.Button("Remove "))
                 {
                     levelDataSO.posToCharacterData.Remove(pair.Key);

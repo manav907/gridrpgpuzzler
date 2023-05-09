@@ -48,7 +48,14 @@ public class MapManager : MonoBehaviour
             Debug.Log(turnManager.loadThisLevel.posToCharacterData[newPos].name + " was removed forcefully as it might have died dont save if you dont know why this happned");
             turnManager.loadThisLevel.posToCharacterData.Remove(newPos);
         }
-        turnManager.loadThisLevel.posToCharacterData.Add(newPos, turnManager.loadThisLevel.posToCharacterData[oldPos]);//this combined with force move causes dictionary issues
+        if (turnManager.loadThisLevel.posToCharacterData.Keys.Contains(oldPos))
+        {
+            turnManager.loadThisLevel.posToCharacterData.Add(newPos, turnManager.loadThisLevel.posToCharacterData[oldPos]);//this combined with force move causes dictionary issues
+        }
+        else
+        {
+            Debug.Log("characters not present at pos" + oldPos + "\n may be an error");
+        }
         turnManager.loadThisLevel.posToCharacterData.Remove(oldPos);
     }
     public void KillCharacter(Vector3Int newPos)

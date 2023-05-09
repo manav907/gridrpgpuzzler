@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 [CustomEditor(typeof(DataManager))]
 public class DataManagerEditor : Editor
@@ -16,17 +20,24 @@ public class DataManagerEditor : Editor
         var levelDataSO = dataManager.EditLevel;
         if (levelDataSO.posToCharacterData != null && Application.isPlaying)
         {
+            if (GUILayout.Button("View Current Character"))
+            {
+                dataManager.viewCurrentCharacter();
+            }
             EditorGUILayout.LabelField("Position To Character Data Dictionary:");
             foreach (var pair in levelDataSO.posToCharacterData)
             {
                 levelDataSO.loadDataifNotLoaded();
                 GUILayout.BeginHorizontal();
-                if (GUILayout.Button("Edit "))
+
+                if (GUILayout.Button(pair.Key.ToString()))
+                {
+                    dataManager.setCameraPos(pair.Key);
+                }
+                if (GUILayout.Button("Edit " + pair.Value.name + pair.Value.InstanceID))
                 {
                     Selection.activeObject = pair.Value;
                 }
-                GUILayout.Label(pair.Key.ToString());
-                GUILayout.Label(pair.Value.name + pair.Value.InstanceID);
                 if (GUILayout.Button("Remove "))
                 {
                     levelDataSO.posToCharacterData.Remove(pair.Key);
