@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using System;
-using UnityEngine.EventSystems;
 
 public class ReticalManager : MonoBehaviour
 {
