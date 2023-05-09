@@ -168,7 +168,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
         else
         {
-            currentTarget = targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];//Setting Current Target for later use
+            currentTarget = selectOptimalTarget();
             if (attackRangeList.Contains(currentTarget))
             {
                 if (checkAI)
@@ -197,11 +197,17 @@ public class CharacterControllerScript : MonoBehaviour
             thisList.Remove(thisCharpos);
             return thisList;
         }
+        Vector3Int selectOptimalTarget()
+        {
+            return targetList[universalCalculator.SelectRandomBetweenZeroAndInt(targetList.Count)];//Setting Current Target for later use
+        }
     }
     public Vector3Int getCharV3Int()
     {
         return universalCalculator.convertToVector3Int(this.gameObject.transform.position);
     }
+
+
     public Vector3Int getTarget(List<Vector3Int> validTargets)
     //validTargets depends on the action being performed
     {

@@ -507,6 +507,7 @@ MonoBehaviour:
   validTilesTileMap: {fileID: 1375412778}
   shadowTilemap: {fileID: 262393155}
   shadowTilePrefab: {fileID: 11400000, guid: f29b5e39308961f4cbec66700416b6cb, type: 2}
+  DrawShadows: 1
 --- !u!114 &732592033
 MonoBehaviour:
   m_ObjectHideFlags: 0
