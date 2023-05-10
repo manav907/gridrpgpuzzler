@@ -54,6 +54,8 @@ public class CharacterControllerScript : MonoBehaviour
             speedValue = CharacterDataSO.speedValue;
             rangeOfVision = CharacterDataSO.rangeOfVision;
 
+            GameEvents.current.onCharacterDeath += Buill;//Cheack agasfaidfajdiaukdhajidhjiahdjashjkd
+
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
             abilityList.AddRange(GlobalCal.createCopyListUsingConstructor(CharacterDataSO.listOfAbility));
@@ -102,6 +104,7 @@ public class CharacterControllerScript : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log(this.name + " Character has Died");
+            GameEvents.current.CheckDath();
             KillCharacter();
             return true;
         }
@@ -118,6 +121,10 @@ public class CharacterControllerScript : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+    }
+    void Buill()
+    {
+        Debug.Log("pls sub");
     }
     public int actionPoints = 1;
     public bool doActionPointsRemainAfterAbility()
