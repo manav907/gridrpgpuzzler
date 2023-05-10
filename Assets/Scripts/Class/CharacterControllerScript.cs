@@ -54,8 +54,6 @@ public class CharacterControllerScript : MonoBehaviour
             speedValue = CharacterDataSO.speedValue;
             rangeOfVision = CharacterDataSO.rangeOfVision;
 
-            GameEvents.current.onCharacterDeath += Buill;//Cheack agasfaidfajdiaukdhajidhjiahdjashjkd
-
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
             abilityList.AddRange(GlobalCal.createCopyListUsingConstructor(CharacterDataSO.listOfAbility));
@@ -63,8 +61,9 @@ public class CharacterControllerScript : MonoBehaviour
             AbilityNameToAbilityDataDIR = AbilityNameToAbilityData();
             //Setting Specific Name
             this.name = characterName + " " + CharacterDataSO.InstanceID;
-            //creating Override
-
+            //Game Event Regersery
+            if (!isPlayerCharacter)
+                GameEvents.current.addEnemy();
             //doingAnimController
             var SO = gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum);
             animator.runtimeAnimatorController = SO.GeneratedAnimatorOverrideController;
@@ -104,13 +103,17 @@ public class CharacterControllerScript : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log(this.name + " Character has Died");
-            GameEvents.current.CheckDath();
+
             KillCharacter();
             return true;
         }
         return false;
         void KillCharacter()
         {
+            if (!isPlayerCharacter)
+                GameEvents.current.oneEnemyDied();
+
+
             Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
             turnManager.ListOfInteractableCharacters.Remove(gameObject);
@@ -121,10 +124,6 @@ public class CharacterControllerScript : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
-    }
-    void Buill()
-    {
-        Debug.Log("pls sub");
     }
     public int actionPoints = 1;
     public bool doActionPointsRemainAfterAbility()

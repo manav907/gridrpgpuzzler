@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class ButtonManager : MonoBehaviour
 {
     [SerializeField] List<GameObject> ActionButtons;
@@ -71,6 +72,4 @@ public class ButtonManager : MonoBehaviour
             });
         }
     }
-
-
 }
