@@ -23,21 +23,17 @@ public class GameEvents : MonoBehaviour
     }
     public void oneEnemyDied()
     {
-        if (TotalEnemies > 0)
-        {
-            TotalEnemies--;
-            Debug.Log("Remaining Enemies are" + TotalEnemies);
-        }
-        else if (TotalEnemies < 0)
-        {
-            Debug.Log("Extra Enemy Died WTF!!!!");
-        }
+        TotalEnemies--;
+        Debug.Log("Remaining Enemies are" + TotalEnemies);
+        CheckWinCondidion();
+    }
+    void CheckWinCondidion()
+    {
         if (TotalEnemies == 0)
         {
             Debug.Log("Event of Game Win");
             Debug.Break();
         }
-
     }
     public void addEnemy()
     {
