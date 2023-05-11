@@ -145,6 +145,7 @@ public class CharacterControllerScript : MonoBehaviour
         buttonManager.clearButtons();
         if (controlCharacter)
         {
+            GameEvents.current.TriggerNextDialog();//Disable this laeter
             buttonManager.InstantiateButtons(CharacterMoveList);
             turnManager.setCameraPos(getCharV3Int());
         }
