@@ -80,7 +80,7 @@ public class TurnManager : MonoBehaviour
     }
     public void beginTurnIfPossible()
     {
-       ///reticalManager.reDrawShadows();
+        ///reticalManager.reDrawShadows();
         if (noPlayerCharacterRemaining())
             triggerGameEnd();
         else
@@ -92,6 +92,7 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Game Over");
             buttonManager.clearButtons();
+            buttonManager.InstantiateButtons(new List<AbilityName>() { AbilityName.Restart });
         }
         void setCharacterData()
         {

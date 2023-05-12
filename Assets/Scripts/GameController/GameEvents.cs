@@ -10,6 +10,9 @@ public class GameEvents : MonoBehaviour
     [SerializeField] GameObject scriptManager;
     public static GameEvents current;
     [SerializeField] TMPro.TextMeshProUGUI textBox;
+    [SerializeField] Image imagePortraitReffrence;
+    [SerializeField] Sprite[] images;
+    int imageLoop = 0;
     [SerializeField] string[] listOFDialog;
     int currentDialog = 0;
     int TotalEnemies = 0;
@@ -45,10 +48,20 @@ public class GameEvents : MonoBehaviour
     }
     void CheckWinCondidion()
     {
+        string gameWinDialog = "Event of Game Win";
+        void winGameDialog()
+        {
+            textBox.text = gameWinDialog;
+
+            //Setting Portrait transparency to 0
+            Color spriteColor = imagePortraitReffrence.color;
+            spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
+            imagePortraitReffrence.color = spriteColor;
+        }
         if (TotalEnemies == 0)
         {
             TriggerNextDialogAction -= TriggerCharacterDialogs;
-            string gameWinDialog = "Event of Game Win";
+
             if (TotalPlayers == Survivors)
             {
                 gameWinDialog = "We took significant risks today, but by severing our challenges one by one, we emerged victorious and lived to tell the tale.";
@@ -60,15 +73,15 @@ public class GameEvents : MonoBehaviour
             else
             {
                 gameWinDialog = "We survived, but at what cost? The scars we carry will forever remind us of the sacrifices made and the battles fought.";
-
             }
-            Action winGameDialog = delegate
-            {
-                textBox.text = gameWinDialog;
-            };
-            TriggerNextDialogAction += winGameDialog;
 
-            //Debug.Break();
+            TriggerNextDialogAction += winGameDialog;
+        }
+        else if (Survivors == 0)
+        {
+            TriggerNextDialogAction -= TriggerCharacterDialogs;
+            gameWinDialog = "Game Over";
+            TriggerNextDialogAction += winGameDialog;
         }
     }
     public void addCharacter(bool isPlayerCharacter)
@@ -91,16 +104,32 @@ public class GameEvents : MonoBehaviour
     {
 
         if (currentDialog + 1 > listOFDialog.Length)
-        { textBox.text = ""; return; }
+        {
+            //imagePortraitReffrence
 
+
+            //Setting Portrait transparency to 0
+            Color spriteColor = imagePortraitReffrence.color;
+            spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
+            imagePortraitReffrence.color = spriteColor;
+
+
+
+            textBox.text = "";
+            return;
+        }
+        if (imageLoop == images.Length)
+            imageLoop = 0;
+        imagePortraitReffrence.sprite = images[imageLoop];
         textBox.text = listOFDialog[currentDialog];
         currentDialog++;
+        imageLoop++;
     }
     public void reloadScene()
     {
         // Get the index of the current scene
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        
+
         // Reload the current scene by loading its index
         SceneManager.LoadScene(currentSceneIndex);
     }
