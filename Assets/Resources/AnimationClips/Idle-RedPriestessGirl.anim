@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Walk-Rapidash
+  m_Name: Idle-RedPriestessGirl
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,20 +20,12 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-    - time: 0.2
-      value: {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-    - time: 0.4
-      value: {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-    - time: 0.6
-      value: {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-    - time: 0.8
-      value: {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+      value: {fileID: 561747880, guid: a2538df5426a5d34589a9d376f13f28f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 5
+  m_SampleRate: 1
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -48,11 +40,7 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-    - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-    - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-    - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-    - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: 561747880, guid: a2538df5426a5d34589a9d376f13f28f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

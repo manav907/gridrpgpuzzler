@@ -14,4 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiles:
   - {fileID: 11400000, guid: deae00807db5f764ea0ef2695a63b383, type: 2}
+  - {fileID: 11400000, guid: b9abf0e98c58846498a51caaa1e73136, type: 2}
+  - {fileID: 11400000, guid: 0ec5cfdd4993e104c81e15f249320923, type: 2}
+  - {fileID: 11400000, guid: 778889c7f682efd40a6acd95375cc91d, type: 2}
+  - {fileID: 11400000, guid: 58f2051221ac9a4418c0f5bef9f72e11, type: 2}
+  - {fileID: 11400000, guid: a0f8733fa5590094c9036d5c645b7677, type: 2}
+  - {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
+  - {fileID: 11400000, guid: 3f9ac13cc28d0884db5f21f97b3e65af, type: 2}
+  - {fileID: 11400000, guid: f9825792c11e7d441941c68fc078d204, type: 2}
+  - {fileID: 11400000, guid: aa78eb12a0dc77444ba666cb5e011b33, type: 2}
+  - {fileID: 11400000, guid: 237ed48a893b0d342aad25205876a561, type: 2}
   groundFloorType: 0

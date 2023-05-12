@@ -17,20 +17,6 @@ public class CharacterAnimationData : ScriptableObject
     // Add other unique data fields as needed
     [SerializeField]
     public AnimatorOverrideController GeneratedAnimatorOverrideController;
-   /*  {
-        get
-        {
-            var assetPath = nameEnum.ToString() + ".overrideController";
-            AnimatorOverrideController asset = Resources.Load<AnimatorOverrideController>(assetPath);
-            //AnimatorOverrideController asset = AssetDatabase.LoadAssetAtPath<AnimatorOverrideController>(assetPath);
-            if (asset == null)
-            {
-                Debug.Log("Failed to load AnimatorOverrideController asset for " + nameEnum.ToString());
-            }
-            return asset;
-        }
-    } */
-
 
     public Dictionary<String, Sprite[]> listOfSprites()
     {
@@ -45,5 +31,7 @@ public class CharacterAnimationData : ScriptableObject
 public enum CharacterName
 {
     Rapidash,
-    ShedNinja
+    PinkHairGuy,
+    RedPriestessGirl,
+    GreenRedDude
 }

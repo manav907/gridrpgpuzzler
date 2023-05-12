@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
+  m_Name: PinkHairGuy CharacterAnimationData
+  m_EditorClassIdentifier: 
+  nameEnum: 1
+  spriteOffsetY: 0.5
+  Walk:
+  - {fileID: -872131439, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  - {fileID: -1670769258, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  - {fileID: 665491784, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  Idle:
+  - {fileID: -1374189113, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  - {fileID: -644951406, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  - {fileID: 1500874870, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: fe7553ccbba3bdb4bbe11ae1ce71b78e, type: 2}

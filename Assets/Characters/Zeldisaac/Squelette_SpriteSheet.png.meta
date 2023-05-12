@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c827088f025ff124e85bfa19417717b7
+guid: 04cb7fd9f85fae64ea3390272235f109
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,13 +43,13 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 0
+  spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 28
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -141,12 +141,159 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Walk-Anim_0
+      name: Squelette_SpriteSheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 336
-        width: 40
+        x: 18
+        y: 208
+        width: 29
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b54ef16607a8f40aa7793f4d75f900
+      internalID: -1682670780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 205
+        width: 26
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffd50d11466da4246a20c8234e85554a
+      internalID: 522653645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 208
+        width: 29
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37181e1a86a099141bf7b80391b060c0
+      internalID: -1595341053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 204
+        width: 29
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b3df14689dfdb644828c271c593855b
+      internalID: -469184511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 208
+        width: 29
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93ef85d3643a3d44291e04dfea0c0d3d
+      internalID: 106594559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 206
+        width: 42
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c70f07d5690ab424c9ab2f1400816b86
+      internalID: -1412445130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 193
+        width: 53
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c026bc1868a0da44abbcbb3a4d69cbb6
+      internalID: 417994268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 196
+        width: 33
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -155,335 +302,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 435ecd59561acbc43bed1a82234c9c41
-      internalID: -468390188
+      spriteID: 45d0597c2fd7e9040a86a8359c224400
+      internalID: 40462287
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_1
+      name: Squelette_SpriteSheet_8
       rect:
         serializedVersion: 2
-        x: 40
-        y: 336
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: afec3af28d9cf6d47a8e0c8146ff9c1f
-      internalID: 1928790757
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_2
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 336
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e66c1d86c1e2e964088651ef0544f18b
-      internalID: -1745784374
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_3
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 336
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 76904d2a58165294cafdd9b24eb8f731
-      internalID: 777029606
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 288
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5fd711cb15cb883429a95231bd78e4f5
-      internalID: 328409553
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_5
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 288
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c8d7ca828b42e8c41b05c3cf21b50d5e
-      internalID: 995025971
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_6
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 288
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f2fb982b07bec54a9b6f7a4c84f4ac2
-      internalID: -1994938408
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_7
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 288
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 52d894bddbc8fc94798074f7b8ebbc51
-      internalID: -346646924
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_8
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 240
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1907402f2c724d744a7b43ff94e68d03
-      internalID: 1596430722
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_9
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 240
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 918262420193aae44a5c8a055e5f48b2
-      internalID: -866574828
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_10
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 240
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8ca009f1c4e1a7e4d981246cc35c0fae
-      internalID: -1815481271
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_11
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 240
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 006e112225fd814449b407cca2bba635
-      internalID: -1214346612
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 192
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bb70046a3bd6c9d4793cd5bdf94579b8
-      internalID: -2086074928
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_13
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 192
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d44e937129040b64daceb10a89a542ed
-      internalID: 521330930
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_14
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 192
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 50e7712e624065a4187f7c1bc7c287b1
-      internalID: -565948402
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_15
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 192
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c2ab077a07a8993438201ab76b5767ae
-      internalID: -1114320923
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_16
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 14
         y: 144
-        width: 40
-        height: 48
+        width: 32
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -491,20 +323,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4ff8f30da8cdcf4fb0b25bc1496ee30
-      internalID: 1928448020
+      spriteID: 05c8771a27150e540bef9a2980e08183
+      internalID: 34435786
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_17
+      name: Squelette_SpriteSheet_9
       rect:
         serializedVersion: 2
-        x: 40
+        x: 79
+        y: 141
+        width: 30
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6b9435463a76274a85ab0128425ff99
+      internalID: -826438850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 142
         y: 144
-        width: 40
-        height: 48
+        width: 32
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -512,20 +365,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2465b39b9da7e84b84b36e3b8141af6
-      internalID: -1388869317
+      spriteID: eeb623aba4913fc4da4fae55d029be9c
+      internalID: -462745984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_18
+      name: Squelette_SpriteSheet_11
       rect:
         serializedVersion: 2
-        x: 80
+        x: 208
+        y: 141
+        width: 29
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20154e89a58ecb146ab39e090ee12783
+      internalID: 1126812238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 270
         y: 144
-        width: 40
-        height: 48
+        width: 32
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -533,20 +407,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2202d3d7e88fe64cb4ffc116f8bd48b
-      internalID: -231469135
+      spriteID: af0cafe16bba7b545b7013df765f9273
+      internalID: -436631446
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_19
+      name: Squelette_SpriteSheet_13
       rect:
         serializedVersion: 2
-        x: 120
+        x: 337
+        y: 132
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5c42d0cf5bd3704fa75318cdb6ad51b
+      internalID: 1125259946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 143
+        width: 52
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50bfbba3692a2b940b7cadc54141b049
+      internalID: 704795147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 458
         y: 144
-        width: 40
-        height: 48
+        width: 34
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -554,20 +470,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4392e3ce850e62438c703c9e9242442
-      internalID: -1715188597
+      spriteID: 897d00559215b534f8b3ed8fcdaa7e72
+      internalID: 264721910
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_20
+      name: Squelette_SpriteSheet_16
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
-        width: 40
-        height: 48
+        x: 18
+        y: 80
+        width: 21
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -575,20 +491,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2404b242cca835e4b95b27d905fda2c0
-      internalID: -1393935471
+      spriteID: a6a5267c99d9d2149b58cc2977c26837
+      internalID: 2042355897
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_21
+      name: Squelette_SpriteSheet_17
       rect:
         serializedVersion: 2
-        x: 40
-        y: 96
-        width: 40
-        height: 48
+        x: 79
+        y: 80
+        width: 33
+        height: 37
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -596,20 +512,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebce69504bb26c84e8a16dcb6d2b4cd9
-      internalID: -136597566
+      spriteID: 63acfe412c0daf348a9c3cce126b6f33
+      internalID: 908689333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_22
+      name: Squelette_SpriteSheet_18
       rect:
         serializedVersion: 2
-        x: 80
-        y: 96
-        width: 40
-        height: 48
+        x: 146
+        y: 80
+        width: 21
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -617,20 +533,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7a9fb7dc7ad0504f80d2aee4f00244e
-      internalID: 698875985
+      spriteID: b16bdb293daa4a24d93d0493ffe92082
+      internalID: -767256718
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_23
+      name: Squelette_SpriteSheet_19
       rect:
         serializedVersion: 2
-        x: 120
-        y: 96
-        width: 40
-        height: 48
+        x: 205
+        y: 77
+        width: 34
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -638,20 +554,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f50a9c8291d84464b96eb181582380c4
-      internalID: 1032962688
+      spriteID: f4b7fe3607175f945a8097bb6040c15c
+      internalID: -1874608948
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_24
+      name: Squelette_SpriteSheet_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 48
-        width: 40
-        height: 48
+        x: 274
+        y: 80
+        width: 21
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -659,20 +575,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e034ee1ea381444ba92a44958be32e7
-      internalID: 666079142
+      spriteID: a5b2a0723cc6c644d89c22708d103d52
+      internalID: -106495224
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_25
+      name: Squelette_SpriteSheet_21
       rect:
         serializedVersion: 2
-        x: 40
-        y: 48
-        width: 40
-        height: 48
+        x: 335
+        y: 72
+        width: 48
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -680,20 +596,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1496935783e52624e87e00ac0041cbe2
-      internalID: 240645619
+      spriteID: 3436e80f063956143a8fd9d08ca35381
+      internalID: -695168944
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_26
+      name: Squelette_SpriteSheet_22
       rect:
         serializedVersion: 2
-        x: 80
-        y: 48
-        width: 40
-        height: 48
+        x: 384
+        y: 72
+        width: 55
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -701,20 +617,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba4a3c4ae524fe14ca13d7309327d2d4
-      internalID: -732117532
+      spriteID: 2fadd37bdabf36f499ac94b7ee18faf2
+      internalID: -1119933228
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_27
+      name: Squelette_SpriteSheet_23
       rect:
         serializedVersion: 2
-        x: 120
-        y: 48
-        width: 40
-        height: 48
+        x: 448
+        y: 80
+        width: 50
+        height: 41
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -722,20 +638,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ffb256751ef5804d89be532bc84b36b
-      internalID: 487659825
+      spriteID: 1aaa14e4ba4ab3f4e9a8aab3930fdf30
+      internalID: 1324609705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_28
+      name: Squelette_SpriteSheet_24
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 40
-        height: 48
+        x: 25
+        y: 16
+        width: 21
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -743,41 +659,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b83f1fac91b0501499471bc84aa28055
-      internalID: 1134233983
+      spriteID: a5ecf2ce27052db468947810787a158b
+      internalID: -1831975383
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_29
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 0
-        width: 40
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 58c954e689a77114ab758be3cce4e093
-      internalID: -834194817
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Walk-Anim_30
+      name: Squelette_SpriteSheet_25
       rect:
         serializedVersion: 2
         x: 80
-        y: 0
-        width: 40
-        height: 48
+        y: 16
+        width: 33
+        height: 37
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -785,20 +680,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd2cc1bdd04e2514199ff704a31217db
-      internalID: 1758345733
+      spriteID: 1468a68999149f14ba48484421d2d8f4
+      internalID: 1088390833
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Walk-Anim_31
+      name: Squelette_SpriteSheet_26
       rect:
         serializedVersion: 2
-        x: 120
-        y: 0
-        width: 40
-        height: 48
+        x: 153
+        y: 16
+        width: 21
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -806,8 +701,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b81f53dc5e9a3247961eb159729a13c
-      internalID: 522828502
+      spriteID: d899e5494eea3e44c992a094b4da38f2
+      internalID: 937466298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_27
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 15
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcea99eaf2f4024488bc425d7bfbb35a
+      internalID: -785290119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_28
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 16
+        width: 21
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc4d2e8db36ac4a4089000c36b9ad222
+      internalID: -1001453278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_29
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 8
+        width: 48
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef2827620cadaac42bcffa55184f8712
+      internalID: -742940371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_30
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 8
+        width: 55
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1be07969673fd6e41a6c5c95f6274494
+      internalID: -940303943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Squelette_SpriteSheet_31
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 16
+        width: 50
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25249c4562be61c41867dbf9dc31647d
+      internalID: -864281292
       vertices: []
       indices: 
       edges: []
@@ -823,38 +823,38 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Walk-Anim_6: -1994938408
-      Walk-Anim_16: 1928448020
-      Walk-Anim_8: 1596430722
-      Walk-Anim_27: 487659825
-      Walk-Anim_13: 521330930
-      Walk-Anim_22: 698875985
-      Walk-Anim_11: -1214346612
-      Walk-Anim_12: -2086074928
-      Walk-Anim_15: -1114320923
-      Walk-Anim_25: 240645619
-      Walk-Anim_29: -834194817
-      Walk-Anim_0: -468390188
-      Walk-Anim_17: -1388869317
-      Walk-Anim_18: -231469135
-      Walk-Anim_28: 1134233983
-      Walk-Anim_9: -866574828
-      Walk-Anim_3: 777029606
-      Walk-Anim_19: -1715188597
-      Walk-Anim_7: -346646924
-      Walk-Anim_10: -1815481271
-      Walk-Anim_14: -565948402
-      Walk-Anim_1: 1928790757
-      Walk-Anim_4: 328409553
-      Walk-Anim_5: 995025971
-      Walk-Anim_20: -1393935471
-      Walk-Anim_30: 1758345733
-      Walk-Anim_24: 666079142
-      Walk-Anim_23: 1032962688
-      Walk-Anim_26: -732117532
-      Walk-Anim_31: 522828502
-      Walk-Anim_21: -136597566
-      Walk-Anim_2: -1745784374
+      Squelette_SpriteSheet_23: 1324609705
+      Squelette_SpriteSheet_26: 937466298
+      Squelette_SpriteSheet_18: -767256718
+      Squelette_SpriteSheet_24: -1831975383
+      Squelette_SpriteSheet_17: 908689333
+      Squelette_SpriteSheet_27: -785290119
+      Squelette_SpriteSheet_8: 34435786
+      Squelette_SpriteSheet_4: 106594559
+      Squelette_SpriteSheet_12: -436631446
+      Squelette_SpriteSheet_15: 264721910
+      Squelette_SpriteSheet_1: 522653645
+      Squelette_SpriteSheet_22: -1119933228
+      Squelette_SpriteSheet_28: -1001453278
+      Squelette_SpriteSheet_0: -1682670780
+      Squelette_SpriteSheet_7: 40462287
+      Squelette_SpriteSheet_14: 704795147
+      Squelette_SpriteSheet_16: 2042355897
+      Squelette_SpriteSheet_20: -106495224
+      Squelette_SpriteSheet_21: -695168944
+      Squelette_SpriteSheet_3: -469184511
+      Squelette_SpriteSheet_31: -864281292
+      Squelette_SpriteSheet_13: 1125259946
+      Squelette_SpriteSheet_2: -1595341053
+      Squelette_SpriteSheet_11: 1126812238
+      Squelette_SpriteSheet_10: -462745984
+      Squelette_SpriteSheet_29: -742940371
+      Squelette_SpriteSheet_9: -826438850
+      Squelette_SpriteSheet_19: -1874608948
+      Squelette_SpriteSheet_25: 1088390833
+      Squelette_SpriteSheet_5: -1412445130
+      Squelette_SpriteSheet_6: 417994268
+      Squelette_SpriteSheet_30: -940303943
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
