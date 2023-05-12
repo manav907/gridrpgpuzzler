@@ -5333,17 +5333,15 @@ MonoBehaviour:
   - {fileID: 1910574847, guid: 1c1ba5ea2e0dacf4085507a38283e1b9, type: 3}
   - {fileID: 283047903, guid: d942bb81dcc904a4dbf31da9bc295391, type: 3}
   listOFDialog:
-  - You guys, we're surrounded! We can't stay here!
+  - You guys, it's an ambush! We can't stay here, or we'll be overwhelmed!
   - If we keep running, we'll never escape. We have to face them head-on. I'll go
     and draw their attention.
-  - No, don't! It's too dangerous!
+  - No, please! It's too dangerous! I can't bear the thought of losing you.
   - I'm coming to help you. Don't do anything reckless!
   - Believe me, this is our only chance. We need to split up, sever their forces,
     and take them down individually.
-  - I know how determined you are, but going alone worries me deeply. We've come
-    this far together, and I don't want to lose you. However, I also recognize the
-    need to adapt. If this is the path you believe in, then I'll put my trust in
-    you. Just promise me you'll be careful out there.
+  - Your recklessness worries me, but your determination has always amazed me. I'll
+    trust in you, but please, stay safe.
   - They're faster and deadlier than us, capable of taking us down in a single strike.
     Every move we make must be flawless. We can't afford even the slightest error.
     We must be precise and calculated in our actions if we want to survive.
@@ -8810,7 +8808,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1000, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1945140950
