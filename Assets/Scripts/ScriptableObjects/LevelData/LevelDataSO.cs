@@ -13,6 +13,47 @@ public class LevelDataSO : ScriptableObject
     public Dictionary<Vector3Int, CharacterData> posToCharacterData;
     [HideInInspector] public Vector3Int CheckAtPos;
     [HideInInspector] public CharacterData importThisCharData;
+    [Header("Level Builder Stuff")]
+    public Dictionary<int, CharacterData> levelPresetsForEnemies;
+    public Dictionary<int, Vector3Int> dataForLevel;
+    public Dictionary<Vector3Int, CharacterData> dataForPlayers;
+    public Dictionary<Vector3Int, CharacterData> generatedPostoCD;
+    void PopulateGeneratedPosToCD()
+    {
+        generatedPostoCD = new Dictionary<Vector3Int, CharacterData>();
+        foreach (var dataPair in dataForLevel)
+        {
+            var data = ScriptableObject.CreateInstance<CharacterData>();
+
+            Vector3Int atPos = dataPair.Value;
+            int CharacterDataID = dataPair.Key;
+            try
+            {
+                generatedPostoCD.Add(atPos, levelPresetsForEnemies[CharacterDataID]);
+            }
+            catch (KeyNotFoundException)
+            {
+                if (CharacterDataID == 0)
+                {
+                    //Debug.Log("Adding Characters");
+                }
+                else
+                {
+                    Debug.LogError("Enemy Key not Present in Level Preset Dictionary");
+                }
+            }
+            try
+            {
+                generatedPostoCD.Add(atPos, dataForPlayers[dataForLevel[CharacterDataID]]);
+            }
+            catch (ArgumentException)
+            {
+                Debug.LogError("Player Key and Opponet Key Mismatch; Overwriting the key; review Data and dont save if you dont know why this happned");
+                generatedPostoCD.Remove(atPos);
+                generatedPostoCD.Add(atPos, dataForPlayers[dataForLevel[CharacterDataID]]);
+            }
+        }
+    }
     public void addToDictionary()//Called from Custom Inspector Button
     {
         if (posToCharacterData == null)

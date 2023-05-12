@@ -62,8 +62,7 @@ public class CharacterControllerScript : MonoBehaviour
             //Setting Specific Name
             this.name = characterName + " " + CharacterDataSO.InstanceID;
             //Game Event Regersery
-            if (!isPlayerCharacter)
-                GameEvents.current.addEnemy();
+            GameEvents.current.addCharacter(isPlayerCharacter);
             //doingAnimController
             var SO = gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum);
             animator.runtimeAnimatorController = SO.GeneratedAnimatorOverrideController;
@@ -110,8 +109,7 @@ public class CharacterControllerScript : MonoBehaviour
         return false;
         void KillCharacter()
         {
-            if (!isPlayerCharacter)
-                GameEvents.current.oneEnemyDied();
+            GameEvents.current.oneCharacterDied(isPlayerCharacter);
 
 
             Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);

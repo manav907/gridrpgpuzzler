@@ -507,7 +507,7 @@ MonoBehaviour:
   validTilesTileMap: {fileID: 1375412778}
   shadowTilemap: {fileID: 262393155}
   shadowTilePrefab: {fileID: 11400000, guid: f29b5e39308961f4cbec66700416b6cb, type: 2}
-  DrawShadows: 1
+  DrawShadows: 0
 --- !u!114 &732592033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7960,13 +7960,20 @@ MonoBehaviour:
   scriptManager: {fileID: 732592026}
   textBox: {fileID: 1945140950}
   listOFDialog:
-  - you guys move out of there we are being surrounded
-  - we wont be able to escape like this we will have to fight them. ill go and distract
-  - no dont you will die
-  - i comming there to help you dont do anything stupid
-  - ' '
-  - ' '
-  - These Fire type are weak to the water if only we could get to them
+  - You guys, we're surrounded! We can't stay here!
+  - If we keep running, we'll never escape. We have to face them head-on. I'll go
+    and draw their attention.
+  - No, don't! It's too dangerous!
+  - I'm coming to help you. Don't do anything reckless!
+  - Believe me, this is our only chance. We need to split up, sever their forces,
+    and take them down individually.
+  - I know how determined you are, but going alone worries me deeply. We've come
+    this far together, and I don't want to lose you. However, I also recognize the
+    need to adapt. If this is the path you believe in, then I'll put my trust in
+    you. Just promise me you'll be careful out there.
+  - They're faster and deadlier than us, capable of taking us down in a single strike.
+    Every move we make must be flawless. We can't afford even the slightest error.
+    We must be precise and calculated in our actions if we want to survive.
 --- !u!4 &943107458
 Transform:
   m_ObjectHideFlags: 0

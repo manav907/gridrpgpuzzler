@@ -59,6 +59,7 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction.Add(AbilityName.HeartPickup, HeartPickup);
         abilityNameToAction.Add(AbilityName.DoubleTeam, DoubleTeam);
         abilityNameToAction.Add(AbilityName.AxeSweep, AxeSweep);
+        abilityNameToAction.Add(AbilityName.Restart, Restart);
 
         //ablity Actions
         void MoveCharacter()
@@ -108,6 +109,11 @@ public class MoveDictionaryManager : MonoBehaviour
         void AxeSweep()
         {
             StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.AxeSweep));
+        }
+        void Restart()
+        {
+            GameEvents.current.reloadScene();
+            //Debug.Log("Restart Function not created");
         }
         //Simple Action and Co-routines that will be used for ablity Actions
         void simpleMoveAction()
@@ -295,7 +301,8 @@ public enum AbilityName
     FireBall,
     HeartPickup,
     DoubleTeam,
-    AxeSweep
+    AxeSweep,
+    Restart
 }
 
 [Serializable]

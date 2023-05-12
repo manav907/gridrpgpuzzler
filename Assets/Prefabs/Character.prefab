@@ -58,7 +58,7 @@ MonoBehaviour:
   CharacterDataSO: {fileID: 0}
   Heatlh: {fileID: 1664907520338834495}
   abilityList: []
-  CharacterMoveList: 0000000004000000
+  CharacterMoveList: 0a00000000000000
   CharacterInventoryList: 05000000
   actionPoints: 1
   animator: {fileID: 2406951079378199446}
