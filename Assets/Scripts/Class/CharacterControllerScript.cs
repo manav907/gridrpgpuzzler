@@ -140,7 +140,7 @@ public class CharacterControllerScript : MonoBehaviour
     {
         ToggleCharacterTurnAnimation(true);
         actionPoints = 1;//Remove This later
-        buttonManager.clearButtons();
+        //buttonManager.clearButtons();
         if (controlCharacter)
         {
             GameEvents.current.TriggerNextDialog();//Disable this laeter

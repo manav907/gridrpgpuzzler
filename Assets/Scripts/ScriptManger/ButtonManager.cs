@@ -39,7 +39,7 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] GameObject ButtonHolder;
 
     [SerializeField] float buttonSpacing = 0;
-    float buttonHight;
+    [SerializeField] float buttonHight;
     public void InstantiateButtons(List<AbilityName> abilityOfCharacter)
     {
         clearButtons();

@@ -91,7 +91,7 @@ public class TurnManager : MonoBehaviour
         void triggerGameEnd()
         {
             Debug.Log("Game Over");
-            buttonManager.clearButtons();
+            //buttonManager.clearButtons();
             buttonManager.InstantiateButtons(new List<AbilityName>() { AbilityName.Restart });
         }
         void setCharacterData()
