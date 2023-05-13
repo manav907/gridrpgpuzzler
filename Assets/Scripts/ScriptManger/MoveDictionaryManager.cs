@@ -124,6 +124,7 @@ public class MoveDictionaryManager : MonoBehaviour
             ListOfMovePoints.Add(tryHere);
             universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
             //thisCharacter.transform.position = tryHere;
+
         }
         void simpleAttackAction()
         {
@@ -135,6 +136,7 @@ public class MoveDictionaryManager : MonoBehaviour
             ListOfMovePoints.Add(tryHere);
             ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
             universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
+            GameEvents.current.PlaySound(0);//This is For attacking
         }
         void simpleAoeAttackAction()
         {
@@ -151,6 +153,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         simpleAttackAction();
                     }
             }
+            GameEvents.current.PlaySound(1);//This is For attacking bigg
         }
         void checkCharacters(CharacterControllerScript targetCharacter)
         {

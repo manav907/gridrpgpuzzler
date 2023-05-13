@@ -18,6 +18,15 @@ public class GameEvents : MonoBehaviour
     int TotalEnemies = 0;
     int TotalPlayers;
     int Survivors;
+    [Header("SFX")]
+    public AudioClip[] sfx;
+    public void PlaySound(int i)
+    {
+        //GameObject soundGameObject = new GameObject("Sound");
+        //AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(sfx[i]);
+    }
     private void Awake()
     {
         current = this;
