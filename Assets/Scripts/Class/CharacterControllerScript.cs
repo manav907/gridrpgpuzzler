@@ -101,7 +101,7 @@ public class CharacterControllerScript : MonoBehaviour
         Heatlh.text = health + "";
         if (health <= 0)
         {
-            Debug.Log(this.name + " Character has Died");
+            //Debug.Log(this.name + " Character has Died");
 
             KillCharacter();
             return true;

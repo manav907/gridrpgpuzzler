@@ -9,11 +9,13 @@ public class GameEvents : MonoBehaviour
 {
     [SerializeField] GameObject scriptManager;
     public static GameEvents current;
+    [Header("Dialog Stuff")]
     [SerializeField] TMPro.TextMeshProUGUI textBox;
     [SerializeField] Image imagePortraitReffrence;
     [SerializeField] Sprite[] images;
     int imageLoop = 0;
     [SerializeField] string[] listOFDialog;
+    [Header("Game State")]
     int currentDialog = 0;
     int TotalEnemies = 0;
     int TotalPlayers;
@@ -46,12 +48,12 @@ public class GameEvents : MonoBehaviour
         if (!isPlayerCharacter)
         {
             TotalEnemies--;
-            Debug.Log("Remaining Enemies are" + TotalEnemies);
+            //Debug.Log("Remaining Enemies are" + TotalEnemies);
         }
         else
         {
             Survivors--;
-            Debug.Log("Remaining Survivors are" + Survivors);
+            //Debug.Log("Remaining Survivors are" + Survivors);
         }
         CheckWinCondidion();
     }
@@ -134,6 +136,7 @@ public class GameEvents : MonoBehaviour
         currentDialog++;
         imageLoop++;
     }
+
     public void reloadScene()
     {
         // Get the index of the current scene

@@ -21,9 +21,9 @@ MonoBehaviour:
   - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   Idle:
-  - {fileID: 34435786, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -826438850, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -462745984, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: 1126812238, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -436631446, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 401b28f0e09db5e4d8ca3c3d97add01d, type: 2}

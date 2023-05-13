@@ -5335,17 +5335,22 @@ MonoBehaviour:
   - {fileID: 1910574847, guid: 1c1ba5ea2e0dacf4085507a38283e1b9, type: 3}
   - {fileID: 283047903, guid: d942bb81dcc904a4dbf31da9bc295391, type: 3}
   listOFDialog:
-  - You guys, it's an ambush! We can't stay here, or we'll be overwhelmed!
+  - You guys, it's an ambush! We can't stay here, or we'll be overwhelmed!(Click
+    on Move then select a Purple Tile Near You!)
   - If we keep running, we'll never escape. We have to face them head-on. I'll go
-    and draw their attention.
-  - No, please! It's too dangerous! I can't bear the thought of losing you.
-  - I'm coming to help you. Don't do anything reckless!
+    and draw their attention.(Click Attack and Select a Purple Tile with an Enemy
+    on it)
+  - No, please! It's too dangerous! I can't bear the thought of losing you.(Cancel
+    Actions using right click or clicking on invalid spots)
+  - I'm coming to help you. Don't do anything reckless!(Use Diagonal attacks to safely
+    attack these enemies)
   - Believe me, this is our only chance. We need to split up, sever their forces,
-    and take them down individually.
+    and take them down individually.(These Skeletons take 2 hits to defete)
   - Your recklessness worries me, but your determination has always amazed me. I'll
-    trust in you, but please, stay safe.
+    trust in you, but please, stay safe.(these skeletons will one hit you!!))
   - They're faster and deadlier than us, capable of taking us down in a single strike.
-    Every move we make must be flawless. We can't afford even the slightest error.
+    Every move we make must be flawless. We can't afford even the slightest error.(Good
+    Luck and Have fun))
   sfx:
   - {fileID: 8300000, guid: 800597fa51e470149884807229cbb097, type: 3}
   - {fileID: 8300000, guid: 73ae828fecce3b344a339e157f25df8a, type: 3}
