@@ -13,12 +13,12 @@ public class MoveDictionaryManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     ButtonManager buttonManager;
     [Header("Read Only Data")]
-    [SerializeField] private float moveTimeSpeed = 0.12f;
+    private float moveTimeSpeed = 0.12f;
     [Header("Character Data")]
     GameObject thisCharacter;
-    [SerializeField] CharacterControllerScript characterCS;
+    CharacterControllerScript characterCS;
     [Header("Retical And Tile Data")]
-    [SerializeField] private Vector3Int tryHere;
+    private Vector3Int tryHere;
     [Header("Current Ablity")]
     [SerializeField] Ability currentAblity;
     [Header("Debug Data")]
@@ -28,6 +28,8 @@ public class MoveDictionaryManager : MonoBehaviour
     bool checkValidActionTiles { get { return dataManager.checkValidActionTiles; } }
 
     bool ShouldContinue;
+    [Header("Tool Tips")]
+    [SerializeField] private TMPro.TextMeshProUGUI toolTip;
     public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
@@ -159,7 +161,15 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             targetCharacter.CheckIfCharacterIsDead();
         }
+
     }
+    void addToolTip(string Tip, bool resetTip = false)
+    {
+        if (resetTip == true)
+            toolTip.text = "";
+        toolTip.text += Tip;
+    }
+
     public void doAction(AbilityName abilityName)
     {
         abilityNameToAction[abilityName]();
@@ -189,6 +199,7 @@ public class MoveDictionaryManager : MonoBehaviour
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
             reticalManager.reticalShapes = ability.reticalShapes;
             reticalManager.rangeOfAction = rangeOfAction;
+            addToolTip("select Purple Tile To Contine with Action " + ability.abilityString + " Or Right Click to Cancel", true);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
             reticalManager.reticalShapes = ReticalShapes.SSingle;
@@ -210,17 +221,21 @@ public class MoveDictionaryManager : MonoBehaviour
             }
         }
         reticalManager.reDrawValidTiles();
+
         //reticalManager.reDrawShadows();
         //Methods
         bool CheckContinue()
         {
             if (Input.GetMouseButtonDown(0))
             {
+                addToolTip("Select an Button To Perform an Action", true);
                 ShouldContinue = true;
                 return true;
+
             }
             else if (Input.GetMouseButtonDown(1))
             {
+                addToolTip("Action Cancelled; Select an Button To Perform an Action", true);
                 ShouldContinue = false;
                 return true;
             }
@@ -228,13 +243,15 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         bool CheckMovePoint()
         {
-            if (ShouldContinue && listOfValidtargets.Contains(tryHere))
+            if (ShouldContinue && listOfValidtargets.Contains(tryHere) && listOfValidtargets.Count != 0)
             {
+
                 return true;
             }
             else if (listOfValidtargets.Count == 0)
             {
-                Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
+                addToolTip("No Valid Tiles for This Action; Select an Button To Perform an Action", true);
+                //Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
                 getValidTargetList(ability);
                 return false;
             }
