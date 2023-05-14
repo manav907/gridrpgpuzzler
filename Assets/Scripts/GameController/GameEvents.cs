@@ -7,7 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class GameEvents : MonoBehaviour
 {
+    [Header("Reffrences")]
     [SerializeField] GameObject scriptManager;
+    TurnManager turnManager;
+    DialogSetManger dialogSetManger;
     public static GameEvents current;
     [Header("Dialog Stuff")]
     [SerializeField] TMPro.TextMeshProUGUI textBox;
@@ -20,6 +23,9 @@ public class GameEvents : MonoBehaviour
     int TotalEnemies = 0;
     int TotalPlayers;
     int Survivors;
+    int turnLoop;
+    CharacterName currentCharacterName;
+
     [Header("SFX")]
     public AudioClip[] sfx;
     public void PlaySound(int i)
@@ -34,6 +40,9 @@ public class GameEvents : MonoBehaviour
         current = this;
         onCharacterDeath += delegate { Debug.Log("Even dEath Called"); };
         TriggerNextDialogAction += TriggerCharacterDialogs;
+        turnManager = scriptManager.GetComponent<TurnManager>();
+        dialogSetManger = GetComponent<DialogSetManger>();
+
     }
     public event Action onCharacterDeath;
     public void CheckDath()
@@ -43,9 +52,34 @@ public class GameEvents : MonoBehaviour
             onCharacterDeath();
         }
     }
-    public void oneCharacterDied(bool isPlayerCharacter)
+    public void DeathEvent(CharacterControllerScript characterControllerScript)
     {
-        if (!isPlayerCharacter)
+
+        switch (characterControllerScript.CharacterDataSO.NameEnum)
+        {
+            case CharacterName.PinkHairGuy:
+                {
+                    // Code to execute when the character's name is PinkHairGuy
+                    // Add your logic here
+                    break; // It's important to include the break statement to exit the switch statement
+                }
+            // Add additional cases for other character names if needed
+            // case CharacterName.AnotherCharacterName:
+            // {
+            //     // Code to execute when the character's name is AnotherCharacterName
+            //     break;
+            // }
+            default:
+                {
+                    // Code to execute when none of the cases match
+                    break;
+                }
+        }
+        if (characterControllerScript.CharacterDataSO.NameEnum == CharacterName.PinkHairGuy)
+        {
+            DialotTreeInt = 1;
+        }
+        if (!characterControllerScript.isPlayerCharacter)
         {
             TotalEnemies--;
             //Debug.Log("Remaining Enemies are" + TotalEnemies);
@@ -108,18 +142,33 @@ public class GameEvents : MonoBehaviour
     public event Action TriggerNextDialogAction;
     public void TriggerNextDialog()
     {
+        turnLoop = turnManager.TurnLoop;
+        currentCharacterName = turnManager.thisCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum;
         if (TriggerNextDialogAction != null)
             TriggerNextDialogAction();
     }
+    public int DialotTreeInt = 0;
     void TriggerCharacterDialogs()
     {
+        Debug.Log("Current Tree" + DialotTreeInt + " Chanracter Name" + currentCharacterName.ToString() + " Turn Loop " + turnLoop);
+        string newDialog;
+        newDialog = dialogSetManger.DialogTree[DialotTreeInt].getCharacterDialog(currentCharacterName.ToString(), turnLoop);
+        Debug.Log(newDialog);
 
-        if (currentDialog + 1 > listOFDialog.Length)
+        if (newDialog == null)
         {
-            //imagePortraitReffrence
+            setDialogToNull();
 
-
-            //Setting Portrait transparency to 0
+        }
+        if (imageLoop == images.Length)
+            imageLoop = 0;
+        imagePortraitReffrence.sprite = images[imageLoop];
+        //textBox.text = listOFDialog[currentDialog];
+        textBox.text = newDialog;
+        currentDialog++;
+        imageLoop++;
+        void setDialogToNull()
+        {
             Color spriteColor = imagePortraitReffrence.color;
             spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
             imagePortraitReffrence.color = spriteColor;
@@ -129,12 +178,6 @@ public class GameEvents : MonoBehaviour
             textBox.text = "";
             return;
         }
-        if (imageLoop == images.Length)
-            imageLoop = 0;
-        imagePortraitReffrence.sprite = images[imageLoop];
-        textBox.text = listOFDialog[currentDialog];
-        currentDialog++;
-        imageLoop++;
     }
 
     public void reloadScene()

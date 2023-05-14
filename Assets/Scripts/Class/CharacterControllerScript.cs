@@ -109,7 +109,7 @@ public class CharacterControllerScript : MonoBehaviour
         return false;
         void KillCharacter()
         {
-            GameEvents.current.oneCharacterDied(isPlayerCharacter);
+            GameEvents.current.DeathEvent(this.GetComponent<CharacterControllerScript>());
 
 
             Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);

@@ -130,9 +130,12 @@ public class TurnManager : MonoBehaviour
         }
         beginTurnIfPossible();
     }
+    [Header("Turn Stuff")]
+    public int TurnLoop = -1;
     void recalculateOrder()
     {
         //reticalManager.reDrawShadows();
+        TurnLoop++;
         OrderOfInteractableCharacters = SortBySpeed(ListOfInteractableCharacters);
 
         List<GameObject> SortBySpeed(List<GameObject> thisList)
