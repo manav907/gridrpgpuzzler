@@ -175,12 +175,15 @@ public class GameEvents : MonoBehaviour
     public int DialotTreeInt = 0;
     void TriggerCharacterDialogs()
     {
-        Debug.Log("Current Tree" + DialotTreeInt + " Chanracter Name" + currentCharacterName.ToString() + " Turn Loop " + turnLoop);
-        dialogSetManger.setBranch(generateTreeIndex());
+        //Debug.Log("Current Tree" + DialotTreeInt + " Chanracter Name" + currentCharacterName.ToString() + " Turn Loop " + turnLoop);
+        string currentTreeIndex = generateTreeIndex();
+        Debug.Log("Current Tree " + currentTreeIndex + " Chanracter Name " + currentCharacterName.ToString() + " Turn Loop " + turnLoop);
+        dialogSetManger.setBranch(currentTreeIndex);
         string newDialog;
-        newDialog = dialogSetManger.DialogTree[DialotTreeInt].getCharacterDialog(currentCharacterName.ToString(), turnLoop);
+        //newDialog = dialogSetManger.DialogTree[DialotTreeInt].getCharacterDialog(currentCharacterName.ToString(), turnLoop);
+        newDialog = dialogSetManger.curentBranch.getCharacterDialog(currentCharacterName.ToString(), turnLoop);
         Sprite newSprite;
-        newSprite = dialogSetManger.DialogTree[DialotTreeInt].getCharacterSprite(currentCharacterName.ToString(), turnLoop);
+        newSprite = dialogSetManger.curentBranch.getCharacterSprite(currentCharacterName.ToString(), turnLoop);
         Debug.Log(newDialog);
 
         if (newDialog == null)

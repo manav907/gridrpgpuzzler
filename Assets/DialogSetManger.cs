@@ -9,11 +9,11 @@ public class DialogSetManger : MonoBehaviour
     public List<DialogSetBranch> DialogTree;
     public Dictionary<string, DialogSetBranch> branchNameToSet;
     public DialogSetBranch curentBranch;
-    public void setBranch(string NameOfCharacter)
+    public void setBranch(string branchName)
     {
         try
         {
-            curentBranch = branchNameToSet[NameOfCharacter];
+            curentBranch = branchNameToSet[branchName];
         }
         catch (NullReferenceException)
         {
@@ -22,6 +22,11 @@ public class DialogSetManger : MonoBehaviour
             {
                 branchNameToSet.Add(branch.branchName, branch);
             }
+            curentBranch = branchNameToSet[branchName];
+        }
+        catch (KeyNotFoundException)
+        {
+            Debug.LogError(branchName + "This Dialog Path Does not Exits");
         }
     }
 
