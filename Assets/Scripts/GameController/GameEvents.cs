@@ -16,10 +16,8 @@ public class GameEvents : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI textBox;
     [SerializeField] Image imagePortraitReffrence;
     [SerializeField] Sprite[] images;
-    int imageLoop = 0;
     [SerializeField] string[] listOFDialog;
     [Header("Game State")]
-    int currentDialog = 0;
     int TotalEnemies = 0;
     int TotalPlayers;
     int Survivors;
@@ -52,32 +50,59 @@ public class GameEvents : MonoBehaviour
             onCharacterDeath();
         }
     }
+    bool char1 = true;
+    bool char2 = true;
+    bool char3 = true;
+    string generateTreeIndex()
+    {
+
+        string output = "";
+
+        if (char1)
+            output += "1";
+        else
+            output += "0";
+
+        if (char2)
+            output += "1";
+        else
+            output += "0";
+
+        if (char3)
+            output += "1";
+        else
+            output += "0";
+        return output;
+    }
     public void DeathEvent(CharacterControllerScript characterControllerScript)
     {
 
         switch (characterControllerScript.CharacterDataSO.NameEnum)
         {
-            case CharacterName.PinkHairGuy:
+
+            case CharacterName.GreenRedDude:
                 {
-                    // Code to execute when the character's name is PinkHairGuy
-                    // Add your logic here
+                    char1 = false;
+                    DialotTreeInt = 1;
                     break; // It's important to include the break statement to exit the switch statement
                 }
-            // Add additional cases for other character names if needed
-            // case CharacterName.AnotherCharacterName:
-            // {
-            //     // Code to execute when the character's name is AnotherCharacterName
-            //     break;
-            // }
+            case CharacterName.PinkHairGuy:
+                {
+                    char2 = false;
+                    DialotTreeInt = 1;
+                    break; // It's important to include the break statement to exit the switch statement
+                }
+            case CharacterName.RedPriestessGirl:
+                {
+                    char3 = false;
+                    DialotTreeInt = 1;
+                    break; // It's important to include the break statement to exit the switch statement
+                }
             default:
                 {
-                    // Code to execute when none of the cases match
+                    DialotTreeInt = 0;
                     break;
                 }
-        }
-        if (characterControllerScript.CharacterDataSO.NameEnum == CharacterName.PinkHairGuy)
-        {
-            DialotTreeInt = 1;
         }
         if (!characterControllerScript.isPlayerCharacter)
         {
@@ -151,8 +176,11 @@ public class GameEvents : MonoBehaviour
     void TriggerCharacterDialogs()
     {
         Debug.Log("Current Tree" + DialotTreeInt + " Chanracter Name" + currentCharacterName.ToString() + " Turn Loop " + turnLoop);
+        dialogSetManger.setBranch(generateTreeIndex());
         string newDialog;
         newDialog = dialogSetManger.DialogTree[DialotTreeInt].getCharacterDialog(currentCharacterName.ToString(), turnLoop);
+        Sprite newSprite;
+        newSprite = dialogSetManger.DialogTree[DialotTreeInt].getCharacterSprite(currentCharacterName.ToString(), turnLoop);
         Debug.Log(newDialog);
 
         if (newDialog == null)
@@ -160,13 +188,8 @@ public class GameEvents : MonoBehaviour
             setDialogToNull();
 
         }
-        if (imageLoop == images.Length)
-            imageLoop = 0;
-        imagePortraitReffrence.sprite = images[imageLoop];
-        //textBox.text = listOFDialog[currentDialog];
+        imagePortraitReffrence.sprite = newSprite;
         textBox.text = newDialog;
-        currentDialog++;
-        imageLoop++;
         void setDialogToNull()
         {
             Color spriteColor = imagePortraitReffrence.color;

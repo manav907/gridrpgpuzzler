@@ -5587,6 +5587,8 @@ MonoBehaviour:
       - They're faster and deadlier than us, capable of taking us down in a single
         strike. Every move we make must be flawless. We can't afford even the slightest
         error.(Play carefuly you only have 1 health)
+      characterSprites:
+      - {fileID: 506561512, guid: 895e30480d8bf3445b1e61432c41e086, type: 3}
     - NameOfCharacter: PinkHairGuy
       Dialogs:
       - If we keep running, we'll never escape. We have to face them head-on. I'll
@@ -5594,12 +5596,16 @@ MonoBehaviour:
         Enemy on it)
       - Believe me, this is our only chance. We need to split up, sever their forces,
         and take them down individually.(These Skeletons take 2 hits to defete)
+      characterSprites:
+      - {fileID: 1910574847, guid: 1c1ba5ea2e0dacf4085507a38283e1b9, type: 3}
     - NameOfCharacter: RedPriestessGirl
       Dialogs:
       - No, please! It's too dangerous! I can't bear the thought of losing you.(Cancel
         Actions using right click or clicking on invalid spots)
       - Your recklessness worries me, but your determination has always amazed me.
         I'll trust in you, but please, stay safe.(these skeletons will one hit you!!))
+      characterSprites:
+      - {fileID: 283047903, guid: d942bb81dcc904a4dbf31da9bc295391, type: 3}
   - branchName: PinkHairGuyDiesOnLoop3
     DialogSets:
     - NameOfCharacter: GreenRedDude
@@ -5612,6 +5618,8 @@ MonoBehaviour:
       - They're faster and deadlier than us, capable of taking us down in a single
         strike. Every move we make must be flawless. We can't afford even the slightest
         error.(Good Luck and Have fun)
+      characterSprites:
+      - {fileID: 506561512, guid: 895e30480d8bf3445b1e61432c41e086, type: 3}
     - NameOfCharacter: RedPriestessGirl
       Dialogs:
       - No Dialog Here
@@ -5622,6 +5630,8 @@ MonoBehaviour:
       - In my sorrow, a burning resolve awakens. I swear to avenge you, my love.
         The undead who took you shall face my wrath..(these skeletons will one hit
         you!!)
+      characterSprites:
+      - {fileID: 283047903, guid: d942bb81dcc904a4dbf31da9bc295391, type: 3}
 --- !u!1 &957306166
 GameObject:
   m_ObjectHideFlags: 0
