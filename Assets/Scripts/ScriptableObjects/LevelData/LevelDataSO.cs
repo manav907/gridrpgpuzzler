@@ -17,20 +17,34 @@ public class LevelDataSO : ScriptableObject
     public Dictionary<string, CharacterData> IdToCharacterData;
     public Dictionary<Vector3Int, string> V3IntToID;
     public Dictionary<Vector3Int, CharacterData> CharacterDataOverrides;
+    [Header("DataStore")]
+    public Dictionary<string, string> objectNameToJsonString;
+    public string DataStore;
+    public void SaveDataInDictionary()
+    {
+        objectNameToJsonString = new Dictionary<string, string>();
+        objectNameToJsonString.Add(IdToCharacterData.ToString(), JsonConvert.SerializeObject(IdToCharacterData, GeneralSettings));
+        objectNameToJsonString.Add(V3IntToID.ToString(), JsonConvert.SerializeObject(V3IntToID, GeneralSettings));
+        DataStore = JsonConvert.SerializeObject(objectNameToJsonString, GeneralSettings);
+    }
+    public void LoadDataFromDictionary()
+    {
+        ClearData();
+        Dictionary<string, string> objectNameToJsonString = JsonConvert.DeserializeObject<Dictionary<string, string>>(DataStore);
+        JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            Converters = new JsonConverter[]
+            {
+                 new CharacterDataConverter()
+             , new DictionaryConverterV3IntString()
+              }
+        };
+        IdToCharacterData = JsonConvert.DeserializeObject<Dictionary<string, CharacterData>>(objectNameToJsonString[IdToCharacterData.ToString()], settings);
+        V3IntToID = JsonConvert.DeserializeObject<Dictionary<Vector3Int, string>>(objectNameToJsonString[V3IntToID.ToString()], settings);
+    }
     Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir(string json)
     {
-        /* if (json != null)
-        {
-
-            JsonSerializerSettings settings = new JsonSerializerSettings
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                Converters = new JsonConverter[] { new CharacterDataConverter() }
-            };
-
-            IdToCharacterData = JsonConvert.DeserializeObject<Dictionary<int, CharacterData>>(json, settings);
-        } */
-
 
         var data = new Dictionary<Vector3Int, CharacterData>();
         foreach (var dataPair in V3IntToID)
@@ -39,6 +53,7 @@ public class LevelDataSO : ScriptableObject
             Vector3Int atPos = dataPair.Key;
             string CharacterDataID = dataPair.Value;
             CharacterData characterData = ScriptableObject.CreateInstance<CharacterData>();
+            characterData.ReplaceDataWithPreset(IdToCharacterData[CharacterDataID]);
             //characterData.(IdToCharacterData[CharacterDataID]);
             try
             {
@@ -46,17 +61,7 @@ public class LevelDataSO : ScriptableObject
             }
             catch (KeyNotFoundException)
             {
-                    Debug.LogError("Enemy Key not Present in Level Preset Dictionary");
-            }
-            try
-            {
-                data.Add(atPos, IdToCharacterData[CharacterDataID]);
-            }
-            catch (ArgumentException)
-            {
-                Debug.LogError("Player Key and Opponet Key Mismatch; Overwriting the key; review Data and dont save if you dont know why this happned");
-                data.Remove(atPos);
-                data.Add(atPos, IdToCharacterData[V3IntToID[atPos]]);
+                Debug.LogError("Enemy Key not Present in Level Preset Dictionary");
             }
         }
 
@@ -76,17 +81,18 @@ public class LevelDataSO : ScriptableObject
         }
         posToCharacterData.Add(CheckAtPos, importThisCharData);
     }
-    JsonSerializerSettings settings = new JsonSerializerSettings
+    JsonSerializerSettings GeneralSettings = new JsonSerializerSettings
     {
         Converters = new JsonConverter[]
         {
-            new DictionaryConverterV3IntCharacterData()
+            new DictionaryConverterV3IntCharacterData(),
+            new DictionaryConverterV3IntString()
         }
     };
 #if UNITY_EDITOR
     public void SaveData()
     {
-        string json = JsonConvert.SerializeObject(posToCharacterData, settings);
+        string json = JsonConvert.SerializeObject(posToCharacterData, GeneralSettings);
         string path = "levelData"; // the name of the asset relative to the Resources folder
         TextAsset existingAsset = Resources.Load<TextAsset>(path);
         if (existingAsset != null)
@@ -114,7 +120,7 @@ public class LevelDataSO : ScriptableObject
         if (asset != null)
         {
             string json = asset.text;
-            var data = JsonConvert.DeserializeObject<Dictionary<Vector3Int, CharacterData>>(json, settings);
+            var data = JsonConvert.DeserializeObject<Dictionary<Vector3Int, CharacterData>>(json, GeneralSettings);
             posToCharacterData = data;
         }
         else
@@ -185,8 +191,8 @@ public class DictionaryConverterV3IntCharacterData : JsonConverter<Dictionary<Ve
 
         foreach (var kvp in value)
         {
-            var key = JsonConvert.SerializeObject(kvp.Key);
-            var val = JObject.Parse(JsonConvert.SerializeObject(kvp.Value));
+            var key = JsonConvert.SerializeObject(kvp.Key);//This is Special Beacause this is a Object Type
+            var val = JObject.Parse(JsonConvert.SerializeObject(kvp.Value));//This is Special Beacause this is a Object Type
             writer.WritePropertyName(key);
             val.WriteTo(writer);
         }
@@ -211,4 +217,46 @@ public class CharacterDataConverter : JsonConverter<CharacterData>
 
     public override bool CanRead { get { return true; } }
     public override bool CanWrite { get { return false; } }
+}
+public class DictionaryConverterV3IntString : JsonConverter<Dictionary<Vector3Int, string>>
+{
+    JsonSerializerSettings settings = new JsonSerializerSettings
+    {
+        PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+        Converters = new JsonConverter[]
+        {
+            new CharacterDataConverter()
+        }
+    };
+    public override bool CanRead => true;
+    public override bool CanWrite => true;
+
+    public override Dictionary<Vector3Int, string> ReadJson(JsonReader reader, Type objectType, Dictionary<Vector3Int, string> existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        var dict = new Dictionary<Vector3Int, string>();
+        var jObject = JObject.Load(reader);
+
+        foreach (var kvp in jObject)
+        {
+            var key = JsonConvert.DeserializeObject<Vector3Int>(kvp.Key);//This is Special Beacause this is a Object Type
+            var value = kvp.Value.ToString();//This is Special Beacause this is a Value Type
+            dict.Add(key, value);
+        }
+
+        return dict;
+    }
+
+    public override void WriteJson(JsonWriter writer, Dictionary<Vector3Int, string> value, JsonSerializer serializer)
+    {
+        writer.WriteStartObject();
+
+        foreach (var kvp in value)
+        {
+            var key = JsonConvert.SerializeObject(kvp.Key);
+            writer.WritePropertyName(key);//This is Special Beacause this is a Object Type
+            writer.WriteValue(kvp.Value);//This is Special Beacause this is a Value Type
+        }
+
+        writer.WriteEndObject();
+    }
 }
