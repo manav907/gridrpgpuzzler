@@ -15,11 +15,12 @@ MonoBehaviour:
   InstanceID: 1
   characterName: Ninjask
   NameEnum: 1
+  isPlayerCharacter: 1
   health: 5
   attackDamage: 2
   speedValue: 5
   rangeOfVision: 5
-  canWalkOn: 0000000001000000
+  canWalkOn: 00000000
   listOfAbility:
   - abilityString: Move
     abilityName: 1

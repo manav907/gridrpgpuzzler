@@ -36,4 +36,23 @@ public class CharacterData : ScriptableObject
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
         listOfAbility = new List<Ability>(characterData.listOfAbility);
     }
+    public void ReplaceDataWithPreset(CharacterData characterData)
+    {
+        if(characterData==null)
+        {
+            Debug.Log("Data was Null");
+            return;
+        }
+        InstanceID = characterData.InstanceID;
+        characterName = characterData.characterName;
+        NameEnum = characterData.NameEnum;
+        isPlayerCharacter = characterData.isPlayerCharacter;
+        health = characterData.health;
+        attackDamage = characterData.attackDamage;
+        speedValue = characterData.speedValue;
+        rangeOfVision = characterData.rangeOfVision;
+        canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
+        listOfAbility = new List<Ability>(characterData.listOfAbility);
+    }
+
 }

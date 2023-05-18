@@ -14,45 +14,53 @@ public class LevelDataSO : ScriptableObject
     [HideInInspector] public Vector3Int CheckAtPos;
     [HideInInspector] public CharacterData importThisCharData;
     [Header("Level Builder Stuff")]
-    public Dictionary<int, CharacterData> levelPresetsForEnemies;
-    public Dictionary<int, Vector3Int> dataForLevel;
-    public Dictionary<Vector3Int, CharacterData> dataForPlayers;
-    public Dictionary<Vector3Int, CharacterData> generatedPostoCD;
-    void PopulateGeneratedPosToCD()
+    public Dictionary<string, CharacterData> IdToCharacterData;
+    public Dictionary<Vector3Int, string> V3IntToID;
+    public Dictionary<Vector3Int, CharacterData> CharacterDataOverrides;
+    Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir(string json)
     {
-        generatedPostoCD = new Dictionary<Vector3Int, CharacterData>();
-        foreach (var dataPair in dataForLevel)
+        /* if (json != null)
         {
-            var data = ScriptableObject.CreateInstance<CharacterData>();
 
-            Vector3Int atPos = dataPair.Value;
-            int CharacterDataID = dataPair.Key;
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Converters = new JsonConverter[] { new CharacterDataConverter() }
+            };
+
+            IdToCharacterData = JsonConvert.DeserializeObject<Dictionary<int, CharacterData>>(json, settings);
+        } */
+
+
+        var data = new Dictionary<Vector3Int, CharacterData>();
+        foreach (var dataPair in V3IntToID)
+        {
+
+            Vector3Int atPos = dataPair.Key;
+            string CharacterDataID = dataPair.Value;
+            CharacterData characterData = ScriptableObject.CreateInstance<CharacterData>();
+            //characterData.(IdToCharacterData[CharacterDataID]);
             try
             {
-                generatedPostoCD.Add(atPos, levelPresetsForEnemies[CharacterDataID]);
+                data.Add(atPos, characterData);
             }
             catch (KeyNotFoundException)
             {
-                if (CharacterDataID == 0)
-                {
-                    //Debug.Log("Adding Characters");
-                }
-                else
-                {
                     Debug.LogError("Enemy Key not Present in Level Preset Dictionary");
-                }
             }
             try
             {
-                generatedPostoCD.Add(atPos, dataForPlayers[dataForLevel[CharacterDataID]]);
+                data.Add(atPos, IdToCharacterData[CharacterDataID]);
             }
             catch (ArgumentException)
             {
                 Debug.LogError("Player Key and Opponet Key Mismatch; Overwriting the key; review Data and dont save if you dont know why this happned");
-                generatedPostoCD.Remove(atPos);
-                generatedPostoCD.Add(atPos, dataForPlayers[dataForLevel[CharacterDataID]]);
+                data.Remove(atPos);
+                data.Add(atPos, IdToCharacterData[V3IntToID[atPos]]);
             }
         }
+
+        return data;
     }
     public void addToDictionary()//Called from Custom Inspector Button
     {
@@ -113,10 +121,17 @@ public class LevelDataSO : ScriptableObject
         {
             Debug.Log("File not found!");
         }
+
+
+
+
     }
     public void ClearData()
     {
         posToCharacterData = new Dictionary<Vector3Int, CharacterData>();
+        IdToCharacterData = new Dictionary<string, CharacterData>();
+        V3IntToID = new Dictionary<Vector3Int, string>();
+        CharacterDataOverrides = new Dictionary<Vector3Int, CharacterData>();
     }
     public bool loadDataifNotLoaded()
     {
