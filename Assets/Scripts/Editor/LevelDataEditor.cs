@@ -97,29 +97,21 @@ public class LevelDataEditor : Editor
             {
                 GUILayout.BeginHorizontal();
                 //GUILayout.Label(pair.Key.ToString());
-                if (GUILayout.Button("Update Position" + pair.Key))
+                if (GUILayout.Button("Update Position" + pair.Key + " Of Character " + pair.Value))
                 {
                     //EditorUtility.OpenPropertyEditor(pair.Value);//Selection.activeObject = pair.Value;
                     Vector3Int oldPos = pair.Key;
                     string oldValue = pair.Value;
                     levelDataSO.V3IntToID.Remove(oldPos);
-                    levelDataSO.V3IntToID.Add(checkAtPos, "");
+                    levelDataSO.V3IntToID.Add(checkAtPos, oldValue);
                     break;
 
                 }
                 if (pair.Value == "")
                 {
-                    //GUILayout.TextArea(ChangeName);
-
-                    //string[] characterOptions = new string[] { "Option 1", "Option 2", "Option 3" }; // Replace with your own list of options
                     string[] characterOptions = levelDataSO.IdToCharacterData.Keys.ToArray();
-
-
-
                     int selectedIndex = EditorGUILayout.Popup("Select Character", -1, characterOptions);
-                    //ChangeName = EditorGUILayout.TextField(ChangeName);
-                    
-                    if (GUILayout.Button("Change Character"))
+                    if (selectedIndex != -1)
                     {
                         ChangeName = characterOptions[selectedIndex];
                         Vector3Int oldPos = pair.Key;
@@ -130,11 +122,6 @@ public class LevelDataEditor : Editor
                         ChangeName = "";
                         break;
                     }
-                }
-                else
-                {
-                    Debug.Log(pair.Value);
-                    GUILayout.TextArea(pair.Value);
                 }
                 //EditorGUILayout.ObjectField(pair.Value, typeof(CharacterData), false);//This Displayes the object
                 if (GUILayout.Button("Remove "))
