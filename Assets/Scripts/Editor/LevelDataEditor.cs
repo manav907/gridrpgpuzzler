@@ -13,11 +13,10 @@ public class LevelDataEditor : Editor
     string ChangeName;
     public override void OnInspectorGUI()
     {
-
         DrawDefaultInspector();
         GUILayout.Space(10);
         LevelDataSO levelDataSO = target as LevelDataSO;
-
+        GUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Speical Load Buttons:");
         if (GUILayout.Button("Load"))
         {
@@ -27,6 +26,11 @@ public class LevelDataEditor : Editor
         {
             levelDataSO.SaveDataInDictionary();
         }
+        if (GUILayout.Button("Clear Data"))
+        {
+            levelDataSO.ClearData();
+        }
+        GUILayout.EndHorizontal();
         //ID to Chard DATA
         EditorGUILayout.LabelField("IdToCharacterData:");
         if (levelDataSO.IdToCharacterData != null)
@@ -107,99 +111,11 @@ public class LevelDataEditor : Editor
                     }
                     GUILayout.EndHorizontal();
                 }
-
             }
             else
             {
-                if (GUILayout.Button("Load V3IntToID?"))
-                {
-                    levelDataSO.V3IntToID = new Dictionary<Vector3Int, string>();//needs to Change;
-                }
+                EditorGUILayout.LabelField("Data Not Initlized; Clear Data to Load Data");
             }
-
-
-        }
-        else
-        {
-            if (GUILayout.Button("Load Level Data?"))
-            {
-                levelDataSO.IdToCharacterData = new Dictionary<string, CharacterData>();
-            }
-        }
-        //Vector3IntTo ID.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /////////////////////
-
-        if (levelDataSO.posToCharacterData != null)
-        {
-            levelDataSO.loadDataifNotLoaded();
-            EditorGUILayout.LabelField("Position To GameObject Dictionary:");
-            foreach (var pair in levelDataSO.posToCharacterData)
-            {
-                //EditorGUILayout.LabelField($"Key: {pair.Key}, Value: {pair.Value.name}");
-                GUILayout.BeginHorizontal();
-
-                GUILayout.Label(pair.Key.ToString());
-                if (GUILayout.Button("Edit " + pair.Value.name + pair.Value.InstanceID))
-                {
-                    Selection.activeObject = pair.Value;
-                }
-                if (GUILayout.Button("Remove "))
-                {
-                    levelDataSO.posToCharacterData.Remove(pair.Key);
-                    break;
-                }
-                GUILayout.EndHorizontal();
-            }
-        }
-
-        GUILayout.BeginHorizontal();
-
-        //CharacterData characterData = new CharacterData();
-        checkAtPos = EditorGUILayout.Vector3IntField(GUIContent.none, checkAtPos);
-        //characterData = (CharacterData)EditorGUILayout.ObjectField(GUIContent.none, characterData, typeof(CharacterData), false);
-        GUILayout.EndHorizontal();
-        GUILayout.BeginHorizontal();
-
-
-        if (GUILayout.Button("Add To Dictionary"))
-        {
-            levelDataSO.addToDictionary();
-        }
-        GUILayout.EndHorizontal();
-        GUILayout.Label("Manage Level Data File");
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("SaveData"))
-        {
-            levelDataSO.SaveData();
-        }
-        if (GUILayout.Button("LoadData"))
-        {
-            levelDataSO.LoadData();
-        }
-        if (GUILayout.Button("Clear Data(no Save)"))
-        {
-            levelDataSO.ClearData();
-        }
-        GUILayout.EndHorizontal();
-        if (GUILayout.Button("tryDiagonose"))
-        {
-            levelDataSO.tryDiagonose();
         }
     }
 }

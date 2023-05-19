@@ -61,8 +61,10 @@ public class TurnManager : MonoBehaviour
     }
     void InstantiateallIntractableCharacters()
     {
-        loadThisLevel.LoadData();
-        foreach (var characterDataPair in loadThisLevel.posToCharacterData)
+        //loadThisLevel.LoadData();
+        loadThisLevel.LoadDataFromDictionary();
+        var dict = loadThisLevel.GenerateV3IntToCharacterDataDir(loadThisLevel.DataStore);
+        foreach (var characterDataPair in dict)
         {
             GameObject InstansiatedCharacter = Instantiate(characterPrefab);//Instansiateding Character
             CharacterControllerScript InstansiatedCCS = InstansiatedCharacter.GetComponent<CharacterControllerScript>();//Getting CCS
@@ -72,7 +74,7 @@ public class TurnManager : MonoBehaviour
             InstansiatedCCS.CharacterDataSO.InstanceID = InstansiatedCharacter.GetInstanceID();//Setting Instance ID
             //Adding to Lists
             ListOfInteractableCharacters.Add(InstansiatedCharacter);//Adding Character to List
-            if (mapManager.cellDataDir.ContainsKey(characterDataPair.Key))
+            if (mapManager.cellDataDir.ContainsKey(characterDataPair.Key))//Checks if Tile is Valid ie recorded in Dictionary does not do walkablity checks
                 mapManager.cellDataDir[characterDataPair.Key].characterAtCell = InstansiatedCharacter;//Setting Mapmanager Posistion
             else
             {

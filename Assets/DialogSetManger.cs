@@ -64,6 +64,11 @@ public class DialogSetManger : MonoBehaviour
                 initilizeDictionary();
                 return NameToSetDir[NameOfCharacter].GetSprite(turnLoop);
             }
+            catch (KeyNotFoundException)
+            {
+                Debug.Log("No Dialog Here Bro the Dicitionary does not have the character bruh");
+                return null;
+            }
         }
         void initilizeDictionary()
         {

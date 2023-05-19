@@ -43,7 +43,7 @@ public class LevelDataSO : ScriptableObject
         IdToCharacterData = JsonConvert.DeserializeObject<Dictionary<string, CharacterData>>(objectNameToJsonString[IdToCharacterData.ToString()], settings);
         V3IntToID = JsonConvert.DeserializeObject<Dictionary<Vector3Int, string>>(objectNameToJsonString[V3IntToID.ToString()], settings);
     }
-    Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir(string json)
+    public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir(string json)
     {
 
         var data = new Dictionary<Vector3Int, CharacterData>();
@@ -122,8 +122,7 @@ public class LevelDataSO : ScriptableObject
         {
             string json = asset.text;
             var data = JsonConvert.DeserializeObject<Dictionary<Vector3Int, CharacterData>>(json, GeneralSettings);
-            //posToCharacterData = data;
-            posToCharacterData = GenerateV3IntToCharacterDataDir(DataStore);
+            posToCharacterData = data;
         }
         else
         {
@@ -131,7 +130,7 @@ public class LevelDataSO : ScriptableObject
         }
 
 
-
+        //posToCharacterData = GenerateV3IntToCharacterDataDir(DataStore);
 
     }
     public void ClearData()

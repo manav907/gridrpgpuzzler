@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 [CustomEditor(typeof(DataManager))]
 public class DataManagerEditor : Editor
 {
-    Vector3Int checkAtPos;
+    /* Vector3Int checkAtPos;
     CharacterData characterData;
     public override void OnInspectorGUI()
     {
@@ -87,5 +87,5 @@ public class DataManagerEditor : Editor
         }
 
 
-    }
+    } */
 }
