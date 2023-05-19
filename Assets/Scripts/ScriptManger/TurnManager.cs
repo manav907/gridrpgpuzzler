@@ -72,7 +72,12 @@ public class TurnManager : MonoBehaviour
             InstansiatedCCS.CharacterDataSO.InstanceID = InstansiatedCharacter.GetInstanceID();//Setting Instance ID
             //Adding to Lists
             ListOfInteractableCharacters.Add(InstansiatedCharacter);//Adding Character to List
-            mapManager.cellDataDir[characterDataPair.Key].characterAtCell = InstansiatedCharacter;//Setting Mapmanager Posistion
+            if (mapManager.cellDataDir.ContainsKey(characterDataPair.Key))
+                mapManager.cellDataDir[characterDataPair.Key].characterAtCell = InstansiatedCharacter;//Setting Mapmanager Posistion
+            else
+            {
+                Debug.Log("Wrong Tile Skipping Character");
+            }
             InstansiatedCharacter.transform.SetParent(characterHolder.transform, false);//Setting Parent GameObjects 
             //last step
             InstansiatedCCS.InitilizeCharacter(gameController);//Last step Initilization

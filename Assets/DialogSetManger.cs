@@ -47,6 +47,11 @@ public class DialogSetManger : MonoBehaviour
                 initilizeDictionary();
                 return getCharacterDialog(NameOfCharacter, turnLoop);
             }
+            catch (KeyNotFoundException)
+            {
+                Debug.Log("No Dialog Here Bro the Dicitionary does not have the character bruh");
+                return "dialog Error";
+            }
         }
         public Sprite getCharacterSprite(string NameOfCharacter, int turnLoop)
         {

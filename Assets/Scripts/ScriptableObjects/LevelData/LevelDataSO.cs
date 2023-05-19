@@ -47,6 +47,7 @@ public class LevelDataSO : ScriptableObject
     {
 
         var data = new Dictionary<Vector3Int, CharacterData>();
+        LoadDataFromDictionary();
         foreach (var dataPair in V3IntToID)
         {
 
@@ -121,7 +122,8 @@ public class LevelDataSO : ScriptableObject
         {
             string json = asset.text;
             var data = JsonConvert.DeserializeObject<Dictionary<Vector3Int, CharacterData>>(json, GeneralSettings);
-            posToCharacterData = data;
+            //posToCharacterData = data;
+            posToCharacterData = GenerateV3IntToCharacterDataDir(DataStore);
         }
         else
         {
