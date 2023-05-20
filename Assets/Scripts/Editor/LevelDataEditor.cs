@@ -42,6 +42,14 @@ public class LevelDataEditor : Editor
 
         if (levelDataSO.IdToCharacterData != null)
         {
+            foreach(var pair in levelDataSO.IdToCharacterData)
+            {
+                if(pair.Value==null)
+                {
+                    levelDataSO.LoadDataFromDictionary();
+                }
+                break;
+            }
             EditorGUILayout.LabelField("IdToCharacterData:");
             GUILayout.BeginHorizontal();
             NewName = EditorGUILayout.TextField(GUIContent.none, NewName);
@@ -67,6 +75,7 @@ public class LevelDataEditor : Editor
                 //GUILayout.Label(pair.Key.ToString());
                 if (GUILayout.Button(pair.Key))
                 {
+
                     EditorUtility.OpenPropertyEditor(pair.Value);
                     Selection.activeObject = pair.Value;
                 }
