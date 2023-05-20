@@ -100,9 +100,10 @@ public class LevelDataEditor : Editor
 
                 foreach (var pair in levelDataSO.V3IntToID)
                 {
-                    GUILayout.BeginHorizontal();
-                    //GUILayout.Label(pair.Key.ToString());
-                    if (GUILayout.Button("Update Position" + pair.Key + " Of Character " + pair.Value))
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(pair.Key.ToString(), GUILayout.Width(100));
+                    EditorGUILayout.LabelField(pair.Value, GUILayout.Width(100));
+                    /* if (GUILayout.Button("View Position" + pair.Key + " if In PlayMode "))
                     {
                         //EditorUtility.OpenPropertyEditor(pair.Value);//Selection.activeObject = pair.Value;
                         Vector3Int oldPos = pair.Key;
@@ -110,15 +111,14 @@ public class LevelDataEditor : Editor
                         levelDataSO.V3IntToID.Remove(oldPos);
                         levelDataSO.V3IntToID.Add(checkAtPos, oldValue);
                         break;
-
-                    }
+                    } */
                     //EditorGUILayout.ObjectField(pair.Value, typeof(CharacterData), false);//This Displayes the object
-                    if (GUILayout.Button("Remove "))
+                    if (GUILayout.Button("Remove", GUILayout.Width(80)))
                     {
                         levelDataSO.V3IntToID.Remove(pair.Key);
                         break;
                     }
-                    GUILayout.EndHorizontal();
+                    EditorGUILayout.EndHorizontal();
                 }
             }
         }
