@@ -19,7 +19,7 @@ public class LevelDataSO : ScriptableObject
     public Dictionary<Vector3Int, CharacterData> CharacterDataOverrides;
     [Header("DataStore")]
     public Dictionary<string, string> objectNameToJsonString;
-    public string DataStore;
+    public String DataStore;
     public void SaveDataInDictionary()
     {
         objectNameToJsonString = new Dictionary<string, string>();

@@ -17,6 +17,13 @@ public class LevelDataEditor : Editor
         GUILayout.Space(10);
         LevelDataSO levelDataSO = target as LevelDataSO;
         GUILayout.BeginHorizontal();
+        EditorGUILayout.TextField(GUIContent.none, levelDataSO.DataStore);
+        if (GUILayout.Button("SaveBackup"))
+        {
+            BackupManager.BackupSOString(levelDataSO, levelDataSO.DataStore);
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Speical Load Buttons:");
         if (GUILayout.Button("Load"))
         {
@@ -32,9 +39,10 @@ public class LevelDataEditor : Editor
         }
         GUILayout.EndHorizontal();
         //ID to Chard DATA
-        EditorGUILayout.LabelField("IdToCharacterData:");
+
         if (levelDataSO.IdToCharacterData != null)
         {
+            EditorGUILayout.LabelField("IdToCharacterData:");
             GUILayout.BeginHorizontal();
             NewName = EditorGUILayout.TextField(GUIContent.none, NewName);
             if (GUILayout.Button("New Character Preset"))
@@ -59,7 +67,8 @@ public class LevelDataEditor : Editor
                 //GUILayout.Label(pair.Key.ToString());
                 if (GUILayout.Button(pair.Key))
                 {
-                    EditorUtility.OpenPropertyEditor(pair.Value);//Selection.activeObject = pair.Value;
+                    EditorUtility.OpenPropertyEditor(pair.Value);
+                    Selection.activeObject = pair.Value;
                 }
                 //EditorGUILayout.ObjectField(pair.Value, typeof(CharacterData), false);//This Displayes the object
                 if (GUILayout.Button("Remove "))
@@ -112,10 +121,11 @@ public class LevelDataEditor : Editor
                     GUILayout.EndHorizontal();
                 }
             }
-            else
-            {
-                EditorGUILayout.LabelField("Data Not Initlized; Clear Data to Load Data");
-            }
+        }
+        else
+        {
+            EditorGUILayout.LabelField("Data Not Initlized; Clear Data to Load Data");
+            levelDataSO.LoadDataFromDictionary();
         }
     }
 }

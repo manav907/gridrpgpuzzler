@@ -160,5 +160,21 @@ public class TurnManager : MonoBehaviour
         }
     }
 }
+public enum GameStoryState
+{
+    UnAssignedevent = 0,
+    PlayerCharacterTurn,
+    EnemyCharacterTurn,
+    PlayerPartyDialogEvent,
+    PlayerCharacterDialogEvent,
+    EnemyCharacterDialogEnent,
+    AllCharacterDialogEvent,
+    WorldDialogEvent,
+
+}
+public enum ControlCharacterState
+{
+    
+}
 
 
