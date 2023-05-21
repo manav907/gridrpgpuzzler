@@ -16,8 +16,8 @@ public class LevelDataEditor : Editor
         DrawDefaultInspector();
         GUILayout.Space(10);
         LevelDataSO levelDataSO = target as LevelDataSO;
-        GUILayout.BeginHorizontal();
         EditorGUILayout.TextArea(levelDataSO.DataStore);
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("SaveBackup"))
         {
             BackupManager.BackupSOString(levelDataSO, levelDataSO.DataStore);
