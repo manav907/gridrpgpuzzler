@@ -17,10 +17,14 @@ public class LevelDataEditor : Editor
         GUILayout.Space(10);
         LevelDataSO levelDataSO = target as LevelDataSO;
         GUILayout.BeginHorizontal();
-        EditorGUILayout.TextField(GUIContent.none, levelDataSO.DataStore);
+        EditorGUILayout.TextArea(levelDataSO.DataStore);
         if (GUILayout.Button("SaveBackup"))
         {
             BackupManager.BackupSOString(levelDataSO, levelDataSO.DataStore);
+        }
+        if (GUILayout.Button("LoadBackup"))
+        {
+            levelDataSO.DataStore = BackupManager.ReloadLatestBackup(levelDataSO);
         }
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
@@ -42,9 +46,9 @@ public class LevelDataEditor : Editor
 
         if (levelDataSO.IdToCharacterData != null)
         {
-            foreach(var pair in levelDataSO.IdToCharacterData)
+            foreach (var pair in levelDataSO.IdToCharacterData)
             {
-                if(pair.Value==null)
+                if (pair.Value == null)
                 {
                     levelDataSO.LoadDataFromDictionary();
                 }

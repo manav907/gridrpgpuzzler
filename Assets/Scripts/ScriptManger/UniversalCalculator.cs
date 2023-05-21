@@ -345,6 +345,24 @@ public static class BackupManager
             Debug.LogError("Backup Folder Does not Exist" + backupFolderPath);
         }
     }
+    public static string ReloadLatestBackup(ScriptableObject scriptableObject)
+    {
+        string filePath = AssetDatabase.GetAssetPath(scriptableObject);
+        string fileName = scriptableObject.name;
+        string folderPath = System.IO.Path.GetDirectoryName(filePath);
+        string backupFolderPath = Path.Combine(folderPath, fileName + "_BackupsFolder");
+        string[] backupFiles = Directory.GetFiles(backupFolderPath, "*.jsonStringBackup");
+        if (backupFiles.Length > 0)
+        {
+            Array.Sort(backupFiles, (a, b) => File.GetCreationTime(b).CompareTo(File.GetCreationTime(a)));
+            string lastSavedFileLocation = backupFiles[0];
+            string lastSavedJson = System.IO.File.ReadAllText(lastSavedFileLocation);
+            Debug.Log("Reloaded File" + backupFiles[0]);
+            return lastSavedJson;
+        }
+        Debug.Log("failed to Reload File");
+        return "";
+    }
 }
 
 public static class HUDStuff
