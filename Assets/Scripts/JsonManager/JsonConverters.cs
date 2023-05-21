@@ -7,17 +7,6 @@ using Newtonsoft.Json.Linq;
 
 public class JsonConverters : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
 
 
@@ -156,16 +145,17 @@ public class DictionaryConverterStringCharacterData : JsonConverter<Dictionary<s
 
     public override void WriteJson(JsonWriter writer, Dictionary<string, CharacterData> value, JsonSerializer serializer)
     {
-        writer.WriteStartObject();
+        throw new NotImplementedException();
+        /*  writer.WriteStartObject();
 
-        foreach (var kvp in value)
-        {
-            var key = JsonConvert.SerializeObject(kvp.Key);//This is Special Beacause this is a Object Type
-            var val = JObject.Parse(JsonConvert.SerializeObject(kvp.Value));//This is Special Beacause this is a Object Type
-            writer.WritePropertyName(key);
-            val.WriteTo(writer);
-        }
+         foreach (var kvp in value)
+         {
+             var key = JsonConvert.SerializeObject(kvp.Key);//This is Special Beacause this is a Object Type
+             var val = JObject.Parse(JsonConvert.SerializeObject(kvp.Value));//This is Special Beacause this is a Object Type
+             writer.WritePropertyName(key);
+             val.WriteTo(writer);
+         }
 
-        writer.WriteEndObject();
+         writer.WriteEndObject(); */
     }
 }
