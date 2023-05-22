@@ -26,7 +26,8 @@ public class CharacterControllerScript : MonoBehaviour
     public int rangeOfVision;
     public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
-    [SerializeField] private TextMesh Heatlh;
+    [SerializeField] private TMPro.TextMeshPro Heatlh;
+    //[SerializeField] private TextMesh Heatlh;
     private ButtonManager buttonManager;
     private MapManager mapManager;
     private TurnManager turnManager;

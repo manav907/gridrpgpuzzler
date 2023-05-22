@@ -193,6 +193,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             tryHere = characterCS.getTarget(listOfValidtargets);
             ShouldContinue = true;
+            yield return new WaitForSeconds(0.25f);
         }
         else//if it is the player character
         {
