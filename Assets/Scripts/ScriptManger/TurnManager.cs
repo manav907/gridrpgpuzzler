@@ -123,6 +123,7 @@ public class TurnManager : MonoBehaviour
     {
         basicCameraController.setCameraPos(pos);
     }
+    
     public void endTurn()
     {
         TurnCountInt++;

@@ -17,7 +17,14 @@ public class LevelDataSO : ScriptableObject
     public Dictionary<Vector3Int, CharacterData> CharacterDataOverrides;
     [Header("DataStore")]
     public Dictionary<string, string> objectNameToJsonString;
-    public string DataStore;
+    [SerializeField][HideInInspector] public string DataStore;
+    [Header("Serilizable LevelData")]
+    [SerializeField] SerializableDictionary<string, CharacterData> IDToChar;
+    [SerializeField] SerializableDictionary<Vector3Int, string> PosToID;
+    [SerializeField] SerializableDictionary<Vector3Int, StringEnum> V3String;
+    [Header("Dfactor ")]
+    [SerializeField] StringEnumDictionary<Vector3Int, CharacterData> V3IntChar;
+
     public void SaveDataInDictionary()
     {
         objectNameToJsonString = new Dictionary<string, string>();
@@ -32,6 +39,12 @@ public class LevelDataSO : ScriptableObject
         Dictionary<string, string> objectNameToJsonString = JsonConvert.DeserializeObject<Dictionary<string, string>>(DataStore);
         IdToCharacterData = JsonConvert.DeserializeObject<Dictionary<string, CharacterData>>(objectNameToJsonString[IdToCharacterData.ToString()], GeneralSettings);
         V3IntToID = JsonConvert.DeserializeObject<Dictionary<Vector3Int, string>>(objectNameToJsonString[V3IntToID.ToString()], GeneralSettings);
+
+
+        ////
+
+        IDToChar.CopyDict(IdToCharacterData);
+        PosToID.CopyDict(V3IntToID);
     }
     public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir(string json)
     {
@@ -120,5 +133,14 @@ public class LevelDataSO : ScriptableObject
     //[SerializeField] string tryThis;
     public void tryDiagonose()
     {
+    }
+    void OnGUI()
+
+    {
+        if (GUILayout.Button("Help"))
+        //if (GUI.Button(new Rect(10, 10, 50, 50), "Help"))
+        {
+            Debug.Log("Help");
+        }
     }
 }
