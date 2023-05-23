@@ -23,58 +23,28 @@ public class StringEnmumDictionaryPropertyDrawer : PropertyDrawer
 
             //if (KeyValuePairs.isExpanded)
             {
-                if (KeyValuePairs.arraySize == 0)
-                {
-                    EditorGUILayout.LabelField("No elements");
-                }
-                else
-                {
-                    SerializedProperty childProps = KeyValuePairs;
-                    Rect childRect = EditorGUI.IndentedRect(EditorGUILayout.GetControlRect());
-                    EditorGUI.BeginProperty(childRect, GUIContent.none, childProps);
+                SerializedProperty childProps = KeyValuePairs;
+                Rect childRect = EditorGUI.IndentedRect(EditorGUILayout.GetControlRect());
+                ReorderableList thislist = new ReorderableList(childProps.serializedObject, childProps, true, true, true, true);
 
-                    ReorderableList list = new ReorderableList(property.serializedObject, childProps, true, true, true, true);
-                    list.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "List");
-                    list.drawElementCallback = (rect, index, isActive, isFocused) =>
+                thislist.drawElementCallback = (Rect rect, int index, bool isActive, bool ifFocuesd) =>
+
+                {
+                    SerializedProperty element = childProps.GetArrayElementAtIndex(index);
+                    Rect elementRect = rect;
+                    elementRect.height = EditorGUIUtility.singleLineHeight;
+                    EditorGUI.PropertyField(elementRect, element.FindPropertyRelative("key"));
+                    elementRect.y += EditorGUIUtility.singleLineHeight * 1.5f;
+                    EditorGUI.PropertyField(elementRect, element.FindPropertyRelative("value"));
+                };
+                //thislist.elementHeight = 0f;
+                thislist.elementHeightCallback = (int index) =>
                     {
-                        SerializedProperty elementProperty = childProps.GetArrayElementAtIndex(index);
-                        EditorGUI.indentLevel++;
-
-
-                        if (elementProperty.isExpanded)
-                        {
-                            rect.y -= EditorGUIUtility.singleLineHeight * 1.5f;
-                            rect.height += EditorGUIUtility.singleLineHeight * 3f;
-                        }
-                        elementProperty.isExpanded = EditorGUI.Foldout(rect, elementProperty.isExpanded, "Element " + index);
-
-                        if (elementProperty.isExpanded)
-                        {
-                            //foldoutRect.y += EditorGUIUtility.singleLineHeight * 3f;
-                            rect.height -= EditorGUIUtility.singleLineHeight * 3f;
-
-                            EditorGUI.indentLevel++;
-                            Rect minirect = rect;
-
-
-                            minirect.y += EditorGUIUtility.singleLineHeight * 2.5f;
-                            EditorGUI.PropertyField(minirect, elementProperty.FindPropertyRelative("key"));
-                            minirect.y += EditorGUIUtility.singleLineHeight * 1.5f;
-                            EditorGUI.PropertyField(minirect, elementProperty.FindPropertyRelative("value"));
-
-                            EditorGUI.indentLevel--;
-                        }
-
-                        EditorGUI.indentLevel--;
+                        return 3f * EditorGUIUtility.singleLineHeight;
                     };
-
-                    list.DoLayoutList();
-
-
-                    EditorGUI.EndProperty();
-                    EditorGUI.indentLevel--;
-                }
+                thislist.DoLayoutList();
             }
+            EditorGUI.indentLevel--;
         }
     }
 }
