@@ -30,17 +30,30 @@ public class StringEnmumDictionaryPropertyDrawer : PropertyDrawer
                 thislist.drawElementCallback = (Rect rect, int index, bool isActive, bool ifFocuesd) =>
 
                 {
+
                     SerializedProperty element = childProps.GetArrayElementAtIndex(index);
-                    Rect elementRect = rect;
-                    elementRect.height = EditorGUIUtility.singleLineHeight;
-                    EditorGUI.PropertyField(elementRect, element.FindPropertyRelative("key"));
-                    elementRect.y += EditorGUIUtility.singleLineHeight * 1.5f;
-                    EditorGUI.PropertyField(elementRect, element.FindPropertyRelative("value"));
+                    EditorGUI.indentLevel++;
+                    Rect foldOutRect = rect;
+                    element.isExpanded = EditorGUI.Foldout(foldOutRect, element.isExpanded, "");
+                    if (element.isExpanded)
+                    {
+                        Rect elementRect = rect;
+                        elementRect.height = EditorGUIUtility.singleLineHeight;
+                        EditorGUI.PropertyField(elementRect, element.FindPropertyRelative("key"));
+                        elementRect.y += EditorGUIUtility.singleLineHeight * 1.5f;
+                        EditorGUI.PropertyField(elementRect, element.FindPropertyRelative("value"));
+                    }
+                    EditorGUI.indentLevel--;
                 };
                 //thislist.elementHeight = 0f;
                 thislist.elementHeightCallback = (int index) =>
                     {
-                        return 3f * EditorGUIUtility.singleLineHeight;
+                        if (childProps.GetArrayElementAtIndex(index).isExpanded)
+                        {
+                            //float hight = childProps.GetArrayElementAtIndex(index).rectValue.h
+                            return 3f * EditorGUIUtility.singleLineHeight;
+                        }
+                        return EditorGUIUtility.singleLineHeight;
                     };
                 thislist.DoLayoutList();
             }
