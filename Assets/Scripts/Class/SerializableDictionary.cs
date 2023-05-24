@@ -10,8 +10,8 @@ public class SerializableDictionary<TKey, TValue>
     [System.Serializable]
     public class KeyPair
     {
-        [SerializeField][SerializeReference] public TKey key;
-        [SerializeField][SerializeReference] public TValue value;
+        [SerializeField] public TKey key;
+        [SerializeField] public TValue value;
         public KeyPair(TKey key, TValue value)
         {
             this.key = key;
