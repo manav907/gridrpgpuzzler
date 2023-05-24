@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
+  m_Name: GreenRedDude
+  m_EditorClassIdentifier: 
+  InstanceID: 1
+  characterName: Ninjask
+  NameEnum: 3
+  isPlayerCharacter: 1
+  health: 1
+  attackDamage: 1
+  speedValue: 5
+  rangeOfVision: 5
+  canWalkOn: 00000000
+  listOfAbility:
+  - abilityString: Move
+    abilityName: 1
+    forceAbility: 0
+    rangeOfActionEnum: 2
+    reticalShapes: 0
+    requireCharacterBoolEnum: 2
+    disregardWalkablity: 0
+  - abilityString: Attack
+    abilityName: 2
+    forceAbility: 0
+    rangeOfActionEnum: 2
+    reticalShapes: 0
+    requireCharacterBoolEnum: 1
+    disregardWalkablity: 0
+  - abilityString: AxeSweep
+    abilityName: 9
+    forceAbility: 0
+    rangeOfActionEnum: 2
+    reticalShapes: 2
+    requireCharacterBoolEnum: 0
+    disregardWalkablity: 1

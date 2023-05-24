@@ -62,8 +62,8 @@ public class TurnManager : MonoBehaviour
     void InstantiateallIntractableCharacters()
     {
         //loadThisLevel.LoadData();
-        loadThisLevel.LoadDataFromDictionary();
-        var dict = loadThisLevel.GenerateV3IntToCharacterDataDir(loadThisLevel.DataStore);
+        //loadThisLevel.LoadDataFromDictionary();
+        var dict = loadThisLevel.GenerateV3IntToCharacterDataDir();
         foreach (var characterDataPair in dict)
         {
             GameObject InstansiatedCharacter = Instantiate(characterPrefab);//Instansiateding Character

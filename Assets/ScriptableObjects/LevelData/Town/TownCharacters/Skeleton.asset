@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
-  m_Name: Rapidash
+  m_Name: Skeleton
   m_EditorClassIdentifier: 
   InstanceID: 2
   characterName: Rapidash
-  health: 5
+  NameEnum: 0
+  isPlayerCharacter: 0
+  health: 2
   attackDamage: 2
   speedValue: 3
   rangeOfVision: 5
@@ -34,12 +36,3 @@ MonoBehaviour:
     reticalShapes: 0
     requireCharacterBoolEnum: 1
     disregardWalkablity: 0
-  spriteOffsetY: 0.5
-  Walk:
-  - {fileID: 1089611904, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
-  - {fileID: 256670280, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
-  - {fileID: 64736867, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
-  - {fileID: 570990605, guid: 6d7684dabdd836f4c8f96a59860fb34e, type: 3}
-  Idle:
-  - {fileID: -397161805, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
-  - {fileID: -1601712476, guid: 6fbe120b7fde42041ac062d32262a02b, type: 3}
