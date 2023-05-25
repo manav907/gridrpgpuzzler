@@ -7,7 +7,7 @@ using System.Linq;
 public class MapManager : MonoBehaviour
 {
     [SerializeField] public LevelDataSO LoadThisLevel;
-    [SerializeField] List<Tilemap> OrderOfTileMaps;
+    List<Tilemap> allTileMaps;
     [SerializeField] Tilemap Obstacles;
     [SerializeField] Tilemap Ground_Floor_Over;
     [SerializeField] Tilemap Ground_Floor;
@@ -108,8 +108,12 @@ public class MapManager : MonoBehaviour
     }
     void setCellDataDir()
     {
+        allTileMaps = new List<Tilemap>();
+        allTileMaps.Add(Obstacles);
+        allTileMaps.Add(Ground_Floor);
+        allTileMaps.Add(Ground_Floor_Over);
         cellDataDir = new Dictionary<Vector3Int, CellData>();
-        foreach (Tilemap tilemap in OrderOfTileMaps)
+        foreach (Tilemap tilemap in allTileMaps)
         {
             foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
             {
@@ -156,7 +160,7 @@ public class MapManager : MonoBehaviour
             universalCalculator = gameController.GetComponent<UniversalCalculator>();
 
             //Getting Objects From Game Controller
-            OrderOfTileMaps = mapManager.OrderOfTileMaps;
+            OrderOfTileMaps = mapManager.allTileMaps;
             dataFromTiles = mapManager.dataFromTiles;
             //Populating CellData Here
             refreshCellData();
