@@ -6,6 +6,7 @@ using System.IO;
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "New LevelData", menuName = "Level Data")]
 public class LevelDataSO : ScriptableObject
@@ -14,6 +15,9 @@ public class LevelDataSO : ScriptableObject
     [Header("Serilizable LevelData")]
     [SerializeField] SerializableDictionary<string, CharacterData> IDToChar;
     [SerializeField] SerializableDictionary<Vector3Int, string> PosToID;
+    [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Obstacles;
+    [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor_Over;
+    [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor;
     public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir()
     {
 

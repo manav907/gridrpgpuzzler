@@ -6,7 +6,7 @@ using System.Linq;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] GridData gridData;
+    [SerializeField] public LevelDataSO LoadThisLevel;
     [SerializeField] List<Tilemap> OrderOfTileMaps;
     [SerializeField] Tilemap Obstacles;
     [SerializeField] Tilemap Ground_Floor_Over;
@@ -19,16 +19,15 @@ public class MapManager : MonoBehaviour
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         turnManager = GetComponent<TurnManager>();
-        pullFromTileMapsToSO();
-        //PushFromSOToTileMaps();
+        OverWriteMapDataToSO();
         setTilesDir();
         setCellDataDir();
     }
-    void pullFromTileMapsToSO()
+    public void OverWriteMapDataToSO()
     {
-        pullToTileMapStore(Obstacles, gridData.Obstacles);
-        pullToTileMapStore(Ground_Floor_Over, gridData.Ground_Floor_Over);
-        pullToTileMapStore(Ground_Floor, gridData.Ground_Floor);
+        pullToTileMapStore(Obstacles, LoadThisLevel.Obstacles);
+        pullToTileMapStore(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
+        pullToTileMapStore(Ground_Floor, LoadThisLevel.Ground_Floor);
         void pullToTileMapStore(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore)
         {
             Dictionary<Vector3Int, TileBase> dict = new Dictionary<Vector3Int, TileBase>();
@@ -44,11 +43,11 @@ public class MapManager : MonoBehaviour
             tileMapStore.CopyDict(dict);
         }
     }
-    void PushFromSOToTileMaps()
+    public void LoadMapDataFromSO()
     {
-        pushToTileMap(Obstacles, gridData.Obstacles);
-        pushToTileMap(Ground_Floor_Over, gridData.Ground_Floor_Over);
-        pushToTileMap(Ground_Floor, gridData.Ground_Floor);
+        pushToTileMap(Obstacles, LoadThisLevel.Obstacles);
+        pushToTileMap(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
+        pushToTileMap(Ground_Floor, LoadThisLevel.Ground_Floor);
         void pushToTileMap(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore)
         {
             var dict = tileMapStore.returnDict();

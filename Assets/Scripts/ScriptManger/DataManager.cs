@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-    public LevelDataSO EditLevel;
     public bool EditMapMode = false;
     public int alternateRange = 50;
     public bool checkValidActionTiles = false;
@@ -56,7 +55,6 @@ public class DataManager : MonoBehaviour
         turnManager = GetComponent<TurnManager>();
         moveDictionaryManager = GetComponent<MoveDictionaryManager>();
         mapManager = GetComponent<MapManager>();
-        EditLevel = turnManager.loadThisLevel;
 
         setDictionarty();
     }

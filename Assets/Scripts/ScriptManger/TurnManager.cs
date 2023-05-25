@@ -27,8 +27,6 @@ public class TurnManager : MonoBehaviour
     [Header("Character Prefab Data to Instanstace Characters")]
     [SerializeField] GameObject characterPrefab;
     [SerializeField] GameObject characterHolder;
-    [Header("Level Data")]
-    public LevelDataSO loadThisLevel;
     [SerializeField] List<CharacterData> listOfCD;
     [Header("List of Active Characters")]
     public List<GameObject> ListOfInteractableCharacters;
@@ -61,9 +59,7 @@ public class TurnManager : MonoBehaviour
     }
     void InstantiateallIntractableCharacters()
     {
-        //loadThisLevel.LoadData();
-        //loadThisLevel.LoadDataFromDictionary();
-        var dict = loadThisLevel.GenerateV3IntToCharacterDataDir();
+        var dict = mapManager.LoadThisLevel.GenerateV3IntToCharacterDataDir();
         foreach (var characterDataPair in dict)
         {
             GameObject InstansiatedCharacter = Instantiate(characterPrefab);//Instansiateding Character
@@ -123,7 +119,7 @@ public class TurnManager : MonoBehaviour
     {
         basicCameraController.setCameraPos(pos);
     }
-    
+
     public void endTurn()
     {
         TurnCountInt++;
@@ -175,7 +171,7 @@ public enum GameStoryState
 }
 public enum ControlCharacterState
 {
-    
+
 }
 
 
