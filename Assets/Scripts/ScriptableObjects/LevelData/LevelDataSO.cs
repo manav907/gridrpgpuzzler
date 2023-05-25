@@ -13,7 +13,7 @@ public class LevelDataSO : ScriptableObject
 
     [Header("Serilizable LevelData")]
     [SerializeField] SerializableDictionary<string, CharacterData> IDToChar;
-    [SerializeField]SerializableDictionary<Vector3Int, string> PosToID;
+    [SerializeField] SerializableDictionary<Vector3Int, string> PosToID;
     public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir()
     {
 

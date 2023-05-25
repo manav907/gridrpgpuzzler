@@ -6,7 +6,11 @@ using System.Linq;
 
 public class MapManager : MonoBehaviour
 {
+    [SerializeField] GridData gridData;
     [SerializeField] List<Tilemap> OrderOfTileMaps;
+    [SerializeField] Tilemap Obstacles;
+    [SerializeField] Tilemap Ground_Floor_Over;
+    [SerializeField] Tilemap Ground_Floor;
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
     UniversalCalculator universalCalculator;
@@ -15,8 +19,50 @@ public class MapManager : MonoBehaviour
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         turnManager = GetComponent<TurnManager>();
+        pullFromTileMapsToSO();
+        //PushFromSOToTileMaps();
         setTilesDir();
-        setCellData();
+        setCellDataDir();
+    }
+    void pullFromTileMapsToSO()
+    {
+        pullToTileMapStore(Obstacles, gridData.Obstacles);
+        pullToTileMapStore(Ground_Floor_Over, gridData.Ground_Floor_Over);
+        pullToTileMapStore(Ground_Floor, gridData.Ground_Floor);
+        void pullToTileMapStore(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore)
+        {
+            Dictionary<Vector3Int, TileBase> dict = new Dictionary<Vector3Int, TileBase>();
+            foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
+            {
+                TileBase tile = tilemap.GetTile(pos);
+                if (tile != null)//Null tile Check to insure performace and stuff
+                {
+                    //Null Key Check to make sure CellData is instanciated only once for multiple tiles at the same Cell
+                    dict.Add(pos, tile);
+                }
+            }
+            tileMapStore.CopyDict(dict);
+        }
+    }
+    void PushFromSOToTileMaps()
+    {
+        pushToTileMap(Obstacles, gridData.Obstacles);
+        pushToTileMap(Ground_Floor_Over, gridData.Ground_Floor_Over);
+        pushToTileMap(Ground_Floor, gridData.Ground_Floor);
+        void pushToTileMap(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore)
+        {
+            var dict = tileMapStore.returnDict();
+            tilemap.ClearAllTiles();
+            foreach (var pair in dict)
+            {
+                Vector3Int pos = pair.Key;
+                TileBase tile = pair.Value;
+                if (tile != null)//Null tile Check to insure performace and stuff
+                {
+                    tilemap.SetTile(pos, tile);
+                }
+            }
+        }
     }
     void setTilesDir()
     {
@@ -61,7 +107,7 @@ public class MapManager : MonoBehaviour
         }
         return false;
     }
-    void setCellData()
+    void setCellDataDir()
     {
         cellDataDir = new Dictionary<Vector3Int, CellData>();
         foreach (Tilemap tilemap in OrderOfTileMaps)

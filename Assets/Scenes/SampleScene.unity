@@ -522,10 +522,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d46bf0b395e13d4eac05cf805f12c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridData: {fileID: 11400000, guid: a5b4c2b2ce2e5d644a5bb3f05b161eb6, type: 2}
   OrderOfTileMaps:
   - {fileID: 901888352}
   - {fileID: 1533399530}
   - {fileID: 957306169}
+  Obstacles: {fileID: 1533399530}
+  Ground_Floor_Over: {fileID: 957306169}
+  Ground_Floor: {fileID: 901888352}
   listOfTileDataScriptableObjects:
   - {fileID: 11400000, guid: cf96a52dbe483ab4ebde73314693d934, type: 2}
   - {fileID: 11400000, guid: cef59eb637bef15499926ba58c5f0c7f, type: 2}
