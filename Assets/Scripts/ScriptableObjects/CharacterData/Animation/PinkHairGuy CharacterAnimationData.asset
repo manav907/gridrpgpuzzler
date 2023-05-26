@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PinkHairGuy CharacterAnimationData
   m_EditorClassIdentifier: 
   nameEnum: 1
-  spriteOffsetY: 0.5
+  spriteOffsetY: 0
   Walk:
   - {fileID: -872131439, guid: 4588065920eafd34fa98511bbe368761, type: 3}
   - {fileID: -1670769258, guid: 4588065920eafd34fa98511bbe368761, type: 3}

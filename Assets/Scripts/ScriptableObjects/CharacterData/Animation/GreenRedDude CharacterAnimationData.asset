@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GreenRedDude CharacterAnimationData
   m_EditorClassIdentifier: 
   nameEnum: 3
-  spriteOffsetY: 0.5
+  spriteOffsetY: 0
   Walk:
   - {fileID: 443505917, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
   - {fileID: -705041071, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}

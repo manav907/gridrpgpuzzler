@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rapidash CharacterAnimationData
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationData
   nameEnum: 0
-  spriteOffsetY: 0.5
+  spriteOffsetY: 0
   Walk:
   - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}

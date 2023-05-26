@@ -18,7 +18,7 @@ MonoBehaviour:
   isPlayerCharacter: 1
   health: 1
   attackDamage: 1
-  speedValue: 5
+  speedValue: 7
   rangeOfVision: 5
   canWalkOn: 00000000
   listOfAbility:
