@@ -11,6 +11,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Tilemap Obstacles;
     [SerializeField] Tilemap Ground_Floor_Over;
     [SerializeField] Tilemap Ground_Floor;
+    [SerializeField] Tilemap Character_Placement;
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
     UniversalCalculator universalCalculator;
@@ -20,6 +21,7 @@ public class MapManager : MonoBehaviour
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         turnManager = GetComponent<TurnManager>();
         OverWriteMapDataToSO();
+        Character_Placement.ClearAllTiles();
         setTilesDir();
         setCellDataDir();
     }
@@ -28,6 +30,7 @@ public class MapManager : MonoBehaviour
         pullToTileMapStore(Obstacles, LoadThisLevel.Obstacles);
         pullToTileMapStore(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pullToTileMapStore(Ground_Floor, LoadThisLevel.Ground_Floor);
+        pullToTileMapStore(Character_Placement, LoadThisLevel.Character_Placeholder);
         void pullToTileMapStore(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore)
         {
             Dictionary<Vector3Int, TileBase> dict = new Dictionary<Vector3Int, TileBase>();
@@ -48,6 +51,7 @@ public class MapManager : MonoBehaviour
         pushToTileMap(Obstacles, LoadThisLevel.Obstacles);
         pushToTileMap(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pushToTileMap(Ground_Floor, LoadThisLevel.Ground_Floor);
+        pushToTileMap(Character_Placement, LoadThisLevel.Character_Placeholder);
         void pushToTileMap(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore)
         {
             var dict = tileMapStore.returnDict();
