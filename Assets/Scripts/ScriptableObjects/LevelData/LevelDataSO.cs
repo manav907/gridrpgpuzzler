@@ -11,11 +11,7 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "New LevelData", menuName = "Level Data")]
 public class LevelDataSO : ScriptableObject
 {
-
-    [Header("Serilizable LevelData")]
-    [SerializeField] SerializableDictionary<string, CharacterData> IDToChar;
-    [SerializeField] SerializableDictionary<Vector3Int, string> PosToID;
-    [Header("tileMap")]
+    [Header("TileMapData")]
     [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Obstacles;
     [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor_Over;
     [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor;
