@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using System;
 
 public class MapManager : MonoBehaviour
 {
@@ -20,12 +21,23 @@ public class MapManager : MonoBehaviour
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         turnManager = GetComponent<TurnManager>();
-        LoadThisLevel = UserDataManager.currentLevel;
+        LoadCorrectScene();
+
         LoadMapDataFromSO();
         Debug.Log(LoadThisLevel);
         Character_Placement.ClearAllTiles();
         setTilesDir();
         setCellDataDir();
+    }
+    void LoadCorrectScene()
+    {
+        if (UserDataManager.currentLevel == null)
+        {
+            Debug.LogError("Incorrect Scene Loaded Loading last Known Scene");
+            return;
+        }
+        LoadThisLevel = UserDataManager.currentLevel;
+
     }
     public void OverWriteMapDataToSO()
     {

@@ -184,10 +184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c24d64f882e3242a63d3d3240f7d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExampleList: []
   arcadeModeLevels:
-  - {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
   - {fileID: 11400000, guid: bc17f350a44ac3f49b279bc3f544c36b, type: 2}
+  - {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
   GridXLimit: 5
 --- !u!1 &615890425
 GameObject:
