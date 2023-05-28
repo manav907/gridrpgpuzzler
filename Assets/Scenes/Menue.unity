@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 308615220}
   - component: {fileID: 308615219}
+  - component: {fileID: 308615221}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -171,6 +172,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &308615221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308615218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c24d64f882e3242a63d3d3240f7d4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExampleList: []
+  arcadeModeLevels:
+  - {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
+  - {fileID: 11400000, guid: bc17f350a44ac3f49b279bc3f544c36b, type: 2}
+  GridXLimit: 5
 --- !u!1 &615890425
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,9 @@ public class MapManager : MonoBehaviour
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         turnManager = GetComponent<TurnManager>();
-        OverWriteMapDataToSO();
+        LoadThisLevel = UserDataManager.currentLevel;
+        LoadMapDataFromSO();
+        Debug.Log(LoadThisLevel);
         Character_Placement.ClearAllTiles();
         setTilesDir();
         setCellDataDir();

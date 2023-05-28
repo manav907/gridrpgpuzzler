@@ -1,11 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement style="align-items: center; justify-content: center; flex-direction: column; flex-grow: 1;">
-        <ui:VisualElement name="Options" style="position: relative; top: -20%; flex-direction: row; align-items: center; justify-content: center; right: -40%;">
-            <ui:Button text="Settings" display-tooltip-when-elided="true" />
+    <ui:VisualElement name="Screen" style="align-items: center; justify-content: center; flex-direction: column; flex-grow: 1; transition-duration: 5s;">
+        <ui:VisualElement name="Options" style="position: relative; top: -5%; flex-direction: row; align-items: center; justify-content: center; right: -40%;">
+            <ui:Button text="Settings" display-tooltip-when-elided="true" name="Settings" />
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="Back" />
         </ui:VisualElement>
-        <ui:VisualElement name="ModeContainer" style="flex-direction: row; width: 30%; height: 10%; justify-content: center; align-items: stretch; flex-grow: 0.5; flex-basis: auto; flex-shrink: 1;">
-            <ui:Button text="Arcade Mode" display-tooltip-when-elided="true" name="ArcadeMode" tooltip="Begin Arcade Mode - Play levels on demand and Compete for High Score" style="-unity-text-align: middle-center; width: auto; height: auto; justify-content: center; align-items: center; flex-direction: column; white-space: normal; font-size: 18px; flex-basis: 50%;" />
-            <ui:Button text="Story Mode" display-tooltip-when-elided="true" name="StoryMode" tooltip="Begin Story Mode" style="height: auto; width: auto; justify-content: center; align-items: center; white-space: normal; -unity-text-align: middle-center; flex-basis: 50%; font-size: 18px;" />
+        <ui:VisualElement name="MainView" style="flex-grow: 0.9; flex-direction: row; justify-content: center; width: 30%; height: 10%;">
+            <ui:VisualElement name="Modes" focusable="false" style="flex-direction: row; width: auto; height: auto; justify-content: center; align-items: stretch; flex-grow: 1; flex-basis: auto; flex-shrink: 1; opacity: 1; display: none; visibility: visible; overflow: visible;">
+                <ui:Button text="Story Mode" display-tooltip-when-elided="true" name="StoryMode" tooltip="Begin Story Mode" style="height: auto; width: auto; justify-content: center; align-items: center; white-space: normal; -unity-text-align: middle-center; flex-basis: 100%; font-size: 18px;" />
+                <ui:Button text="Arcade Mode" display-tooltip-when-elided="true" name="ArcadeMode" tooltip="Begin Arcade Mode - Play levels on demand and Compete for High Score" style="-unity-text-align: middle-center; width: auto; height: auto; justify-content: center; align-items: center; flex-direction: column; white-space: normal; font-size: 18px; flex-basis: 100%;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ButtonGird" style="flex-direction: row; align-items: center; justify-content: flex-start;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

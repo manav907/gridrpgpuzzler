@@ -59,6 +59,7 @@ public class TurnManager : MonoBehaviour
     }
     void InstantiateallIntractableCharacters()
     {
+        
         var dict = mapManager.LoadThisLevel.GenerateV3IntToCharacterDataDir();
         foreach (var characterDataPair in dict)
         {
