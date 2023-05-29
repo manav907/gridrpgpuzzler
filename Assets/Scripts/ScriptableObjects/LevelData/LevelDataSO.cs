@@ -20,28 +20,6 @@ public class LevelDataSO : ScriptableObject
     [SerializeField] public SerializableDictionary<TileBase, CharacterData> TileToChar;
     public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir()
     {
-
-        /*  var data = new Dictionary<Vector3Int, CharacterData>();
-         Dictionary<Vector3Int, string> PosToIDDir = PosToID.returnDict();
-         Dictionary<string, CharacterData> IDToCharDir = IDToChar.returnDict();
-         foreach (var dataPair in PosToIDDir)
-         {
-
-             Vector3Int atPos = dataPair.Key;
-             string CharacterDataID = dataPair.Value;
-             CharacterData characterData = ScriptableObject.CreateInstance<CharacterData>();
-             characterData.ReplaceDataWithPreset(IDToCharDir[CharacterDataID]);
-             //characterData.(IdToCharacterData[CharacterDataID]);
-             try
-             {
-                 data.Add(atPos, characterData);
-             }
-             catch (KeyNotFoundException)
-             {
-                 Debug.LogError("Enemy Key not Present in Level Preset Dictionary");
-             }
-         }
-         return data; */
         var data = new Dictionary<Vector3Int, CharacterData>();
         Dictionary<Vector3Int, TileBase> Character_Placeholder = this.Character_Placeholder.returnDict();
         Dictionary<TileBase, CharacterData> TileToChar = this.TileToChar.returnDict();
