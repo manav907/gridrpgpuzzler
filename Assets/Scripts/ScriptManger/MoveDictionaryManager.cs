@@ -82,7 +82,7 @@ public class MoveDictionaryManager : MonoBehaviour
             if (characterCS.doActionPointsRemainAfterAbility() == false)
             {
                 CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-                targetCharacter.ToggleCharacterTurnAnimation(false);                 
+                targetCharacter.ToggleCharacterTurnAnimation(false);
                 buttonManager.clearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
@@ -208,7 +208,16 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
+            GameObject objectCharacter = thisCharacter;
+            if (mapManager.cellDataDir[tryHere].characterAtCell != null)
+                objectCharacter = mapManager.cellDataDir[tryHere].characterAtCell;
+            GameEvents.current.sendChoice(thisCharacter, forAbilityData, objectCharacter);
+            yield return new WaitUntil(() => !GameEvents.current.EventInMotion);
+
+
             doThisAction();
+
+
 
             if (forceNextAbility == AbilityName.EndTurn)
             { doAction(AbilityName.EndTurn); }

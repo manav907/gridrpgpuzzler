@@ -12,38 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5222714fd87614146a8cf0525881ae67, type: 3}
   m_Name: Town
   m_EditorClassIdentifier: 
-  IDToChar:
-    KeyValuePairs:
-    - key: GreenRedDude
-      value: {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
-    - key: PinkHairGuy
-      value: {fileID: 11400000, guid: d18dc25da05cb7044b938c5a595aa3fb, type: 2}
-    - key: RedPriestessGirl
-      value: {fileID: 11400000, guid: 5ae9fabda933b73429302837d58ac7f6, type: 2}
-    - key: Skeleton
-      value: {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
-  PosToID:
-    KeyValuePairs:
-    - key: {x: -6, y: -12, z: 0}
-      value: GreenRedDude
-    - key: {x: -3, y: -5, z: 0}
-      value: PinkHairGuy
-    - key: {x: -2, y: -6, z: 0}
-      value: RedPriestessGirl
-    - key: {x: 2, y: -12, z: 0}
-      value: Skeleton
-    - key: {x: 3, y: -2, z: 0}
-      value: Skeleton
-    - key: {x: -7, y: -3, z: 0}
-      value: Skeleton
-    - key: {x: -1, y: 1, z: 0}
-      value: Skeleton
-    - key: {x: 3, y: 0, z: 0}
-      value: Skeleton
-    - key: {x: -2, y: 0, z: 0}
-      value: Skeleton
-    - key: {x: -1, y: -12, z: 0}
-      value: Skeleton
   Obstacles:
     KeyValuePairs: []
   Ground_Floor_Over:
@@ -1046,3 +1014,38 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: d18dc25da05cb7044b938c5a595aa3fb, type: 2}
     - key: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
       value: {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
+  ChoiceToBranchMap:
+    KeyValuePairs:
+    - key:
+        choiceStack: []
+      value:
+        OrderOfDialogs:
+          KeyValuePairs:
+          - key: 3
+            value:
+              dialogText: 1gre
+          - key: 1
+            value:
+              dialogText: 23
+          - key: 2
+            value:
+              dialogText: 5543d
+        AvaiableChoices:
+        - subjectCharcter: 1
+          performedAction: 0
+          objectCharacter: 2
+    - key:
+        choiceStack:
+        - subjectCharcter: 1
+          performedAction: 0
+          objectCharacter: 2
+      value:
+        OrderOfDialogs:
+          KeyValuePairs:
+          - key: 3
+            value:
+              dialogText: Brush why kill
+          - key: 1
+            value:
+              dialogText: IDK bro
+        AvaiableChoices: []

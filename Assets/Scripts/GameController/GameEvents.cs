@@ -10,13 +10,12 @@ public class GameEvents : MonoBehaviour
     [Header("Reffrences")]
     [SerializeField] GameObject scriptManager;
     TurnManager turnManager;
-    DialogSetManger dialogSetManger;
     public static GameEvents current;
     [Header("Dialog Stuff")]
     [SerializeField] TMPro.TextMeshProUGUI textBox;
     [SerializeField] Image imagePortraitReffrence;
     [SerializeField] Sprite[] images;
-    [SerializeField] string[] listOFDialog;
+    [SerializeField] ChoiceBasedDialogManager DialogTree;
     [Header("Game State")]
     int TotalEnemies = 0;
     int TotalPlayers;
@@ -39,8 +38,9 @@ public class GameEvents : MonoBehaviour
         onCharacterDeath += delegate { Debug.Log("Even dEath Called"); };
         TriggerNextDialogAction += TriggerCharacterDialogs;
         turnManager = scriptManager.GetComponent<TurnManager>();
-        dialogSetManger = GetComponent<DialogSetManger>();
-
+        MapManager mapManager = scriptManager.GetComponent<MapManager>();
+        //
+        DialogTree = new ChoiceBasedDialogManager(mapManager.LoadThisLevel.ChoiceToBranchMap);
     }
     public event Action onCharacterDeath;
     public void CheckDath()
@@ -50,60 +50,10 @@ public class GameEvents : MonoBehaviour
             onCharacterDeath();
         }
     }
-    bool char1 = true;
-    bool char2 = true;
-    bool char3 = true;
-    string generateTreeIndex()
-    {
-
-        string output = "";
-
-        if (char1)
-            output += "1";
-        else
-            output += "0";
-
-        if (char2)
-            output += "1";
-        else
-            output += "0";
-
-        if (char3)
-            output += "1";
-        else
-            output += "0";
-        return output;
-    }
     public void DeathEvent(CharacterControllerScript characterControllerScript)
     {
 
-        switch (characterControllerScript.CharacterDataSO.NameEnum)
-        {
-
-            case CharacterName.GreenRedDude:
-                {
-                    char1 = false;
-                    DialotTreeInt = 1;
-                    break; // It's important to include the break statement to exit the switch statement
-                }
-            case CharacterName.PinkHairGuy:
-                {
-                    char2 = false;
-                    DialotTreeInt = 1;
-                    break; // It's important to include the break statement to exit the switch statement
-                }
-            case CharacterName.RedPriestessGirl:
-                {
-                    char3 = false;
-                    DialotTreeInt = 1;
-                    break; // It's important to include the break statement to exit the switch statement
-                }
-            default:
-                {
-                    DialotTreeInt = 0;
-                    break;
-                }
-        }
+        //Debug.Log("Death of " + characterControllerScript.CharacterDataSO.NameEnum);
         if (!characterControllerScript.isPlayerCharacter)
         {
             TotalEnemies--;
@@ -115,6 +65,30 @@ public class GameEvents : MonoBehaviour
             //Debug.Log("Remaining Survivors are" + Survivors);
         }
         CheckWinCondidion();
+    }
+    public bool EventInMotion;
+    public void sendChoice(GameObject subjectCharacter, AbilityName abilityPerfomed, GameObject objectCharacter)
+    {
+        EventInMotion = true;
+        Choice newChoice = new Choice(subjectCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum, Choice.Actions.Observed, objectCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum);
+        if (abilityPerfomed != AbilityName.Move)
+            newChoice.performedAction = Choice.Actions.Attacked;
+        DeathCheckOnChoice();
+        if (DialogTree.ChangeBranch(newChoice))
+        {
+            TriggerDialogEvent(DialogTree.currentBranch);
+        }
+        else
+        {
+            EventInMotion = false;
+        }
+        void DeathCheckOnChoice()
+        {
+            if (true == true)
+            {
+                newChoice.performedAction = Choice.Actions.Killed;
+            }
+        }
     }
     void CheckWinCondidion()
     {
@@ -175,32 +149,34 @@ public class GameEvents : MonoBehaviour
     public int DialotTreeInt = 0;
     void TriggerCharacterDialogs()
     {
-        //Debug.Log("Current Tree" + DialotTreeInt + " Chanracter Name" + currentCharacterName.ToString() + " Turn Loop " + turnLoop);
-        string currentTreeIndex = generateTreeIndex();
-        Debug.Log("Current Tree " + currentTreeIndex + " Chanracter Name " + currentCharacterName.ToString() + " Turn Loop " + turnLoop);
-        dialogSetManger.setBranch(currentTreeIndex);
-        string newDialog;
-        //newDialog = dialogSetManger.DialogTree[DialotTreeInt].getCharacterDialog(currentCharacterName.ToString(), turnLoop);
-        newDialog = dialogSetManger.curentBranch.getCharacterDialog(currentCharacterName.ToString(), turnLoop);
-        Sprite newSprite;
-        newSprite = dialogSetManger.curentBranch.getCharacterSprite(currentCharacterName.ToString(), turnLoop);
-        Debug.Log(newDialog);
+        //Debug.Log("Replacing This Stuff");
 
-        if (newDialog == null)
+    }
+    void TriggerDialogEvent(DialogEvent currentDialogEvent)
+    {
+        Dictionary<CharacterName, Dialog> DialogMap = currentDialogEvent.OrderOfDialogs.returnDict();
+        foreach (var keyPair in DialogMap)
         {
-            setDialogToNull();
-
+            Debug.Log("Character" + keyPair.Key + " Said That " + keyPair.Value.dialogText);
         }
-        imagePortraitReffrence.sprite = newSprite;
-        textBox.text = newDialog;
+
+        EventInMotion = false;
+        setDialog(null, "");
+        void setDialog(Sprite newSprite, string newDialog)
+        {
+            if (newDialog == null)
+            {
+                setDialogToNull();
+                return;
+            }
+            imagePortraitReffrence.sprite = newSprite;
+            textBox.text = newDialog;
+        }
         void setDialogToNull()
         {
             Color spriteColor = imagePortraitReffrence.color;
             spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
             imagePortraitReffrence.color = spriteColor;
-
-
-
             textBox.text = "";
             return;
         }
