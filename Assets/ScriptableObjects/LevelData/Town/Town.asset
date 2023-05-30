@@ -1023,28 +1023,28 @@ MonoBehaviour:
           KeyValuePairs:
           - key: 3
             value:
-              dialogText: 1gre
+              dialogText: move away
           - key: 1
             value:
-              dialogText: 23
+              dialogText: split away
           - key: 2
             value:
-              dialogText: 5543d
+              dialogText: regroup
         AvaiableChoices:
-        - subjectCharcter: 1
-          performedAction: 0
+        - subjectCharacter: 1
+          performedAction: 1
           objectCharacter: 2
     - key:
         choiceStack:
-        - subjectCharcter: 1
-          performedAction: 0
+        - subjectCharacter: 1
+          performedAction: 1
           objectCharacter: 2
       value:
         OrderOfDialogs:
           KeyValuePairs:
           - key: 3
             value:
-              dialogText: Brush why kill
+              dialogText: Bro why kill
           - key: 1
             value:
               dialogText: IDK bro

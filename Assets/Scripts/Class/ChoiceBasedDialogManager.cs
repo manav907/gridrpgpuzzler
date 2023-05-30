@@ -5,24 +5,24 @@ using UnityEngine;
 [System.Serializable]
 public class ChoiceBasedDialogManager
 {
-    Dictionary<BranchID, DialogEvent> ChoiceToBranchMap;
+    Dictionary<string, DialogEvent> ChoiceToBranchMap;
     public DialogEvent currentBranch;
     BranchID cuurentBranchID;
     public bool ChangeBranch(Choice newActiontaken)
     {
         if (currentBranch.isChoiceContained(newActiontaken))
         {
-            //Debug.Log("Choice Was Available");
+            
             cuurentBranchID.choiceStack.Add(newActiontaken);
-            if (ChoiceToBranchMap.ContainsKey(cuurentBranchID))
+            if (ChoiceToBranchMap.ContainsKey(cuurentBranchID.ID))//Need To Write New Check For This As Well
             {
-                currentBranch = ChoiceToBranchMap[cuurentBranchID];
-                //Debug.Log("Path Exixts");
+                currentBranch = ChoiceToBranchMap[cuurentBranchID.ID];
+                Debug.Log("Path Exists");
                 return true;
             }
             else
             {
-                //Debug.LogError("Path Does not Exist");
+                Debug.LogError("Path Does not Exist");
                 return false;
             }
         }
@@ -36,9 +36,14 @@ public class ChoiceBasedDialogManager
     }
     public ChoiceBasedDialogManager(SerializableDictionary<BranchID, DialogEvent> ChoiceToBranchMapSD)
     {
-        ChoiceToBranchMap = ChoiceToBranchMapSD.returnDict();
+        var tempDict = ChoiceToBranchMapSD.returnDict();
+        ChoiceToBranchMap = new Dictionary<string, DialogEvent>();
+        foreach (var keyPair in tempDict)
+        {
+            ChoiceToBranchMap.Add(keyPair.Key.ID, keyPair.Value);
+        }
         currentBranch = ChoiceToBranchMapSD.Values()[0];
-        cuurentBranchID = ChoiceToBranchMapSD.Keys()[0];
+        cuurentBranchID = new BranchID();
     }
 
 }
@@ -75,7 +80,23 @@ public class Dialog
 [System.Serializable]
 public class BranchID
 {
+    public string ID
+    {
+        get
+        {
+            string IDstring = "";
+            foreach (Choice choice in choiceStack)
+            {
+                IDstring += choice.CheckAction();
+            }
+            return IDstring;
+        }
+    }
     public List<Choice> choiceStack;
+    public BranchID()
+    {
+        choiceStack = new List<Choice>();
+    }
 }
 
 [System.Serializable]

@@ -27,8 +27,6 @@ public class GameEvents : MonoBehaviour
     public AudioClip[] sfx;
     public void PlaySound(int i)
     {
-        //GameObject soundGameObject = new GameObject("Sound");
-        //AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
         AudioSource audioSource = GetComponent<AudioSource>();
         audioSource.PlayOneShot(sfx[i]);
     }
@@ -36,11 +34,34 @@ public class GameEvents : MonoBehaviour
     {
         current = this;
         onCharacterDeath += delegate { Debug.Log("Even dEath Called"); };
-        TriggerNextDialogAction += TriggerCharacterDialogs;
         turnManager = scriptManager.GetComponent<TurnManager>();
         MapManager mapManager = scriptManager.GetComponent<MapManager>();
+
+
         //
         DialogTree = new ChoiceBasedDialogManager(mapManager.LoadThisLevel.ChoiceToBranchMap);
+    }
+    Dictionary<CharacterName, Transform> NameTagToTransform;
+    public void setVariables()
+    {
+        setUpCamera();
+    }
+    void setUpCamera()
+    {
+        NameTagToTransform = new Dictionary<CharacterName, Transform>();
+
+        foreach (var GO in turnManager.ListOfInteractableCharacters)
+        {
+            CharacterName nameEnum = GO.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum;
+            if (NameTagToTransform.ContainsKey(nameEnum))
+            {
+            }
+            else
+            {
+                Debug.Log(nameEnum);
+                NameTagToTransform.Add(nameEnum, GO.GetComponent<Transform>());
+            }
+        }
     }
     public event Action onCharacterDeath;
     public void CheckDath()
@@ -104,7 +125,6 @@ public class GameEvents : MonoBehaviour
         }
         if (TotalEnemies == 0)
         {
-            TriggerNextDialogAction -= TriggerCharacterDialogs;
 
             if (TotalPlayers == Survivors)
             {
@@ -123,7 +143,6 @@ public class GameEvents : MonoBehaviour
         }
         else if (Survivors == 0)
         {
-            TriggerNextDialogAction -= TriggerCharacterDialogs;
             gameWinDialog = "Game Over";
             TriggerNextDialogAction += winGameDialog;
         }
@@ -146,39 +165,50 @@ public class GameEvents : MonoBehaviour
         if (TriggerNextDialogAction != null)
             TriggerNextDialogAction();
     }
-    public int DialotTreeInt = 0;
-    void TriggerCharacterDialogs()
+    public void TriggerDialogEvent(DialogEvent currentDialogEvent)
     {
-        //Debug.Log("Replacing This Stuff");
+        StartCoroutine(ShowCharacterDialogs());
 
-    }
-    void TriggerDialogEvent(DialogEvent currentDialogEvent)
-    {
-        Dictionary<CharacterName, Dialog> DialogMap = currentDialogEvent.OrderOfDialogs.returnDict();
-        foreach (var keyPair in DialogMap)
-        {
-            Debug.Log("Character" + keyPair.Key + " Said That " + keyPair.Value.dialogText);
-        }
-
-        EventInMotion = false;
-        setDialog(null, "");
         void setDialog(Sprite newSprite, string newDialog)
         {
-            if (newDialog == null)
+            /* if (newDialog == null)
             {
+                Debug.Log("Dialog Was Null \n" + newDialog);
                 setDialogToNull();
                 return;
-            }
-            imagePortraitReffrence.sprite = newSprite;
+            } */
+            //Debug.Log(textBox.text);
             textBox.text = newDialog;
+            if (newSprite != null)
+            { imagePortraitReffrence.sprite = newSprite; }
+
         }
-        void setDialogToNull()
+        /* void setDialogToNull()
         {
             Color spriteColor = imagePortraitReffrence.color;
             spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
             imagePortraitReffrence.color = spriteColor;
             textBox.text = "";
             return;
+        } */
+        IEnumerator ShowCharacterDialogs()
+        {
+            setDialog(null, "");
+            Dictionary<CharacterName, Dialog> DialogMap = currentDialogEvent.OrderOfDialogs.returnDict();
+            Vector3 originalPos = turnManager.thisCharacter.transform.position;
+            foreach (var keyPair in DialogMap)
+            {
+
+                //Debug.Log("Character" + keyPair.Key + " Said \n" + keyPair.Value.dialogText);
+                setDialog(null, keyPair.Value.dialogText);
+                if (NameTagToTransform.ContainsKey(keyPair.Key))
+                    turnManager.setCameraPos(NameTagToTransform[keyPair.Key].transform.position);
+
+
+                yield return new WaitForSeconds(2f);
+            }
+            turnManager.setCameraPos(originalPos);
+            EventInMotion = false;// This is Super Inportant
         }
     }
 

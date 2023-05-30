@@ -24,7 +24,6 @@ public class MapManager : MonoBehaviour
         LoadCorrectScene();
 
         LoadMapDataFromSO();
-        Debug.Log(LoadThisLevel);
         Character_Placement.ClearAllTiles();
         setTilesDir();
         setCellDataDir();

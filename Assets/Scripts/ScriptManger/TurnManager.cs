@@ -56,10 +56,11 @@ public class TurnManager : MonoBehaviour
         reticalManager.setVariables();
         universalCalculator.setVariables();
         basicCameraController.setVariables(gameController);
+
     }
     void InstantiateallIntractableCharacters()
     {
-        
+
         var dict = mapManager.LoadThisLevel.GenerateV3IntToCharacterDataDir();
         foreach (var characterDataPair in dict)
         {
@@ -81,6 +82,8 @@ public class TurnManager : MonoBehaviour
             //last step
             InstansiatedCCS.InitilizeCharacter(gameController);//Last step Initilization
         }
+
+        GameEvents.current.setVariables();
     }
     public void beginTurnIfPossible()
     {
