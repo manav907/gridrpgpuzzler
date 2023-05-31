@@ -15,7 +15,7 @@ public class GameEvents : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI textBox;
     [SerializeField] Image imagePortraitReffrence;
     [SerializeField] Sprite[] images;
-    [SerializeField] ChoiceBasedDialogManager DialogTree;
+    [SerializeField] public ChoiceBasedDialogManager DialogTree;
     [Header("Game State")]
     int TotalEnemies = 0;
     int TotalPlayers;
@@ -42,11 +42,7 @@ public class GameEvents : MonoBehaviour
         DialogTree = new ChoiceBasedDialogManager(mapManager.LoadThisLevel.ChoiceToBranchMap);
     }
     Dictionary<CharacterName, Transform> NameTagToTransform;
-    public void setVariables()
-    {
-        setUpCamera();
-    }
-    void setUpCamera()
+    public void setUpCamera()
     {
         NameTagToTransform = new Dictionary<CharacterName, Transform>();
 
@@ -183,29 +179,32 @@ public class GameEvents : MonoBehaviour
             { imagePortraitReffrence.sprite = newSprite; }
 
         }
-        /* void setDialogToNull()
+        void setDialogToNull()
         {
             Color spriteColor = imagePortraitReffrence.color;
             spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
             imagePortraitReffrence.color = spriteColor;
             textBox.text = "";
             return;
-        } */
+        }
         IEnumerator ShowCharacterDialogs()
         {
             setDialog(null, "");
-            Dictionary<CharacterName, Dialog> DialogMap = currentDialogEvent.OrderOfDialogs.returnDict();
+            //Dictionary<CharacterName, Dialog> DialogMap = currentDialogEvent.OrderOfDialogs.returnDict();
+            var OrderOfDialogs = currentDialogEvent.OrderOfDialogs.KeyValuePairs;
             Vector3 originalPos = turnManager.thisCharacter.transform.position;
-            foreach (var keyPair in DialogMap)
+            for (int i = 0; i < OrderOfDialogs.Count; i++)
             {
-
+                var key = OrderOfDialogs[i].key;
+                var value = OrderOfDialogs[i].value;
                 //Debug.Log("Character" + keyPair.Key + " Said \n" + keyPair.Value.dialogText);
-                setDialog(null, keyPair.Value.dialogText);
-                if (NameTagToTransform.ContainsKey(keyPair.Key))
-                    turnManager.setCameraPos(NameTagToTransform[keyPair.Key].transform.position);
+                setDialog(null, value.dialogText);
+                if (NameTagToTransform.ContainsKey(key))
+                    turnManager.setCameraPos(NameTagToTransform[key].transform.position);
 
 
                 yield return new WaitForSeconds(2f);
+                setDialogToNull();
             }
             turnManager.setCameraPos(originalPos);
             EventInMotion = false;// This is Super Inportant

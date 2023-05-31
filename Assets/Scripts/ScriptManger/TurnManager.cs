@@ -11,8 +11,9 @@ public class TurnManager : MonoBehaviour
     {
         GetGameObjects();
         InstantiateallIntractableCharacters();//Can only be called after getting game objects
-        recalculateOrder();//can only be called after Instanstiating the Characterts
+        recalculateOrder();//can only be called after Instanstiating the Characterts       
         beginTurnIfPossible();
+        GameEvents.current.TriggerDialogEvent(GameEvents.current.DialogTree.currentBranch);//Starts the First Dialog Event
     }
     [Header("Reffrences to Important Game Objects")]
     GameObject gameController;
@@ -83,7 +84,7 @@ public class TurnManager : MonoBehaviour
             InstansiatedCCS.InitilizeCharacter(gameController);//Last step Initilization
         }
 
-        GameEvents.current.setVariables();
+        GameEvents.current.setUpCamera();//Move This Somewhere Else
     }
     public void beginTurnIfPossible()
     {

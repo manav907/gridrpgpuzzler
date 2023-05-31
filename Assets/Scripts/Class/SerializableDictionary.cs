@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class SerializableDictionary<TKey, TValue>
 {
-    [SerializeField] List<KeyPair> KeyValuePairs;
+    [SerializeField] public List<KeyPair> KeyValuePairs;
     [System.Serializable]
     public class KeyPair
     {

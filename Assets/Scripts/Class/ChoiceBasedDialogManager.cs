@@ -28,7 +28,6 @@ public class ChoiceBasedDialogManager
         }
         else
         {
-            //Debug.Log("Choice Was NOT Available");
             return false;
         }
 

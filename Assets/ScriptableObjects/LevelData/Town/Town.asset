@@ -1023,13 +1023,16 @@ MonoBehaviour:
           KeyValuePairs:
           - key: 3
             value:
-              dialogText: move away
+              dialogText: You guys, it's an ambush! We can't stay here, or we'll
+                be overwhelmed!
           - key: 1
             value:
-              dialogText: split away
+              dialogText: If we keep running, we'll never escape. We have to face
+                them head-on. I'll go and draw their attention.
           - key: 2
             value:
-              dialogText: regroup
+              dialogText: No, please! It's too dangerous! I can't bear the thought
+                of losing you.
         AvaiableChoices:
         - subjectCharacter: 1
           performedAction: 1
@@ -1044,8 +1047,12 @@ MonoBehaviour:
           KeyValuePairs:
           - key: 3
             value:
-              dialogText: Bro why kill
+              dialogText: How could you just ....??
           - key: 1
             value:
-              dialogText: IDK bro
+              dialogText: I had no choice! We couldn't save her and stay alive ourselves.
+          - key: 3
+            value:
+              dialogText: I can't believe this... I won't forget what happened here
+                today.
         AvaiableChoices: []
