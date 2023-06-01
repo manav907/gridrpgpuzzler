@@ -13,7 +13,6 @@ public class TurnManager : MonoBehaviour
         InstantiateallIntractableCharacters();//Can only be called after getting game objects
         recalculateOrder();//can only be called after Instanstiating the Characterts       
         beginTurnIfPossible();
-        GameEvents.current.TriggerDialogEvent(GameEvents.current.DialogTree.currentBranch);//Starts the First Dialog Event
     }
     [Header("Reffrences to Important Game Objects")]
     GameObject gameController;

@@ -15,7 +15,6 @@ public class GameEvents : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI textBox;
     [SerializeField] Image imagePortraitReffrence;
     [SerializeField] Sprite[] images;
-    [SerializeField] public ChoiceBasedDialogManager DialogTree;
     [Header("Game State")]
     int TotalEnemies = 0;
     int TotalPlayers;
@@ -36,10 +35,6 @@ public class GameEvents : MonoBehaviour
         onCharacterDeath += delegate { Debug.Log("Even dEath Called"); };
         turnManager = scriptManager.GetComponent<TurnManager>();
         MapManager mapManager = scriptManager.GetComponent<MapManager>();
-
-
-        //
-        DialogTree = new ChoiceBasedDialogManager(mapManager.LoadThisLevel.ChoiceToBranchMap);
     }
     Dictionary<CharacterName, Transform> NameTagToTransform;
     public void setUpCamera()
@@ -91,9 +86,10 @@ public class GameEvents : MonoBehaviour
         if (abilityPerfomed != AbilityName.Move)
             newChoice.performedAction = Choice.Actions.Attacked;
         DeathCheckOnChoice();
-        if (DialogTree.ChangeBranch(newChoice))
+        if (true == false)
+        //if (DialogTree.ChangeBranch(newChoice))
         {
-            TriggerDialogEvent(DialogTree.currentBranch);
+            //TriggerDialogEvent(DialogTree.currentBranch);
         }
         else
         {

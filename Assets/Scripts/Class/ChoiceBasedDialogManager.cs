@@ -12,7 +12,7 @@ public class ChoiceBasedDialogManager
     {
         if (currentBranch.isChoiceContained(newActiontaken))
         {
-            
+
             cuurentBranchID.choiceStack.Add(newActiontaken);
             if (ChoiceToBranchMap.ContainsKey(cuurentBranchID.ID))//Need To Write New Check For This As Well
             {
@@ -122,5 +122,17 @@ public class Choice
         Killed,
         Healed,
         Observed
+    }
+    public class EventTrigger
+    //THIS IS CALLED BY ANOTHER GAMEOBJECT eg char1 call EventTrigger OnHurt which check for OnDeath and then calls it if needed
+    //when this is called it checks if the trigger requitrements are met by check with GameEvents using char1 has argument
+    // then trigger the event if positive
+    {
+        Actions actionPerformed;
+        bool mortalityChance;
+        GameObject TheyGuyWhoPreformedTheaCTIN;
+        List<Choice> WhiteListTriggerRequitements;
+        List<Choice> BlackListTriggerRequitements;
+        //List<Choice> AnyTriggerRequitements;
     }
 }

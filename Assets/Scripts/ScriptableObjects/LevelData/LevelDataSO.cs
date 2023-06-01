@@ -18,9 +18,8 @@ public class LevelDataSO : ScriptableObject
     [Header("CharacterData")]
     [HideInInspector][SerializeField] public SerializableDictionary<Vector3Int, TileBase> Character_Placeholder;
     [SerializeField] public SerializableDictionary<TileBase, CharacterData> TileToChar;
-
-
-    [SerializeField] public SerializableDictionary<BranchID, DialogEvent> ChoiceToBranchMap;
+    
+    //[SerializeField]public SerializableDictionary<>
 
 
     public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir()
