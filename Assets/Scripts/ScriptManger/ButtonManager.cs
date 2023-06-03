@@ -40,7 +40,7 @@ public class ButtonManager : MonoBehaviour
 
     [SerializeField] float buttonSpacing = 0;
     [SerializeField] float buttonHight;
-    public void InstantiateButtons(List<AbilityName> abilityOfCharacter)
+    public void InstantiateButtons(List<CompundAbility> abilityOfCharacter)
     {
         clearButtons();
         for (int i = 0; i < abilityOfCharacter.Count; i++)
@@ -55,9 +55,9 @@ public class ButtonManager : MonoBehaviour
             // getting cache for captured variables
             //int captured = i;//no Longer needed
 
-            AbilityName abilityName = abilityOfCharacter[i];
-            string stringOfAbilityName = abilityName.ToString();//This is the cache now
-            stringOfAbilityName = universalCalculator.CamelCaseToSpaces(stringOfAbilityName);
+            CompundAbility abilityName = abilityOfCharacter[i];
+            string stringOfAbilityName = abilityName.NameOfAbility;//This is the cache now
+            //stringOfAbilityName = universalCalculator.CamelCaseToSpaces(stringOfAbilityName);
             // using variables to set text
             TMPthis.text = stringOfAbilityName;
             ActionButtons[i].name = stringOfAbilityName + " Button";

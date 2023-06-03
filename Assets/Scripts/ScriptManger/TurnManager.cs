@@ -99,7 +99,12 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Game Over");
             //buttonManager.clearButtons();
-            buttonManager.InstantiateButtons(new List<AbilityName>() { AbilityName.Restart });
+            CompundAbility Restart = new CompundAbility();
+            BasicAction basicAction = new BasicAction();
+            basicAction.typeOfAction = TypeOfAction.apply_TryEndTurn;
+            Restart.componentActions.Add(basicAction);
+
+            buttonManager.InstantiateButtons(new List<CompundAbility>() { Restart });
         }
         void setCharacterData()
         {

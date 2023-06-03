@@ -92,6 +92,10 @@ public class MapManager : MonoBehaviour
 
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, CharacterControllerScript characterDataHolder)
     {
+        if (!cellDataDir.ContainsKey(tilePos))
+        {
+            return false;
+        }
         //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
         //This get data From SO
         foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)

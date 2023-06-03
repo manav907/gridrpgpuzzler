@@ -79,11 +79,11 @@ public class GameEvents : MonoBehaviour
         CheckWinCondidion();
     }
     public bool EventInMotion;
-    public void sendChoice(GameObject subjectCharacter, AbilityName abilityPerfomed, GameObject objectCharacter)
+    public void sendChoice(GameObject subjectCharacter, TypeOfAction abilityPerfomed, GameObject objectCharacter)
     {
         EventInMotion = true;
         Choice newChoice = new Choice(subjectCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum, Choice.Actions.Observed, objectCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum);
-        if (abilityPerfomed != AbilityName.Move)
+        if (abilityPerfomed != TypeOfAction.apply_SelfMove)
             newChoice.performedAction = Choice.Actions.Attacked;
         DeathCheckOnChoice();
         if (true == false)

@@ -20,7 +20,7 @@ public class MoveDictionaryManager : MonoBehaviour
     [Header("Retical And Tile Data")]
     private Vector3Int tryHere;
     [Header("Current Ablity")]
-    [SerializeField] Ability currentAblity;
+    //[SerializeField] Ability currentAblity;
     [Header("Debug Data")]
     [SerializeField][TextArea] string ValidTargetListDebugInfo;
     bool EditMapMode { get { return dataManager.EditMapMode; } }
@@ -48,36 +48,43 @@ public class MoveDictionaryManager : MonoBehaviour
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
     }
     Dictionary<AbilityName, Action> abilityNameToAction;
+    Dictionary<TypeOfAction, Action> TypeOFActionToAction;
     void SetMoveDictionary()
     {
         abilityNameToAction = new Dictionary<AbilityName, Action>();
-        abilityNameToAction.Add(AbilityName.Move, MoveCharacter);
-        abilityNameToAction.Add(AbilityName.Attack, AttackHere);
-        abilityNameToAction.Add(AbilityName.DoubleAttack, DoubleAttack);
-        abilityNameToAction.Add(AbilityName.EndTurn, EndTurn);
-        abilityNameToAction.Add(AbilityName.OpenInventory, OpenInventory);
-        abilityNameToAction.Add(AbilityName.CloseInventory, CloseInventory);
-        abilityNameToAction.Add(AbilityName.FireBall, ThrowFireBall);
-        abilityNameToAction.Add(AbilityName.HeartPickup, HeartPickup);
         abilityNameToAction.Add(AbilityName.DoubleTeam, DoubleTeam);
         abilityNameToAction.Add(AbilityName.AxeSweep, AxeSweep);
         abilityNameToAction.Add(AbilityName.Restart, Restart);
 
-        //ablity Actions
-        void MoveCharacter()
+        TypeOFActionToAction = new Dictionary<TypeOfAction, Action>();
+
+        TypeOFActionToAction.Add(TypeOfAction.apply_Damage, apply_Damage);
+        TypeOFActionToAction.Add(TypeOfAction.apply_Heal, apply_Heal);
+        TypeOFActionToAction.Add(TypeOfAction.apply_SelfMove, apply_SelfMove);
+        TypeOFActionToAction.Add(TypeOfAction.apply_TryEndTurn, apply_TryEndTurn);
+
+
+        void apply_Damage()
         {
-            //Ability ability = new Ability(AbilityName.Move, ValidTargetData.OnOccupiable, DirectionOfAction.complete);
-            StartCoroutine(getInput(simpleMoveAction, AbilityName.Move));
+            BasicActionInProgress = false;
         }
-        void AttackHere()
+        void apply_Heal()
         {
-            StartCoroutine(getInput(simpleAttackAction, AbilityName.Attack));
+            BasicActionInProgress = false;
         }
-        void DoubleAttack()
+        void apply_SelfMove()
         {
-            StartCoroutine(getInput(simpleAttackAction, AbilityName.Attack));
+            Vector3Int currentPosition = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+            mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
+            var ListOfMovePoints = new List<Vector3>();
+            ListOfMovePoints.Add(tryHere);
+            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
+
+
+
+            BasicActionInProgress = false;
         }
-        void EndTurn()
+        void apply_TryEndTurn()
         {
             if (characterCS.doActionPointsRemainAfterAbility() == false)
             {
@@ -86,48 +93,18 @@ public class MoveDictionaryManager : MonoBehaviour
                 buttonManager.clearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
-        }
-        void OpenInventory()
-        {
-            buttonManager.InstantiateButtons(characterCS.CharacterInventoryList);
-        }
-        void CloseInventory()
-        {
-            buttonManager.InstantiateButtons(characterCS.CharacterMoveList);
-        }
-        void ThrowFireBall()
-        {
-            Debug.Log("Throw Fire Ball");
-            CloseInventory();
-        }
-        void HeartPickup()
-        {
-            characterCS.health += 3;
-            CloseInventory();
-            if (characterCS.CheckIfCharacterIsDead() == false)
-                EndTurn();
+            BasicActionInProgress = false;
         }
         void DoubleTeam()
         { characterCS.actionPoints += 1; }
         void AxeSweep()
         {
-            StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.AxeSweep));
+            //StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.AxeSweep));
         }
         void Restart()
         {
             GameEvents.current.reloadScene();
             //Debug.Log("Restart Function not created");
-        }
-        //Simple Action and Co-routines that will be used for ablity Actions
-        void simpleMoveAction()
-        {
-            Vector3Int currentPosition = universalCalculator.castAsV3Int(thisCharacter.transform.position);
-            mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
-            var ListOfMovePoints = new List<Vector3>();
-            ListOfMovePoints.Add(tryHere);
-            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
-            //thisCharacter.transform.position = tryHere;
-
         }
         void simpleAttackAction()
         {
@@ -170,22 +147,33 @@ public class MoveDictionaryManager : MonoBehaviour
             toolTip.text = "";
         toolTip.text += Tip;
     }
+    bool BasicActionInProgress = false;
 
-    public void doAction(AbilityName abilityName)
+    public void doAction(CompundAbility compoundAbility)
     {
-        abilityNameToAction[abilityName]();
+        StartCoroutine(BeginCompoundAbility(compoundAbility));
+        IEnumerator BeginCompoundAbility(CompundAbility compoundAbility)
+        {
+            Debug.Log("Starting Compund Ability");
+            foreach (BasicAction basicAction in compoundAbility.componentActions)
+            {
+                BasicActionInProgress = true;
+                StartCoroutine(getInput(basicAction));
+                yield return new WaitUntil(() => !BasicActionInProgress);
+            }
+            //End Turn Dialog
+            Debug.LogError("Ending Compund Ability but it is not implemented");
+        }
+
     }
 
-    IEnumerator getInput(Action doThisAction, AbilityName forAbilityData)
+    IEnumerator getInput(BasicAction basicAction)
     {
         //Declaring Variables
-        Ability ability = characterCS.AbilityNameToAbilityDataDIR[forAbilityData];
-        currentAblity = ability;
-        float rangeOfAction = ability.GetRangeOfAction();
-        AbilityName forceNextAbility = ability.forceAbility;
+        float rangeOfAction = ((int)basicAction.rangeOfActionEnum);
         if (rangeOfAction == 0)
-            Debug.Log(rangeOfAction);
-        List<Vector3Int> listOfValidtargets = getValidTargetList(ability);
+            Debug.Log(rangeOfAction + " was zero");
+        List<Vector3Int> listOfValidtargets = getValidTargetList(basicAction);
         reticalManager.fromPoint = characterCS.getCharV3Int();
         ShouldContinue = false;
 
@@ -199,9 +187,9 @@ public class MoveDictionaryManager : MonoBehaviour
         else//if it is the player character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-            reticalManager.reticalShapes = ability.reticalShapes;
+            reticalManager.reticalShapes = basicAction.areaOfEffectType;
             reticalManager.rangeOfAction = rangeOfAction;
-            addToolTip("select Purple Tile To Contine with Action " + ability.abilityString + " Or Right Click to Cancel", true);
+            addToolTip("select Purple Tile To Contine with Action " + basicAction.typeOfAction + " Or Right Click to Cancel", true);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
             reticalManager.reticalShapes = ReticalShapes.SSingle;
@@ -211,25 +199,11 @@ public class MoveDictionaryManager : MonoBehaviour
             GameObject objectCharacter = thisCharacter;
             if (mapManager.cellDataDir[tryHere].characterAtCell != null)
                 objectCharacter = mapManager.cellDataDir[tryHere].characterAtCell;
-            GameEvents.current.sendChoice(thisCharacter, forAbilityData, objectCharacter);
+            GameEvents.current.sendChoice(thisCharacter, basicAction.typeOfAction, objectCharacter);
+            //Send Events Regarding Choice
             yield return new WaitUntil(() => !GameEvents.current.EventInMotion);
 
-
-            doThisAction();
-
-
-
-            if (forceNextAbility == AbilityName.EndTurn)
-            { doAction(AbilityName.EndTurn); }
-            else
-            {
-                var list = new List<AbilityName>()
-                {
-                    forceNextAbility,
-                    AbilityName.EndTurn
-                };
-                buttonManager.InstantiateButtons(list);
-            }
+            TypeOFActionToAction[basicAction.typeOfAction]();
         }
         reticalManager.reDrawValidTiles();
 
@@ -263,18 +237,18 @@ public class MoveDictionaryManager : MonoBehaviour
             {
                 addToolTip("No Valid Tiles for This Action; Select an Button To Perform an Action", true);
                 //Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
-                getValidTargetList(ability);
+                getValidTargetList(basicAction);
                 return false;
             }
             else
                 return false;
         }
     }
-    public List<Vector3Int> getValidTargetList(Ability ability)
+    public List<Vector3Int> getValidTargetList(BasicAction action)
     {
         float rangeOfAction;
         if (!EditMapMode)
-            rangeOfAction = ability.GetRangeOfAction();
+            rangeOfAction = ((int)action.rangeOfActionEnum) / 10;
         else
             rangeOfAction = alternateRange;
 
@@ -282,16 +256,26 @@ public class MoveDictionaryManager : MonoBehaviour
         Vector3Int centerPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
-        if (!ability.disregardWalkablity)
+        bool disregardWalkablity = false;
+        bool requireCharacter = false;
+        if (action.validTileType == ValidTileType.PointTargeted)
+        {
             listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
+            disregardWalkablity = true;
+        }
+        if (action.validTargets == ValidTargets.LivingEntities)
+        {
+            requireCharacter = true;
+        }
         listOfRanges.Remove(centerPos);
         ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
         {
             //Normal Checks         
-            bool hasWalkability = ability.disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
-            bool requireCharacterCondition = GlobalCal.compareBool(mapManager.isCellHoldingCharacer(listOfRanges[i]), ability.requireCharacterBoolEnum);
+            bool hasWalkability = disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
+            bool requireCharacterCondition = requireCharacter ? mapManager.isCellHoldingCharacer(listOfRanges[i]) : true;
+            //bool requireCharacterCondition = GlobalCal.compareBool(mapManager.isCellHoldingCharacer(listOfRanges[i]), action.requireCharacterBoolEnum);
             if (hasWalkability && requireCharacterCondition)
             {/*Do Nothing since all conditions are fine*/}
             else
@@ -300,7 +284,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 if (checkValidActionTiles)
                 {
                     bool condtion = false;//Will be reassigned later                        
-                    string debugLine = "For Action " + ability.abilityName + " Point " + listOfRanges[i] + " was Invalid as Tile ";
+                    string debugLine = "For Action " + action.typeOfAction + " Point " + listOfRanges[i] + " was Invalid as Tile ";
                     string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
                     if (!requireCharacterCondition)
                     {
@@ -335,37 +319,50 @@ public enum AbilityName
     AxeSweep,
     Restart
 }
-
 [Serializable]
-public class Ability
+public class CompundAbility
 {
-    public String abilityString;
-    public AbilityName abilityName;
-    public AbilityName forceAbility = AbilityName.EndTurn;
-    public RangeOfActionEnum rangeOfActionEnum = RangeOfActionEnum.r10;
-    public ReticalShapes reticalShapes = ReticalShapes.SSingle;
-    public BoolEnum requireCharacterBoolEnum = BoolEnum.TrueOrFalse;
-    public bool disregardWalkablity = false;
-    public Ability()
+    public string NameOfAbility;
+    public List<BasicAction> componentActions;
+    public CompundAbility()
     {
 
     }
-    public Ability(Ability ability)
+    public CompundAbility(CompundAbility given)
     {
-        abilityString = ability.abilityString;
-        abilityName = ability.abilityName;
-        forceAbility = ability.forceAbility;
-        rangeOfActionEnum = ability.rangeOfActionEnum;
-        reticalShapes = ability.reticalShapes;
-        requireCharacterBoolEnum = ability.requireCharacterBoolEnum;
-        disregardWalkablity = ability.disregardWalkablity;
+        this.NameOfAbility = given.NameOfAbility;
+        componentActions = GlobalCal.createCopyListUsingConstructor(given.componentActions);
     }
-    public float GetRangeOfAction()
+
+}
+[Serializable]
+public class BasicAction
+{
+    public TypeOfAction typeOfAction;
+    public RangeOfActionEnum rangeOfActionEnum;
+    public ReticalShapes areaOfEffectType;
+    public ValidTileType validTileType;
+    public ValidTargets validTargets;
+    public BasicAction()
     {
-        string rangeString = rangeOfActionEnum.ToString();
-        rangeString = rangeString.Replace("r", "");
-        return float.Parse(rangeString) / 10;
+
     }
+    public BasicAction(BasicAction given)
+    {
+        typeOfAction = given.typeOfAction;
+        rangeOfActionEnum = given.rangeOfActionEnum;
+        areaOfEffectType = given.areaOfEffectType;
+        validTileType = given.validTileType;
+        validTargets = given.validTargets;
+    }
+
+}
+public enum TypeOfAction
+{
+    apply_Damage,
+    apply_Heal,
+    apply_SelfMove,
+    apply_TryEndTurn
 }
 public enum BoolEnum
 {
@@ -375,11 +372,24 @@ public enum BoolEnum
 }
 public enum RangeOfActionEnum
 {
-    r0, r10, r15, r20, r25, r30
+    r0 = 0,
+    r10 = 10,
+    r15 = 15,
+    r20 = 20,
+    r25 = 25,
+    r30 = 30
 }
 public enum ValidTileType
 {
     PointTargeted,
     UnitTargeted,
     EmptyCellTargeted
+}
+public enum ValidTargets
+{
+    All,
+    Enemies,
+    Allies,
+    LivingEntities,
+    NonLivingEntities
 }

@@ -17,7 +17,7 @@ public class CharacterData : ScriptableObject
     public int rangeOfVision = 2;
     //Custom Data Types
     public List<GroundFloorType> canWalkOn;
-    public List<Ability> listOfAbility;
+    public List<CompundAbility> abilities;
 
     public CharacterData()
     {
@@ -34,11 +34,11 @@ public class CharacterData : ScriptableObject
         speedValue = characterData.speedValue;
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        listOfAbility = new List<Ability>(characterData.listOfAbility);
+        abilities = new List<CompundAbility>(characterData.abilities);
     }
     public void ReplaceDataWithPreset(CharacterData characterData)
     {
-        if(characterData==null)
+        if (characterData == null)
         {
             Debug.Log("Data was Null");
             return;
@@ -52,7 +52,7 @@ public class CharacterData : ScriptableObject
         speedValue = characterData.speedValue;
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        listOfAbility = new List<Ability>(characterData.listOfAbility);
+        abilities = new List<CompundAbility>(characterData.abilities);
     }
 
 }

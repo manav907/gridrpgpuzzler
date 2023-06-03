@@ -33,7 +33,7 @@ public class CharacterControllerScript : MonoBehaviour
     private TurnManager turnManager;
     DataManager dataManager;
     UniversalCalculator universalCalculator;
-    [SerializeField] List<Ability> abilityList;
+    [SerializeField] List<CompundAbility> abilityList;
 
     public void InitilizeCharacter(GameObject gameController)
     {
@@ -57,9 +57,8 @@ public class CharacterControllerScript : MonoBehaviour
 
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
-            abilityList.AddRange(GlobalCal.createCopyListUsingConstructor(CharacterDataSO.listOfAbility));
+            abilityList.AddRange(GlobalCal.createCopyListUsingConstructor(CharacterDataSO.abilities));
             //Setting Data
-            AbilityNameToAbilityDataDIR = AbilityNameToAbilityData();
             //Setting Specific Name
             this.name = characterName + " " + CharacterDataSO.InstanceID;
             //Game Event Regersery
@@ -71,16 +70,6 @@ public class CharacterControllerScript : MonoBehaviour
             //Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
             spriteHolder.position = new Vector3(spriteHolder.position.x, spriteHolder.position.y + SO.spriteOffsetY, spriteHolder.position.z);
             //Methods
-            Dictionary<AbilityName, Ability> AbilityNameToAbilityData()
-            {
-                Dictionary<AbilityName, Ability> thisDir = new Dictionary<AbilityName, Ability>();
-                foreach (Ability ability in abilityList)
-                {
-                    thisDir.Add(ability.abilityName, ability);
-                    CharacterMoveList.Add(ability.abilityName);
-                }
-                return thisDir;
-            }
         }
     }
     public void saveCharacterDataToCSO()
@@ -92,11 +81,8 @@ public class CharacterControllerScript : MonoBehaviour
         CharacterDataSO.speedValue = speedValue;
         CharacterDataSO.rangeOfVision = rangeOfVision;
         CharacterDataSO.canWalkOn = canWalkOn;
-        CharacterDataSO.listOfAbility = GlobalCal.createCopyListUsingConstructor(abilityList);
+        CharacterDataSO.abilities = GlobalCal.createCopyListUsingConstructor(abilityList);
     }
-    public Dictionary<AbilityName, Ability> AbilityNameToAbilityDataDIR;
-    public List<AbilityName> CharacterMoveList;
-    public List<AbilityName> CharacterInventoryList;
     public bool CheckIfCharacterIsDead()
     {
         Heatlh.text = health + "";
@@ -145,7 +131,7 @@ public class CharacterControllerScript : MonoBehaviour
         if (controlCharacter)
         {
             GameEvents.current.TriggerNextDialog();//Disable this laeter
-            buttonManager.InstantiateButtons(CharacterMoveList);
+            buttonManager.InstantiateButtons(abilityList);
             turnManager.setCameraPos(getCharV3Int());
         }
         else
@@ -164,12 +150,14 @@ public class CharacterControllerScript : MonoBehaviour
         var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
         //GhostVision for tracking after leaving Vision
         var targetList = listOfPossibleTargets(VisionList);
-        var attackRangeList = moveDictionaryManager.getValidTargetList(AbilityNameToAbilityDataDIR[AbilityName.Attack]);
+        //var attackRangeList = moveDictionaryManager.getValidTargetList(AbilityNameToAbilityDataDIR[AbilityName.Attack]);
+        var attackRangeList = new List<Vector3Int>();
+        Debug.LogError("AI Stuf Needs Rework");
         if (targetList.Count == 0)
         {
             if (checkAI)
                 Debug.Log("Ideling");
-            moveDictionaryManager.doAction(AbilityName.EndTurn);
+            //moveDictionaryManager.doAction(AbilityName.EndTurn);
             return;
         }
         else
@@ -179,13 +167,13 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 if (checkAI)
                     Debug.Log("Attacking");
-                moveDictionaryManager.doAction(AbilityName.Attack);
+                //moveDictionaryManager.doAction(AbilityName.Attack);
             }
             else if (true)//if character not in attack range
             {
                 if (checkAI)
                     Debug.Log("Moving");
-                moveDictionaryManager.doAction(AbilityName.Move);
+                //moveDictionaryManager.doAction(AbilityName.Move);
             }
         }
         List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
