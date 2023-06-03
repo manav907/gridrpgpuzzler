@@ -113,7 +113,7 @@ public class CharacterControllerScript : MonoBehaviour
             GameEvents.current.DeathEvent(this.GetComponent<CharacterControllerScript>());
 
 
-            Vector3Int thisCharPos = universalCalculator.convertToVector3Int(this.gameObject.transform.position);
+            Vector3Int thisCharPos = universalCalculator.castAsV3Int(this.gameObject.transform.position);
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
             turnManager.ListOfInteractableCharacters.Remove(gameObject);
             mapManager.KillCharacter(getCharV3Int());
@@ -210,7 +210,7 @@ public class CharacterControllerScript : MonoBehaviour
     }
     public Vector3Int getCharV3Int()
     {
-        return universalCalculator.convertToVector3Int(this.gameObject.transform.position);
+        return universalCalculator.castAsV3Int(this.gameObject.transform.position);
     }
 
 

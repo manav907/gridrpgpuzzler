@@ -121,7 +121,7 @@ public class MoveDictionaryManager : MonoBehaviour
         //Simple Action and Co-routines that will be used for ablity Actions
         void simpleMoveAction()
         {
-            Vector3Int currentPosition = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
+            Vector3Int currentPosition = universalCalculator.castAsV3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
             var ListOfMovePoints = new List<Vector3>();
             ListOfMovePoints.Add(tryHere);
@@ -279,7 +279,7 @@ public class MoveDictionaryManager : MonoBehaviour
             rangeOfAction = alternateRange;
 
         //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
-        Vector3Int centerPos = universalCalculator.convertToVector3Int(thisCharacter.transform.position);
+        Vector3Int centerPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         if (!ability.disregardWalkablity)

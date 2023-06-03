@@ -39,7 +39,7 @@ public class UniversalCalculator : MonoBehaviour
     }
 
     //Vector handeling
-    public Vector3Int convertToVector3Int(Vector3 thisVector)
+    public Vector3Int castAsV3Int(Vector3 thisVector)
     {
         return new Vector3Int((int)thisVector.x, (int)thisVector.y, (int)thisVector.z);
     }
