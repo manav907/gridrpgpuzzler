@@ -123,6 +123,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             Vector3Int currentPosition = universalCalculator.castAsV3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
+
             var ListOfMovePoints = new List<Vector3>();
             ListOfMovePoints.Add(tryHere);
             universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
@@ -143,11 +144,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void simpleAoeAttackAction()
         {
-
-            reticalManager.reticalShapes = ReticalShapes.SSweep;
-            List<Vector3Int> aoeTargeted = reticalManager.generateShape(tryHere);
-            reticalManager.reticalShapes = ReticalShapes.SSingle;
-            foreach (Vector3Int point in aoeTargeted)
+            foreach (Vector3Int point in areaOfAction)
             {
                 if (mapManager.cellDataDir.ContainsKey(point))
                     if (mapManager.isCellHoldingCharacer(point))
@@ -175,6 +172,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         abilityNameToAction[abilityName]();
     }
+    private List<Vector3Int> areaOfAction;
 
     IEnumerator getInput(Action doThisAction, AbilityName forAbilityData)
     {
@@ -182,7 +180,6 @@ public class MoveDictionaryManager : MonoBehaviour
         Ability ability = characterCS.AbilityNameToAbilityDataDIR[forAbilityData];
         currentAblity = ability;
         float rangeOfAction = ability.GetRangeOfAction();
-        AbilityName forceNextAbility = ability.forceAbility;
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction);
         List<Vector3Int> listOfValidtargets = getValidTargetList(ability);
@@ -204,6 +201,7 @@ public class MoveDictionaryManager : MonoBehaviour
             addToolTip("select Purple Tile To Contine with Action " + ability.abilityString + " Or Right Click to Cancel", true);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
+            areaOfAction = reticalManager.generateShape(tryHere);
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
@@ -216,20 +214,6 @@ public class MoveDictionaryManager : MonoBehaviour
 
 
             doThisAction();
-
-
-
-            if (forceNextAbility == AbilityName.EndTurn)
-            { doAction(AbilityName.EndTurn); }
-            else
-            {
-                var list = new List<AbilityName>()
-                {
-                    forceNextAbility,
-                    AbilityName.EndTurn
-                };
-                buttonManager.InstantiateButtons(list);
-            }
         }
         reticalManager.reDrawValidTiles();
 
@@ -341,7 +325,6 @@ public class Ability
 {
     public String abilityString;
     public AbilityName abilityName;
-    public AbilityName forceAbility = AbilityName.EndTurn;
     public RangeOfActionEnum rangeOfActionEnum = RangeOfActionEnum.r10;
     public ReticalShapes reticalShapes = ReticalShapes.SSingle;
     public BoolEnum requireCharacterBoolEnum = BoolEnum.TrueOrFalse;
@@ -354,7 +337,6 @@ public class Ability
     {
         abilityString = ability.abilityString;
         abilityName = ability.abilityName;
-        forceAbility = ability.forceAbility;
         rangeOfActionEnum = ability.rangeOfActionEnum;
         reticalShapes = ability.reticalShapes;
         requireCharacterBoolEnum = ability.requireCharacterBoolEnum;
@@ -362,9 +344,10 @@ public class Ability
     }
     public float GetRangeOfAction()
     {
-        string rangeString = rangeOfActionEnum.ToString();
+        /* string rangeString = rangeOfActionEnum.ToString();
         rangeString = rangeString.Replace("r", "");
-        return float.Parse(rangeString) / 10;
+        return float.Parse(rangeString) / 10; */
+        return ((float)rangeOfActionEnum) / 10;
     }
 }
 public enum BoolEnum
@@ -375,7 +358,12 @@ public enum BoolEnum
 }
 public enum RangeOfActionEnum
 {
-    r0, r10, r15, r20, r25, r30
+    r0 = 0,
+    r10 = 10,
+    r15 = 15,
+    r20 = 20,
+    r25 = 25,
+    r30 = 30
 }
 public enum ValidTileType
 {
