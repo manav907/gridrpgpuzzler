@@ -55,8 +55,8 @@ public class ButtonManager : MonoBehaviour
             // getting cache for captured variables
             //int captured = i;//no Longer needed
 
-            CompundAbility abilityName = abilityOfCharacter[i];
-            string stringOfAbilityName = abilityName.NameOfAbility;//This is the cache now
+            CompundAbility compundAbility = abilityOfCharacter[i];
+            string stringOfAbilityName = compundAbility.NameOfAbility;//This is the cache now
             //stringOfAbilityName = universalCalculator.CamelCaseToSpaces(stringOfAbilityName);
             // using variables to set text
             TMPthis.text = stringOfAbilityName;
@@ -67,7 +67,7 @@ public class ButtonManager : MonoBehaviour
             thisButton.onClick.RemoveAllListeners();
             thisButton.onClick.AddListener(delegate
             {
-                moveDictionaryManager.doAction(abilityName);
+                moveDictionaryManager.doAction(compundAbility);
                 //Debug.Log("Button clicked: " + listCDHTEXT);
             });
         }

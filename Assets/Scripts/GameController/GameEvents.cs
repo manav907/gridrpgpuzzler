@@ -49,7 +49,7 @@ public class GameEvents : MonoBehaviour
             }
             else
             {
-                Debug.Log(nameEnum);
+                //Debug.Log(nameEnum);
                 NameTagToTransform.Add(nameEnum, GO.GetComponent<Transform>());
             }
         }

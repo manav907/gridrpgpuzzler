@@ -48,7 +48,7 @@ public class MoveDictionaryManager : MonoBehaviour
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
     }
     Dictionary<AbilityName, Action> abilityNameToAction;
-    Dictionary<TypeOfAction, Action> TypeOFActionToAction;
+    Dictionary<CompundAbilityPreset, Action> AbilityPresets;
     void SetMoveDictionary()
     {
         abilityNameToAction = new Dictionary<AbilityName, Action>();
@@ -56,33 +56,38 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction.Add(AbilityName.AxeSweep, AxeSweep);
         abilityNameToAction.Add(AbilityName.Restart, Restart);
 
-        TypeOFActionToAction = new Dictionary<TypeOfAction, Action>();
+        AbilityPresets = new Dictionary<CompundAbilityPreset, Action>();
 
-        TypeOFActionToAction.Add(TypeOfAction.apply_Damage, apply_Damage);
-        TypeOFActionToAction.Add(TypeOfAction.apply_Heal, apply_Heal);
-        TypeOFActionToAction.Add(TypeOfAction.apply_SelfMove, apply_SelfMove);
-        TypeOFActionToAction.Add(TypeOfAction.apply_TryEndTurn, apply_TryEndTurn);
+        AbilityPresets.Add(CompundAbilityPreset.Move, Move);
+        void Move()
+        {
+            StartCoroutine(orderOfEvents());
+            IEnumerator orderOfEvents()
+            {
+                foreach (var pointsToMove in listOfPointsForCompundAction)
+                {
+                    yield return new WaitForSeconds(0.25f);
+                    apply_SelfMove(pointsToMove);
+                }
+            }
+
+        }
+
 
 
         void apply_Damage()
         {
-            BasicActionInProgress = false;
+            //BasicActionInProgress = false;
         }
         void apply_Heal()
         {
-            BasicActionInProgress = false;
+            //BasicActionInProgress = false;
         }
-        void apply_SelfMove()
+        void apply_SelfMove(List<Vector3Int> movePoints)
         {
             Vector3Int currentPosition = universalCalculator.castAsV3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
-            var ListOfMovePoints = new List<Vector3>();
-            ListOfMovePoints.Add(tryHere);
-            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
-
-
-
-            BasicActionInProgress = false;
+            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, universalCalculator.castListAsV3(movePoints), moveTimeSpeed);
         }
         void apply_TryEndTurn()
         {
@@ -93,7 +98,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 buttonManager.clearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
-            BasicActionInProgress = false;
+            //BasicActionInProgress = false;
         }
         void DoubleTeam()
         { characterCS.actionPoints += 1; }
@@ -148,29 +153,58 @@ public class MoveDictionaryManager : MonoBehaviour
         toolTip.text += Tip;
     }
     bool BasicActionInProgress = false;
+    bool CompundActionInProgress = false;
+    CompundAbility currentAbility;
+    Vector3Int theroticalCurrentPos;
 
     public void doAction(CompundAbility compoundAbility)
     {
+        currentAbility = compoundAbility;
+        theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
         StartCoroutine(BeginCompoundAbility(compoundAbility));
         IEnumerator BeginCompoundAbility(CompundAbility compoundAbility)
         {
-            Debug.Log("Starting Compund Ability");
-            foreach (BasicAction basicAction in compoundAbility.componentActions)
+            stageOfAction = 0;
+            listOfPointsForCompundAction = new List<List<Vector3Int>>();
+            CompundActionInProgress = true;
+            for (int i = 0; i < compoundAbility.actionInputParams.Count; i++)
             {
+                if (!CompundActionInProgress)
+                {
+                    Debug.Log("CA was Broken");
+                    break;
+                }
                 BasicActionInProgress = true;
-                StartCoroutine(getInput(basicAction));
+                stageOfAction = i;
+
+                ActionInputParams actionInputParams = compoundAbility.actionInputParams[i];
+
+                StartCoroutine(getInput(actionInputParams));
                 yield return new WaitUntil(() => !BasicActionInProgress);
+                if (actionInputParams.updateTheroticalPos)
+                {
+                    theroticalCurrentPos = tryHere;//Rework This Section
+                }
+                yield return null;
+                Debug.Log("Co loop end");
+            }
+            if (CompundActionInProgress)
+            {
+                AbilityPresets[compoundAbility.preset]();
+                CompundActionInProgress = false;
             }
             //End Turn Dialog
-            Debug.LogError("Ending Compund Ability but it is not implemented");
+            //Debug.LogError("Ending Compund Ability but it is not implemented");
         }
 
     }
+    int stageOfAction;
+    List<List<Vector3Int>> listOfPointsForCompundAction;
 
-    IEnumerator getInput(BasicAction basicAction)
+    IEnumerator getInput(ActionInputParams basicAction)
     {
         //Declaring Variables
-        float rangeOfAction = ((int)basicAction.rangeOfActionEnum);
+        float rangeOfAction = (float)basicAction.rangeOfActionEnum;
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction + " was zero");
         List<Vector3Int> listOfValidtargets = getValidTargetList(basicAction);
@@ -189,21 +223,21 @@ public class MoveDictionaryManager : MonoBehaviour
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
             reticalManager.reticalShapes = basicAction.areaOfEffectType;
             reticalManager.rangeOfAction = rangeOfAction;
-            addToolTip("select Purple Tile To Contine with Action " + basicAction.typeOfAction + " Or Right Click to Cancel", true);
+            addToolTip("select Purple Tile To Contine with Action " + basicAction + " Or Right Click to Cancel", true);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
+
+
             tryHere = reticalManager.getMovePoint();
+            listOfPointsForCompundAction.Add(reticalManager.generateShape(tryHere));
+
+
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
-        if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
+        if (CheckMovePoint() && CompundActionInProgress == true)//if Getting tryHere was at a Valid Tile
         {
-            GameObject objectCharacter = thisCharacter;
-            if (mapManager.cellDataDir[tryHere].characterAtCell != null)
-                objectCharacter = mapManager.cellDataDir[tryHere].characterAtCell;
-            GameEvents.current.sendChoice(thisCharacter, basicAction.typeOfAction, objectCharacter);
-            //Send Events Regarding Choice
-            yield return new WaitUntil(() => !GameEvents.current.EventInMotion);
 
-            TypeOFActionToAction[basicAction.typeOfAction]();
+            BasicActionInProgress = false;
+            //TypeOFActionToAction[basicAction.typeOfAction]();
         }
         reticalManager.reDrawValidTiles();
 
@@ -221,6 +255,7 @@ public class MoveDictionaryManager : MonoBehaviour
             else if (Input.GetMouseButtonDown(1))
             {
                 addToolTip("Action Cancelled; Select an Button To Perform an Action", true);
+                CompundActionInProgress = false;
                 ShouldContinue = false;
                 return true;
             }
@@ -244,16 +279,16 @@ public class MoveDictionaryManager : MonoBehaviour
                 return false;
         }
     }
-    public List<Vector3Int> getValidTargetList(BasicAction action)
+    public List<Vector3Int> getValidTargetList(ActionInputParams action)
     {
         float rangeOfAction;
         if (!EditMapMode)
-            rangeOfAction = ((int)action.rangeOfActionEnum) / 10;
+            rangeOfAction = ((float)action.rangeOfActionEnum) / 10;
         else
             rangeOfAction = alternateRange;
 
         //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
-        Vector3Int centerPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+        Vector3Int centerPos = theroticalCurrentPos;
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         bool disregardWalkablity = false;
@@ -284,7 +319,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 if (checkValidActionTiles)
                 {
                     bool condtion = false;//Will be reassigned later                        
-                    string debugLine = "For Action " + action.typeOfAction + " Point " + listOfRanges[i] + " was Invalid as Tile ";
+                    string debugLine = "For Action " + action + " Point " + listOfRanges[i] + " was Invalid as Tile ";
                     string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
                     if (!requireCharacterCondition)
                     {
@@ -323,7 +358,8 @@ public enum AbilityName
 public class CompundAbility
 {
     public string NameOfAbility;
-    public List<BasicAction> componentActions;
+    public CompundAbilityPreset preset;
+    public List<ActionInputParams> actionInputParams;
     public CompundAbility()
     {
 
@@ -331,30 +367,35 @@ public class CompundAbility
     public CompundAbility(CompundAbility given)
     {
         this.NameOfAbility = given.NameOfAbility;
-        componentActions = GlobalCal.createCopyListUsingConstructor(given.componentActions);
+        actionInputParams = GlobalCal.createCopyListUsingConstructor(given.actionInputParams);
     }
 
 }
 [Serializable]
-public class BasicAction
+public class ActionInputParams
 {
-    public TypeOfAction typeOfAction;
     public RangeOfActionEnum rangeOfActionEnum;
     public ReticalShapes areaOfEffectType;
     public ValidTileType validTileType;
     public ValidTargets validTargets;
-    public BasicAction()
+    public bool updateTheroticalPos = true;
+    public ActionInputParams()
     {
 
     }
-    public BasicAction(BasicAction given)
+    public ActionInputParams(ActionInputParams given)
     {
-        typeOfAction = given.typeOfAction;
         rangeOfActionEnum = given.rangeOfActionEnum;
         areaOfEffectType = given.areaOfEffectType;
         validTileType = given.validTileType;
         validTargets = given.validTargets;
     }
+
+}
+public enum CompundAbilityPreset
+{
+    Move,
+    Attack,
 
 }
 public enum TypeOfAction

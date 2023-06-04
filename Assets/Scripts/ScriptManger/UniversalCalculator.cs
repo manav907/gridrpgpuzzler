@@ -43,6 +43,24 @@ public class UniversalCalculator : MonoBehaviour
     {
         return new Vector3Int((int)thisVector.x, (int)thisVector.y, (int)thisVector.z);
     }
+    public List<Vector3Int> castListAsV3Int(List<Vector3> v3List)
+    {
+        var List = new List<Vector3Int>();
+        foreach (var pos in v3List)
+        {
+            List.Add(castAsV3Int(pos));
+        }
+        return List;
+    }
+    public List<Vector3> castListAsV3(List<Vector3Int> v3IntList)
+    {
+        var List = new List<Vector3>();
+        foreach (var pos in v3IntList)
+        {
+            List.Add(pos);
+        }
+        return List;
+    }
     public List<Vector3Int> generateRangeFrom2Vectors(Vector3 start, Vector3 end)
     {
         List<Vector3Int> listOfRanges = new List<Vector3Int>();
