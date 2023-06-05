@@ -71,7 +71,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void AttackHere()
         {
-            StartCoroutine(getInput(simpleAttackAction, AbilityName.Attack));
+            StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.Attack));
         }
         void DoubleAttack()
         {
@@ -127,6 +127,8 @@ public class MoveDictionaryManager : MonoBehaviour
             var ListOfMovePoints = new List<Vector3>();
             ListOfMovePoints.Add(tryHere);
             universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
+
+            EndTurn();
             //thisCharacter.transform.position = tryHere;
 
         }
@@ -153,7 +155,8 @@ public class MoveDictionaryManager : MonoBehaviour
                         simpleAttackAction();
                     }
             }
-            GameEvents.current.PlaySound(1);//This is For attacking bigg
+            //GameEvents.current.PlaySound(1);//This is For attacking bigg
+            EndTurn();
         }
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
