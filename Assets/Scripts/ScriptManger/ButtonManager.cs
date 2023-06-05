@@ -40,9 +40,10 @@ public class ButtonManager : MonoBehaviour
 
     [SerializeField] float buttonSpacing = 0;
     [SerializeField] float buttonHight;
-    public void InstantiateButtons(List<CompundAbility> abilityOfCharacter)
+    public void InstantiateButtons(List<LadderCollapseFunction> abilityOfCharacter)
     {
         clearButtons();
+        
         for (int i = 0; i < abilityOfCharacter.Count; i++)
         {
             ActionButtons.Add(Instantiate(ButtonPrefab));//Just Instanting
@@ -55,8 +56,8 @@ public class ButtonManager : MonoBehaviour
             // getting cache for captured variables
             //int captured = i;//no Longer needed
 
-            CompundAbility compundAbility = abilityOfCharacter[i];
-            string stringOfAbilityName = compundAbility.NameOfAbility;//This is the cache now
+            LadderCollapseFunction compundAbility = abilityOfCharacter[i];
+            string stringOfAbilityName = compundAbility.name;//This is the cache now
             //stringOfAbilityName = universalCalculator.CamelCaseToSpaces(stringOfAbilityName);
             // using variables to set text
             TMPthis.text = stringOfAbilityName;

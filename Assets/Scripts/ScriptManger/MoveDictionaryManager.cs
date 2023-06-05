@@ -47,14 +47,14 @@ public class MoveDictionaryManager : MonoBehaviour
         //Debug.Log(thisCharacter.name);//
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
     }
-    Dictionary<AbilityName, Action> abilityNameToAction;
+    Dictionary<TypeOfAction, Action> abilityNameToAction;
     Dictionary<CompundAbilityPreset, Action> AbilityPresets;
     void SetMoveDictionary()
     {
-        abilityNameToAction = new Dictionary<AbilityName, Action>();
-        abilityNameToAction.Add(AbilityName.DoubleTeam, DoubleTeam);
-        abilityNameToAction.Add(AbilityName.AxeSweep, AxeSweep);
-        abilityNameToAction.Add(AbilityName.Restart, Restart);
+        abilityNameToAction = new Dictionary<TypeOfAction, Action>();
+        abilityNameToAction.Add(TypeOfAction.apply_SelfMove, apply_SelfMove);
+        abilityNameToAction.Add(TypeOfAction.apply_Damage, apply_Damage);
+        abilityNameToAction.Add(TypeOfAction.apply_Heal, apply_Heal);
 
         AbilityPresets = new Dictionary<CompundAbilityPreset, Action>();
 
@@ -67,7 +67,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 foreach (var pointsToMove in listOfPointsForCompundAction)
                 {
                     yield return new WaitForSeconds(0.25f);
-                    apply_SelfMove(pointsToMove);
+                    apply_SelfMove();
                 }
             }
 
@@ -83,8 +83,10 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             //BasicActionInProgress = false;
         }
-        void apply_SelfMove(List<Vector3Int> movePoints)
+        void apply_SelfMove()
         {
+            var movePoints = new List<Vector3Int>();
+            movePoints.Add(tryHere);
             Vector3Int currentPosition = universalCalculator.castAsV3Int(thisCharacter.transform.position);
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
             universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, universalCalculator.castListAsV3(movePoints), moveTimeSpeed);
@@ -123,23 +125,7 @@ public class MoveDictionaryManager : MonoBehaviour
             universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
             GameEvents.current.PlaySound(0);//This is For attacking
         }
-        void simpleAoeAttackAction()
-        {
 
-            reticalManager.reticalShapes = ReticalShapes.SSweep;
-            List<Vector3Int> aoeTargeted = reticalManager.generateShape(tryHere);
-            reticalManager.reticalShapes = ReticalShapes.SSingle;
-            foreach (Vector3Int point in aoeTargeted)
-            {
-                if (mapManager.cellDataDir.ContainsKey(point))
-                    if (mapManager.isCellHoldingCharacer(point))
-                    {
-                        tryHere = point;
-                        simpleAttackAction();
-                    }
-            }
-            GameEvents.current.PlaySound(1);//This is For attacking bigg
-        }
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
             targetCharacter.CheckIfCharacterIsDead();
@@ -153,52 +139,82 @@ public class MoveDictionaryManager : MonoBehaviour
         toolTip.text += Tip;
     }
     bool BasicActionInProgress = false;
-    bool CompundActionInProgress = false;
-    CompundAbility currentAbility;
     Vector3Int theroticalCurrentPos;
-
-    public void doAction(CompundAbility compoundAbility)
-    {
-        currentAbility = compoundAbility;
-        theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
-        StartCoroutine(BeginCompoundAbility(compoundAbility));
-        IEnumerator BeginCompoundAbility(CompundAbility compoundAbility)
-        {
-            stageOfAction = 0;
-            listOfPointsForCompundAction = new List<List<Vector3Int>>();
-            CompundActionInProgress = true;
-            for (int i = 0; i < compoundAbility.actionInputParams.Count; i++)
-            {
-                if (!CompundActionInProgress)
-                {
-                    Debug.Log("CA was Broken");
-                    break;
-                }
-                BasicActionInProgress = true;
-                stageOfAction = i;
-
-                ActionInputParams actionInputParams = compoundAbility.actionInputParams[i];
-
-                StartCoroutine(getInput(actionInputParams));
-                yield return new WaitUntil(() => !BasicActionInProgress);
-                if (actionInputParams.updateTheroticalPos)
-                {
-                    theroticalCurrentPos = tryHere;//Rework This Section
-                }
-                yield return null;
-                Debug.Log("Co loop end");
-            }
-            if (CompundActionInProgress)
-            {
-                AbilityPresets[compoundAbility.preset]();
-                CompundActionInProgress = false;
-            }
-            //End Turn Dialog
-            //Debug.LogError("Ending Compund Ability but it is not implemented");
-        }
-
-    }
     int stageOfAction;
+
+    /*  public void doAction(CompundAbility compoundAbility)
+     {
+         currentAbility = compoundAbility;
+         theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+         StartCoroutine(BeginCompoundAbility());
+         IEnumerator BeginCompoundAbility()
+         {
+             stageOfAction = 0;
+             listOfPointsForCompundAction = new List<List<Vector3Int>>();
+             CompundActionInProgress = true;
+             for (int i = 0; i < compoundAbility.actionInputParams.Count; i++)
+             {
+                 if (!CompundActionInProgress)
+                 {
+                     Debug.Log("CA was Broken");
+                     break;
+                 }
+                 BasicActionInProgress = true;
+                 stageOfAction = i;
+
+                 ActionInputParams actionInputParams = compoundAbility.actionInputParams[i];
+
+                 StartCoroutine(getInput(actionInputParams));
+                 yield return new WaitUntil(() => !BasicActionInProgress);
+                 if (actionInputParams.updateTheroticalPos)
+                 {
+                     theroticalCurrentPos = tryHere;//Rework This Section
+                 }
+                 yield return null;
+                 Debug.Log("Co loop end");
+             }
+             if (CompundActionInProgress)
+             {
+                 AbilityPresets[compoundAbility.preset]();
+                 CompundActionInProgress = false;
+             }
+             //End Turn Dialog
+             //Debug.LogError("Ending Compund Ability but it is not implemented");
+         }
+
+     } */
+    int SetDataAtIndex;
+    List<Vector3Int>[] DataSetForLadderCollapse;
+    public void doAction(LadderCollapseFunction ladderCollapseFunction)
+    {
+        theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+        StartCoroutine(SequenceOfEvents());
+        IEnumerator SequenceOfEvents()
+        {
+            DataSetForLadderCollapse = new List<Vector3Int>[ladderCollapseFunction.SetDataAtIndex.KeyValuePairs.Count];
+            foreach (var keyPair in ladderCollapseFunction.invokeFunction.KeyValuePairs)
+            {
+                SetDataAtIndex = keyPair.value;
+                if (keyPair.key == LadderCollapseFunctionEnums.SetDataAtIndex)
+                {
+                    BasicActionInProgress = true;
+                    StartCoroutine(getInput(ladderCollapseFunction.SetDataAtIndex.KeyValuePairs[SetDataAtIndex].key));
+                    yield return new WaitUntil(() => !BasicActionInProgress);
+
+                }
+                else if (keyPair.key == LadderCollapseFunctionEnums.PerformFromDataAtIndex)
+                {
+                    TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs[SetDataAtIndex].key;
+                    foreach (Vector3Int point in DataSetForLadderCollapse[SetDataAtIndex])
+                    {
+                        tryHere = point;
+                        abilityNameToAction[actiontype]();
+                    }
+                }
+            }
+            yield return null;
+        }
+    }
     List<List<Vector3Int>> listOfPointsForCompundAction;
 
     IEnumerator getInput(ActionInputParams basicAction)
@@ -224,16 +240,19 @@ public class MoveDictionaryManager : MonoBehaviour
             reticalManager.reticalShapes = basicAction.areaOfEffectType;
             reticalManager.rangeOfAction = rangeOfAction;
             addToolTip("select Purple Tile To Contine with Action " + basicAction + " Or Right Click to Cancel", true);
+
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
+            ;
 
 
             tryHere = reticalManager.getMovePoint();
-            listOfPointsForCompundAction.Add(reticalManager.generateShape(tryHere));
+            //listOfPointsForCompundAction.Add(reticalManager.generateShape(tryHere));
+            DataSetForLadderCollapse[SetDataAtIndex] = reticalManager.generateShape(tryHere);
 
 
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
-        if (CheckMovePoint() && CompundActionInProgress == true)//if Getting tryHere was at a Valid Tile
+        if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
 
             BasicActionInProgress = false;
@@ -242,7 +261,6 @@ public class MoveDictionaryManager : MonoBehaviour
         else
         {
 
-            CompundActionInProgress = false;
             BasicActionInProgress = false;
         }
         reticalManager.reDrawValidTiles();
@@ -261,7 +279,6 @@ public class MoveDictionaryManager : MonoBehaviour
             else if (Input.GetMouseButtonDown(1))
             {
                 addToolTip("Action Cancelled; Select an Button To Perform an Action", true);
-                CompundActionInProgress = false;
                 ShouldContinue = false;
                 return true;
             }
@@ -299,6 +316,11 @@ public class MoveDictionaryManager : MonoBehaviour
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         bool disregardWalkablity = false;
         bool requireCharacter = false;
+
+
+
+
+
         listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
         if (action.validTileType == ValidTileType.PointTargeted)
         {
@@ -322,6 +344,7 @@ public class MoveDictionaryManager : MonoBehaviour
             {/*Do Nothing since all conditions are fine*/}
             else
             {
+
                 //For Debugging
                 if (checkValidActionTiles)
                 {
@@ -362,23 +385,6 @@ public enum AbilityName
     Restart
 }
 [Serializable]
-public class CompundAbility
-{
-    public string NameOfAbility;
-    public CompundAbilityPreset preset;
-    public List<ActionInputParams> actionInputParams;
-    public CompundAbility()
-    {
-
-    }
-    public CompundAbility(CompundAbility given)
-    {
-        this.NameOfAbility = given.NameOfAbility;
-        actionInputParams = GlobalCal.createCopyListUsingConstructor(given.actionInputParams);
-    }
-
-}
-[Serializable]
 public class ActionInputParams
 {
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
@@ -402,6 +408,31 @@ public class ActionInputParams
         return (float)rangeOfActionEnum / 10;
     }
 
+}
+[Serializable]
+public class LadderCollapseFunction
+{
+    public String name;
+    public SerializableDictionary<LadderCollapseFunctionEnums, int> invokeFunction;
+    public SerializableDictionary<ActionInputParams, int> SetDataAtIndex;
+    public SerializableDictionary<TypeOfAction, int> DoActionFromDataAtIndex;
+    public LadderCollapseFunction()
+    {
+
+    }
+    public LadderCollapseFunction(LadderCollapseFunction given)
+    {
+        this.name = given.name;
+        //Rework This
+        invokeFunction = (given.invokeFunction);
+        SetDataAtIndex = (given.SetDataAtIndex);
+        DoActionFromDataAtIndex = (given.DoActionFromDataAtIndex);
+    }
+}
+public enum LadderCollapseFunctionEnums
+{
+    SetDataAtIndex,
+    PerformFromDataAtIndex
 }
 public enum CompundAbilityPreset
 {

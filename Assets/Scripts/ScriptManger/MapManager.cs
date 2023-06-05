@@ -33,7 +33,7 @@ public class MapManager : MonoBehaviour
     {
         if (UserDataManager.currentLevel == null)
         {
-            Debug.LogError("Incorrect Scene Loaded Loading last Known Scene");
+            //Debug.LogError("Incorrect Scene Loaded Loading last Known Scene");
             return;
         }
         LoadThisLevel = UserDataManager.currentLevel;

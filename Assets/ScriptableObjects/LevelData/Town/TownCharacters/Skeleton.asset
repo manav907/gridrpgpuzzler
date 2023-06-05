@@ -21,18 +21,12 @@ MonoBehaviour:
   speedValue: 3
   rangeOfVision: 5
   canWalkOn: 0000000002000000
-  listOfAbility:
-  - abilityString: Move
-    abilityName: 1
-    forceAbility: 0
-    rangeOfActionEnum: 3
-    reticalShapes: 0
-    requireCharacterBoolEnum: 2
-    disregardWalkablity: 0
-  - abilityString: Attack
-    abilityName: 2
-    forceAbility: 0
-    rangeOfActionEnum: 1
-    reticalShapes: 0
-    requireCharacterBoolEnum: 1
-    disregardWalkablity: 0
+  abilities: []
+  LadderAbility:
+  - name: 
+    invokeFunction:
+      KeyValuePairs: []
+    SetDataAtIndex:
+      KeyValuePairs: []
+    DoActionFromDataAtIndex:
+      KeyValuePairs: []

@@ -33,7 +33,7 @@ public class CharacterControllerScript : MonoBehaviour
     private TurnManager turnManager;
     DataManager dataManager;
     UniversalCalculator universalCalculator;
-    [SerializeField] List<CompundAbility> abilityList;
+    [SerializeField] List<LadderCollapseFunction> ladderList;
 
     public void InitilizeCharacter(GameObject gameController)
     {
@@ -57,7 +57,9 @@ public class CharacterControllerScript : MonoBehaviour
 
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
-            abilityList.AddRange(GlobalCal.createCopyListUsingConstructor(CharacterDataSO.abilities));
+            //Rewordk This
+            //ladderList.AddRange(GlobalCal.createCopyListUsingConstructor(CharacterDataSO.LadderAbility));
+            ladderList = CharacterDataSO.LadderAbility;
             //Setting Data
             //Setting Specific Name
             this.name = characterName + " " + CharacterDataSO.InstanceID;
@@ -81,7 +83,6 @@ public class CharacterControllerScript : MonoBehaviour
         CharacterDataSO.speedValue = speedValue;
         CharacterDataSO.rangeOfVision = rangeOfVision;
         CharacterDataSO.canWalkOn = canWalkOn;
-        CharacterDataSO.abilities = GlobalCal.createCopyListUsingConstructor(abilityList);
     }
     public bool CheckIfCharacterIsDead()
     {
@@ -131,7 +132,7 @@ public class CharacterControllerScript : MonoBehaviour
         if (controlCharacter)
         {
             GameEvents.current.TriggerNextDialog();//Disable this laeter
-            buttonManager.InstantiateButtons(abilityList);
+            buttonManager.InstantiateButtons(ladderList);
             turnManager.setCameraPos(getCharV3Int());
         }
         else
