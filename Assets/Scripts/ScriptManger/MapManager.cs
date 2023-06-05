@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
 using System;
+using UnityEditor;
 
 public class MapManager : MonoBehaviour
 {
@@ -58,7 +59,9 @@ public class MapManager : MonoBehaviour
             }
             tileMapStore.CopyDict(dict);
         }
+        EditorUtility.SetDirty(LoadThisLevel);
         UnityEditor.AssetDatabase.SaveAssets();
+        UnityEditor.AssetDatabase.Refresh();
     }
     public void LoadMapDataFromSO()
     {
