@@ -204,11 +204,11 @@ public class MoveDictionaryManager : MonoBehaviour
     IEnumerator getInput(ActionInputParams basicAction)
     {
         //Declaring Variables
-        float rangeOfAction = (float)basicAction.rangeOfActionEnum;
+        float rangeOfAction = basicAction.getRangeOfAction();
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction + " was zero");
         List<Vector3Int> listOfValidtargets = getValidTargetList(basicAction);
-        reticalManager.fromPoint = characterCS.getCharV3Int();
+        reticalManager.fromPoint = theroticalCurrentPos;
         ShouldContinue = false;
 
         //Executing Script
@@ -238,6 +238,12 @@ public class MoveDictionaryManager : MonoBehaviour
 
             BasicActionInProgress = false;
             //TypeOFActionToAction[basicAction.typeOfAction]();
+        }
+        else
+        {
+
+            CompundActionInProgress = false;
+            BasicActionInProgress = false;
         }
         reticalManager.reDrawValidTiles();
 
@@ -283,7 +289,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         float rangeOfAction;
         if (!EditMapMode)
-            rangeOfAction = ((float)action.rangeOfActionEnum) / 10;
+            rangeOfAction = action.getRangeOfAction();
         else
             rangeOfAction = alternateRange;
 
@@ -293,9 +299,10 @@ public class MoveDictionaryManager : MonoBehaviour
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         bool disregardWalkablity = false;
         bool requireCharacter = false;
+        listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
         if (action.validTileType == ValidTileType.PointTargeted)
         {
-            listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
+
             disregardWalkablity = true;
         }
         if (action.validTargets == ValidTargets.LivingEntities)
@@ -374,7 +381,7 @@ public class CompundAbility
 [Serializable]
 public class ActionInputParams
 {
-    public RangeOfActionEnum rangeOfActionEnum;
+    [SerializeField] RangeOfActionEnum rangeOfActionEnum;
     public ReticalShapes areaOfEffectType;
     public ValidTileType validTileType;
     public ValidTargets validTargets;
@@ -389,6 +396,10 @@ public class ActionInputParams
         areaOfEffectType = given.areaOfEffectType;
         validTileType = given.validTileType;
         validTargets = given.validTargets;
+    }
+    public float getRangeOfAction()
+    {
+        return (float)rangeOfActionEnum / 10;
     }
 
 }
