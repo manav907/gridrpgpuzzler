@@ -12,11 +12,11 @@ using UnityEngine.Tilemaps;
 public class LevelDataSO : ScriptableObject
 {
     [Header("TileMapData")]
-    [HideInInspector][SerializeField] public SerializableDictionary<Vector3Int, TileBase> Obstacles;
-    [HideInInspector][SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor_Over;
-    [HideInInspector][SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor;
+    [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Obstacles;
+    [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor_Over;
+    [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor;
     [Header("CharacterData")]
-    [HideInInspector][SerializeField] public SerializableDictionary<Vector3Int, TileBase> Character_Placeholder;
+    [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Character_Placeholder;
     [SerializeField] public SerializableDictionary<TileBase, CharacterData> TileToChar;
     
     //[SerializeField]public SerializableDictionary<>

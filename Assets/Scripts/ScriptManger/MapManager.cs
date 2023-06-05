@@ -58,6 +58,7 @@ public class MapManager : MonoBehaviour
             }
             tileMapStore.CopyDict(dict);
         }
+        UnityEditor.AssetDatabase.SaveAssets();
     }
     public void LoadMapDataFromSO()
     {
