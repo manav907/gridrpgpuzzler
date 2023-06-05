@@ -35,6 +35,12 @@ public class CharacterDataEditor : Editor
             newCharacterData = null;
             Debug.Log("Replaced Character Data with Preset");
         }
+        if (GUILayout.Button("Save SO"))
+        {
+            EditorUtility.SetDirty(characterData);
+            UnityEditor.AssetDatabase.SaveAssets();
+            UnityEditor.AssetDatabase.Refresh();
+        }
         //EditorGUILayout.PropertyField(serializedObject.FindProperty("ListOfAbility"), true);
     }
 }

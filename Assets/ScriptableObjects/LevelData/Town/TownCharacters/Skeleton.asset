@@ -24,15 +24,13 @@ MonoBehaviour:
   listOfAbility:
   - abilityString: Move
     abilityName: 1
-    forceAbility: 0
-    rangeOfActionEnum: 3
+    rangeOfActionEnum: 20
     reticalShapes: 0
     requireCharacterBoolEnum: 2
     disregardWalkablity: 0
   - abilityString: Attack
     abilityName: 2
-    forceAbility: 0
-    rangeOfActionEnum: 1
+    rangeOfActionEnum: 10
     reticalShapes: 0
     requireCharacterBoolEnum: 1
     disregardWalkablity: 0
