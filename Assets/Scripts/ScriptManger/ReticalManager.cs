@@ -94,28 +94,6 @@ public class ReticalManager : MonoBehaviour
         worldPos.z = 0f;
         return Grid.WorldToCell(worldPos);
     }
-    public void doOnClick()
-    {
-        Action thiAction = delegate { Debug.Log("This "); };
-        StartCoroutine(onClick());
-        IEnumerator onClick()
-        {
-            yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1      
-            bool CheckContinue()
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    thiAction();
-                    return true;
-                }
-                else if (Input.GetMouseButtonDown(1))
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
-    }
     //Tile Stuff
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles
     {

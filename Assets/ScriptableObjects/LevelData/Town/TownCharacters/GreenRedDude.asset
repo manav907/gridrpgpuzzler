@@ -27,6 +27,8 @@ MonoBehaviour:
       KeyValuePairs:
       - key: 0
         value: 0
+      - key: 1
+        value: 0
     SetDataAtIndex:
       KeyValuePairs:
       - key:
@@ -38,5 +40,5 @@ MonoBehaviour:
         value: 0
     DoActionFromDataAtIndex:
       KeyValuePairs:
-      - key: 0
+      - key: 2
         value: 0

@@ -36,6 +36,16 @@ public class SerializableDictionary<TKey, TValue>
             this.KeyValuePairs.Add(keyPair);
         }
     }
+    public List<KeyPair> returnKeyPairList()
+    {
+        var newList = new List<KeyPair>();
+        foreach (var pair in KeyValuePairs)
+        {
+            KeyPair newPair = new KeyPair(pair.key, pair.value);
+            newList.Add(newPair);
+        }
+        return newList;
+    }
     public List<TKey> Keys()
     {
         return returnDict().Keys.ToList();
