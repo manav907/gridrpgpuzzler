@@ -26,6 +26,7 @@ public class CharacterControllerScript : MonoBehaviour
     public int rangeOfVision;
     public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
+    public Vector3Int CellPosOfCharcter;
     [SerializeField] private TMPro.TextMeshPro Heatlh;
     //[SerializeField] private TextMesh Heatlh;
     private ButtonManager buttonManager;
@@ -199,7 +200,10 @@ public class CharacterControllerScript : MonoBehaviour
     }
     public Vector3Int getCharV3Int()
     {
-        return universalCalculator.castAsV3Int(this.gameObject.transform.position);
+        if (mapManager.cellDataDir[CellPosOfCharcter].characterAtCell = this.gameObject)
+            return CellPosOfCharcter;
+            Debug.LogError("Fata chara erro");
+        return Vector3Int.zero;
     }
 
 

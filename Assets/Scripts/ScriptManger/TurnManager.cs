@@ -73,7 +73,9 @@ public class TurnManager : MonoBehaviour
             //Adding to Lists
             ListOfInteractableCharacters.Add(InstansiatedCharacter);//Adding Character to List
             if (mapManager.cellDataDir.ContainsKey(characterDataPair.Key))//Checks if Tile is Valid ie recorded in Dictionary does not do walkablity checks
-                mapManager.cellDataDir[characterDataPair.Key].characterAtCell = InstansiatedCharacter;//Setting Mapmanager Posistion
+            {
+                mapManager.PlaceCharacterAtPos(characterDataPair.Key, InstansiatedCharacter);
+            }//Setting Mapmanager Posistion
             else
             {
                 Debug.Log("Wrong Tile Skipping Character");

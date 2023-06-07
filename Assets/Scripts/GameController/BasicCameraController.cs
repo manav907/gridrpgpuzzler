@@ -49,10 +49,9 @@ public class BasicCameraController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameEvents.current.TriggerNextDialog();
             //mapManager.getCellData(reticalManager.getMovePoint());
-            //Vector3Int thisPos = reticalManager.getMovePoint();
-            //Debug.Log("At Pos " + thisPos + " AnyCharacter here was = " + mapManager.isCellHoldingCharacer(thisPos));
+            Vector3Int thisPos = reticalManager.getMovePoint();
+            Debug.Log("At Pos " + thisPos + " AnyCharacter here was = " + mapManager.isCellHoldingCharacer(thisPos));
             //mapManager.cellDataDir[thisPos].ReadInfo();
         }
     }

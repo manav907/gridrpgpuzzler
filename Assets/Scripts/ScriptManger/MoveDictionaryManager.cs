@@ -83,9 +83,10 @@ public class MoveDictionaryManager : MonoBehaviour
         void apply_SelfMove()
         {
             var movePoints = new List<Vector3Int>();
-            movePoints.Add(tryHere);
-            Vector3Int currentPosition = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+
+            Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
+            movePoints.Add(tryHere);
             universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, universalCalculator.castListAsV3(movePoints), moveTimeSpeed);
         }
         void apply_TryEndTurn()
@@ -101,10 +102,6 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void DoubleTeam()
         { characterCS.actionPoints += 1; }
-        void AxeSweep()
-        {
-            //StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.AxeSweep));
-        }
         void Restart()
         {
             GameEvents.current.reloadScene();

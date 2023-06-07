@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Tilemap Character_Placement;
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
+    Dictionary<Vector3Int, GameObject> PosToCharGO;
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
     public void setVariables()
@@ -26,6 +27,7 @@ public class MapManager : MonoBehaviour
 
         LoadMapDataFromSO();
         Character_Placement.ClearAllTiles();
+        PosToCharGO = new Dictionary<Vector3Int, GameObject>();
         setTilesDir();
         setCellDataDir();
     }
@@ -109,10 +111,26 @@ public class MapManager : MonoBehaviour
                 return false;
         return true;
     }
+    public void PlaceCharacterAtPos(Vector3Int newPos, GameObject character)
+    {
+        PosToCharGO.Add(newPos, character);
+        cellDataDir[newPos].characterAtCell = character;
+        character.GetComponent<CharacterControllerScript>().CellPosOfCharcter = newPos;
+    }
+    public void RemoveCharacterFromPos(Vector3Int Pos)
+    {
+        if (PosToCharGO.ContainsKey(Pos))
+        {
+            cellDataDir[Pos].characterAtCell = null;
+            PosToCharGO.Remove(Pos);
+        }
+        else
+            Debug.LogError("Fatal Pos Erro");
+    }
     public void UpdateCharacterPosistion(Vector3Int oldPos, Vector3Int newPos, GameObject character)
     {
-        cellDataDir[oldPos].characterAtCell = null;
-        cellDataDir[newPos].characterAtCell = character;
+        RemoveCharacterFromPos(oldPos);
+        PlaceCharacterAtPos(newPos, character);
     }
     public void KillCharacter(Vector3Int newPos)
     {
