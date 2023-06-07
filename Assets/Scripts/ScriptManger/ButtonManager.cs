@@ -43,7 +43,7 @@ public class ButtonManager : MonoBehaviour
     public void InstantiateButtons(List<LadderCollapseFunction> abilityOfCharacter)
     {
         clearButtons();
-        
+
         for (int i = 0; i < abilityOfCharacter.Count; i++)
         {
             ActionButtons.Add(Instantiate(ButtonPrefab));//Just Instanting
@@ -57,7 +57,7 @@ public class ButtonManager : MonoBehaviour
             //int captured = i;//no Longer needed
 
             LadderCollapseFunction compundAbility = abilityOfCharacter[i];
-            string stringOfAbilityName = compundAbility.name;//This is the cache now
+            string stringOfAbilityName = compundAbility.Name;//This is the cache now
             //stringOfAbilityName = universalCalculator.CamelCaseToSpaces(stringOfAbilityName);
             // using variables to set text
             TMPthis.text = stringOfAbilityName;

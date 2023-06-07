@@ -49,8 +49,6 @@ public class LadderCollapseFunctionEditor : Editor
             //
             if (ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key == LadderCollapseFunctionEnums.setDataWithID)
             {
-
-                currentsetDataWithID++;
                 if (ladderCollapseFunction.SetDataAtIndex.Count < currentsetDataWithID + 1)
                 {
                     ladderCollapseFunction.SetDataAtIndex.Add(new ActionInputParams(new ActionInputParams()));
@@ -58,15 +56,16 @@ public class LadderCollapseFunctionEditor : Editor
                 SerializedProperty SetDataAtIndexKeyPairs = serializedObject.FindProperty("SetDataAtIndex");
                 SerializedProperty SetDataAtIndexKeyPair = SetDataAtIndexKeyPairs.GetArrayElementAtIndex(currentsetDataWithID);
                 EditorGUILayout.PropertyField(SetDataAtIndexKeyPair, true);
+                currentsetDataWithID++;
             }
             else if (ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key == LadderCollapseFunctionEnums.doActionWithID)
             {
-                currentdoActionWithID++;
                 if (ladderCollapseFunction.DoActionFromDataAtIndex.Count < currentdoActionWithID + 1)
                 {
                     ladderCollapseFunction.DoActionFromDataAtIndex.Add(TypeOfAction.apply_Damage);
                 }
                 ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID] = (TypeOfAction)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID]);
+                currentdoActionWithID++;
             }
             else if (ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
             {

@@ -58,7 +58,23 @@ public class MoveDictionaryManager : MonoBehaviour
 
         void apply_Damage()
         {
-            //BasicActionInProgress = false;
+            GameObject targetCharGO = mapManager.cellDataDir[tryHere].characterAtCell;
+            if (targetCharGO != null)
+            {
+                CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+                CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
+                targetCharacter.health -= attackingCharacter.attackDamage;
+                checkCharacters(targetCharacter);
+                var ListOfMovePoints = new List<Vector3>();
+                ListOfMovePoints.Add(tryHere);
+                ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
+                universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
+                GameEvents.current.PlaySound(0);
+            }
+            else
+            {
+
+            }
         }
         void apply_Heal()
         {
@@ -93,18 +109,6 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             GameEvents.current.reloadScene();
             //Debug.Log("Restart Function not created");
-        }
-        void simpleAttackAction()
-        {
-            CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
-            CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-            targetCharacter.health -= attackingCharacter.attackDamage;
-            checkCharacters(targetCharacter);
-            var ListOfMovePoints = new List<Vector3>();
-            ListOfMovePoints.Add(tryHere);
-            ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
-            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
-            GameEvents.current.PlaySound(0);//This is For attacking
         }
 
         void checkCharacters(CharacterControllerScript targetCharacter)
@@ -151,24 +155,31 @@ public class MoveDictionaryManager : MonoBehaviour
                 currentVarirable = keyPair.value;
                 if (keyPair.key == LadderCollapseFunctionEnums.setDataWithID)
                 {
-                    currentsetDataWithID++;
+
                     variableNameToData.Add(currentVarirable, new List<Vector3Int>());
                     BasicActionInProgress = true;
                     StartCoroutine(getInput(ladderCollapseFunction.SetDataAtIndex[currentsetDataWithID]));
                     yield return new WaitUntil(() => !BasicActionInProgress);
                     yield return null;
+                    currentsetDataWithID++;
 
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
                 {
-                    currentdoActionWithID++;
+
                     TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
                     foreach (Vector3Int point in variableNameToData[currentVarirable])
                     {
                         yield return new WaitForSeconds(0.25f);
                         tryHere = point;
-                        abilityNameToAction[actiontype]();
+                        if (mapManager.cellDataDir.ContainsKey(tryHere))
+                            abilityNameToAction[actiontype]();
+                        else
+                        {
+                            //This Point was skipped because it is invalid
+                        }
                     }
+                    currentdoActionWithID++;
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
                 {
@@ -225,11 +236,11 @@ public class MoveDictionaryManager : MonoBehaviour
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
 
             tryHere = reticalManager.getMovePoint();
-            
+
             variableNameToData[currentVarirable] = reticalManager.generateShape(tryHere);
-            if(basicAction.updateTheroticalPos)
+            if (basicAction.updateTheroticalPos)
             {
-                theroticalCurrentPos=tryHere;
+                theroticalCurrentPos = tryHere;
             }
 
 
