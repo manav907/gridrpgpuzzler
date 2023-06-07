@@ -133,7 +133,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             DataSetForLadderCollapse = new List<Vector3Int>[ladderCollapseFunction.SetDataAtIndex.KeyValuePairs.Count];
             foreach (var keyPair in ladderCollapseFunction.invokeFunction.KeyValuePairs)
-            {                
+            {
                 if (GetInputState != CoRoutineStateCheck.Proceeding)
                 {
                     Debug.Log("Action was" + GetInputState);
@@ -141,14 +141,14 @@ public class MoveDictionaryManager : MonoBehaviour
                 }
 
                 SetDataAtIndex = keyPair.value;
-                if (keyPair.key == LadderCollapseFunctionEnums.SetDataAtArrayIndex)
+                if (keyPair.key == LadderCollapseFunctionEnums.setDataWithID)
                 {
                     BasicActionInProgress = true;
                     StartCoroutine(getInput(ladderCollapseFunction.SetDataAtIndex.KeyValuePairs[SetDataAtIndex].key));
                     yield return new WaitUntil(() => !BasicActionInProgress);
 
                 }
-                else if (keyPair.key == LadderCollapseFunctionEnums.PerformActionFromDataAtArrayIndex)
+                else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
                 {
                     TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs[SetDataAtIndex].key;
                     foreach (Vector3Int point in DataSetForLadderCollapse[SetDataAtIndex])
@@ -164,6 +164,7 @@ public class MoveDictionaryManager : MonoBehaviour
                     DataSetForLadderCollapse[SetDataAtIndex].Add(theroticalCurrentPos);
                 }
             }
+           
             yield return null;
         }
     }
@@ -381,8 +382,8 @@ public enum CoRoutineStateCheck
 
 public enum LadderCollapseFunctionEnums
 {
-    SetDataAtArrayIndex,
-    PerformActionFromDataAtArrayIndex,
+    setDataWithID,
+    doActionWithID,
     SetDataUsingTherorticalPosAtArrayIndex,
 }
 public enum TypeOfAction
