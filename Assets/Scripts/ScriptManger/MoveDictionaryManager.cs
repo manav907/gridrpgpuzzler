@@ -122,8 +122,9 @@ public class MoveDictionaryManager : MonoBehaviour
     bool BasicActionInProgress = false;
     Vector3Int theroticalCurrentPos;
     int stageOfAction;
-    int SetDataAtIndex;
-    List<Vector3Int>[] DataSetForLadderCollapse;
+
+    string currentVarirable;
+    Dictionary<string, List<Vector3Int>> variableNameToData;
     public void doAction(LadderCollapseFunction ladderCollapseFunction)
     {
         theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
@@ -131,7 +132,15 @@ public class MoveDictionaryManager : MonoBehaviour
         StartCoroutine(SequenceOfEvents());
         IEnumerator SequenceOfEvents()
         {
-            DataSetForLadderCollapse = new List<Vector3Int>[ladderCollapseFunction.SetDataAtIndex.KeyValuePairs.Count];
+            variableNameToData = new Dictionary<string, List<Vector3Int>>();
+
+
+            int currentsetDataWithID = 0;
+            int currentdoActionWithID = 0;
+            int currentSetDataUsingTherorticalPosAtArrayIndex = 0;
+
+
+
             foreach (var keyPair in ladderCollapseFunction.invokeFunction.KeyValuePairs)
             {
                 if (GetInputState != CoRoutineStateCheck.Proceeding)
@@ -139,19 +148,22 @@ public class MoveDictionaryManager : MonoBehaviour
                     Debug.Log("Action was" + GetInputState);
                     break;
                 }
-
-                SetDataAtIndex = keyPair.value;
+                currentVarirable = keyPair.value;
                 if (keyPair.key == LadderCollapseFunctionEnums.setDataWithID)
                 {
+                    currentsetDataWithID++;
+                    variableNameToData.Add(currentVarirable, new List<Vector3Int>());
                     BasicActionInProgress = true;
-                    StartCoroutine(getInput(ladderCollapseFunction.SetDataAtIndex.KeyValuePairs[SetDataAtIndex].key));
+                    StartCoroutine(getInput(ladderCollapseFunction.SetDataAtIndex[currentsetDataWithID]));
                     yield return new WaitUntil(() => !BasicActionInProgress);
+                    yield return null;
 
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
                 {
-                    TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs[SetDataAtIndex].key;
-                    foreach (Vector3Int point in DataSetForLadderCollapse[SetDataAtIndex])
+                    currentdoActionWithID++;
+                    TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
+                    foreach (Vector3Int point in variableNameToData[currentVarirable])
                     {
                         yield return new WaitForSeconds(0.25f);
                         tryHere = point;
@@ -160,11 +172,12 @@ public class MoveDictionaryManager : MonoBehaviour
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
                 {
-                    DataSetForLadderCollapse[SetDataAtIndex] = new List<Vector3Int>();
-                    DataSetForLadderCollapse[SetDataAtIndex].Add(theroticalCurrentPos);
+                    currentSetDataUsingTherorticalPosAtArrayIndex++;
+                    variableNameToData[currentVarirable] = new List<Vector3Int>();
+                    variableNameToData[currentVarirable].Add(theroticalCurrentPos);
                 }
             }
-           
+
             yield return null;
         }
     }
@@ -212,8 +225,12 @@ public class MoveDictionaryManager : MonoBehaviour
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
 
             tryHere = reticalManager.getMovePoint();
-            //listOfPointsForCompundAction.Add(reticalManager.generateShape(tryHere));
-            DataSetForLadderCollapse[SetDataAtIndex] = reticalManager.generateShape(tryHere);
+            
+            variableNameToData[currentVarirable] = reticalManager.generateShape(tryHere);
+            if(basicAction.updateTheroticalPos)
+            {
+                theroticalCurrentPos=tryHere;
+            }
 
 
             reticalManager.reticalShapes = ReticalShapes.SSingle;

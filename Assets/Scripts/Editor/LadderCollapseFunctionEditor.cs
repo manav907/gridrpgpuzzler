@@ -6,18 +6,42 @@ using UnityEditor;
 [CustomEditor(typeof(LadderCollapseFunction))]
 public class LadderCollapseFunctionEditor : Editor
 {
+    int currentsetDataWithID;
+    int currentdoActionWithID;
+    int currentSetDataUsingTherorticalPosAtArrayIndex;
+    Dictionary<string, int> VarirableDict;
     public override void OnInspectorGUI()
     {
         LadderCollapseFunction ladderCollapseFunction = target as LadderCollapseFunction;
         DrawDefaultInspector();
         EditorGUILayout.LabelField("Costom Inspect");
+        SetUPOptionsDict();
 
+        if (ladderCollapseFunction.invokeFunction.KeyValuePairs.Count == 0)
+        {
+            ladderCollapseFunction.invokeFunction.KeyValuePairs.Add
+            (new KeyPair<LadderCollapseFunctionEnums, string>(LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex, ""));
+            return;
+        }
+        //
+        currentsetDataWithID = 0;
+        currentdoActionWithID = 0;
+        currentSetDataUsingTherorticalPosAtArrayIndex = 0;
+        //
         for (int i = 0; i < ladderCollapseFunction.invokeFunction.KeyValuePairs.Count; i++)
         {
             EditorGUILayout.BeginHorizontal();
             ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key = (LadderCollapseFunctionEnums)EditorGUILayout.EnumPopup(ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key);
-            ladderCollapseFunction.invokeFunction.KeyValuePairs[i].value = EditorGUILayout.IntField(ladderCollapseFunction.invokeFunction.KeyValuePairs[i].value);
-            int ID = ladderCollapseFunction.invokeFunction.KeyValuePairs[i].value;
+            string currentValeueString = ladderCollapseFunction.invokeFunction.KeyValuePairs[i].value;
+            int selectedindex = 0;
+            if (VarirableDict.ContainsKey(currentValeueString))
+                selectedindex = EditorGUILayout.Popup(VarirableDict[currentValeueString], ladderCollapseFunction.Varirables.ToArray());
+            ladderCollapseFunction.invokeFunction.KeyValuePairs[i].value = ladderCollapseFunction.Varirables[selectedindex];
+            if (GUILayout.Button("Delete"))
+            {
+                ladderCollapseFunction.invokeFunction.KeyValuePairs.RemoveAt(i);
+                break;
+            }
             EditorGUILayout.EndHorizontal();
             //
             EditorGUI.indentLevel++;
@@ -26,36 +50,25 @@ public class LadderCollapseFunctionEditor : Editor
             if (ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key == LadderCollapseFunctionEnums.setDataWithID)
             {
 
-                if (ladderCollapseFunction.SetDataAtIndex.KeyValuePairs.Count < ID + 1)
+                currentsetDataWithID++;
+                if (ladderCollapseFunction.SetDataAtIndex.Count < currentsetDataWithID + 1)
                 {
-
-                    ladderCollapseFunction.SetDataAtIndex.KeyValuePairs.Add(new KeyPair<ActionInputParams, string>(new ActionInputParams(), ""));
-                    return;
+                    ladderCollapseFunction.SetDataAtIndex.Add(new ActionInputParams(new ActionInputParams()));
                 }
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("AffectsVariableID");
-                ladderCollapseFunction.SetDataAtIndex.KeyValuePairs[ID].value = EditorGUILayout.TextField(ladderCollapseFunction.SetDataAtIndex.KeyValuePairs[ID].value);
-                EditorGUILayout.EndHorizontal();
-                SerializedProperty SetDataAtIndexKeyPairs = serializedObject.FindProperty("SetDataAtIndex.KeyValuePairs");
-                SerializedProperty SetDataAtIndexKeyPair = SetDataAtIndexKeyPairs.GetArrayElementAtIndex(ID);
-                SerializedProperty actionInputParams = SetDataAtIndexKeyPair.FindPropertyRelative("key");
-                //ladderCollapseFunction.SetDataAtIndex.KeyValuePairs[ID].key = 
-                EditorGUILayout.PropertyField(actionInputParams);
+                SerializedProperty SetDataAtIndexKeyPairs = serializedObject.FindProperty("SetDataAtIndex");
+                SerializedProperty SetDataAtIndexKeyPair = SetDataAtIndexKeyPairs.GetArrayElementAtIndex(currentsetDataWithID);
+                EditorGUILayout.PropertyField(SetDataAtIndexKeyPair, true);
             }
             else if (ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key == LadderCollapseFunctionEnums.doActionWithID)
             {
-                if (ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs.Count < ID + 1)
+                currentdoActionWithID++;
+                if (ladderCollapseFunction.DoActionFromDataAtIndex.Count < currentdoActionWithID + 1)
                 {
-                    ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs.Add(new KeyPair<TypeOfAction, string>(TypeOfAction.apply_Damage, ""));
-                    return;
+                    ladderCollapseFunction.DoActionFromDataAtIndex.Add(TypeOfAction.apply_Damage);
                 }
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("AffectsVariableID");
-                ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs[ID].value = EditorGUILayout.TextField(ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs[ID].value);
-                EditorGUILayout.EndHorizontal();
-                ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs[ID].key = (TypeOfAction)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex.KeyValuePairs[ID].key);
+                ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID] = (TypeOfAction)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID]);
             }
-            else
+            else if (ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
             {
                 //do Nothing
             }
@@ -67,10 +80,41 @@ public class LadderCollapseFunctionEditor : Editor
         if (GUILayout.Button("Add New ladderCollapseStep"))
         {
             ladderCollapseFunction.invokeFunction.KeyValuePairs.Add
-            (new KeyPair<LadderCollapseFunctionEnums, int>(LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex, 0));
+            (new KeyPair<LadderCollapseFunctionEnums, string>(LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex, ""));
         }
         serializedObject.ApplyModifiedProperties();
+        void SetUPOptionsDict()
+        {
+            VarirableDict = new Dictionary<string, int>();
+            if (ladderCollapseFunction.Varirables.Count == 0)
+            {
+                ladderCollapseFunction.Varirables.Add("New Varirable");
+            }
+            for (int i = 0; i < ladderCollapseFunction.Varirables.Count; i++)
+            {
+                VarirableDict.Add(ladderCollapseFunction.Varirables[i], i);
+                EditorGUILayout.BeginHorizontal();
+                ladderCollapseFunction.Varirables[i] = EditorGUILayout.TextField(ladderCollapseFunction.Varirables[i]);
+                if (GUILayout.Button("Delete"))
+                {
+                    ladderCollapseFunction.Varirables.RemoveAt(i);
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            if (GUILayout.Button("Add New"))
+            {
+                string newKeyName = "New Key";
+                if (VarirableDict.ContainsKey(newKeyName))
+                {
+                    Debug.LogError("Key Alredy Present");
+                }
+                else
+                {
+                    ladderCollapseFunction.Varirables.Add(newKeyName);
+                }
+            }
 
+        }
     }
 
 }

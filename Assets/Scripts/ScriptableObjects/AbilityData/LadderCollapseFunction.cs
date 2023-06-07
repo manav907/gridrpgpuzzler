@@ -5,9 +5,10 @@ using UnityEngine;
 public class LadderCollapseFunction : ScriptableObject
 {
     public string Name;
-    public SerializableDictionary<LadderCollapseFunctionEnums, int> invokeFunction;
-    public SerializableDictionary<ActionInputParams, string> SetDataAtIndex;
-    public SerializableDictionary<TypeOfAction, string> DoActionFromDataAtIndex;
+    public List<string> Varirables;
+    public SerializableDictionary<LadderCollapseFunctionEnums, string> invokeFunction;
+    public List<ActionInputParams> SetDataAtIndex;
+    public List<TypeOfAction> DoActionFromDataAtIndex;
     public LadderCollapseFunction()
     {
 

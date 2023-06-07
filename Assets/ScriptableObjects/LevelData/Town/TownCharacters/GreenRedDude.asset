@@ -22,23 +22,5 @@ MonoBehaviour:
   rangeOfVision: 5
   canWalkOn: 00000000
   LadderAbility:
-  - name: Move
-    invokeFunction:
-      KeyValuePairs:
-      - key: 0
-        value: 0
-      - key: 1
-        value: 0
-    SetDataAtIndex:
-      KeyValuePairs:
-      - key:
-          rangeOfActionEnum: 15
-          areaOfEffectType: 0
-          validTileType: 2
-          validTargets: 0
-          updateTheroticalPos: 0
-        value: 0
-    DoActionFromDataAtIndex:
-      KeyValuePairs:
-      - key: 2
-        value: 0
+  - {fileID: 11400000, guid: bcf5f8057e5c6d144801241b79104612, type: 2}
+  - {fileID: 11400000, guid: d8dcbed5a2630ef4f89755b5495727d7, type: 2}
