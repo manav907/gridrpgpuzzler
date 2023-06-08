@@ -85,10 +85,18 @@ public class LadderCollapseFunctionEditor : Editor
         void SetUPOptionsDict()
         {
             VarirableDict = new Dictionary<string, int>();
-            if (ladderCollapseFunction.Varirables.Count == 0)
+            //Debug.Log(ladderCollapseFunction.Varirables);
+            if (ladderCollapseFunction.Varirables == null)
             {
-                ladderCollapseFunction.Varirables.Add("New Varirable");
+                ladderCollapseFunction.Varirables = new List<string>();
+                ladderCollapseFunction.DoActionFromDataAtIndex = new List<TypeOfAction>();
+                ladderCollapseFunction.invokeFunction = new SerializableDictionary<LadderCollapseFunctionEnums, string>();
+                ladderCollapseFunction.SetDataAtIndex = new List<ActionInputParams>();
             }
+                if (ladderCollapseFunction.Varirables.Count == 0)
+                {
+                    ladderCollapseFunction.Varirables.Add("New Varirable");
+                }
             for (int i = 0; i < ladderCollapseFunction.Varirables.Count; i++)
             {
                 VarirableDict.Add(ladderCollapseFunction.Varirables[i], i);

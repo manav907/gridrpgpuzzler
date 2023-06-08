@@ -202,7 +202,7 @@ public class CharacterControllerScript : MonoBehaviour
     {
         if (mapManager.cellDataDir[CellPosOfCharcter].characterAtCell = this.gameObject)
             return CellPosOfCharcter;
-            Debug.LogError("Fata chara erro");
+        Debug.LogError("Fata chara erro");
         return Vector3Int.zero;
     }
 

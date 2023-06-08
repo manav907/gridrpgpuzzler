@@ -55,6 +55,8 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction.Add(TypeOfAction.apply_SelfMove, apply_SelfMove);
         abilityNameToAction.Add(TypeOfAction.apply_Damage, apply_Damage);
         abilityNameToAction.Add(TypeOfAction.apply_Heal, apply_Heal);
+        abilityNameToAction.Add(TypeOfAction.apply_TryEndTurn, apply_TryEndTurn);
+        abilityNameToAction.Add(TypeOfAction.RestartScene, Restart);
 
         void apply_Damage()
         {
@@ -100,8 +102,8 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             //BasicActionInProgress = false;
         }
-        void DoubleTeam()
-        { characterCS.actionPoints += 1; }
+        /* void DoubleTeam()
+        { characterCS.actionPoints += 1; } */
         void Restart()
         {
             GameEvents.current.reloadScene();
@@ -311,16 +313,28 @@ public class MoveDictionaryManager : MonoBehaviour
         List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         bool disregardWalkablity = false;
         bool requireCharacter = false;
+        bool reverseRequireCharacterCondiditon = false;
         listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
         if (action.validTileType == ValidTileType.PointTargeted)
         {
 
             disregardWalkablity = true;
         }
-        if (action.validTargets == ValidTargets.LivingEntities)
+        else if (action.validTileType == ValidTileType.EmptyCellTargeted)
+        {
+
+            requireCharacter = true;
+            reverseRequireCharacterCondiditon = true;
+        }
+        else if (action.validTileType == ValidTileType.UnitTargeted)
         {
             requireCharacter = true;
         }
+
+        /* if (action.validTargets == ValidTargets.LivingEntities)
+        {
+            requireCharacter = true;
+        } */
         listOfRanges.Remove(centerPos);
         ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
@@ -329,7 +343,10 @@ public class MoveDictionaryManager : MonoBehaviour
             //Normal Checks         
             bool hasWalkability = disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
             bool requireCharacterCondition = requireCharacter ? mapManager.isCellHoldingCharacer(listOfRanges[i]) : true;
-            //bool requireCharacterCondition = GlobalCal.compareBool(mapManager.isCellHoldingCharacer(listOfRanges[i]), action.requireCharacterBoolEnum);
+            if (reverseRequireCharacterCondiditon)
+            {
+                requireCharacterCondition = !requireCharacterCondition;
+            }
             if (hasWalkability && requireCharacterCondition)
             {/*Do Nothing since all conditions are fine*/}
             else
@@ -416,7 +433,8 @@ public enum TypeOfAction
     apply_Damage,
     apply_Heal,
     apply_SelfMove,
-    apply_TryEndTurn
+    apply_TryEndTurn,
+    RestartScene
 }
 public enum BoolEnum
 {
