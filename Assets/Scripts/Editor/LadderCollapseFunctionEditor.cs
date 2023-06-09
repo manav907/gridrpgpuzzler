@@ -62,9 +62,13 @@ public class LadderCollapseFunctionEditor : Editor
             {
                 if (ladderCollapseFunction.DoActionFromDataAtIndex.Count < currentdoActionWithID + 1)
                 {
-                    ladderCollapseFunction.DoActionFromDataAtIndex.Add(TypeOfAction.apply_Damage);
+                    ladderCollapseFunction.DoActionFromDataAtIndex.Add(new ActionEffectParams());
                 }
-                ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID] = (TypeOfAction)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID]);
+                EditorGUILayout.BeginHorizontal();
+                ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction = (TypeOfAction)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction);
+                ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets = (ValidTargets)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets);
+                EditorGUILayout.Toggle(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].includeSelf);
+                EditorGUILayout.EndHorizontal();
                 currentdoActionWithID++;
             }
             else if (ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
@@ -89,14 +93,14 @@ public class LadderCollapseFunctionEditor : Editor
             if (ladderCollapseFunction.Varirables == null)
             {
                 ladderCollapseFunction.Varirables = new List<string>();
-                ladderCollapseFunction.DoActionFromDataAtIndex = new List<TypeOfAction>();
+                ladderCollapseFunction.DoActionFromDataAtIndex = new List<ActionEffectParams>();
                 ladderCollapseFunction.invokeFunction = new SerializableDictionary<LadderCollapseFunctionEnums, string>();
                 ladderCollapseFunction.SetDataAtIndex = new List<ActionInputParams>();
             }
-                if (ladderCollapseFunction.Varirables.Count == 0)
-                {
-                    ladderCollapseFunction.Varirables.Add("New Varirable");
-                }
+            if (ladderCollapseFunction.Varirables.Count == 0)
+            {
+                ladderCollapseFunction.Varirables.Add("New Varirable ");
+            }
             for (int i = 0; i < ladderCollapseFunction.Varirables.Count; i++)
             {
                 VarirableDict.Add(ladderCollapseFunction.Varirables[i], i);

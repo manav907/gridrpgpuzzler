@@ -166,7 +166,11 @@ public class MoveDictionaryManager : MonoBehaviour
                 else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
                 {
 
-                    TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
+                    TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction;
+                    if (!ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].includeSelf)
+                    {
+                        variableNameToData[currentVarirable].Remove(thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int());
+                    }
                     foreach (Vector3Int point in variableNameToData[currentVarirable])
                     {
                         yield return new WaitForSeconds(0.25f);
@@ -330,12 +334,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             requireCharacter = true;
         }
-
-        /* if (action.validTargets == ValidTargets.LivingEntities)
-        {
-            requireCharacter = true;
-        } */
-        listOfRanges.Remove(centerPos);
+        //listOfRanges.Remove(centerPos);
         ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
@@ -459,9 +458,12 @@ public enum ValidTileType
 }
 public enum ValidTargets
 {
-    All,
+    Any,
+    Empty,
     Enemies,
     Allies,
+    AlliesAndSelf,
+    Self,
     LivingEntities,
     NonLivingEntities
 }

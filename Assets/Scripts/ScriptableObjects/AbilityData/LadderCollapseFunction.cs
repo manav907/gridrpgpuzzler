@@ -8,7 +8,7 @@ public class LadderCollapseFunction : ScriptableObject
     public List<string> Varirables;
     public SerializableDictionary<LadderCollapseFunctionEnums, string> invokeFunction;
     public List<ActionInputParams> SetDataAtIndex;
-    public List<TypeOfAction> DoActionFromDataAtIndex;
+    public List<ActionEffectParams> DoActionFromDataAtIndex;
     public LadderCollapseFunction()
     {
 
@@ -21,4 +21,11 @@ public class LadderCollapseFunction : ScriptableObject
         SetDataAtIndex = (given.SetDataAtIndex);
         DoActionFromDataAtIndex = (given.DoActionFromDataAtIndex);
     }
+}
+[System.Serializable]
+public class ActionEffectParams
+{
+    public TypeOfAction typeOfAction;
+    public ValidTargets validTargets;
+    public bool includeSelf;
 }
