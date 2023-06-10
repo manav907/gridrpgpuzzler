@@ -24,6 +24,7 @@ public class CharacterControllerScript : MonoBehaviour
     public int attackDamage;
     public int speedValue;
     public int rangeOfVision;
+    public string faction;
     public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
     public Vector3Int CellPosOfCharcter;
@@ -55,6 +56,7 @@ public class CharacterControllerScript : MonoBehaviour
             attackDamage = CharacterDataSO.attackDamage;
             speedValue = CharacterDataSO.speedValue;
             rangeOfVision = CharacterDataSO.rangeOfVision;
+            faction = CharacterDataSO.Faction;
 
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;

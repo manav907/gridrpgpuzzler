@@ -67,7 +67,7 @@ public class LadderCollapseFunctionEditor : Editor
                 EditorGUILayout.BeginHorizontal();
                 ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction = (TypeOfAction)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction);
                 ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets = (ValidTargets)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets);
-                EditorGUILayout.Toggle(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].includeSelf);
+                ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].includeSelf = EditorGUILayout.Toggle(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].includeSelf);
                 EditorGUILayout.EndHorizontal();
                 currentdoActionWithID++;
             }

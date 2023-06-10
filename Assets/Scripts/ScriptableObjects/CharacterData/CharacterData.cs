@@ -10,6 +10,7 @@ public class CharacterData : ScriptableObject
     public string characterName = "GenericCharacter";
     public CharacterName NameEnum;
     public bool isPlayerCharacter = true;
+    public string Faction;
     //Stats
     public int health = 5;
     public int attackDamage = 2;
@@ -35,6 +36,7 @@ public class CharacterData : ScriptableObject
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
         LadderAbility = new List<LadderCollapseFunction>(characterData.LadderAbility);
+        Faction = characterData.Faction;
     }
     public void ReplaceDataWithPreset(CharacterData characterData)
     {
@@ -53,6 +55,7 @@ public class CharacterData : ScriptableObject
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
         LadderAbility = new List<LadderCollapseFunction>(characterData.LadderAbility);
+        Faction = characterData.Faction;
     }
 
 }

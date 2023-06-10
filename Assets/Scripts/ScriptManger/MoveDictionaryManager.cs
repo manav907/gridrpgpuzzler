@@ -60,23 +60,15 @@ public class MoveDictionaryManager : MonoBehaviour
 
         void apply_Damage()
         {
-            GameObject targetCharGO = mapManager.cellDataDir[tryHere].characterAtCell;
-            if (targetCharGO != null)
-            {
-                CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
-                CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-                targetCharacter.health -= attackingCharacter.attackDamage;
-                checkCharacters(targetCharacter);
-                var ListOfMovePoints = new List<Vector3>();
-                ListOfMovePoints.Add(tryHere);
-                ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
-                universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
-                GameEvents.current.PlaySound(0);
-            }
-            else
-            {
-
-            }
+            CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+            CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
+            targetCharacter.health -= attackingCharacter.attackDamage;
+            checkCharacters(targetCharacter);
+            var ListOfMovePoints = new List<Vector3>();
+            ListOfMovePoints.Add(tryHere);
+            ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
+            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
+            GameEvents.current.PlaySound(0);
         }
         void apply_Heal()
         {
@@ -85,7 +77,6 @@ public class MoveDictionaryManager : MonoBehaviour
         void apply_SelfMove()
         {
             var movePoints = new List<Vector3Int>();
-
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
             movePoints.Add(tryHere);
@@ -100,7 +91,6 @@ public class MoveDictionaryManager : MonoBehaviour
                 buttonManager.clearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
-            //BasicActionInProgress = false;
         }
         /* void DoubleTeam()
         { characterCS.actionPoints += 1; } */
@@ -173,13 +163,54 @@ public class MoveDictionaryManager : MonoBehaviour
                     }
                     foreach (Vector3Int point in variableNameToData[currentVarirable])
                     {
-                        yield return new WaitForSeconds(0.25f);
+
                         tryHere = point;
-                        if (mapManager.cellDataDir.ContainsKey(tryHere))
-                            abilityNameToAction[actiontype]();
-                        else
+                        if (DeterminValidTileTarget())
                         {
-                            //This Point was skipped because it is invalid
+                            yield return new WaitForSeconds(0.25f);
+                            abilityNameToAction[actiontype]();
+                        }
+                        bool DeterminValidTileTarget()
+                        {
+
+                            Debug.Log("Here");
+                            if (mapManager.cellDataDir.ContainsKey(tryHere))
+                            {
+                                ValidTargets requitedCondtion = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets;
+                                if (requitedCondtion == ValidTargets.Empty)
+                                {
+                                    return !mapManager.isCellHoldingCharacer(tryHere);
+                                }
+                                else if (mapManager.isCellHoldingCharacer(tryHere))
+                                {
+                                    string faction = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>().faction;
+                                    string factionOfCaster = thisCharacter.GetComponent<CharacterControllerScript>().faction;
+                                    switch (requitedCondtion)
+                                    {
+                                        case ValidTargets.AnyFaction:
+                                            {
+                                                return true;
+                                            }
+                                        case ValidTargets.Enemies:
+                                            {
+                                                if (factionOfCaster != faction)
+                                                    return true;
+                                                else
+                                                    return false;
+                                            }
+                                        case ValidTargets.Allies:
+                                            {
+                                                if (factionOfCaster == faction)
+                                                    return true;
+                                                else
+                                                    return false;
+                                            }
+
+                                    }
+                                }
+                            }
+                            return false;
+
                         }
                     }
                     currentdoActionWithID++;
@@ -458,12 +489,10 @@ public enum ValidTileType
 }
 public enum ValidTargets
 {
-    Any,
     Empty,
+    AnyFaction,
+
     Enemies,
     Allies,
-    AlliesAndSelf,
-    Self,
-    LivingEntities,
-    NonLivingEntities
+    Neutral
 }
