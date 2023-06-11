@@ -143,8 +143,19 @@ public class CharacterControllerScript : MonoBehaviour
             determineAction();
         }
     }
-    Vector3Int currentTarget;
+    [SerializeField] Vector3Int currentTarget;
+    [SerializeField] List<Vector3Int> AttackRangeList;
+    [SerializeField] List<Vector3Int> TargetRangeList;
     int GhostVision = 1;
+    Dictionary<TypeOfAction, LadderCollapseFunction> abilityMap()
+    {
+        var newDict = new Dictionary<TypeOfAction, LadderCollapseFunction>();
+        foreach (var ability in ladderList)
+        {
+            newDict.Add(ability.primaryUseForAction, ability);
+        }
+        return newDict;
+    }
     void determineAction()
     {
 
@@ -152,16 +163,22 @@ public class CharacterControllerScript : MonoBehaviour
             Debug.Log("Determining Action");
         Vector3Int thisCharpos = getCharV3Int();
         var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
+        var optionsofAbilities = abilityMap();
         //GhostVision for tracking after leaving Vision
         var targetList = listOfPossibleTargets(VisionList);
-        //var attackRangeList = moveDictionaryManager.getValidTargetList(AbilityNameToAbilityDataDIR[AbilityName.Attack]);
-        var attackRangeList = new List<Vector3Int>();
+        TargetRangeList = targetList;
+        var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage].SetDataAtIndex[0]);
+        
+        AttackRangeList = attackRangeList;
+        
+        //var attackRangeList = new List<Vector3Int>();
+
         Debug.LogError("AI Stuf Needs Rework");
         if (targetList.Count == 0)
         {
             if (checkAI)
                 Debug.Log("Ideling");
-            //moveDictionaryManager.doAction(AbilityName.EndTurn);
+            moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_TryEndTurn]);
             return;
         }
         else
@@ -172,12 +189,13 @@ public class CharacterControllerScript : MonoBehaviour
                 if (checkAI)
                     Debug.Log("Attacking");
                 //moveDictionaryManager.doAction(AbilityName.Attack);
+                moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage]);
             }
             else if (true)//if character not in attack range
             {
                 if (checkAI)
                     Debug.Log("Moving");
-                //moveDictionaryManager.doAction(AbilityName.Move);
+                moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove]);
             }
         }
         List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)

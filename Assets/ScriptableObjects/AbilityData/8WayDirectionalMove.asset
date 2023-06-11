@@ -12,12 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e1960a27c9e934082b09f75c1a622b, type: 3}
   m_Name: 8WayDirectionalMove
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Move
+  primaryUseForAction: 2
   Varirables:
-  - 'New Varirable '
+  - MoveTo
   invokeFunction:
     KeyValuePairs:
-    - key: 2
-      value: 'New Varirable '
-  SetDataAtIndex: []
-  DoActionFromDataAtIndex: []
+    - key: 0
+      value: MoveTo
+    - key: 1
+      value: MoveTo
+  SetDataAtIndex:
+  - rangeOfActionEnum: 15
+    areaOfEffectType: 0
+    validTileType: 2
+    validTargets: 0
+    updateTheroticalPos: 1
+  DoActionFromDataAtIndex:
+  - typeOfAction: 2
+    validTargets: 0
+    includeSelf: 0
+  - typeOfAction: 3
+    validTargets: 1
+    includeSelf: 1

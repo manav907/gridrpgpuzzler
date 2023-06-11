@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e1960a27c9e934082b09f75c1a622b, type: 3}
   m_Name: SlightOfFirst
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Slight of First
+  primaryUseForAction: 0
   Varirables:
   - OriginalPos
   - TempPos
@@ -37,9 +38,18 @@ MonoBehaviour:
     validTileType: 2
     validTargets: 0
     updateTheroticalPos: 1
-  - rangeOfActionEnum: 20
-    areaOfEffectType: 1
+  - rangeOfActionEnum: 25
+    areaOfEffectType: 2
     validTileType: 0
     validTargets: 0
     updateTheroticalPos: 1
-  DoActionFromDataAtIndex: 020000000000000002000000
+  DoActionFromDataAtIndex:
+  - typeOfAction: 2
+    validTargets: 0
+    includeSelf: 0
+  - typeOfAction: 0
+    validTargets: 1
+    includeSelf: 0
+  - typeOfAction: 2
+    validTargets: 0
+    includeSelf: 0

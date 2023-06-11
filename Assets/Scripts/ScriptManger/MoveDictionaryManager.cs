@@ -46,6 +46,7 @@ public class MoveDictionaryManager : MonoBehaviour
         thisCharacter = turnManager.thisCharacter;
         //Debug.Log(thisCharacter.name);//
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
+        theroticalCurrentPos = characterCS.getCharV3Int();
     }
     Dictionary<TypeOfAction, Action> abilityNameToAction;
 
@@ -138,7 +139,8 @@ public class MoveDictionaryManager : MonoBehaviour
             {
                 if (GetInputState != CoRoutineStateCheck.Proceeding)
                 {
-                    Debug.Log("Action was" + GetInputState);
+                    //Debug.Log("Action was" + GetInputState);
+                    //thisCharacter.GetComponent<CharacterControllerScript>().OnActionComplete(GetInputState);
                     break;
                 }
                 currentVarirable = keyPair.value;
@@ -222,7 +224,10 @@ public class MoveDictionaryManager : MonoBehaviour
                     variableNameToData[currentVarirable].Add(theroticalCurrentPos);
                 }
             }
-
+            if (GetInputState == CoRoutineStateCheck.Proceeding)
+            {
+                abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
+            }
             yield return null;
         }
     }
@@ -239,7 +244,9 @@ public class MoveDictionaryManager : MonoBehaviour
             }
         }
         if (newState != CoRoutineStateCheck.Waiting)
-            Debug.Log(newState);
+        {
+            // Debug.Log(newState);
+        }
         GetInputState = newState;
     }
     IEnumerator getInput(ActionInputParams basicAction)
@@ -256,6 +263,7 @@ public class MoveDictionaryManager : MonoBehaviour
         if (!characterCS.controlCharacter)//if Non Player Character
         {
             tryHere = characterCS.getTarget(listOfValidtargets);
+            variableNameToData[currentVarirable] = reticalManager.generateShape(tryHere);
             ShouldContinue = true;
             yield return new WaitForSeconds(0.25f);
         }
@@ -491,7 +499,6 @@ public enum ValidTargets
 {
     Empty,
     AnyFaction,
-
     Enemies,
     Allies,
     Neutral

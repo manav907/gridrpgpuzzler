@@ -16,17 +16,13 @@ MonoBehaviour:
   characterName: Rapidash
   NameEnum: 0
   isPlayerCharacter: 0
+  Faction: Enemies
   health: 2
   attackDamage: 2
   speedValue: 3
   rangeOfVision: 5
   canWalkOn: 0000000002000000
-  abilities: []
   LadderAbility:
-  - name: 
-    invokeFunction:
-      KeyValuePairs: []
-    SetDataAtIndex:
-      KeyValuePairs: []
-    DoActionFromDataAtIndex:
-      KeyValuePairs: []
+  - {fileID: 11400000, guid: 9215bd0b3ef5f9e4cb5a434c0d810f67, type: 2}
+  - {fileID: 11400000, guid: edbbb701ab4f8ec4db41429ad0935730, type: 2}
+  - {fileID: 11400000, guid: 6efe7ecb0904b864cbe7959f70e64fcf, type: 2}
