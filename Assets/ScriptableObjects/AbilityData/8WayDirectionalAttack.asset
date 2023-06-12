@@ -26,12 +26,10 @@ MonoBehaviour:
   - rangeOfActionEnum: 15
     areaOfEffectType: 0
     validTileType: 1
+    optimalTargetTip: 0
     validTargets: 1
+    includeSelf: 0
     updateTheroticalPos: 1
   DoActionFromDataAtIndex:
   - typeOfAction: 0
-    validTargets: 1
-    includeSelf: 0
   - typeOfAction: 3
-    validTargets: 1
-    includeSelf: 1

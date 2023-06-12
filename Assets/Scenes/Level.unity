@@ -708,6 +708,7 @@ MonoBehaviour:
   OrderOfInteractableCharacters: []
   thisCharacter: {fileID: 0}
   TurnCountInt: 0
+  restart: {fileID: 11400000, guid: c5756839d4e8d93438bdf8929b0a2923, type: 2}
   TurnLoop: -1
 --- !u!4 &732592029
 Transform:
@@ -7426,7 +7427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1910574847, guid: 1c1ba5ea2e0dacf4085507a38283e1b9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

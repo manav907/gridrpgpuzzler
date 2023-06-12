@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 8WaySweepAttack
   m_EditorClassIdentifier: 
   Name: Axe
+  primaryUseForAction: 0
   Varirables:
   - New Varirable
   invokeFunction:
@@ -25,6 +26,9 @@ MonoBehaviour:
   - rangeOfActionEnum: 15
     areaOfEffectType: 2
     validTileType: 0
-    validTargets: 0
+    optimalTargetTip: 0
+    validTargets: 1
+    includeSelf: 0
     updateTheroticalPos: 1
-  DoActionFromDataAtIndex: 00000000
+  DoActionFromDataAtIndex:
+  - typeOfAction: 0

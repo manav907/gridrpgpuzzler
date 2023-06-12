@@ -12,6 +12,7 @@ public class TurnManager : MonoBehaviour
         GetGameObjects();
         InstantiateallIntractableCharacters();//Can only be called after getting game objects
         recalculateOrder();//can only be called after Instanstiating the Characterts       
+        //GameEvents.current.setText("");
         beginTurnIfPossible();
     }
     [Header("Reffrences to Important Game Objects")]
