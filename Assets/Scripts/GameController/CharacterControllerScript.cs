@@ -102,7 +102,7 @@ public class CharacterControllerScript : MonoBehaviour
         {
             GameEvents.current.DeathEvent(this.GetComponent<CharacterControllerScript>());
 
-
+            isALive = false;
             Vector3Int thisCharPos = universalCalculator.castAsV3Int(this.gameObject.transform.position);
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
             turnManager.ListOfInteractableCharacters.Remove(gameObject);
@@ -127,20 +127,25 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
     MoveDictionaryManager moveDictionaryManager;
+    bool isALive = true;
     public void BeginThisCharacterTurn()
     {
-        ToggleCharacterTurnAnimation(true);
-        actionPoints = 1;//Remove This later
-        //buttonManager.clearButtons();
-        if (controlCharacter)
+
+        if (isALive)
         {
-            GameEvents.current.TriggerNextDialog();//Disable this laeter
-            buttonManager.InstantiateButtons(ladderList);
-            turnManager.setCameraPos(getCharV3Int());
-        }
-        else
-        {
-            determineAction();
+            ToggleCharacterTurnAnimation(true);
+            actionPoints = 1;//Remove This later
+                             //buttonManager.clearButtons();
+            if (controlCharacter)
+            {
+                GameEvents.current.TriggerNextDialog();//Disable this laeter
+                buttonManager.InstantiateButtons(ladderList);
+                turnManager.setCameraPos(getCharV3Int());
+            }
+            else
+            {
+                determineAction();
+            }
         }
     }
     [SerializeField] Vector3Int currentTarget;

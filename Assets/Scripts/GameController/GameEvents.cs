@@ -103,6 +103,10 @@ public class GameEvents : MonoBehaviour
             }
         }
     }
+    public void setText(string text)
+    {
+        textBox.text = text;
+    }
     void CheckWinCondidion()
     {
         string gameWinDialog = "Event of Game Win";

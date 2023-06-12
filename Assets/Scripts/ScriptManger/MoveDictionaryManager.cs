@@ -159,59 +159,16 @@ public class MoveDictionaryManager : MonoBehaviour
                 {
 
                     TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction;
-                    if (!ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].includeSelf)
-                    {
-                        variableNameToData[currentVarirable].Remove(thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int());
-                    }
                     foreach (Vector3Int point in variableNameToData[currentVarirable])
                     {
 
                         tryHere = point;
-                        if (DeterminValidTileTarget())
+                        //if (DeterminValidTileTarget())
                         {
                             yield return new WaitForSeconds(0.25f);
                             abilityNameToAction[actiontype]();
                         }
-                        bool DeterminValidTileTarget()
-                        {
-                            if (mapManager.cellDataDir.ContainsKey(tryHere))
-                            {
-                                ValidTargets requitedCondtion = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets;
-                                if (requitedCondtion == ValidTargets.Empty)
-                                {
-                                    return !mapManager.isCellHoldingCharacer(tryHere);
-                                }
-                                else if (mapManager.isCellHoldingCharacer(tryHere))
-                                {
-                                    string faction = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>().faction;
-                                    string factionOfCaster = thisCharacter.GetComponent<CharacterControllerScript>().faction;
-                                    switch (requitedCondtion)
-                                    {
-                                        case ValidTargets.AnyFaction:
-                                            {
-                                                return true;
-                                            }
-                                        case ValidTargets.Enemies:
-                                            {
-                                                if (factionOfCaster != faction)
-                                                    return true;
-                                                else
-                                                    return false;
-                                            }
-                                        case ValidTargets.Allies:
-                                            {
-                                                if (factionOfCaster == faction)
-                                                    return true;
-                                                else
-                                                    return false;
-                                            }
 
-                                    }
-                                }
-                            }
-                            return false;
-
-                        }
                     }
                     currentdoActionWithID++;
                 }
@@ -257,11 +214,12 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager.fromPoint = theroticalCurrentPos;
         ShouldContinue = false;
 
+        List<Vector3Int> tempData = new List<Vector3Int>();
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
             tryHere = characterCS.getTarget(listOfValidtargets);
-            variableNameToData[currentVarirable] = reticalManager.generateShape(tryHere);
+            tempData = reticalManager.generateShape(tryHere);
             ShouldContinue = true;
             yield return new WaitForSeconds(0.25f);
         }
@@ -277,15 +235,19 @@ public class MoveDictionaryManager : MonoBehaviour
 
             tryHere = reticalManager.getMovePoint();
 
-            variableNameToData[currentVarirable] = reticalManager.generateShape(tryHere);
+            tempData = reticalManager.generateShape(tryHere);
             if (basicAction.updateTheroticalPos)
             {
                 theroticalCurrentPos = tryHere;
             }
-
-
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
+        foreach(Vector3Int pos in tempData)
+        {
+            if(DeterminValidTileTarget(pos))
+            variableNameToData[currentVarirable].Add(pos);
+        }
+        //variableNameToData[currentVarirable] = tempData;
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
 
@@ -340,6 +302,47 @@ public class MoveDictionaryManager : MonoBehaviour
                 return false;
             }
         }
+        bool DeterminValidTileTarget(Vector3Int checkPos)
+        {
+            ValidTargets requitedCondtion = basicAction.validTargets;
+            if (mapManager.cellDataDir.ContainsKey(checkPos))
+            {
+
+                if (requitedCondtion == ValidTargets.Empty)
+                {
+                    return !mapManager.isCellHoldingCharacer(checkPos);
+                }
+                else if (mapManager.isCellHoldingCharacer(checkPos))
+                {
+                    string faction = mapManager.cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
+                    string factionOfCaster = thisCharacter.GetComponent<CharacterControllerScript>().faction;
+                    switch (requitedCondtion)
+                    {
+                        case ValidTargets.AnyFaction:
+                            {
+                                return true;
+                            }
+                        case ValidTargets.Enemies:
+                            {
+                                if (factionOfCaster != faction)
+                                    return true;
+                                else
+                                    return false;
+                            }
+                        case ValidTargets.Allies:
+                            {
+                                if (factionOfCaster == faction)
+                                    return true;
+                                else
+                                    return false;
+                            }
+
+                    }
+                }
+            }
+            return false;
+
+        }
     }
     public List<Vector3Int> getValidTargetList(ActionInputParams action)
     {
@@ -371,6 +374,10 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             requireCharacter = true;
         }
+        if (!action.includeSelf)
+        {
+            listOfRanges.Remove(theroticalCurrentPos);
+        }
         //listOfRanges.Remove(centerPos);
         ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
@@ -383,6 +390,7 @@ public class MoveDictionaryManager : MonoBehaviour
             {
                 requireCharacterCondition = !requireCharacterCondition;
             }
+
             if (hasWalkability && requireCharacterCondition)
             {/*Do Nothing since all conditions are fine*/}
             else

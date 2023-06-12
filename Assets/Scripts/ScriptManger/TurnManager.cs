@@ -87,6 +87,7 @@ public class TurnManager : MonoBehaviour
 
         GameEvents.current.setUpCamera();//Move This Somewhere Else
     }
+    [SerializeField] LadderCollapseFunction restart;
     public void beginTurnIfPossible()
     {
         ///reticalManager.reDrawShadows();
@@ -100,13 +101,8 @@ public class TurnManager : MonoBehaviour
         void triggerGameEnd()
         {
             Debug.Log("Game Over");
-            //buttonManager.clearButtons();
-            /* CompundAbility Restart = new CompundAbility();
-            ActionInputParams basicAction = new ActionInputParams();
-            basicAction.typeOfAction = TypeOfAction.apply_TryEndTurn;
-            Restart.actionInputParams.Add(basicAction);
-
-            buttonManager.InstantiateButtons(new List<CompundAbility>() { Restart }); */
+            GameEvents.current.setText("Game Over");
+            buttonManager.InstantiateButtons(new List<LadderCollapseFunction>() { restart });
         }
         void setCharacterData()
         {

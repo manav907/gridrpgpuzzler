@@ -27,8 +27,6 @@ public class LadderCollapseFunction : ScriptableObject
 public class ActionEffectParams
 {
     public TypeOfAction typeOfAction;
-    public ValidTargets validTargets;
-    public bool includeSelf;
 }
 public enum OptimalTargetTip
 {
