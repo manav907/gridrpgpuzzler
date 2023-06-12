@@ -135,6 +135,7 @@ public class MapManager : MonoBehaviour
     }
     public void KillCharacter(Vector3Int newPos)
     {
+        RemoveCharacterFromPos(newPos);
         cellDataDir[newPos].characterAtCell = null;
     }
     public bool isCellHoldingCharacer(Vector3Int pos)

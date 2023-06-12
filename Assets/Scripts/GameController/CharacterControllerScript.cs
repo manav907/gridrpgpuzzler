@@ -144,8 +144,6 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
     [SerializeField] Vector3Int currentTarget;
-    [SerializeField] List<Vector3Int> AttackRangeList;
-    [SerializeField] List<Vector3Int> TargetRangeList;
     int GhostVision = 1;
     Dictionary<TypeOfAction, LadderCollapseFunction> abilityMap()
     {
@@ -166,14 +164,9 @@ public class CharacterControllerScript : MonoBehaviour
         var optionsofAbilities = abilityMap();
         //GhostVision for tracking after leaving Vision
         var targetList = listOfPossibleTargets(VisionList);
-        TargetRangeList = targetList;
         var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage].SetDataAtIndex[0]);
-        
-        AttackRangeList = attackRangeList;
-        
-        //var attackRangeList = new List<Vector3Int>();
 
-        Debug.LogError("AI Stuf Needs Rework");
+        //Debug.LogError("AI Stuf Needs Rework");
         if (targetList.Count == 0)
         {
             if (checkAI)

@@ -174,8 +174,6 @@ public class MoveDictionaryManager : MonoBehaviour
                         }
                         bool DeterminValidTileTarget()
                         {
-
-                            Debug.Log("Here");
                             if (mapManager.cellDataDir.ContainsKey(tryHere))
                             {
                                 ValidTargets requitedCondtion = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets;
@@ -434,7 +432,9 @@ public class ActionInputParams
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
     public ReticalShapes areaOfEffectType;
     public ValidTileType validTileType;
+    public OptimalTargetTip optimalTargetTip;
     public ValidTargets validTargets;
+    public bool includeSelf;
     public bool updateTheroticalPos = true;
     public ActionInputParams()
     {

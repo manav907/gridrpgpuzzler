@@ -30,3 +30,8 @@ public class ActionEffectParams
     public ValidTargets validTargets;
     public bool includeSelf;
 }
+public enum OptimalTargetTip
+{
+    PrefferEnemies,
+    PrefferAllies
+}

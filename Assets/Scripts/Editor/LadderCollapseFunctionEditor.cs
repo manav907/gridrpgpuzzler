@@ -8,7 +8,7 @@ public class LadderCollapseFunctionEditor : Editor
 {
     int currentsetDataWithID;
     int currentdoActionWithID;
-    int currentSetDataUsingTherorticalPosAtArrayIndex;
+    //int currentSetDataUsingTherorticalPosAtArrayIndex;
     Dictionary<string, int> VarirableDict;
     public override void OnInspectorGUI()
     {
@@ -26,7 +26,7 @@ public class LadderCollapseFunctionEditor : Editor
         //
         currentsetDataWithID = 0;
         currentdoActionWithID = 0;
-        currentSetDataUsingTherorticalPosAtArrayIndex = 0;
+        //currentSetDataUsingTherorticalPosAtArrayIndex = 0;
         //
         for (int i = 0; i < ladderCollapseFunction.invokeFunction.KeyValuePairs.Count; i++)
         {
