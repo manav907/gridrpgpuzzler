@@ -219,5 +219,9 @@ public class GameEvents : MonoBehaviour
         // Reload the current scene by loading its index
         SceneManager.LoadScene(currentSceneIndex);
     }
+    public void returnToLevelSelect()
+    {
+        SceneManager.LoadScene(0);
+    }
 
 }
