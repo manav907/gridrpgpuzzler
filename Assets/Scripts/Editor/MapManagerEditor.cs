@@ -12,11 +12,15 @@ public class MapManagerEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("LoadMapDataFromSO"))
         {
+            UnityEditor.AssetDatabase.Refresh();
             mapManager.LoadMapDataFromSO();
         }
         if (GUILayout.Button("OverWriteMapDataToSO"))
         {
             mapManager.OverWriteMapDataToSO();
+            EditorUtility.SetDirty(mapManager.LoadThisLevel);
+            UnityEditor.AssetDatabase.SaveAssets();
+            UnityEditor.AssetDatabase.Refresh();
         }
     }
 }

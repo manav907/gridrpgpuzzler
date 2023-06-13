@@ -61,13 +61,10 @@ public class MapManager : MonoBehaviour
             }
             tileMapStore.CopyDict(dict);
         }
-        EditorUtility.SetDirty(LoadThisLevel);
-        UnityEditor.AssetDatabase.SaveAssets();
-        UnityEditor.AssetDatabase.Refresh();
+        
     }
     public void LoadMapDataFromSO()
-    {
-        UnityEditor.AssetDatabase.Refresh();
+    {        
         pushToTileMap(Obstacles, LoadThisLevel.Obstacles);
         pushToTileMap(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pushToTileMap(Ground_Floor, LoadThisLevel.Ground_Floor);
