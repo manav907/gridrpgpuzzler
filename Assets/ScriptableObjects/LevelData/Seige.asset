@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5222714fd87614146a8cf0525881ae67, type: 3}
-  m_Name: Hunting
+  m_Name: Seige
   m_EditorClassIdentifier: 
   Obstacles:
     KeyValuePairs: []
   Ground_Floor_Over:
     KeyValuePairs:
+    - key: {x: 0, y: -6, z: 0}
+      value: {fileID: 11400000, guid: f054ce658ca128d43804544b024dc006, type: 2}
+    - key: {x: -3, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
+    - key: {x: -6, y: -4, z: 0}
+      value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
     - key: {x: -3, y: -3, z: 0}
       value: {fileID: 11400000, guid: 778889c7f682efd40a6acd95375cc91d, type: 2}
     - key: {x: -1, y: -3, z: 0}
@@ -38,8 +44,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: ec7b67b0fae806d46a6fcf867ebaf3a8, type: 2}
     - key: {x: 4, y: -1, z: 0}
       value: {fileID: 11400000, guid: 13beab8a9d87ab748b7b99f68669073a, type: 2}
-    - key: {x: 6, y: -1, z: 0}
-      value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
     - key: {x: -7, y: 0, z: 0}
       value: {fileID: 11400000, guid: f054ce658ca128d43804544b024dc006, type: 2}
     - key: {x: -3, y: 0, z: 0}
@@ -52,8 +56,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 98a4dfa4d1758054f8f07f801f697398, type: 2}
     - key: {x: 1, y: 1, z: 0}
       value: {fileID: 11400000, guid: 67429dc72ba433b499dceeecda6449b8, type: 2}
-    - key: {x: 4, y: 1, z: 0}
-      value: {fileID: 11400000, guid: b9abf0e98c58846498a51caaa1e73136, type: 2}
     - key: {x: -6, y: 2, z: 0}
       value: {fileID: 11400000, guid: 237ed48a893b0d342aad25205876a561, type: 2}
     - key: {x: -4, y: 2, z: 0}
@@ -72,6 +74,8 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 5edc78d612665124d844ddb81ba97913, type: 2}
     - key: {x: -1, y: 3, z: 0}
       value: {fileID: 11400000, guid: b9abf0e98c58846498a51caaa1e73136, type: 2}
+    - key: {x: -5, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
     - key: {x: -4, y: 4, z: 0}
       value: {fileID: 11400000, guid: 7cc67ebaea564864fb5b7476fcef5b56, type: 2}
     - key: {x: -3, y: 4, z: 0}
@@ -84,6 +88,8 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: b7b2b422d0110a04e9b06260ddabbc7e, type: 2}
     - key: {x: -2, y: 5, z: 0}
       value: {fileID: 11400000, guid: 9fa39022633dd40448ed83d316fea777, type: 2}
+    - key: {x: -1, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
     - key: {x: -4, y: 6, z: 0}
       value: {fileID: 11400000, guid: e9257b65809d85847b3f6c5a49dd9396, type: 2}
     - key: {x: -3, y: 6, z: 0}
@@ -92,6 +98,68 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 1ae4a8ff970492843ac3d8429d0cb9c5, type: 2}
   Ground_Floor:
     KeyValuePairs:
+    - key: {x: -3, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -1, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 0, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -5, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -4, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -3, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -1, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 0, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -6, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -5, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -4, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -3, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -1, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 0, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 1, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 2, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -7, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -6, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -5, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -4, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -3, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -1, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 0, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 1, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 2, y: -5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -8, y: -4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -7, y: -4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -6, y: -4, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -5, y: -4, z: 0}
@@ -109,6 +177,8 @@ MonoBehaviour:
     - key: {x: 1, y: -4, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: 2, y: -4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 3, y: -4, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -8, y: -3, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
@@ -136,10 +206,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: 4, y: -3, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 5, y: -3, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: -9, y: -2, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -8, y: -2, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -7, y: -2, z: 0}
@@ -165,12 +231,6 @@ MonoBehaviour:
     - key: {x: 3, y: -2, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: 4, y: -2, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 5, y: -2, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 6, y: -2, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: -10, y: -1, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -9, y: -1, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
@@ -200,12 +260,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: 4, y: -1, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 5, y: -1, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 6, y: -1, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: -10, y: 0, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -9, y: 0, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -8, y: 0, z: 0}
@@ -232,14 +286,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: 3, y: 0, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 4, y: 0, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 5, y: 0, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 6, y: 0, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: -9, y: 1, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -8, y: 1, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -7, y: 1, z: 0}
@@ -264,10 +310,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: 3, y: 1, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 4, y: 1, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 5, y: 1, z: 0}
-      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -8, y: 2, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -7, y: 2, z: 0}
@@ -290,9 +332,9 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: 2, y: 2, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 3, y: 2, z: 0}
+    - key: {x: -7, y: 3, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
-    - key: {x: 4, y: 2, z: 0}
+    - key: {x: -6, y: 3, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -5, y: 3, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
@@ -308,13 +350,69 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: 1, y: 3, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -7, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -6, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -5, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -4, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -3, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -1, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 0, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 1, y: 4, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -6, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -5, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -4, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -3, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -1, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 0, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 1, y: 5, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -5, y: 6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -4, y: 6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -3, y: 6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: 6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -1, y: 6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: 0, y: 6, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -4, y: 7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -3, y: 7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: 7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -1, y: 7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
   Character_Placeholder:
     KeyValuePairs:
-    - key: {x: -8, y: -2, z: 0}
-      value: {fileID: 11400000, guid: 5b2adebf03ece5345b3a3a4ec34e13a9, type: 2}
-    - key: {x: -4, y: -1, z: 0}
+    - key: {x: -2, y: -6, z: 0}
+      value: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
+    - key: {x: -3, y: -3, z: 0}
       value: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
-    - key: {x: -1, y: 1, z: 0}
+    - key: {x: -1, y: -3, z: 0}
+      value: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
+    - key: {x: -1, y: 0, z: 0}
       value: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
   TileToChar:
     KeyValuePairs:
