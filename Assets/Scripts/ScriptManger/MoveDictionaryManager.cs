@@ -218,10 +218,11 @@ public class MoveDictionaryManager : MonoBehaviour
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
+            reticalManager.reDrawValidTiles(listOfValidtargets);
             tryHere = characterCS.getTarget(listOfValidtargets);
             tempData = reticalManager.generateShape(tryHere);
             ShouldContinue = true;
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.5f);
         }
         else//if it is the player character
         {
@@ -242,10 +243,10 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
-        foreach(Vector3Int pos in tempData)
+        foreach (Vector3Int pos in tempData)
         {
-            if(DeterminValidTileTarget(pos))
-            variableNameToData[currentVarirable].Add(pos);
+            if (DeterminValidTileTarget(pos))
+                variableNameToData[currentVarirable].Add(pos);
         }
         //variableNameToData[currentVarirable] = tempData;
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
@@ -354,11 +355,11 @@ public class MoveDictionaryManager : MonoBehaviour
 
         Vector3Int centerPos = theroticalCurrentPos;
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
-        List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
+        //List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         bool disregardWalkablity = false;
         bool requireCharacter = false;
         bool reverseRequireCharacterCondiditon = false;
-        listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
+        //listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
         if (action.validTileType == ValidTileType.PointTargeted)
         {
 
