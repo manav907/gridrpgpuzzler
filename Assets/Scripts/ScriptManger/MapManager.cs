@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Tilemap Character_Placement;
     [SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
+    Dictionary<Vector3Int, GameObject> PosToCharGO;
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
     public void setVariables()
@@ -26,6 +27,7 @@ public class MapManager : MonoBehaviour
 
         LoadMapDataFromSO();
         Character_Placement.ClearAllTiles();
+        PosToCharGO = new Dictionary<Vector3Int, GameObject>();
         setTilesDir();
         setCellDataDir();
     }
@@ -33,7 +35,7 @@ public class MapManager : MonoBehaviour
     {
         if (UserDataManager.currentLevel == null)
         {
-            Debug.LogError("Incorrect Scene Loaded Loading last Known Scene");
+            //Debug.LogError("Incorrect Scene Loaded Loading last Known Scene");
             return;
         }
         LoadThisLevel = UserDataManager.currentLevel;
@@ -59,12 +61,10 @@ public class MapManager : MonoBehaviour
             }
             tileMapStore.CopyDict(dict);
         }
-        EditorUtility.SetDirty(LoadThisLevel);
-        UnityEditor.AssetDatabase.SaveAssets();
-        UnityEditor.AssetDatabase.Refresh();
+        
     }
     public void LoadMapDataFromSO()
-    {
+    {        
         pushToTileMap(Obstacles, LoadThisLevel.Obstacles);
         pushToTileMap(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pushToTileMap(Ground_Floor, LoadThisLevel.Ground_Floor);
@@ -96,6 +96,10 @@ public class MapManager : MonoBehaviour
 
     public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, CharacterControllerScript characterDataHolder)
     {
+        if (!cellDataDir.ContainsKey(tilePos))
+        {
+            return false;
+        }
         //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
         //This get data From SO
         foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)
@@ -105,13 +109,30 @@ public class MapManager : MonoBehaviour
                 return false;
         return true;
     }
+    public void PlaceCharacterAtPos(Vector3Int newPos, GameObject character)
+    {
+        PosToCharGO.Add(newPos, character);
+        cellDataDir[newPos].characterAtCell = character;
+        character.GetComponent<CharacterControllerScript>().CellPosOfCharcter = newPos;
+    }
+    public void RemoveCharacterFromPos(Vector3Int Pos)
+    {
+        if (PosToCharGO.ContainsKey(Pos))
+        {
+            cellDataDir[Pos].characterAtCell = null;
+            PosToCharGO.Remove(Pos);
+        }
+        else
+            Debug.LogError("Fatal Pos Erro");
+    }
     public void UpdateCharacterPosistion(Vector3Int oldPos, Vector3Int newPos, GameObject character)
     {
-        cellDataDir[oldPos].characterAtCell = null;
-        cellDataDir[newPos].characterAtCell = character;
+        RemoveCharacterFromPos(oldPos);
+        PlaceCharacterAtPos(newPos, character);
     }
     public void KillCharacter(Vector3Int newPos)
     {
+        RemoveCharacterFromPos(newPos);
         cellDataDir[newPos].characterAtCell = null;
     }
     public bool isCellHoldingCharacer(Vector3Int pos)

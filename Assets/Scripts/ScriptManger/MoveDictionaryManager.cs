@@ -20,7 +20,7 @@ public class MoveDictionaryManager : MonoBehaviour
     [Header("Retical And Tile Data")]
     private Vector3Int tryHere;
     [Header("Current Ablity")]
-    [SerializeField] Ability currentAblity;
+    //[SerializeField] Ability currentAblity;
     [Header("Debug Data")]
     [SerializeField][TextArea] string ValidTargetListDebugInfo;
     bool EditMapMode { get { return dataManager.EditMapMode; } }
@@ -46,93 +46,20 @@ public class MoveDictionaryManager : MonoBehaviour
         thisCharacter = turnManager.thisCharacter;
         //Debug.Log(thisCharacter.name);//
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
+        theroticalCurrentPos = characterCS.getCharV3Int();
     }
-    Dictionary<AbilityName, Action> abilityNameToAction;
+    Dictionary<TypeOfAction, Action> abilityNameToAction;
+
     void SetMoveDictionary()
     {
-        abilityNameToAction = new Dictionary<AbilityName, Action>();
-        abilityNameToAction.Add(AbilityName.Move, MoveCharacter);
-        abilityNameToAction.Add(AbilityName.Attack, AttackHere);
-        abilityNameToAction.Add(AbilityName.DoubleAttack, DoubleAttack);
-        abilityNameToAction.Add(AbilityName.EndTurn, EndTurn);
-        abilityNameToAction.Add(AbilityName.OpenInventory, OpenInventory);
-        abilityNameToAction.Add(AbilityName.CloseInventory, CloseInventory);
-        abilityNameToAction.Add(AbilityName.FireBall, ThrowFireBall);
-        abilityNameToAction.Add(AbilityName.HeartPickup, HeartPickup);
-        abilityNameToAction.Add(AbilityName.DoubleTeam, DoubleTeam);
-        abilityNameToAction.Add(AbilityName.AxeSweep, AxeSweep);
-        abilityNameToAction.Add(AbilityName.Restart, Restart);
+        abilityNameToAction = new Dictionary<TypeOfAction, Action>();
+        abilityNameToAction.Add(TypeOfAction.apply_SelfMove, apply_SelfMove);
+        abilityNameToAction.Add(TypeOfAction.apply_Damage, apply_Damage);
+        abilityNameToAction.Add(TypeOfAction.apply_Heal, apply_Heal);
+        abilityNameToAction.Add(TypeOfAction.apply_TryEndTurn, apply_TryEndTurn);
+        abilityNameToAction.Add(TypeOfAction.RestartScene, Restart);
 
-        //ablity Actions
-        void MoveCharacter()
-        {
-            //Ability ability = new Ability(AbilityName.Move, ValidTargetData.OnOccupiable, DirectionOfAction.complete);
-            StartCoroutine(getInput(simpleMoveAction, AbilityName.Move));
-        }
-        void AttackHere()
-        {
-            StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.Attack));
-        }
-        void DoubleAttack()
-        {
-            StartCoroutine(getInput(simpleAttackAction, AbilityName.Attack));
-        }
-        void EndTurn()
-        {
-            if (characterCS.doActionPointsRemainAfterAbility() == false)
-            {
-                CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-                targetCharacter.ToggleCharacterTurnAnimation(false);
-                buttonManager.clearButtons();
-                this.GetComponent<TurnManager>().endTurn();
-            }
-        }
-        void OpenInventory()
-        {
-            buttonManager.InstantiateButtons(characterCS.CharacterInventoryList);
-        }
-        void CloseInventory()
-        {
-            buttonManager.InstantiateButtons(characterCS.CharacterMoveList);
-        }
-        void ThrowFireBall()
-        {
-            Debug.Log("Throw Fire Ball");
-            CloseInventory();
-        }
-        void HeartPickup()
-        {
-            characterCS.health += 3;
-            CloseInventory();
-            if (characterCS.CheckIfCharacterIsDead() == false)
-                EndTurn();
-        }
-        void DoubleTeam()
-        { characterCS.actionPoints += 1; }
-        void AxeSweep()
-        {
-            StartCoroutine(getInput(simpleAoeAttackAction, AbilityName.AxeSweep));
-        }
-        void Restart()
-        {
-            GameEvents.current.reloadScene();
-            //Debug.Log("Restart Function not created");
-        }
-        //Simple Action and Co-routines that will be used for ablity Actions
-        void simpleMoveAction()
-        {
-            Vector3Int currentPosition = universalCalculator.castAsV3Int(thisCharacter.transform.position);
-            mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
-
-            var ListOfMovePoints = new List<Vector3>();
-            ListOfMovePoints.Add(tryHere);
-            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
-
-            EndTurn();
-            //thisCharacter.transform.position = tryHere;
-
-        }
-        void simpleAttackAction()
+        void apply_Damage()
         {
             CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
@@ -142,22 +69,38 @@ public class MoveDictionaryManager : MonoBehaviour
             ListOfMovePoints.Add(tryHere);
             ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
             universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
-            GameEvents.current.PlaySound(0);//This is For attacking
+            GameEvents.current.PlaySound(0);
         }
-        void simpleAoeAttackAction()
+        void apply_Heal()
         {
-            foreach (Vector3Int point in areaOfAction)
-            {
-                if (mapManager.cellDataDir.ContainsKey(point))
-                    if (mapManager.isCellHoldingCharacer(point))
-                    {
-                        tryHere = point;
-                        simpleAttackAction();
-                    }
-            }
-            //GameEvents.current.PlaySound(1);//This is For attacking bigg
-            EndTurn();
+            //BasicActionInProgress = false;
         }
+        void apply_SelfMove()
+        {
+            var movePoints = new List<Vector3Int>();
+            Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
+            mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
+            movePoints.Add(tryHere);
+            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, universalCalculator.castListAsV3(movePoints), moveTimeSpeed);
+        }
+        void apply_TryEndTurn()
+        {
+            if (characterCS.doActionPointsRemainAfterAbility() == false)
+            {
+                CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
+                targetCharacter.ToggleCharacterTurnAnimation(false);
+                buttonManager.clearButtons();
+                this.GetComponent<TurnManager>().endTurn();
+            }
+        }
+        /* void DoubleTeam()
+        { characterCS.actionPoints += 1; } */
+        void Restart()
+        {
+            GameEvents.current.reloadScene();
+            //Debug.Log("Restart Function not created");
+        }
+
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
             targetCharacter.CheckIfCharacterIsDead();
@@ -170,63 +113,162 @@ public class MoveDictionaryManager : MonoBehaviour
             toolTip.text = "";
         toolTip.text += Tip;
     }
+    bool BasicActionInProgress = false;
+    Vector3Int theroticalCurrentPos;
+    int stageOfAction;
 
-    public void doAction(AbilityName abilityName)
+    string currentVarirable;
+    Dictionary<string, List<Vector3Int>> variableNameToData;
+    public void doAction(LadderCollapseFunction ladderCollapseFunction)
     {
-        abilityNameToAction[abilityName]();
-    }
-    private List<Vector3Int> areaOfAction;
+        theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+        setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
+        StartCoroutine(SequenceOfEvents());
+        IEnumerator SequenceOfEvents()
+        {
+            variableNameToData = new Dictionary<string, List<Vector3Int>>();
 
-    IEnumerator getInput(Action doThisAction, AbilityName forAbilityData)
+
+            int currentsetDataWithID = 0;
+            int currentdoActionWithID = 0;
+            int currentSetDataUsingTherorticalPosAtArrayIndex = 0;
+
+
+
+            foreach (var keyPair in ladderCollapseFunction.invokeFunction.KeyValuePairs)
+            {
+                if (GetInputState != CoRoutineStateCheck.Proceeding)
+                {
+                    //Debug.Log("Action was" + GetInputState);
+                    //thisCharacter.GetComponent<CharacterControllerScript>().OnActionComplete(GetInputState);
+                    break;
+                }
+                currentVarirable = keyPair.value;
+                if (keyPair.key == LadderCollapseFunctionEnums.setDataWithID)
+                {
+
+                    variableNameToData.Add(currentVarirable, new List<Vector3Int>());
+                    BasicActionInProgress = true;
+                    StartCoroutine(getInput(ladderCollapseFunction.SetDataAtIndex[currentsetDataWithID]));
+                    yield return new WaitUntil(() => !BasicActionInProgress);
+                    yield return null;
+                    currentsetDataWithID++;
+
+                }
+                else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
+                {
+
+                    TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction;
+                    foreach (Vector3Int point in variableNameToData[currentVarirable])
+                    {
+
+                        tryHere = point;
+                        //if (DeterminValidTileTarget())
+                        {
+                            yield return new WaitForSeconds(0.25f);
+                            abilityNameToAction[actiontype]();
+                        }
+
+                    }
+                    currentdoActionWithID++;
+                }
+                else if (keyPair.key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
+                {
+                    currentSetDataUsingTherorticalPosAtArrayIndex++;
+                    variableNameToData[currentVarirable] = new List<Vector3Int>();
+                    variableNameToData[currentVarirable].Add(theroticalCurrentPos);
+                }
+            }
+            if (GetInputState == CoRoutineStateCheck.Proceeding)
+            {
+                abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
+            }
+            yield return null;
+        }
+    }
+    List<List<Vector3Int>> listOfPointsForCompundAction;
+    CoRoutineStateCheck GetInputState;
+    void setGetInputCoRoutineState(CoRoutineStateCheck newState)
+    {
+
+        if (newState == CoRoutineStateCheck.Misinput)
+        {
+            if (GetInputState == CoRoutineStateCheck.Aborting)
+            {
+                newState = CoRoutineStateCheck.Aborting;
+            }
+        }
+        if (newState != CoRoutineStateCheck.Waiting)
+        {
+            // Debug.Log(newState);
+        }
+        GetInputState = newState;
+    }
+    IEnumerator getInput(ActionInputParams basicAction)
     {
         //Declaring Variables
-        Ability ability = characterCS.AbilityNameToAbilityDataDIR[forAbilityData];
-        currentAblity = ability;
-        float rangeOfAction = ability.GetRangeOfAction();
+        float rangeOfAction = basicAction.getRangeOfAction();
         if (rangeOfAction == 0)
-            Debug.Log(rangeOfAction);
-        List<Vector3Int> listOfValidtargets = getValidTargetList(ability);
-        reticalManager.fromPoint = characterCS.getCharV3Int();
+            Debug.Log(rangeOfAction + " was zero");
+        List<Vector3Int> listOfValidtargets = getValidTargetList(basicAction);
+        reticalManager.fromPoint = theroticalCurrentPos;
         ShouldContinue = false;
 
+        List<Vector3Int> tempData = new List<Vector3Int>();
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
+            reticalManager.reDrawValidTiles(listOfValidtargets);
             tryHere = characterCS.getTarget(listOfValidtargets);
+            tempData = reticalManager.generateShape(tryHere);
             ShouldContinue = true;
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.5f);
         }
         else//if it is the player character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-            reticalManager.reticalShapes = ability.reticalShapes;
+            reticalManager.reticalShapes = basicAction.areaOfEffectType;
             reticalManager.rangeOfAction = rangeOfAction;
-            addToolTip("select Purple Tile To Contine with Action " + ability.abilityString + " Or Right Click to Cancel", true);
+            addToolTip("select Purple Tile To Contine with Action " + basicAction + " Or Right Click to Cancel", true);
+
+            setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
+
             tryHere = reticalManager.getMovePoint();
-            areaOfAction = reticalManager.generateShape(tryHere);
+
+            tempData = reticalManager.generateShape(tryHere);
+            if (basicAction.updateTheroticalPos)
+            {
+                theroticalCurrentPos = tryHere;
+            }
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
+        foreach (Vector3Int pos in tempData)
+        {
+            if (DeterminValidTileTarget(pos))
+                variableNameToData[currentVarirable].Add(pos);
+        }
+        //variableNameToData[currentVarirable] = tempData;
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
-            GameObject objectCharacter = thisCharacter;
-            if (mapManager.cellDataDir[tryHere].characterAtCell != null)
-                objectCharacter = mapManager.cellDataDir[tryHere].characterAtCell;
-            GameEvents.current.sendChoice(thisCharacter, forAbilityData, objectCharacter);
-            yield return new WaitUntil(() => !GameEvents.current.EventInMotion);
 
+            BasicActionInProgress = false;
+            setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
+        }
+        else
+        {
 
-            doThisAction();
+            setGetInputCoRoutineState(CoRoutineStateCheck.Misinput);
+            BasicActionInProgress = false;
         }
         reticalManager.reDrawValidTiles();
-
-        //reticalManager.reDrawShadows();
         //Methods
         bool CheckContinue()
         {
             if (Input.GetMouseButtonDown(0))
             {
                 addToolTip("Select an Button To Perform an Action", true);
+                setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
                 ShouldContinue = true;
                 return true;
 
@@ -234,51 +276,122 @@ public class MoveDictionaryManager : MonoBehaviour
             else if (Input.GetMouseButtonDown(1))
             {
                 addToolTip("Action Cancelled; Select an Button To Perform an Action", true);
+                setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
                 ShouldContinue = false;
                 return true;
             }
+            setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
             return false;
         }
         bool CheckMovePoint()
         {
             if (ShouldContinue && listOfValidtargets.Contains(tryHere) && listOfValidtargets.Count != 0)
             {
-
                 return true;
             }
             else if (listOfValidtargets.Count == 0)
             {
                 addToolTip("No Valid Tiles for This Action; Select an Button To Perform an Action", true);
+                setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
                 //Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
-                getValidTargetList(ability);
+                getValidTargetList(basicAction);
                 return false;
             }
             else
+            {
+                //setGetInputCoRoutineState(CoRoutineStateCheck.Misinput);
                 return false;
+            }
+        }
+        bool DeterminValidTileTarget(Vector3Int checkPos)
+        {
+            ValidTargets requitedCondtion = basicAction.validTargets;
+            if (mapManager.cellDataDir.ContainsKey(checkPos))
+            {
+
+                if (requitedCondtion == ValidTargets.Empty)
+                {
+                    return !mapManager.isCellHoldingCharacer(checkPos);
+                }
+                else if (mapManager.isCellHoldingCharacer(checkPos))
+                {
+                    string faction = mapManager.cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
+                    string factionOfCaster = thisCharacter.GetComponent<CharacterControllerScript>().faction;
+                    switch (requitedCondtion)
+                    {
+                        case ValidTargets.AnyFaction:
+                            {
+                                return true;
+                            }
+                        case ValidTargets.Enemies:
+                            {
+                                if (factionOfCaster != faction)
+                                    return true;
+                                else
+                                    return false;
+                            }
+                        case ValidTargets.Allies:
+                            {
+                                if (factionOfCaster == faction)
+                                    return true;
+                                else
+                                    return false;
+                            }
+
+                    }
+                }
+            }
+            return false;
+
         }
     }
-    public List<Vector3Int> getValidTargetList(Ability ability)
+    public List<Vector3Int> getValidTargetList(ActionInputParams action)
     {
         float rangeOfAction;
         if (!EditMapMode)
-            rangeOfAction = ability.GetRangeOfAction();
+            rangeOfAction = action.getRangeOfAction();
         else
             rangeOfAction = alternateRange;
 
-        //Debug.Log("Generating List of valid Targets for the character" + thisCharacter.name);
-        Vector3Int centerPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+        Vector3Int centerPos = theroticalCurrentPos;
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
-        List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
-        if (!ability.disregardWalkablity)
-            listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
-        listOfRanges.Remove(centerPos);
+        //List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
+        bool disregardWalkablity = false;
+        bool requireCharacter = false;
+        bool reverseRequireCharacterCondiditon = false;
+        //listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
+        if (action.validTileType == ValidTileType.PointTargeted)
+        {
+
+            disregardWalkablity = true;
+        }
+        else if (action.validTileType == ValidTileType.EmptyCellTargeted)
+        {
+
+            requireCharacter = true;
+            reverseRequireCharacterCondiditon = true;
+        }
+        else if (action.validTileType == ValidTileType.UnitTargeted)
+        {
+            requireCharacter = true;
+        }
+        if (!action.includeSelf)
+        {
+            listOfRanges.Remove(theroticalCurrentPos);
+        }
+        //listOfRanges.Remove(centerPos);
         ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
         for (int i = 0; i < listOfRanges.Count; i++)
         {
             //Normal Checks         
-            bool hasWalkability = ability.disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
-            bool requireCharacterCondition = GlobalCal.compareBool(mapManager.isCellHoldingCharacer(listOfRanges[i]), ability.requireCharacterBoolEnum);
+            bool hasWalkability = disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
+            bool requireCharacterCondition = requireCharacter ? mapManager.isCellHoldingCharacer(listOfRanges[i]) : true;
+            if (reverseRequireCharacterCondiditon)
+            {
+                requireCharacterCondition = !requireCharacterCondition;
+            }
+
             if (hasWalkability && requireCharacterCondition)
             {/*Do Nothing since all conditions are fine*/}
             else
@@ -287,7 +400,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 if (checkValidActionTiles)
                 {
                     bool condtion = false;//Will be reassigned later                        
-                    string debugLine = "For Action " + ability.abilityName + " Point " + listOfRanges[i] + " was Invalid as Tile ";
+                    string debugLine = "For Action " + action + " Point " + listOfRanges[i] + " was Invalid as Tile ";
                     string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
                     if (!requireCharacterCondition)
                     {
@@ -322,36 +435,53 @@ public enum AbilityName
     AxeSweep,
     Restart
 }
-
 [Serializable]
-public class Ability
+public class ActionInputParams
 {
-    public String abilityString;
-    public AbilityName abilityName;
-    public RangeOfActionEnum rangeOfActionEnum = RangeOfActionEnum.r10;
-    public ReticalShapes reticalShapes = ReticalShapes.SSingle;
-    public BoolEnum requireCharacterBoolEnum = BoolEnum.TrueOrFalse;
-    public bool disregardWalkablity = false;
-    public Ability()
+    [SerializeField] RangeOfActionEnum rangeOfActionEnum;
+    public ReticalShapes areaOfEffectType;
+    public ValidTileType validTileType;
+    public OptimalTargetTip optimalTargetTip;
+    public ValidTargets validTargets;
+    public bool includeSelf;
+    public bool updateTheroticalPos = true;
+    public ActionInputParams()
     {
 
     }
-    public Ability(Ability ability)
+    public ActionInputParams(ActionInputParams given)
     {
-        abilityString = ability.abilityString;
-        abilityName = ability.abilityName;
-        rangeOfActionEnum = ability.rangeOfActionEnum;
-        reticalShapes = ability.reticalShapes;
-        requireCharacterBoolEnum = ability.requireCharacterBoolEnum;
-        disregardWalkablity = ability.disregardWalkablity;
+        rangeOfActionEnum = given.rangeOfActionEnum;
+        areaOfEffectType = given.areaOfEffectType;
+        validTileType = given.validTileType;
+        validTargets = given.validTargets;
     }
-    public float GetRangeOfAction()
+    public float getRangeOfAction()
     {
-        /* string rangeString = rangeOfActionEnum.ToString();
-        rangeString = rangeString.Replace("r", "");
-        return float.Parse(rangeString) / 10; */
-        return ((float)rangeOfActionEnum) / 10;
+        return (float)rangeOfActionEnum / 10;
     }
+}
+public enum CoRoutineStateCheck
+{
+    Waiting,
+    Proceeding,
+    Aborting,
+    Misinput
+}
+
+public enum LadderCollapseFunctionEnums
+{
+    setDataWithID,
+    doActionWithID,
+    SetDataUsingTherorticalPosAtArrayIndex,
+}
+public enum TypeOfAction
+{
+    apply_Damage,
+    apply_Heal,
+    apply_SelfMove,
+    apply_TryEndTurn,
+    RestartScene
 }
 public enum BoolEnum
 {
@@ -373,4 +503,12 @@ public enum ValidTileType
     PointTargeted,
     UnitTargeted,
     EmptyCellTargeted
+}
+public enum ValidTargets
+{
+    Empty,
+    AnyFaction,
+    Enemies,
+    Allies,
+    Neutral
 }

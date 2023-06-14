@@ -54,13 +54,16 @@ MonoBehaviour:
   attackDamage: 0
   speedValue: 3
   rangeOfVision: 5
+  faction: 
   canWalkOn: 
   CharacterDataSO: {fileID: 0}
+  CellPosOfCharcter: {x: 0, y: 0, z: 0}
   Heatlh: {fileID: 8940392800064962491}
-  abilityList: []
-  CharacterMoveList: 0a00000000000000
-  CharacterInventoryList: 05000000
+  ladderList: []
   actionPoints: 1
+  currentTarget: {x: 0, y: 0, z: 0}
+  AttackRangeList: []
+  TargetRangeList: []
   animator: {fileID: 2406951079378199446}
   spriteHolder: {fileID: 5487882985969914086}
 --- !u!1 &1555172378576254017

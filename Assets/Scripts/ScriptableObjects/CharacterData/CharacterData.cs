@@ -10,6 +10,7 @@ public class CharacterData : ScriptableObject
     public string characterName = "GenericCharacter";
     public CharacterName NameEnum;
     public bool isPlayerCharacter = true;
+    public string Faction;
     //Stats
     public int health = 5;
     public int attackDamage = 2;
@@ -17,7 +18,7 @@ public class CharacterData : ScriptableObject
     public int rangeOfVision = 2;
     //Custom Data Types
     public List<GroundFloorType> canWalkOn;
-    public List<Ability> listOfAbility;
+    public List<LadderCollapseFunction> LadderAbility;
 
     public CharacterData()
     {
@@ -34,11 +35,12 @@ public class CharacterData : ScriptableObject
         speedValue = characterData.speedValue;
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        listOfAbility = new List<Ability>(characterData.listOfAbility);
+        LadderAbility = new List<LadderCollapseFunction>(characterData.LadderAbility);
+        Faction = characterData.Faction;
     }
     public void ReplaceDataWithPreset(CharacterData characterData)
     {
-        if(characterData==null)
+        if (characterData == null)
         {
             Debug.Log("Data was Null");
             return;
@@ -52,7 +54,8 @@ public class CharacterData : ScriptableObject
         speedValue = characterData.speedValue;
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        listOfAbility = new List<Ability>(characterData.listOfAbility);
+        LadderAbility = new List<LadderCollapseFunction>(characterData.LadderAbility);
+        Faction = characterData.Faction;
     }
 
 }

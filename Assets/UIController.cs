@@ -58,7 +58,7 @@ public class UIController : MonoBehaviour
 
             for (int CellFilled = 0; CellFilled < GridXLimit; CellFilled++)
             {
-                Debug.Log(currentButtonID);
+                //Debug.Log(currentButtonID);
                 if (currentButtonID >= numberOfButtons)
                     break;
 

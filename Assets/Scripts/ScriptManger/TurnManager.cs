@@ -12,6 +12,7 @@ public class TurnManager : MonoBehaviour
         GetGameObjects();
         InstantiateallIntractableCharacters();//Can only be called after getting game objects
         recalculateOrder();//can only be called after Instanstiating the Characterts       
+        //GameEvents.current.setText("");
         beginTurnIfPossible();
     }
     [Header("Reffrences to Important Game Objects")]
@@ -73,7 +74,9 @@ public class TurnManager : MonoBehaviour
             //Adding to Lists
             ListOfInteractableCharacters.Add(InstansiatedCharacter);//Adding Character to List
             if (mapManager.cellDataDir.ContainsKey(characterDataPair.Key))//Checks if Tile is Valid ie recorded in Dictionary does not do walkablity checks
-                mapManager.cellDataDir[characterDataPair.Key].characterAtCell = InstansiatedCharacter;//Setting Mapmanager Posistion
+            {
+                mapManager.PlaceCharacterAtPos(characterDataPair.Key, InstansiatedCharacter);
+            }//Setting Mapmanager Posistion
             else
             {
                 Debug.Log("Wrong Tile Skipping Character");
@@ -85,6 +88,7 @@ public class TurnManager : MonoBehaviour
 
         GameEvents.current.setUpCamera();//Move This Somewhere Else
     }
+    [SerializeField] LadderCollapseFunction restart;
     public void beginTurnIfPossible()
     {
         ///reticalManager.reDrawShadows();
@@ -98,8 +102,8 @@ public class TurnManager : MonoBehaviour
         void triggerGameEnd()
         {
             Debug.Log("Game Over");
-            //buttonManager.clearButtons();
-            buttonManager.InstantiateButtons(new List<AbilityName>() { AbilityName.Restart });
+            GameEvents.current.setText("Game Over");
+            buttonManager.InstantiateButtons(new List<LadderCollapseFunction>() { restart });
         }
         void setCharacterData()
         {

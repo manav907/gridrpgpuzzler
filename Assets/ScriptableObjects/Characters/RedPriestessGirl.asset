@@ -16,27 +16,14 @@ MonoBehaviour:
   characterName: Ninjask
   NameEnum: 2
   isPlayerCharacter: 1
+  Faction: 
   health: 1
   attackDamage: 1
   speedValue: 6
   rangeOfVision: 5
   canWalkOn: 00000000
-  listOfAbility:
-  - abilityString: Move
-    abilityName: 1
-    rangeOfActionEnum: 15
-    reticalShapes: 0
-    requireCharacterBoolEnum: 2
-    disregardWalkablity: 0
-  - abilityString: Attack
-    abilityName: 2
-    rangeOfActionEnum: 15
-    reticalShapes: 0
-    requireCharacterBoolEnum: 1
-    disregardWalkablity: 0
-  - abilityString: AxeSweep
-    abilityName: 9
-    rangeOfActionEnum: 15
-    reticalShapes: 2
-    requireCharacterBoolEnum: 0
-    disregardWalkablity: 1
+  LadderAbility:
+  - {fileID: 11400000, guid: d1cbae79bdc4c4040843070851debcbb, type: 2}
+  - {fileID: 11400000, guid: 7ad13331415d0144abf19dee07a7abc6, type: 2}
+  - {fileID: 11400000, guid: ea844d5ebae2f534f9d4509e13283985, type: 2}
+  - {fileID: 11400000, guid: 6efe7ecb0904b864cbe7959f70e64fcf, type: 2}
