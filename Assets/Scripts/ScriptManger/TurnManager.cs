@@ -33,7 +33,7 @@ public class TurnManager : MonoBehaviour
     public List<GameObject> ListOfInteractableCharacters;
     public List<GameObject> OrderOfInteractableCharacters;
     [Header("Current Turn Data")]
-    public GameObject thisCharacter;
+    public static GameObject thisCharacter;
     CharacterControllerScript thisCharacterData;
     [SerializeField] int TurnCountInt = 0;
     void GetGameObjects()
@@ -96,8 +96,6 @@ public class TurnManager : MonoBehaviour
             triggerGameEnd();
         else
         {
-            if (thisCharacterData != null)
-                thisCharacterData.setCharacterAnimation(CharacterAnimationState.Idle);
             setCharacterData();//sets new chracterData
             thisCharacterData.BeginThisCharacterTurn();
         }
@@ -132,6 +130,7 @@ public class TurnManager : MonoBehaviour
 
     public void endTurn()
     {
+        thisCharacterData.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
         TurnCountInt++;
         if (TurnCountInt >= OrderOfInteractableCharacters.Count)
         {

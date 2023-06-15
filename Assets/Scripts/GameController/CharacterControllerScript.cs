@@ -33,6 +33,7 @@ public class CharacterControllerScript : MonoBehaviour
     private ButtonManager buttonManager;
     private MapManager mapManager;
     private TurnManager turnManager;
+    public AnimationControllerScript animationControllerScript;
     DataManager dataManager;
     UniversalCalculator universalCalculator;
     [SerializeField] List<LadderCollapseFunction> ladderList;
@@ -69,11 +70,7 @@ public class CharacterControllerScript : MonoBehaviour
             //Game Event Regersery
             GameEvents.current.addCharacter(isPlayerCharacter);
             //doingAnimController
-            var SO = gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum);
-            animator.runtimeAnimatorController = SO.GeneratedAnimatorOverrideController;
-            //Setting Sprite Stuff
-            //Transform spriteHolder = gameObject.transform.Find("SpriteHolder");
-            spriteHolder.position = new Vector3(spriteHolder.position.x, spriteHolder.position.y + SO.spriteOffsetY, spriteHolder.position.z);
+            animationControllerScript.setVariables(gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum));
             //Methods
         }
     }
@@ -107,7 +104,7 @@ public class CharacterControllerScript : MonoBehaviour
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
             turnManager.ListOfInteractableCharacters.Remove(gameObject);
             mapManager.KillCharacter(getCharV3Int());
-            if (turnManager.thisCharacter == this.gameObject)
+            if (TurnManager.thisCharacter == this.gameObject)
             {
                 turnManager.endTurn();
             }
@@ -133,7 +130,7 @@ public class CharacterControllerScript : MonoBehaviour
 
         if (isALive)
         {
-            ToggleCharacterTurnAnimation();
+            animationControllerScript.setCharacterAnimation(CharacterAnimationState.Walk);
             actionPoints = 1;//Remove This later
                              //buttonManager.clearButtons();
             if (controlCharacter)
@@ -237,43 +234,4 @@ public class CharacterControllerScript : MonoBehaviour
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
     }
-    [SerializeField] Animator animator;
-    [SerializeField] Transform spriteHolder;
-    public bool checkifCharacterTurn()
-    {
-        return turnManager.thisCharacter == this.gameObject;
-    }
-    public void ToggleCharacterTurnAnimation()
-    {
-        if (checkifCharacterTurn())
-        {
-            setCharacterAnimation(CharacterAnimationState.Walk);
-        }
-        else
-        {
-            setCharacterAnimation(CharacterAnimationState.Idle);
-        }
-    }
-    public CharacterAnimationState currentState;
-    public void setCharacterAnimation(CharacterAnimationState state)
-    {
-
-        currentState = state;
-        refreshCharacterAnimation();
-    }
-    public void refreshCharacterAnimation()
-    {
-        string stateString = currentState.ToString();
-        Debug.Log(characterName + "is now walking" + stateString);
-        animator.SetTrigger(stateString);
-    }
-
-
-
-}
-public enum CharacterAnimationState
-{
-    Idle,
-    Walk,
-    RegularAttack,
 }

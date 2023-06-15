@@ -157,7 +157,7 @@ public class GameEvents : MonoBehaviour
     public void TriggerNextDialog()
     {
         turnLoop = turnManager.TurnLoop;
-        currentCharacterName = turnManager.thisCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum;
+        currentCharacterName = TurnManager.thisCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum;
         if (TriggerNextDialogAction != null)
             TriggerNextDialogAction();
     }
@@ -192,7 +192,7 @@ public class GameEvents : MonoBehaviour
             setDialog(null, "");
             //Dictionary<CharacterName, Dialog> DialogMap = currentDialogEvent.OrderOfDialogs.returnDict();
             var OrderOfDialogs = currentDialogEvent.OrderOfDialogs.KeyValuePairs;
-            Vector3 originalPos = turnManager.thisCharacter.transform.position;
+            Vector3 originalPos = TurnManager.thisCharacter.transform.position;
             for (int i = 0; i < OrderOfDialogs.Count; i++)
             {
                 var key = OrderOfDialogs[i].key;

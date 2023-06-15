@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(CharacterControllerScript))]
-public class CharacterControllerScriptEditor : Editor
+[CustomEditor(typeof(AnimationControllerScript))]
+public class AnimationControllerScriptEditor : Editor
 {
-    [SerializeField] CharacterControllerScript newCharacterData;
+    [SerializeField] AnimationControllerScript newCharacterData;
 
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        CharacterControllerScript characterData = target as CharacterControllerScript;
+        AnimationControllerScript characterData = target as AnimationControllerScript;
         CharacterAnimationState newState = (CharacterAnimationState)EditorGUILayout.EnumPopup(characterData.currentState);
         if (characterData.currentState != newState)
         {

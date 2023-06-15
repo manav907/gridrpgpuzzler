@@ -60,12 +60,10 @@ MonoBehaviour:
   CharacterDataSO: {fileID: 0}
   CellPosOfCharcter: {x: 0, y: 0, z: 0}
   Heatlh: {fileID: 8940392800064962491}
+  animationControllerScript: {fileID: 3730697512727443931}
   ladderList: []
   actionPoints: 1
   currentTarget: {x: 0, y: 0, z: 0}
-  animator: {fileID: 2406951079378199446}
-  spriteHolder: {fileID: 5487882985969914086}
-  currentState: 0
 --- !u!114 &3730697512727443931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +76,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4234a27a4e7dca54385ef0b5bfdad041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2406951079378199446}
+  spriteHolder: {fileID: 5487882985969914086}
+  currentState: 0
 --- !u!1 &1555172378576254017
 GameObject:
   m_ObjectHideFlags: 0

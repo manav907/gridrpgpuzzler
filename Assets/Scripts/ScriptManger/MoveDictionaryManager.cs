@@ -43,7 +43,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
     public void getThisCharacterData()
     {
-        thisCharacter = turnManager.thisCharacter;
+        thisCharacter = TurnManager.thisCharacter;
         //Debug.Log(thisCharacter.name);//
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
         theroticalCurrentPos = characterCS.getCharV3Int();
@@ -63,7 +63,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-            attackingCharacter.setCharacterAnimation(CharacterAnimationState.RegularAttack);
+            attackingCharacter.animationControllerScript.setCharacterAnimation(CharacterAnimationState.RegularAttack);
             targetCharacter.health -= attackingCharacter.attackDamage;
             checkCharacters(targetCharacter);
             var ListOfMovePoints = new List<Vector3>();
@@ -89,7 +89,7 @@ public class MoveDictionaryManager : MonoBehaviour
             if (characterCS.doActionPointsRemainAfterAbility() == false)
             {
                 CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-                targetCharacter.ToggleCharacterTurnAnimation();
+                //targetCharacter.animationControllerScript.ToggleCharacterTurnAnimation();
                 buttonManager.clearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
@@ -183,7 +183,6 @@ public class MoveDictionaryManager : MonoBehaviour
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
                 abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
-                characterCS.ToggleCharacterTurnAnimation();
             }
             yield return null;
         }

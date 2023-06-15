@@ -43,7 +43,7 @@ public class DataManager : MonoBehaviour
     }
     public void viewCurrentCharacter()
     {
-        turnManager.setCameraPos(turnManager.thisCharacter.transform.position);
+        turnManager.setCameraPos(TurnManager.thisCharacter.transform.position);
     }
     public void setCameraPos(Vector3Int pos)
     {

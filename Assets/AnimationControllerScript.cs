@@ -4,15 +4,46 @@ using UnityEngine;
 
 public class AnimationControllerScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void setVariables(CharacterAnimationData characterAnimationData)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        animator.runtimeAnimatorController = characterAnimationData.GeneratedAnimatorOverrideController;
+        spriteHolder.position = new Vector3(spriteHolder.position.x, spriteHolder.position.y + characterAnimationData.spriteOffsetY, spriteHolder.position.z);
     }
+    [SerializeField] Animator animator;
+    [SerializeField] Transform spriteHolder;
+    public bool checkifCharacterTurn()
+    {
+        return TurnManager.thisCharacter == this.gameObject;
+    }
+    public void ToggleCharacterTurnAnimation()
+    {
+        if (checkifCharacterTurn())
+        {
+            setCharacterAnimation(CharacterAnimationState.Walk);
+        }
+        else
+        {
+            setCharacterAnimation(CharacterAnimationState.Idle);
+        }
+    }
+    public CharacterAnimationState currentState;
+    public void setCharacterAnimation(CharacterAnimationState state)
+    {
+
+        currentState = state;
+        refreshCharacterAnimation();
+    }
+    public void refreshCharacterAnimation()
+    {
+        string stateString = currentState.ToString();
+        Debug.Log(this.gameObject.name + "is now " + stateString);
+        animator.SetTrigger(stateString);
+    }
+}
+public enum CharacterAnimationState
+{
+    Idle,
+    Walk,
+    RegularAttack,
 }
