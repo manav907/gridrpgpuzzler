@@ -47,3 +47,9 @@ public enum CharacterAnimationState
     Walk,
     RegularAttack,
 }
+public enum AnimationLoopType
+{
+    forEachAction,
+    UntilActionComplete,
+    LoopUntilModified
+}

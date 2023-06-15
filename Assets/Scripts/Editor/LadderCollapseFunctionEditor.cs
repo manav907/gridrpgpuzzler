@@ -64,11 +64,14 @@ public class LadderCollapseFunctionEditor : Editor
                 {
                     ladderCollapseFunction.DoActionFromDataAtIndex.Add(new ActionEffectParams());
                 }
-                EditorGUILayout.BeginHorizontal();
+                SerializedProperty SetDataAtIndexKeyPairs = serializedObject.FindProperty("DoActionFromDataAtIndex");
+                SerializedProperty SetDataAtIndexKeyPair = SetDataAtIndexKeyPairs.GetArrayElementAtIndex(currentdoActionWithID);
+                EditorGUILayout.PropertyField(SetDataAtIndexKeyPair, true);
+                /* EditorGUILayout.BeginHorizontal();
                 ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction = (TypeOfAction)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction);
                 //ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets = (ValidTargets)EditorGUILayout.EnumPopup(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].validTargets);
                 //ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].includeSelf = EditorGUILayout.Toggle(ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].includeSelf);
-                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndHorizontal(); */
                 currentdoActionWithID++;
             }
             else if (ladderCollapseFunction.invokeFunction.KeyValuePairs[i].key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
