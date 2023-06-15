@@ -63,6 +63,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
+            attackingCharacter.setCharacterAnimation(CharacterAnimationState.RegularAttack);
             targetCharacter.health -= attackingCharacter.attackDamage;
             checkCharacters(targetCharacter);
             var ListOfMovePoints = new List<Vector3>();
@@ -88,7 +89,7 @@ public class MoveDictionaryManager : MonoBehaviour
             if (characterCS.doActionPointsRemainAfterAbility() == false)
             {
                 CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-                targetCharacter.ToggleCharacterTurnAnimation(false);
+                targetCharacter.ToggleCharacterTurnAnimation();
                 buttonManager.clearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
@@ -182,6 +183,7 @@ public class MoveDictionaryManager : MonoBehaviour
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
                 abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
+                characterCS.ToggleCharacterTurnAnimation();
             }
             yield return null;
         }

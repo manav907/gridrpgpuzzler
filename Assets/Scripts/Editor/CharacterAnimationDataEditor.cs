@@ -36,8 +36,11 @@ public class CharacterAnimationDataEditor : Editor
         }
         if (GUILayout.Button("Genereate Animation"))
         {
-            AssetDatabase.CreateAsset(GetanimatorOverrideController(), "Assets/Resources/AnimationClips/" + characterAnimationData.nameEnum.ToString() + ".overrideController");
+            string assetPath = "Assets/Resources/AnimationClips/" + characterAnimationData.nameEnum.ToString() + ".overrideController";
+            AssetDatabase.CreateAsset(GetanimatorOverrideController(), assetPath);
             AssetDatabase.SaveAssets();
+            characterAnimationData.GeneratedAnimatorOverrideController = AssetDatabase.LoadAssetAtPath<AnimatorOverrideController>(assetPath);
+
             AnimatorOverrideController GetanimatorOverrideController()
             {
                 string sourceAnimatorControllerPath = "Assets/Prefabs/Character.prefab";

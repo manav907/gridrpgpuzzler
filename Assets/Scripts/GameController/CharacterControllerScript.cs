@@ -133,7 +133,7 @@ public class CharacterControllerScript : MonoBehaviour
 
         if (isALive)
         {
-            ToggleCharacterTurnAnimation(true);
+            ToggleCharacterTurnAnimation();
             actionPoints = 1;//Remove This later
                              //buttonManager.clearButtons();
             if (controlCharacter)
@@ -239,14 +239,41 @@ public class CharacterControllerScript : MonoBehaviour
     }
     [SerializeField] Animator animator;
     [SerializeField] Transform spriteHolder;
-    public void ToggleCharacterTurnAnimation(bool isCharacterTurn)
+    public bool checkifCharacterTurn()
     {
-        //Debug.Log(animator.)
-        if (isCharacterTurn)
-            animator.SetTrigger("Walk");
+        return turnManager.thisCharacter == this.gameObject;
+    }
+    public void ToggleCharacterTurnAnimation()
+    {
+        if (checkifCharacterTurn())
+        {
+            setCharacterAnimation(CharacterAnimationState.Walk);
+        }
         else
-            animator.SetTrigger("Idle");
+        {
+            setCharacterAnimation(CharacterAnimationState.Idle);
+        }
+    }
+    [SerializeField] CharacterAnimationState currentState;
+    public void setCharacterAnimation(CharacterAnimationState state)
+    {
+
+        currentState = state;
+        refreshCharacterAnimation();
+    }
+    public void refreshCharacterAnimation()
+    {
+        string stateString = currentState.ToString();
+        Debug.Log(characterName + "is now walking" + stateString);
+        animator.SetTrigger(stateString);
     }
 
 
+
+}
+public enum CharacterAnimationState
+{
+    Idle,
+    Walk,
+    RegularAttack,
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InstanceID: 1
   characterName: Ninjask
-  NameEnum: 1
+  NameEnum: 4
   isPlayerCharacter: 1
   Faction: 
   health: 1

@@ -14,6 +14,7 @@ public class CharacterAnimationData : ScriptableObject
     public float spriteOffsetY;
     public Sprite[] Walk;
     public Sprite[] Idle;
+    public Sprite[] RegularAttack;
     // Add other unique data fields as needed
     [SerializeField]
     public AnimatorOverrideController GeneratedAnimatorOverrideController;
@@ -23,6 +24,7 @@ public class CharacterAnimationData : ScriptableObject
         var thisDict = new Dictionary<String, Sprite[]>();
         thisDict.Add(nameof(Walk), Walk);
         thisDict.Add(nameof(Idle), Idle);
+        thisDict.Add(nameof(RegularAttack), RegularAttack);
         return thisDict;
     }
 
@@ -30,8 +32,9 @@ public class CharacterAnimationData : ScriptableObject
 }
 public enum CharacterName
 {
-    Rapidash,
+    SkeletonWithSheild,
     PinkHairGuy,
     RedPriestessGirl,
-    GreenRedDude
+    GreenRedDude,
+    OrcBarbarianGreen
 }

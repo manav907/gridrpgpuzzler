@@ -96,7 +96,9 @@ public class TurnManager : MonoBehaviour
             triggerGameEnd();
         else
         {
-            setCharacterData();
+            if (thisCharacterData != null)
+                thisCharacterData.setCharacterAnimation(CharacterAnimationState.Idle);
+            setCharacterData();//sets new chracterData
             thisCharacterData.BeginThisCharacterTurn();
         }
         void triggerGameEnd()

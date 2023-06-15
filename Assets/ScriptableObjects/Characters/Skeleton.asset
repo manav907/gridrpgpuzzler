@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InstanceID: 2
   characterName: Rapidash
-  NameEnum: 0
+  NameEnum: 4
   isPlayerCharacter: 0
   Faction: Enemies
   health: 2
