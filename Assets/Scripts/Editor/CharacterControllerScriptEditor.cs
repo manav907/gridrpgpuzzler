@@ -12,8 +12,10 @@ public class CharacterControllerScriptEditor : Editor
     {
         DrawDefaultInspector();
         CharacterControllerScript characterData = target as CharacterControllerScript;
-        if(GUILayout.Button("Refresh Animation"))
+        CharacterAnimationState newState = (CharacterAnimationState)EditorGUILayout.EnumPopup(characterData.currentState);
+        if (characterData.currentState != newState)
         {
+            characterData.currentState = newState;
             characterData.refreshCharacterAnimation();
         }
     }

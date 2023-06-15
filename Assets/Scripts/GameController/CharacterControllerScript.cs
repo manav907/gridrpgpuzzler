@@ -254,7 +254,7 @@ public class CharacterControllerScript : MonoBehaviour
             setCharacterAnimation(CharacterAnimationState.Idle);
         }
     }
-    [SerializeField] CharacterAnimationState currentState;
+    public CharacterAnimationState currentState;
     public void setCharacterAnimation(CharacterAnimationState state)
     {
 
