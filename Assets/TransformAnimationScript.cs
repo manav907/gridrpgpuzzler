@@ -20,7 +20,7 @@ public class TransformAnimationScript : MonoBehaviour
         {
             var MoveQueueData = new MoveQueueData();
             moveQueueSystem.Add(transform, MoveQueueData);
-            Debug.Log("Created New Entry");
+            //Debug.Log("Created New Entry");
         }
         moveQueueSystem[transform].add(movePoint, moveTime);
         Debug.Log(transform.name + " added" + movePoint + moveTime);
@@ -30,7 +30,7 @@ public class TransformAnimationScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("Starting MoveBw");
+            //Debug.Log("Starting MoveBw");
             yield return StartCoroutine(MoveTransBetweenpoints(transform));
         }
 
@@ -54,7 +54,7 @@ public class TransformAnimationScript : MonoBehaviour
 
             yield return null;
             //yield return new WaitForFixedUpdate();//This makes stuff very laggy
-            Debug.Log("moving" + transform.name + " to " + movePoint + " in " + moveTime + " seconds");
+            //Debug.Log("moving" + transform.name + " to " + movePoint + " in " + moveTime + " seconds");
             while (elapsedTime < moveTime)
             {
                 yield return null;
@@ -71,7 +71,7 @@ public class TransformAnimationScript : MonoBehaviour
             TotalItems = data.NumberOfItems;//Updates if new items were added
         }
         moveQueueSystem.Remove(transform);
-        Debug.Log("completed removoeing transform");
+        //Debug.Log("completed removoeing transform");
         yield return null;
     }
     class MoveQueueData

@@ -65,12 +65,6 @@ public class MoveDictionaryManager : MonoBehaviour
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
             targetCharacter.health -= attackingCharacter.attackDamage;
             checkCharacters(targetCharacter);
-            var ListOfMovePoints = new List<Vector3>();
-            ListOfMovePoints.Add(tryHere);
-            ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
-            //universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
-            //TransformAnimationScript.current.MoveUsingQueueSystem(attackingCharacter.transform, ListOfMovePoints[0], moveTimeSpeed);
-            //TransformAnimationScript.current.MoveUsingQueueSystem(attackingCharacter.transform, ListOfMovePoints[1], moveTimeSpeed);
             GameEvents.current.PlaySound(0);
         }
         void apply_Heal()
@@ -83,32 +77,27 @@ public class MoveDictionaryManager : MonoBehaviour
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
             movePoints.Add(tryHere);
-            //universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, universalCalculator.castListAsV3(movePoints), moveTimeSpeed);
-            //TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed);
         }
         void apply_TryEndTurn()
         {
             if (characterCS.doActionPointsRemainAfterAbility() == false)
             {
                 CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-                //targetCharacter.animationControllerScript.ToggleCharacterTurnAnimation();
                 buttonManager.clearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
         }
-        /* void DoubleTeam()
+        /* void DoubleTeam())
         { characterCS.actionPoints += 1; } */
         void Restart()
         {
             GameEvents.current.reloadScene();
             //Debug.Log("Restart Function not created");
         }
-
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
             targetCharacter.CheckIfCharacterIsDead();
         }
-
     }
 
     void addToolTip(string Tip, bool resetTip = false)
@@ -132,12 +121,9 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             variableNameToData = new Dictionary<string, List<Vector3Int>>();
 
-
             int currentsetDataWithID = 0;
             int currentdoActionWithID = 0;
             int currentSetDataUsingTherorticalPosAtArrayIndex = 0;
-
-
 
             foreach (var keyPair in ladderCollapseFunction.invokeFunction.KeyValuePairs)
             {
@@ -150,44 +136,38 @@ public class MoveDictionaryManager : MonoBehaviour
                 currentVarirable = keyPair.value;
                 if (keyPair.key == LadderCollapseFunctionEnums.setDataWithID)
                 {
-
                     variableNameToData.Add(currentVarirable, new List<Vector3Int>());
                     BasicActionInProgress = true;
                     StartCoroutine(getInput(ladderCollapseFunction.SetDataAtIndex[currentsetDataWithID]));
                     yield return new WaitUntil(() => !BasicActionInProgress);
                     yield return null;
                     currentsetDataWithID++;
-
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
                 {
-
                     ActionEffectParams actionEffectParams = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
                     TypeOfAction actiontype = actionEffectParams.typeOfAction;
                     //AnimationMovementType animationMovementType = actionEffectParams.movementType;
                     AnimationLoopType animationLoopType = actionEffectParams.loopType;
-
-
-                    characterCS.animationControllerScript.setCharacterAnimation(actionEffectParams.AnimationForThisAction);
-                    if (animationLoopType == AnimationLoopType.UntilActionComplete)
+                    IEnumerator animationActionFunction()
                     {
+                        characterCS.animationControllerScript.setCharacterAnimation(actionEffectParams.AnimationForThisAction);
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
+                        characterCS.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
+                    }
+                    if (animationLoopType == AnimationLoopType.UntilActionComplete)
+                    {
+                        yield return StartCoroutine(animationActionFunction());
                     }
                     foreach (Vector3Int point in variableNameToData[currentVarirable])
                     {
-
                         tryHere = point;
                         if (animationLoopType == AnimationLoopType.forEachAction)
                         {
-                            characterCS.animationControllerScript.setCharacterAnimation(actionEffectParams.AnimationForThisAction);
-                            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
-                            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                            characterCS.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
+                            yield return StartCoroutine(animationActionFunction());
                         }
-
                         abilityNameToAction[actiontype]();
-
                     }
                     characterCS.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
                     currentdoActionWithID++;
@@ -201,7 +181,6 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
-
                 abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
             }
             yield return null;
