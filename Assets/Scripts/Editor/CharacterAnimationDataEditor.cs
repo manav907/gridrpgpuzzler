@@ -107,7 +107,7 @@ public class CharacterAnimationDataEditor : Editor
                         AnimationUtility.SetObjectReferenceCurve(clip, EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"), spriteFrames);
                         //AnimationClipSettings Being Created
                         AnimationClipSettings animationClipSettings = new AnimationClipSettings();
-                        animationClipSettings.loopTime = true;
+                        animationClipSettings.loopTime = false;
                         animationClipSettings.stopTime = 1f;
                         //AnimationClipSettings Being Set
                         AnimationUtility.SetAnimationClipSettings(clip, animationClipSettings);

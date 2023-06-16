@@ -51,11 +51,11 @@ public enum AnimationMovementType
 {
     NoMovement,
     ToPoint,
-    InDirection
+    InDirection,
+    ToPointAndReturn
 }
 public enum AnimationLoopType
 {
     forEachAction,
-    UntilActionComplete,
-    LoopUntilModified
+    UntilActionComplete
 }

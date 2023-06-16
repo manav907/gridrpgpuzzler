@@ -63,15 +63,14 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-            attackingCharacter.animationControllerScript.setCharacterAnimation(CharacterAnimationState.RegularAttack);
             targetCharacter.health -= attackingCharacter.attackDamage;
             checkCharacters(targetCharacter);
             var ListOfMovePoints = new List<Vector3>();
             ListOfMovePoints.Add(tryHere);
             ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
             //universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
-            TransformAnimationScript.current.MoveUsingQueueSystem(attackingCharacter.transform, ListOfMovePoints[0], moveTimeSpeed);
-            TransformAnimationScript.current.MoveUsingQueueSystem(attackingCharacter.transform, ListOfMovePoints[1], moveTimeSpeed);
+            //TransformAnimationScript.current.MoveUsingQueueSystem(attackingCharacter.transform, ListOfMovePoints[0], moveTimeSpeed);
+            //TransformAnimationScript.current.MoveUsingQueueSystem(attackingCharacter.transform, ListOfMovePoints[1], moveTimeSpeed);
             GameEvents.current.PlaySound(0);
         }
         void apply_Heal()
@@ -85,7 +84,7 @@ public class MoveDictionaryManager : MonoBehaviour
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
             movePoints.Add(tryHere);
             //universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, universalCalculator.castListAsV3(movePoints), moveTimeSpeed);
-            TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform,tryHere,moveTimeSpeed);
+            //TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed);
         }
         void apply_TryEndTurn()
         {
@@ -111,6 +110,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
 
     }
+
     void addToolTip(string Tip, bool resetTip = false)
     {
         if (resetTip == true)
@@ -162,18 +162,34 @@ public class MoveDictionaryManager : MonoBehaviour
                 else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
                 {
 
-                    TypeOfAction actiontype = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID].typeOfAction;
+                    ActionEffectParams actionEffectParams = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
+                    TypeOfAction actiontype = actionEffectParams.typeOfAction;
+                    //AnimationMovementType animationMovementType = actionEffectParams.movementType;
+                    AnimationLoopType animationLoopType = actionEffectParams.loopType;
+
+
+                    characterCS.animationControllerScript.setCharacterAnimation(actionEffectParams.AnimationForThisAction);
+                    if (animationLoopType == AnimationLoopType.UntilActionComplete)
+                    {
+                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
+                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
+                    }
                     foreach (Vector3Int point in variableNameToData[currentVarirable])
                     {
 
                         tryHere = point;
-                        //if (DeterminValidTileTarget())
+                        if (animationLoopType == AnimationLoopType.forEachAction)
                         {
-                            yield return new WaitForSeconds(0.25f);
-                            abilityNameToAction[actiontype]();
+                            characterCS.animationControllerScript.setCharacterAnimation(actionEffectParams.AnimationForThisAction);
+                            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
+                            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
+                            characterCS.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
                         }
 
+                        abilityNameToAction[actiontype]();
+
                     }
+                    characterCS.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
                     currentdoActionWithID++;
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
@@ -185,6 +201,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
+
                 abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
             }
             yield return null;
@@ -241,11 +258,12 @@ public class MoveDictionaryManager : MonoBehaviour
             tryHere = reticalManager.getMovePoint();
 
             tempData = reticalManager.generateShape(tryHere);
-            if (basicAction.updateTheroticalPos)
-            {
-                theroticalCurrentPos = tryHere;
-            }
+
             reticalManager.reticalShapes = ReticalShapes.SSingle;
+        }
+        if (basicAction.updateTheroticalPos)
+        {
+            theroticalCurrentPos = tryHere;
         }
         foreach (Vector3Int pos in tempData)
         {

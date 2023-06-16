@@ -10,7 +10,7 @@ public class TransformAnimationScript : MonoBehaviour
         current = this;
     }
     private Dictionary<Transform, MoveQueueData> moveQueueSystem;
-    public void MoveUsingQueueSystem(Transform transform, Vector3 movePoint, float moveTime)
+    public IEnumerator MoveUsingQueueSystem(Transform transform, Vector3 movePoint, float moveTime)
     {
         if (moveQueueSystem == null)//Checks it the Dict Exits
         {
@@ -31,7 +31,7 @@ public class TransformAnimationScript : MonoBehaviour
         else
         {
             Debug.Log("Starting MoveBw");
-            StartCoroutine(MoveTransBetweenpoints(transform));
+            yield return StartCoroutine(MoveTransBetweenpoints(transform));
         }
 
     }
