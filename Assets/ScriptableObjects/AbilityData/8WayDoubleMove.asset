@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 8WayDoubleMove
   m_EditorClassIdentifier: 
   Name: Double Move
+  primaryUseForAction: 0
   Varirables:
   - FirstPos
   - SecondPos
@@ -30,11 +31,21 @@ MonoBehaviour:
   - rangeOfActionEnum: 15
     areaOfEffectType: 0
     validTileType: 2
+    optimalTargetTip: 0
     validTargets: 0
+    includeSelf: 0
     updateTheroticalPos: 1
   - rangeOfActionEnum: 15
     areaOfEffectType: 0
     validTileType: 2
+    optimalTargetTip: 0
     validTargets: 0
+    includeSelf: 0
     updateTheroticalPos: 1
-  DoActionFromDataAtIndex: 0200000002000000
+  DoActionFromDataAtIndex:
+  - typeOfAction: 2
+    AnimationForThisAction: 1
+    loopType: 0
+  - typeOfAction: 2
+    AnimationForThisAction: 1
+    loopType: 0

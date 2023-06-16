@@ -29,9 +29,8 @@ MonoBehaviour:
     optimalTargetTip: 0
     validTargets: 1
     includeSelf: 0
-    updateTheroticalPos: 1
+    updateTheroticalPos: 0
   DoActionFromDataAtIndex:
   - typeOfAction: 0
-    AnimationForThisAction: 0
-    movementType: 0
-    loopType: 0
+    AnimationForThisAction: 2
+    loopType: 1
