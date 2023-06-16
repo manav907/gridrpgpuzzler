@@ -27,7 +27,8 @@ public class LadderCollapseFunction : ScriptableObject
 public class ActionEffectParams
 {
     public TypeOfAction typeOfAction;
-    public CharacterAnimationState useThisAnimationForit;
+    public CharacterAnimationState AnimationForThisAction;
+    public AnimationMovementType movementType;
     public AnimationLoopType loopType;
 }
 public enum OptimalTargetTip

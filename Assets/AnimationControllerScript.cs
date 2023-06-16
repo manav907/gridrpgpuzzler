@@ -37,7 +37,7 @@ public class AnimationControllerScript : MonoBehaviour
     public void refreshCharacterAnimation()
     {
         string stateString = currentState.ToString();
-        Debug.Log(this.gameObject.name + "is now " + stateString);
+        //Debug.Log(this.gameObject.name + "is now " + stateString);
         animator.SetTrigger(stateString);
     }
 }
@@ -46,6 +46,12 @@ public enum CharacterAnimationState
     Idle,
     Walk,
     RegularAttack,
+}
+public enum AnimationMovementType
+{
+    NoMovement,
+    ToPoint,
+    InDirection
 }
 public enum AnimationLoopType
 {

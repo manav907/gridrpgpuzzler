@@ -69,7 +69,9 @@ public class MoveDictionaryManager : MonoBehaviour
             var ListOfMovePoints = new List<Vector3>();
             ListOfMovePoints.Add(tryHere);
             ListOfMovePoints.Add(attackingCharacter.getCharV3Int());
-            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
+            //universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, ListOfMovePoints, moveTimeSpeed);
+            TransformAnimationScript.current.MoveUsingQueueSystem(attackingCharacter.transform, ListOfMovePoints[0], moveTimeSpeed);
+            TransformAnimationScript.current.MoveUsingQueueSystem(attackingCharacter.transform, ListOfMovePoints[1], moveTimeSpeed);
             GameEvents.current.PlaySound(0);
         }
         void apply_Heal()

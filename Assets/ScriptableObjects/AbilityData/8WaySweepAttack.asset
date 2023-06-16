@@ -32,3 +32,6 @@ MonoBehaviour:
     updateTheroticalPos: 1
   DoActionFromDataAtIndex:
   - typeOfAction: 0
+    AnimationForThisAction: 0
+    movementType: 0
+    loopType: 0

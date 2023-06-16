@@ -796,7 +796,6 @@ MonoBehaviour:
   listOfCD: []
   ListOfInteractableCharacters: []
   OrderOfInteractableCharacters: []
-  thisCharacter: {fileID: 0}
   TurnCountInt: 0
   restart: {fileID: 11400000, guid: c5756839d4e8d93438bdf8929b0a2923, type: 2}
   TurnLoop: -1
@@ -3048,6 +3047,7 @@ GameObject:
   - component: {fileID: 943107457}
   - component: {fileID: 943107459}
   - component: {fileID: 943107460}
+  - component: {fileID: 943107461}
   m_Layer: 0
   m_Name: GameControllerGO
   m_TagString: GameController
@@ -3285,6 +3285,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &943107461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943107456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88739282b79dc384ea1abb455a5564ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &957306166
 GameObject:
   m_ObjectHideFlags: 0
