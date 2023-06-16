@@ -84,7 +84,8 @@ public class MoveDictionaryManager : MonoBehaviour
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
             movePoints.Add(tryHere);
-            universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, universalCalculator.castListAsV3(movePoints), moveTimeSpeed);
+            //universalCalculator.MoveTransFromBetweenPoint(thisCharacter.transform, universalCalculator.castListAsV3(movePoints), moveTimeSpeed);
+            TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform,tryHere,moveTimeSpeed);
         }
         void apply_TryEndTurn()
         {

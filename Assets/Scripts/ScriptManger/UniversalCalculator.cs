@@ -266,35 +266,6 @@ public class UniversalCalculator : MonoBehaviour
         return CompareToList;
     }
     //
-    
-    public void MoveTransFromBetweenPoint(Transform transform, List<Vector3> movePoints, float moveTime)
-    {
-        StartCoroutine(MoveCoRoutine());
-        IEnumerator MoveCoRoutine()
-        {
-            string debugLine = "";
-            yield return new WaitForSeconds(0.2f);
-            foreach (Vector3 movePoint in movePoints)
-            {
-                float elapsedTime = 0;
-                Vector3 startingPosition = transform.position;
-                debugLine = ("Character Started at " + startingPosition + " and Will Move to " + movePoint + " and it will take time of " + moveTime) + ":\n";
-                while (elapsedTime < moveTime)
-                {
-                    yield return null;
-                    //yield return new WaitForFixedUpdate();//This makes stuff very laggy
-                    elapsedTime += Time.deltaTime;
-                    float percentageMoved = Mathf.Clamp01(elapsedTime / moveTime);
-                    transform.position = Vector3.Lerp(startingPosition, movePoint, percentageMoved);
-                    debugLine += "ElapsedTime " + elapsedTime + " and Current Position" + transform.position + " At the End\n";
-
-                }
-                reticalManager.reDrawShadows();
-            }
-            //Debug.Log(debugLine);
-            transform.position = movePoints.Last();
-        }
-    }
 }
 
 public static class GlobalCal

@@ -22,10 +22,7 @@ public class BasicCameraController : MonoBehaviour
     }
     public void setCameraPos(Vector3 pos)
     {
-        var list = new List<Vector3>();
-        list.Add(new Vector3(pos.x, pos.y, this.transform.position.z));
-        universalCalculator.MoveTransFromBetweenPoint(this.transform, list, moveTime);
-
+        TransformAnimationScript.current.MoveUsingQueueSystem(this.transform,new Vector3(pos.x, pos.y, this.transform.position.z),moveTime);
     }
     int speedreudce = 10;
     // Update is called once per frame
