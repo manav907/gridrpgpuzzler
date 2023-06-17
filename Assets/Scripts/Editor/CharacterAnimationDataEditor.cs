@@ -11,10 +11,29 @@ using UnityEditor.Animations;
 [CustomEditor(typeof(CharacterAnimationData))]
 public class CharacterAnimationDataEditor : Editor
 {
+    //Dictionary<string, bool> isChecked;
+    bool vieAnimation;
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
         CharacterAnimationData characterAnimationData = target as CharacterAnimationData;
+        GUILayout.Label("Preview Animation Here");
+        vieAnimation = GUILayout.Toggle(vieAnimation, "s");
+        if (vieAnimation)
+        {
+            foreach (var pair in characterAnimationData.listOfSprites())
+            {
+                GUILayout.Label(pair.Key);
+                GUILayout.BeginHorizontal();
+                foreach (var sprite in pair.Value)
+                {
+                    var texture = AssetPreview.GetAssetPreview(sprite);
+                    GUILayout.Label(texture, GUILayout.ExpandWidth(false));
+                }
+                GUILayout.EndHorizontal();
+            }
+        }
+        GUILayout.Label("Make Animation Here");
         if (GUILayout.Button("Rename FileNames"))
         {
             // Modify data in the scriptable object

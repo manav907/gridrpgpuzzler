@@ -151,11 +151,20 @@ public class MoveDictionaryManager : MonoBehaviour
                     AnimationLoopType animationLoopType = actionEffectParams.loopType;
                     IEnumerator animationActionFunction()
                     {
+
+                        yield return StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForPreviousToEnd(actionEffectParams.AnimationForThisAction));
+                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
+                        if (animationLoopType == AnimationLoopType.forEachAction)
+                        {
+                            yield return StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForPreviousToEnd(CharacterAnimationState.Idle));
+                        }
+                        /* //yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
+                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
                         float length = characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(actionEffectParams.AnimationForThisAction);
-                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, length));
+                        yield return new WaitForSeconds(length);
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
                         if (animationLoopType == AnimationLoopType.forEachAction)
-                            characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
+                            characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle); */
                     }
                     if (animationLoopType == AnimationLoopType.UntilActionComplete)
                     {
@@ -170,6 +179,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         }
                         abilityNameToAction[actiontype]();
                     }
+                    yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
                     characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
                     currentdoActionWithID++;
                 }

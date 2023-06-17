@@ -35,14 +35,33 @@ public class AnimationControllerScript : MonoBehaviour
 
         currentState = state;
         refreshCharacterAnimation();
+        return 1f;
+    }
+    public IEnumerator setAnimationAndWaitForPreviousToEnd(CharacterAnimationState state)
+    {
+        currentState = state;
+        refreshCharacterAnimation();
+        yield return new WaitUntil(() =>
+    {
         var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-        return animatorStateInfo.length;
+        return animatorStateInfo.normalizedTime >= 1;
+    });
+        //yield return null;
     }
     public void refreshCharacterAnimation()
     {
         animator.SetTrigger(currentState.ToString());
-        //Debug.Log(this.gameObject.name + " is now " + currentState.ToString());
+        var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+        var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        //float duration = animatorClipInfo.length;
+        float duration = animatorStateInfo.length;
+        if (currentState == CharacterAnimationState.RegularAttack)
+        {
+            Debug.Log(this.gameObject.name + " " +
+            "\n" + " State Info: " + currentState.ToString() + animatorStateInfo.length + " " + animatorStateInfo.speed + " " + animatorStateInfo.speed +
+            "\n" + " Clip Info: " + animatorClipInfo.name + " " + animatorClipInfo.length + " " + animatorClipInfo.frameRate + " " + animatorClipInfo.apparentSpeed);
+        }
+        //animator.ResetTrigger(currentState.ToString());
     }
 }
 public enum CharacterAnimationState
