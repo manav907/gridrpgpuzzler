@@ -6,7 +6,8 @@ public class AnimationControllerScript : MonoBehaviour
 {
     public void setVariables(CharacterAnimationData characterAnimationData)
     {
-        Debug.Log(characterAnimationData);
+        //Debug.Log(characterAnimationData);
+
         animator.runtimeAnimatorController = characterAnimationData.GeneratedAnimatorOverrideController;
         spriteHolder.position = new Vector3(spriteHolder.position.x, spriteHolder.position.y + characterAnimationData.spriteOffsetY, spriteHolder.position.z);
     }
@@ -20,25 +21,25 @@ public class AnimationControllerScript : MonoBehaviour
     {
         if (checkifCharacterTurn())
         {
-            setCharacterAnimation(CharacterAnimationState.Walk);
+            setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
         }
         else
         {
-            setCharacterAnimation(CharacterAnimationState.Idle);
+            setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
         }
     }
     public CharacterAnimationState currentState;
-    public void setCharacterAnimation(CharacterAnimationState state)
+    public float setCharacterAnimationAndReturnLength(CharacterAnimationState state)
     {
 
         currentState = state;
         refreshCharacterAnimation();
+        return animator.GetCurrentAnimatorStateInfo(0).length;
     }
     public void refreshCharacterAnimation()
     {
-        string stateString = currentState.ToString();
-        //Debug.Log(this.gameObject.name + "is now " + stateString);
-        animator.SetTrigger(stateString);
+        animator.SetTrigger(currentState.ToString());
+        Debug.Log(this.gameObject.name + "is now " + currentState.ToString());
     }
 }
 public enum CharacterAnimationState

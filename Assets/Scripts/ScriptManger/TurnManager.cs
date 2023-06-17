@@ -130,7 +130,7 @@ public class TurnManager : MonoBehaviour
 
     public void endTurn()
     {
-        thisCharacterData.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
+        thisCharacterData.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
         TurnCountInt++;
         if (TurnCountInt >= OrderOfInteractableCharacters.Count)
         {

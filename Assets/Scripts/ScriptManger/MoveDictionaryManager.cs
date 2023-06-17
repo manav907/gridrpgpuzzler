@@ -151,10 +151,11 @@ public class MoveDictionaryManager : MonoBehaviour
                     AnimationLoopType animationLoopType = actionEffectParams.loopType;
                     IEnumerator animationActionFunction()
                     {
-                        characterCS.animationControllerScript.setCharacterAnimation(actionEffectParams.AnimationForThisAction);
-                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
+                        float length = characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(actionEffectParams.AnimationForThisAction);
+                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, length));
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                        characterCS.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
+                        if (animationLoopType != AnimationLoopType.forEachAction)
+                            characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
                     }
                     if (animationLoopType == AnimationLoopType.UntilActionComplete)
                     {
@@ -169,7 +170,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         }
                         abilityNameToAction[actiontype]();
                     }
-                    characterCS.animationControllerScript.setCharacterAnimation(CharacterAnimationState.Idle);
+                    characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
                     currentdoActionWithID++;
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)

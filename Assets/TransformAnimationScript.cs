@@ -23,7 +23,7 @@ public class TransformAnimationScript : MonoBehaviour
             //Debug.Log("Created New Entry");
         }
         moveQueueSystem[transform].add(movePoint, moveTime);
-        Debug.Log(transform.name + " added" + movePoint + moveTime);
+        //Debug.Log(transform.name + " added" + movePoint + moveTime);
         if (moveQueueSystem[transform].hasRun)
         {
 
