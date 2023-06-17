@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RedPriestessGirl CharacterAnimationData (CharacterAnimationData)
+  m_Controller: {fileID: 9100000, guid: d6389fdb588d09947a51aa1864c6d5a7, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: e46b16b2bfbbe714787dce652ee14310, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 35d8c57887e99d1429fe690759f0c159, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 528b0757c612b824f83483e16921ffed, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 20891444d905fef409a6aeac57881d3c, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 255de92dc591a614fb982f16f32b1bf2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6e65530cb8ffcaf479d1faf8fd01d8cd, type: 2}

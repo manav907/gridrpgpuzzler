@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
   m_Name: GreenRedDude CharacterAnimationData
   m_EditorClassIdentifier: 
-  nameEnum: 3
   spriteOffsetY: 0
   Walk:
   - {fileID: 443505917, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
@@ -22,4 +21,8 @@ MonoBehaviour:
   - {fileID: 1779093491, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
   - {fileID: 2037996223, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
   - {fileID: 1583217870, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: cc9eb51e8d1e0154294b257c03354c96, type: 2}
+  RegularAttack:
+  - {fileID: 443505917, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+  - {fileID: -705041071, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+  - {fileID: 1804122713, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 0620a4d250de69c4d8ce511c0ca1dab8, type: 2}

@@ -19,14 +19,14 @@ public class LevelDataSO : ScriptableObject
     [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Character_Placeholder;
     [SerializeField] public SerializableDictionary<TileBase, CharacterData> TileToChar;
     
-    //[SerializeField]public SerializableDictionary<>
+    
 
 
     public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir()
     {
         var data = new Dictionary<Vector3Int, CharacterData>();
         Dictionary<Vector3Int, TileBase> Character_Placeholder = this.Character_Placeholder.returnDict();
-        Dictionary<TileBase, CharacterData> TileToChar = this.TileToChar.returnDict();
+        Dictionary<TileBase, CharacterData> TileToChar = DataManager.current.tiltoCad.returnDict();
         foreach (var dataPair in Character_Placeholder)
         {
 

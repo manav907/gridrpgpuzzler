@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
   m_Name: SkeletonWithSheild CharacterAnimationData
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationData
-  nameEnum: 0
   spriteOffsetY: 0
   Walk:
   - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
@@ -26,4 +25,10 @@ MonoBehaviour:
   - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: abd38f09d6460c74f8f081423194dc74, type: 2}
+  RegularAttack:
+  - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 3dd0e93564d4c8c46800ba653ff63fbe, type: 2}

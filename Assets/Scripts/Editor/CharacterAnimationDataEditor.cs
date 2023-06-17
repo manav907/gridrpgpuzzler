@@ -19,7 +19,7 @@ public class CharacterAnimationDataEditor : Editor
         {
             // Modify data in the scriptable object
 
-            string newNameForFile = characterAnimationData.nameEnum.ToString() + " CharacterAnimationData";
+            string newNameForFile = characterAnimationData.ToString() + " CharacterAnimationData";
             // Rename the SO asset
             string path = AssetDatabase.GetAssetPath(characterAnimationData);
             string errorMsg = AssetDatabase.RenameAsset(path, newNameForFile);
@@ -36,7 +36,7 @@ public class CharacterAnimationDataEditor : Editor
         }
         if (GUILayout.Button("Genereate Animation"))
         {
-            string assetPath = "Assets/Resources/AnimationClips/" + characterAnimationData.nameEnum.ToString() + ".overrideController";
+            string assetPath = "Assets/Resources/AnimationClips/" + characterAnimationData.ToString() + ".overrideController";
             AssetDatabase.CreateAsset(GetanimatorOverrideController(), assetPath);
             AssetDatabase.SaveAssets();
             characterAnimationData.GeneratedAnimatorOverrideController = AssetDatabase.LoadAssetAtPath<AnimatorOverrideController>(assetPath);
@@ -73,7 +73,7 @@ public class CharacterAnimationDataEditor : Editor
                     {
                         //getting data
                         var animationClip = CreateAnimation(thisPair.Value);//Getting Clip
-                        animationClip.name = thisPair.Key + "-" + characterAnimationData.nameEnum.ToString();//setting name for Animation Clip This Help you know which clips
+                        animationClip.name = thisPair.Key + "-" + characterAnimationData.ToString();//setting name for Animation Clip This Help you know which clips
                         thisDict.Add(thisPair.Key, animationClip);
                         //Save the animation clip
                         SaveClip(animationClip, true);

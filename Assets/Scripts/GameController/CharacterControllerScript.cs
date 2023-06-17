@@ -47,7 +47,12 @@ public class CharacterControllerScript : MonoBehaviour
         dataManager = gameController.GetComponent<DataManager>();
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
         //Initilizing
-        setVariables();
+        try
+        { setVariables(); }
+        catch (NullReferenceException)
+        {
+            Debug.Log("Hey if you are having null reffence here then check out the consutructor for the SO it might not have the new variable");
+        }
         CheckIfCharacterIsDead();
         void setVariables()
         {
@@ -70,7 +75,8 @@ public class CharacterControllerScript : MonoBehaviour
             //Game Event Regersery
             GameEvents.current.addCharacter(isPlayerCharacter);
             //doingAnimController
-            animationControllerScript.setVariables(gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum));
+            //animationControllerScript.setVariables(gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum));
+            animationControllerScript.setVariables(CharacterDataSO.characterAnimationData);
             //Methods
         }
     }

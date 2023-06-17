@@ -7,8 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New CharacterAnimationData", menuName = "CharacterAnimationData")]
 public class CharacterAnimationData : ScriptableObject
 {
-    [Header("Reffrence Data")]
-    public CharacterName nameEnum;
+
     [Header("Animation Stuff")]
     //Sprite Stats
     public float spriteOffsetY;
@@ -16,8 +15,7 @@ public class CharacterAnimationData : ScriptableObject
     public Sprite[] Idle;
     public Sprite[] RegularAttack;
     // Add other unique data fields as needed
-    [SerializeField]
-    public AnimatorOverrideController GeneratedAnimatorOverrideController;
+    [SerializeReference] public AnimatorOverrideController GeneratedAnimatorOverrideController;
 
     public Dictionary<String, Sprite[]> listOfSprites()
     {

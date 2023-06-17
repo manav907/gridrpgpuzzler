@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
   m_Name: PinkHairGuy CharacterAnimationData
   m_EditorClassIdentifier: 
-  nameEnum: 1
   spriteOffsetY: 0
   Walk:
   - {fileID: -872131439, guid: 4588065920eafd34fa98511bbe368761, type: 3}
@@ -22,4 +21,8 @@ MonoBehaviour:
   - {fileID: -1374189113, guid: 4588065920eafd34fa98511bbe368761, type: 3}
   - {fileID: -644951406, guid: 4588065920eafd34fa98511bbe368761, type: 3}
   - {fileID: 1500874870, guid: 4588065920eafd34fa98511bbe368761, type: 3}
-  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: fe7553ccbba3bdb4bbe11ae1ce71b78e, type: 2}
+  RegularAttack:
+  - {fileID: -872131439, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  - {fileID: -1670769258, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  - {fileID: 665491784, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: c28b187119e142c44a9c9bdb610d7267, type: 2}

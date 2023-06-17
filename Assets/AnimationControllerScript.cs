@@ -6,7 +6,7 @@ public class AnimationControllerScript : MonoBehaviour
 {
     public void setVariables(CharacterAnimationData characterAnimationData)
     {
-
+        Debug.Log(characterAnimationData);
         animator.runtimeAnimatorController = characterAnimationData.GeneratedAnimatorOverrideController;
         spriteHolder.position = new Vector3(spriteHolder.position.x, spriteHolder.position.y + characterAnimationData.spriteOffsetY, spriteHolder.position.z);
     }

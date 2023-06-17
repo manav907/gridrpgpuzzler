@@ -9,6 +9,7 @@ public class CharacterData : ScriptableObject
     public int InstanceID;
     public string characterName = "GenericCharacter";
     public CharacterName NameEnum;
+    [SerializeReference]public CharacterAnimationData characterAnimationData;
     public bool isPlayerCharacter = true;
     public string Faction;
     //Stats
@@ -37,6 +38,7 @@ public class CharacterData : ScriptableObject
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
         LadderAbility = new List<LadderCollapseFunction>(characterData.LadderAbility);
         Faction = characterData.Faction;
+        characterAnimationData = characterData.characterAnimationData;
     }
     public void ReplaceDataWithPreset(CharacterData characterData)
     {
@@ -56,6 +58,7 @@ public class CharacterData : ScriptableObject
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
         LadderAbility = new List<LadderCollapseFunction>(characterData.LadderAbility);
         Faction = characterData.Faction;
+        characterAnimationData = characterData.characterAnimationData;
     }
 
 }

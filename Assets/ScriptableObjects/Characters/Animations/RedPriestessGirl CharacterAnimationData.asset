@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
   m_Name: RedPriestessGirl CharacterAnimationData
   m_EditorClassIdentifier: 
-  nameEnum: 2
   spriteOffsetY: 0
   Walk:
   - {fileID: -51477276, guid: a2538df5426a5d34589a9d376f13f28f, type: 3}
@@ -20,4 +19,8 @@ MonoBehaviour:
   - {fileID: 574845460, guid: a2538df5426a5d34589a9d376f13f28f, type: 3}
   Idle:
   - {fileID: 561747880, guid: a2538df5426a5d34589a9d376f13f28f, type: 3}
-  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: c25a265491d22ea4ea392506290c43e6, type: 2}
+  RegularAttack:
+  - {fileID: -51477276, guid: a2538df5426a5d34589a9d376f13f28f, type: 3}
+  - {fileID: -1266723918, guid: a2538df5426a5d34589a9d376f13f28f, type: 3}
+  - {fileID: 574845460, guid: a2538df5426a5d34589a9d376f13f28f, type: 3}
+  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 7b385824077f2664d841406d603ca21c, type: 2}
