@@ -45,7 +45,7 @@ public class CharacterAnimationDataEditor : Editor
             {
                 string sourceAnimatorControllerPath = "Assets/Prefabs/Character.prefab";
                 GameObject prefab = AssetDatabase.LoadAssetAtPath(sourceAnimatorControllerPath, typeof(GameObject)) as GameObject;
-                Animator animator = prefab.GetComponentInChildren<Animator>();                
+                Animator animator = prefab.GetComponentInChildren<Animator>();
                 AnimatorController originalController = animator.runtimeAnimatorController as AnimatorController;
                 //originalController.animationClips[];
                 AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(originalController);
@@ -73,7 +73,7 @@ public class CharacterAnimationDataEditor : Editor
                     foreach (var thisPair in characterAnimationData.listOfSprites())
                     {
                         //getting data
-                        var animationClip = CreateAnimation(thisPair.Value);//Getting Clip
+                        var animationClip = CreateAnimation(thisPair.Value, thisPair.Key);//Getting Clip
                         animationClip.name = thisPair.Key + "-" + characterAnimationData.ToString();//setting name for Animation Clip This Help you know which clips
                         if (thisPair.Key == "RegularAttack")
                         {
@@ -92,12 +92,14 @@ public class CharacterAnimationDataEditor : Editor
                             AssetDatabase.SaveAssets();
                         }
                     }
-                    AnimationClip CreateAnimation(Sprite[] frames)
+                    AnimationClip CreateAnimation(Sprite[] frames, string name)
                     {
-                        string nameOfAnimation = nameof(frames);
-                        //AnimationClip originalClip = AssetDatabase.LoadAssetAtPath("Assets/Resources/AnimationClips/" + nameOfAnimation + ".anim",object) as AnimationClip;
+                        string nameOfAnimation = name;
+                        AnimationClip originalClip = AssetDatabase.LoadAssetAtPath("Assets/Animation/" + nameOfAnimation + ".anim", typeof(AnimationClip)) as AnimationClip;
+                        Debug.Log(nameOfAnimation);
+
                         AnimationClip clip = new AnimationClip();
-                        clip.name = "Unassigned";
+                        clip.name = "Unassigned " + nameOfAnimation + " Animation";
 
                         // Set up the animation clip
                         clip.frameRate = frames.Length; // The animation frame rate
@@ -115,7 +117,7 @@ public class CharacterAnimationDataEditor : Editor
                         //AnimationClipSettings Being Created
                         //AnimationClipSettings originalAnimationClipSetting = 
                         AnimationClipSettings animationClipSettings = new AnimationClipSettings();
-                        animationClipSettings.loopTime = true;//Mess with this to refine loops
+                        animationClipSettings.loopTime = originalClip.isLooping;//Mess with this to refine loops
                         animationClipSettings.stopTime = 1f;
                         //AnimationClipSettings Being Set
                         AnimationUtility.SetAnimationClipSettings(clip, animationClipSettings);
