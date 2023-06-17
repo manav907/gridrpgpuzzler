@@ -45,8 +45,9 @@ public class CharacterAnimationDataEditor : Editor
             {
                 string sourceAnimatorControllerPath = "Assets/Prefabs/Character.prefab";
                 GameObject prefab = AssetDatabase.LoadAssetAtPath(sourceAnimatorControllerPath, typeof(GameObject)) as GameObject;
-                Animator animator = prefab.GetComponentInChildren<Animator>();
+                Animator animator = prefab.GetComponentInChildren<Animator>();                
                 AnimatorController originalController = animator.runtimeAnimatorController as AnimatorController;
+                //originalController.animationClips[];
                 AnimatorOverrideController animatorOverrideController = new AnimatorOverrideController(originalController);
                 animatorOverrideController.name = this.name + " OverideController";
                 List<KeyValuePair<AnimationClip, AnimationClip>> overrideList = new List<KeyValuePair<AnimationClip, AnimationClip>>();
@@ -74,6 +75,10 @@ public class CharacterAnimationDataEditor : Editor
                         //getting data
                         var animationClip = CreateAnimation(thisPair.Value);//Getting Clip
                         animationClip.name = thisPair.Key + "-" + characterAnimationData.ToString();//setting name for Animation Clip This Help you know which clips
+                        if (thisPair.Key == "RegularAttack")
+                        {
+                            //animationClip.loop
+                        }
                         thisDict.Add(thisPair.Key, animationClip);
                         //Save the animation clip
                         SaveClip(animationClip, true);
@@ -89,6 +94,8 @@ public class CharacterAnimationDataEditor : Editor
                     }
                     AnimationClip CreateAnimation(Sprite[] frames)
                     {
+                        string nameOfAnimation = nameof(frames);
+                        //AnimationClip originalClip = AssetDatabase.LoadAssetAtPath("Assets/Resources/AnimationClips/" + nameOfAnimation + ".anim",object) as AnimationClip;
                         AnimationClip clip = new AnimationClip();
                         clip.name = "Unassigned";
 
@@ -106,6 +113,7 @@ public class CharacterAnimationDataEditor : Editor
                         // Add the curve to the animation clip
                         AnimationUtility.SetObjectReferenceCurve(clip, EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"), spriteFrames);
                         //AnimationClipSettings Being Created
+                        //AnimationClipSettings originalAnimationClipSetting = 
                         AnimationClipSettings animationClipSettings = new AnimationClipSettings();
                         animationClipSettings.loopTime = true;//Mess with this to refine loops
                         animationClipSettings.stopTime = 1f;

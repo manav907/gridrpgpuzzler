@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class AnimationControllerScript : MonoBehaviour
@@ -34,12 +35,14 @@ public class AnimationControllerScript : MonoBehaviour
 
         currentState = state;
         refreshCharacterAnimation();
-        return animator.GetCurrentAnimatorStateInfo(0).length;
+        var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        return animatorStateInfo.length;
     }
     public void refreshCharacterAnimation()
     {
         animator.SetTrigger(currentState.ToString());
-        Debug.Log(this.gameObject.name + "is now " + currentState.ToString());
+        //Debug.Log(this.gameObject.name + " is now " + currentState.ToString());
     }
 }
 public enum CharacterAnimationState

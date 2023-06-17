@@ -33,4 +33,4 @@ MonoBehaviour:
   DoActionFromDataAtIndex:
   - typeOfAction: 0
     AnimationForThisAction: 2
-    loopType: 1
+    loopType: 0

@@ -17,9 +17,9 @@ public class CharacterAnimationData : ScriptableObject
     // Add other unique data fields as needed
     [SerializeReference] public AnimatorOverrideController GeneratedAnimatorOverrideController;
 
-    public Dictionary<String, Sprite[]> listOfSprites()
+    public Dictionary<string, Sprite[]> listOfSprites()
     {
-        var thisDict = new Dictionary<String, Sprite[]>();
+        var thisDict = new Dictionary<string, Sprite[]>();
         thisDict.Add(nameof(Walk), Walk);
         thisDict.Add(nameof(Idle), Idle);
         thisDict.Add(nameof(RegularAttack), RegularAttack);

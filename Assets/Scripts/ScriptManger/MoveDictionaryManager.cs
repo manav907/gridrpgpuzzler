@@ -154,7 +154,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         float length = characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(actionEffectParams.AnimationForThisAction);
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, length));
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                        if (animationLoopType != AnimationLoopType.forEachAction)
+                        if (animationLoopType == AnimationLoopType.forEachAction)
                             characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
                     }
                     if (animationLoopType == AnimationLoopType.UntilActionComplete)
