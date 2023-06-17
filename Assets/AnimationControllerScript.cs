@@ -22,46 +22,70 @@ public class AnimationControllerScript : MonoBehaviour
     {
         if (checkifCharacterTurn())
         {
-            setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
+            //setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
+            StartCoroutine(setAnimationAndWaitForIt(CharacterAnimationState.Walk));
         }
         else
         {
-            setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
+            //setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
+            StartCoroutine(setAnimationAndWaitForIt(CharacterAnimationState.Idle));
         }
     }
+    public CharacterAnimationState previousState;
     public CharacterAnimationState currentState;
-    public float setCharacterAnimationAndReturnLength(CharacterAnimationState state)
+    /* public float setCharacterAnimationAndReturnLength(CharacterAnimationState state)
     {
-
+        previousState = currentState;
         currentState = state;
         refreshCharacterAnimation();
         return 1f;
-    }
-    public IEnumerator setAnimationAndWaitForPreviousToEnd(CharacterAnimationState state)
+    } */
+    public IEnumerator setAnimationAndWaitForIt(CharacterAnimationState state, bool wait = true)
     {
         currentState = state;
         refreshCharacterAnimation();
-        yield return new WaitUntil(() =>
+        if (wait)
+            yield return StartCoroutine(waitForAnimation(state));
+
+    }
+    public IEnumerator waitForAnimation(CharacterAnimationState state)
     {
-        var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        return animatorStateInfo.normalizedTime >= 1;
-    });
-        //yield return null;
+
+        //Debug.Log("Waiting for animation " + state.ToString());
+        yield return new WaitUntil(() =>
+        {
+            return isTheCorrectAnimation();
+        });
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+        bool isTheCorrectAnimation()
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(state.ToString()))
+                return true;
+            //Debug.Log("Waiting for the Wrong animation");
+            return false;
+        }
     }
     public void refreshCharacterAnimation()
     {
         animator.SetTrigger(currentState.ToString());
-        var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
-        var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        //float duration = animatorClipInfo.length;
-        float duration = animatorStateInfo.length;
-        if (currentState == CharacterAnimationState.RegularAttack)
+        DebugRefresh(false);
+        void DebugRefresh(bool DebugData)
         {
-            Debug.Log(this.gameObject.name + " " +
-            "\n" + " State Info: " + currentState.ToString() + animatorStateInfo.length + " " + animatorStateInfo.speed + " " + animatorStateInfo.speed +
-            "\n" + " Clip Info: " + animatorClipInfo.name + " " + animatorClipInfo.length + " " + animatorClipInfo.frameRate + " " + animatorClipInfo.apparentSpeed);
+            if (DebugData)
+            {
+                var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+                var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                //float duration = animatorClipInfo.length;
+                float duration = animatorStateInfo.length;
+                if (currentState == CharacterAnimationState.RegularAttack)
+                {
+                    Debug.Log(gameObject.name + " " +
+                    "\n" + " State Info: " + currentState.ToString() + animatorStateInfo.length + " " + animatorStateInfo.speed + " " + animatorStateInfo.speed +
+                    "\n" + " Clip Info: " + animatorClipInfo.name + " " + animatorClipInfo.length + " " + animatorClipInfo.frameRate + " " + animatorClipInfo.apparentSpeed);
+
+                }
+            }
         }
-        //animator.ResetTrigger(currentState.ToString());
     }
 }
 public enum CharacterAnimationState

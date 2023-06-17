@@ -14,6 +14,7 @@ public class MoveDictionaryManager : MonoBehaviour
     ButtonManager buttonManager;
     [Header("Read Only Data")]
     private float moveTimeSpeed = 0.12f;
+    private float waitBetweenopetaions = 0.4f;
     [Header("Character Data")]
     GameObject thisCharacter;
     CharacterControllerScript characterCS;
@@ -145,26 +146,35 @@ public class MoveDictionaryManager : MonoBehaviour
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
                 {
+                    float startTime = Time.time;
+                    float lastTime = Time.time;
+                    debugTime(false);
+                    void debugTime(bool debugit = true)
+                    {
+                        if (!debugit)
+                            return;
+                        float currentTime = Time.time;
+                        float deltaTime = currentTime - lastTime;
+
+                        Debug.Log("Delta Time: " + deltaTime);
+                        lastTime = currentTime;
+                    }
+                    //
                     ActionEffectParams actionEffectParams = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
                     TypeOfAction actiontype = actionEffectParams.typeOfAction;
                     //AnimationMovementType animationMovementType = actionEffectParams.movementType;
                     AnimationLoopType animationLoopType = actionEffectParams.loopType;
                     IEnumerator animationActionFunction()
                     {
-
-                        yield return StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForPreviousToEnd(actionEffectParams.AnimationForThisAction));
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
-                        if (animationLoopType == AnimationLoopType.forEachAction)
-                        {
-                            yield return StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForPreviousToEnd(CharacterAnimationState.Idle));
-                        }
-                        /* //yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
-                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                        float length = characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(actionEffectParams.AnimationForThisAction);
-                        yield return new WaitForSeconds(length);
-                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                        if (animationLoopType == AnimationLoopType.forEachAction)
-                            characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle); */
+                        yield return StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(actionEffectParams.AnimationForThisAction));
+
+                    }
+                    IEnumerator afterAnimationOfAction()
+                    {
+                        StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
+                        StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle, false));
+                        yield return new WaitForSeconds(waitBetweenopetaions);
                     }
                     if (animationLoopType == AnimationLoopType.UntilActionComplete)
                     {
@@ -174,13 +184,14 @@ public class MoveDictionaryManager : MonoBehaviour
                     {
                         tryHere = point;
                         if (animationLoopType == AnimationLoopType.forEachAction)
-                        {
                             yield return StartCoroutine(animationActionFunction());
-                        }
-                        abilityNameToAction[actiontype]();
+                        abilityNameToAction[actiontype]();//The Actual Action
+                        if (animationLoopType == AnimationLoopType.forEachAction)
+                            yield return afterAnimationOfAction();
                     }
                     yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                    characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
+                    characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle);
+                    //characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
                     currentdoActionWithID++;
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
@@ -193,6 +204,7 @@ public class MoveDictionaryManager : MonoBehaviour
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
                 abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
+                ///Debug.LogError("Hey End Turn is Disableed");
             }
             yield return null;
         }
