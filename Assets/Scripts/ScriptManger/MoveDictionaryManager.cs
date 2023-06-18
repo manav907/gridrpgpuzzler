@@ -208,7 +208,7 @@ public class MoveDictionaryManager : MonoBehaviour
                             yield return afterAnimationOfAction();
                     }
                     yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                    characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle);
+                    StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle));
                     //characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
                     currentdoActionWithID++;
                 }
