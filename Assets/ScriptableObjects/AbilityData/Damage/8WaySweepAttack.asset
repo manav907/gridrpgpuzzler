@@ -34,4 +34,4 @@ MonoBehaviour:
   - typeOfAction: 0
     doActionTillKeyFrameAnimation: 3
     animationMovementType: 0
-    loopType: 0
+    loopType: 1

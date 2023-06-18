@@ -133,7 +133,6 @@ public class CharacterControllerScript : MonoBehaviour
     bool isALive = true;
     public void BeginThisCharacterTurn()
     {
-
         if (isALive)
         {
             //animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);

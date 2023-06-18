@@ -12,15 +12,17 @@ using UnityEditor.Animations;
 public class CharacterAnimationDataEditor : Editor
 {
     //Dictionary<string, bool> isChecked;
-    bool vieAnimation;
+    float sizeOfView = 0f;
+    Vector2 scroll = new Vector2();
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
         CharacterAnimationData characterAnimationData = target as CharacterAnimationData;
         GUILayout.Label("Preview Animation Here");
-        vieAnimation = GUILayout.Toggle(vieAnimation, "s");
-        if (vieAnimation)
+        sizeOfView = EditorGUILayout.FloatField(sizeOfView);
+        if (sizeOfView != 0)
         {
+            scroll = EditorGUILayout.BeginScrollView(scroll);
             foreach (var pair in characterAnimationData.listOfSprites())
             {
                 GUILayout.Label(pair.Key);
@@ -28,10 +30,13 @@ public class CharacterAnimationDataEditor : Editor
                 foreach (var sprite in pair.Value)
                 {
                     var texture = AssetPreview.GetAssetPreview(sprite);
-                    GUILayout.Label(texture, GUILayout.ExpandWidth(false));
+                    //                    GUILayout.Box(texture, GUILayout.ExpandWidth(false), GUILayout.Height(sizeOfView), GUILayout.Width(sizeOfView));
+                    GUILayout.Box(texture, GUILayout.ExpandWidth(false));
                 }
                 GUILayout.EndHorizontal();
+
             }
+            EditorGUILayout.EndScrollView();
         }
         GUILayout.Label("Make Animation Here");
         if (GUILayout.Button("Rename FileNames"))
@@ -130,9 +135,9 @@ public class CharacterAnimationDataEditor : Editor
                         // Add the curve to the animation clip
                         AnimationUtility.SetObjectReferenceCurve(clip, EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"), spriteFrames);
                         //AnimationClipSettings Being Created
-                        //AnimationClipSettings originalAnimationClipSetting = 
                         AnimationClipSettings animationClipSettings = new AnimationClipSettings();
                         animationClipSettings.loopTime = originalClip.isLooping;//Mess with this to refine loops
+                        //animationClipSettings.stopTime = 1f;
                         animationClipSettings.stopTime = 1f;
                         //AnimationClipSettings Being Set
                         AnimationUtility.SetAnimationClipSettings(clip, animationClipSettings);

@@ -88,7 +88,6 @@ public class TurnManager : MonoBehaviour
 
         GameEvents.current.setUpCamera();//Move This Somewhere Else
     }
-    [SerializeField] LadderCollapseFunction restart;
     public void beginTurnIfPossible()
     {
         ///reticalManager.reDrawShadows();
@@ -103,7 +102,6 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Game Over");
             GameEvents.current.setText("Game Over");
-            buttonManager.InstantiateButtons(new List<LadderCollapseFunction>() { restart });
         }
         void setCharacterData()
         {
