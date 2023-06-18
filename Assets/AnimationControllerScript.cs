@@ -96,13 +96,13 @@ public enum CharacterAnimationState
 }
 public enum AnimationMovementType
 {
+    NudgeToPoint,
     NoMovement,
-    ToPoint,
-    InDirection,
-    ToPointAndReturn
+    WalkToPoint,
+
 }
 public enum AnimationLoopType
 {
-    forEachAction,
-    UntilActionComplete
+    forEachPoint,
+    forAction
 }

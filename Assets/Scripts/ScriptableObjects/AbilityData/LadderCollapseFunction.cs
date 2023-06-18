@@ -27,9 +27,15 @@ public class LadderCollapseFunction : ScriptableObject
 public class ActionEffectParams
 {
     public TypeOfAction typeOfAction;
-    public CharacterAnimationState AnimationForThisAction;
-    //public AnimationMovementType movementType;
+    //public CharacterAnimationState setUpActionAnimation;
+    public CharacterAnimationState doActionTillKeyFrameAnimation;
+    public AnimationMovementType animationMovementType;
+    //public CharacterAnimationState windupActionAnimation;
     public AnimationLoopType loopType;
+}
+public class AnimationParameter
+{
+
 }
 public enum OptimalTargetTip
 {

@@ -14,12 +14,12 @@ public class MoveDictionaryManager : MonoBehaviour
     ButtonManager buttonManager;
     [Header("Read Only Data")]
     private float moveTimeSpeed = 0.12f;
-    private float waitBetweenopetaions = 0.4f;
+    private float waitBetweenOpetaions = 0.4f;
     [Header("Character Data")]
     GameObject thisCharacter;
     CharacterControllerScript characterCS;
     [Header("Retical And Tile Data")]
-    private Vector3Int tryHere;
+    private Vector3 tryHere;
     [Header("Current Ablity")]
     //[SerializeField] Ability currentAblity;
     [Header("Debug Data")]
@@ -62,7 +62,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
         void apply_Damage()
         {
-            CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+            CharacterControllerScript targetCharacter = mapManager.cellDataDir[universalCalculator.castAsV3Int(tryHere)].characterAtCell.GetComponent<CharacterControllerScript>();
             CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
             targetCharacter.health -= attackingCharacter.attackDamage;
             checkCharacters(targetCharacter);
@@ -76,8 +76,8 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             var movePoints = new List<Vector3Int>();
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
-            mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
-            movePoints.Add(tryHere);
+            mapManager.UpdateCharacterPosistion(currentPosition, universalCalculator.castAsV3Int(tryHere), thisCharacter);
+            movePoints.Add(universalCalculator.castAsV3Int(tryHere));
         }
         void apply_TryEndTurn()
         {
@@ -162,31 +162,49 @@ public class MoveDictionaryManager : MonoBehaviour
                     //
                     ActionEffectParams actionEffectParams = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
                     TypeOfAction actiontype = actionEffectParams.typeOfAction;
-                    //AnimationMovementType animationMovementType = actionEffectParams.movementType;
+                    AnimationMovementType animationMovementType = actionEffectParams.animationMovementType;
                     AnimationLoopType animationLoopType = actionEffectParams.loopType;
                     IEnumerator animationActionFunction()
                     {
-                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, tryHere, moveTimeSpeed));
-                        yield return StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(actionEffectParams.AnimationForThisAction));
+                        Vector3 targetLocation = tryHere;
+                        if (animationMovementType == AnimationMovementType.NudgeToPoint)
+                        {
+                            Vector3 point1 = theroticalCurrentPos;
+                            Vector3 point2 = tryHere;
+                            float distanceFactor = 0.3f;  // Adjust this value to control the distance from point1
+
+                            Vector3 direction = (point2 - point1).normalized;  // Calculate the direction between the points
+                            Vector3 midPoint = point1 + direction * distanceFactor * Vector3.Distance(point1, point2);
+                            targetLocation = midPoint;
+
+
+                        }
+                        else if (animationMovementType == AnimationMovementType.NoMovement)
+                        {
+                            targetLocation=theroticalCurrentPos;
+                        }
+
+                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));
+                        yield return StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(actionEffectParams.doActionTillKeyFrameAnimation));
 
                     }
                     IEnumerator afterAnimationOfAction()
                     {
                         StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
                         StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle, false));
-                        yield return new WaitForSeconds(waitBetweenopetaions);
+                        yield return new WaitForSeconds(waitBetweenOpetaions);
                     }
-                    if (animationLoopType == AnimationLoopType.UntilActionComplete)
+                    if (animationLoopType == AnimationLoopType.forAction)
                     {
                         yield return StartCoroutine(animationActionFunction());
                     }
                     foreach (Vector3Int point in variableNameToData[currentVarirable])
                     {
                         tryHere = point;
-                        if (animationLoopType == AnimationLoopType.forEachAction)
+                        if (animationLoopType == AnimationLoopType.forEachPoint)
                             yield return StartCoroutine(animationActionFunction());
                         abilityNameToAction[actiontype]();//The Actual Action
-                        if (animationLoopType == AnimationLoopType.forEachAction)
+                        if (animationLoopType == AnimationLoopType.forEachPoint)
                             yield return afterAnimationOfAction();
                     }
                     yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
@@ -243,7 +261,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);
             tryHere = characterCS.getTarget(listOfValidtargets);
-            tempData = reticalManager.generateShape(tryHere);
+            tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
             ShouldContinue = true;
             yield return new WaitForSeconds(0.5f);
         }
@@ -259,13 +277,13 @@ public class MoveDictionaryManager : MonoBehaviour
 
             tryHere = reticalManager.getMovePoint();
 
-            tempData = reticalManager.generateShape(tryHere);
+            tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
 
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
         if (basicAction.updateTheroticalPos)
         {
-            theroticalCurrentPos = tryHere;
+            theroticalCurrentPos = universalCalculator.castAsV3Int(tryHere);
         }
         foreach (Vector3Int pos in tempData)
         {
@@ -309,7 +327,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         bool CheckMovePoint()
         {
-            if (ShouldContinue && listOfValidtargets.Contains(tryHere) && listOfValidtargets.Count != 0)
+            if (ShouldContinue && listOfValidtargets.Contains(universalCalculator.castAsV3Int(tryHere)) && listOfValidtargets.Count != 0)
             {
                 return true;
             }
