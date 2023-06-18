@@ -476,7 +476,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0.21428573, z: 0}
+  m_ChunkCullingBounds: {x: 0.3125, y: 0.375, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -505,8 +505,8 @@ Tilemap:
   - first: {x: -3, y: -3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -515,8 +515,8 @@ Tilemap:
   - first: {x: -1, y: -3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -525,8 +525,8 @@ Tilemap:
   - first: {x: -1, y: 0, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -534,15 +534,19 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 3
-    m_Data: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
-  m_TileSpriteArray:
   - m_RefCount: 3
-    m_Data: {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    m_Data: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -872131439, guid: 4588065920eafd34fa98511bbe368761, type: 3}
+  - m_RefCount: 3
+    m_Data: {fileID: -1215065186, guid: 1a1e7f08f387ab540bc22ba2fc7f8e1c, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 4
     m_Data:
@@ -926,7 +930,7 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: d18dc25da05cb7044b938c5a595aa3fb, type: 2}
     - key: {fileID: 11400000, guid: c5b0130d31bc58f49b9d60835a5aa92a, type: 2}
       value: {fileID: 11400000, guid: 5ae9fabda933b73429302837d58ac7f6, type: 2}
-    - key: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
+    - key: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
       value: {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
   mapManager: {fileID: 0}
 --- !u!1 &795636361

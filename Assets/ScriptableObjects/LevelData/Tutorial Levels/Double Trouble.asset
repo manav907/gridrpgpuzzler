@@ -372,14 +372,14 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
   Character_Placeholder:
     KeyValuePairs:
-    - key: {x: -2, y: -4, z: 0}
+    - key: {x: -2, y: -6, z: 0}
       value: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
     - key: {x: -3, y: -3, z: 0}
-      value: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
+      value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
     - key: {x: -1, y: -3, z: 0}
-      value: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
+      value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
     - key: {x: -1, y: 0, z: 0}
-      value: {fileID: 11400000, guid: b0c20b5bdc2e52e4b88771e71819fcba, type: 2}
+      value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
   TileToChar:
     KeyValuePairs:
     - key: {fileID: 11400000, guid: 5b2adebf03ece5345b3a3a4ec34e13a9, type: 2}

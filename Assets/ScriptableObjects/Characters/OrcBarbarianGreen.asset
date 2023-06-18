@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
-  m_Name: Skeleton
+  m_Name: OrcBarbarianGreen
   m_EditorClassIdentifier: 
   InstanceID: 2
-  characterName: Rapidash
+  characterName: Orc Barbarian Green
   NameEnum: 4
   characterAnimationData: {fileID: 11400000, guid: 438ec9b0549a0314a97d2fd0e8935c25, type: 2}
   isPlayerCharacter: 0

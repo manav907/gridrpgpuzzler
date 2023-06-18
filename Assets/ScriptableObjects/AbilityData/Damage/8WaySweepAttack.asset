@@ -32,5 +32,6 @@ MonoBehaviour:
     updateTheroticalPos: 0
   DoActionFromDataAtIndex:
   - typeOfAction: 0
-    AnimationForThisAction: 2
+    doActionTillKeyFrameAnimation: 2
+    animationMovementType: 0
     loopType: 0

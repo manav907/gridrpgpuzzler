@@ -10,6 +10,7 @@ public class CharacterAnimationData : ScriptableObject
 
     [Header("Animation Stuff")]
     //Sprite Stats
+    public float spriteOffsetX;
     public float spriteOffsetY;
     public Sprite[] Walk;
     public Sprite[] Idle;

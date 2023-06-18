@@ -87,6 +87,11 @@ public class MoveDictionaryManager : MonoBehaviour
                 buttonManager.clearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
+            else
+            {
+                //StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Walk));
+            }
+
         }
         /* void DoubleTeam())
         { characterCS.actionPoints += 1; } */
@@ -181,7 +186,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         }
                         else if (animationMovementType == AnimationMovementType.NoMovement)
                         {
-                            targetLocation=theroticalCurrentPos;
+                            targetLocation = theroticalCurrentPos;
                         }
 
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));

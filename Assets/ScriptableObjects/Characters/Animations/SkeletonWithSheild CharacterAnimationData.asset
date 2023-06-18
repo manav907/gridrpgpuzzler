@@ -26,9 +26,8 @@ MonoBehaviour:
   - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   RegularAttack:
-  - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: -1412445130, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: 417994268, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  - {fileID: 40462287, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 3dd0e93564d4c8c46800ba653ff63fbe, type: 2}

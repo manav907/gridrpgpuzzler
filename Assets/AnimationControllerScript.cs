@@ -10,7 +10,7 @@ public class AnimationControllerScript : MonoBehaviour
         //Debug.Log(characterAnimationData);
 
         animator.runtimeAnimatorController = characterAnimationData.GeneratedAnimatorOverrideController;
-        spriteHolder.position = new Vector3(spriteHolder.position.x, spriteHolder.position.y + characterAnimationData.spriteOffsetY, spriteHolder.position.z);
+        spriteHolder.position = new Vector3(spriteHolder.position.x + characterAnimationData.spriteOffsetX, spriteHolder.position.y + characterAnimationData.spriteOffsetY, spriteHolder.position.z);
     }
     [SerializeField] Animator animator;
     [SerializeField] Transform spriteHolder;

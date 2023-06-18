@@ -137,7 +137,7 @@ public class CharacterControllerScript : MonoBehaviour
         if (isALive)
         {
             //animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
-            animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Walk);
+            StartCoroutine(animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Walk));
             actionPoints = 1;//Remove This later
                              //buttonManager.clearButtons();
             if (controlCharacter)
