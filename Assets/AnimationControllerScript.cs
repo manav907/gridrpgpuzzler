@@ -31,15 +31,7 @@ public class AnimationControllerScript : MonoBehaviour
             StartCoroutine(setAnimationAndWaitForIt(CharacterAnimationState.Idle));
         }
     }
-    public CharacterAnimationState previousState;
     public CharacterAnimationState currentState;
-    /* public float setCharacterAnimationAndReturnLength(CharacterAnimationState state)
-    {
-        previousState = currentState;
-        currentState = state;
-        refreshCharacterAnimation();
-        return 1f;
-    } */
     public IEnumerator setAnimationAndWaitForIt(CharacterAnimationState state, bool wait = true)
     {
         currentState = state;
@@ -93,6 +85,7 @@ public enum CharacterAnimationState
     Idle,
     Walk,
     RegularAttack,
+    SpecialAttack
 }
 public enum AnimationMovementType
 {

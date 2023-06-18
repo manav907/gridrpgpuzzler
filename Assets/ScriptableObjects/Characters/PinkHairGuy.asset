@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PinkHairGuy
   m_EditorClassIdentifier: 
   InstanceID: 1
-  characterName: Ninjask
+  characterName: Dwarf
   NameEnum: 1
-  characterAnimationData: {fileID: 11400000, guid: adb96c03a75a05b4d9bf2ecf44a5880f, type: 2}
+  characterAnimationData: {fileID: 11400000, guid: 4433d9d783aef9844a4f70ca655365f6, type: 2}
   isPlayerCharacter: 1
   Faction: 
   health: 1

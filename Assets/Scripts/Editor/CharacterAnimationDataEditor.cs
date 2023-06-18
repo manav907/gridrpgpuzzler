@@ -93,11 +93,7 @@ public class CharacterAnimationDataEditor : Editor
                     {
                         //getting data
                         var animationClip = CreateAnimation(thisPair.Value, thisPair.Key);//Getting Clip
-                        animationClip.name = thisPair.Key + "-" + characterAnimationData.ToString();//setting name for Animation Clip This Help you know which clips
-                        if (thisPair.Key == "RegularAttack")
-                        {
-                            //animationClip.loop
-                        }
+                        animationClip.name = thisPair.Key + "-" + characterAnimationData.ToString();//setting name for Animation Clip This Help you know which clips                        
                         thisDict.Add(thisPair.Key, animationClip);
                         //Save the animation clip
                         SaveClip(animationClip, true);
