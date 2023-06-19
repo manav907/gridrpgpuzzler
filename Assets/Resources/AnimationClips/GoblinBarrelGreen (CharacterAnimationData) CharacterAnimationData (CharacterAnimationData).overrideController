@@ -6,14 +6,12 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OrcBarbarianGreen CharacterAnimationData (CharacterAnimationData)
+  m_Name: GoblinBarrelGreen (CharacterAnimationData) CharacterAnimationData (CharacterAnimationData)
   m_Controller: {fileID: 9100000, guid: d6389fdb588d09947a51aa1864c6d5a7, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: e46b16b2bfbbe714787dce652ee14310, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: f4d4a4e7b39bac24eb52093dd25d4539, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 04f7315dd0f2dea4293d9040bbe3d693, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 528b0757c612b824f83483e16921ffed, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: b61bff9fb2d4f194aa45cd25d37d1804, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 910535d73b1b8674895e9ae612a96e2f, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 255de92dc591a614fb982f16f32b1bf2, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: c4522be74e257d74faee902e8aee3844, type: 2}
-  - m_OriginalClip: {fileID: 7400000, guid: f1aa182960a05d942b944881b11583e0, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 850f220570d68f8468dd25cd31f4c17d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2b8ed24612552bb4c9deec46d9c6fa6b, type: 2}

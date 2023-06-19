@@ -4,9 +4,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
-
-
-
+using System;
 
 [CustomEditor(typeof(CharacterAnimationData))]
 public class CharacterAnimationDataEditor : Editor
@@ -23,11 +21,11 @@ public class CharacterAnimationDataEditor : Editor
         if (sizeOfView != 0)
         {
             scroll = EditorGUILayout.BeginScrollView(scroll);
-            foreach (var pair in characterAnimationData.listOfSprites())
+            foreach (var pair in characterAnimationData.animations)
             {
-                GUILayout.Label(pair.Key);
+                GUILayout.Label(pair.stateName);
                 GUILayout.BeginHorizontal();
-                foreach (var sprite in pair.Value)
+                foreach (var sprite in pair.frames)
                 {
                     var texture = AssetPreview.GetAssetPreview(sprite);
                     //                    GUILayout.Box(texture, GUILayout.ExpandWidth(false), GUILayout.Height(sizeOfView), GUILayout.Width(sizeOfView));
@@ -87,19 +85,27 @@ public class CharacterAnimationDataEditor : Editor
                 foreach (var thisPair in overrideList)
                 {
                     string thisName = thisPair.Key.name;
-                    var thisKeyPair = new KeyValuePair<AnimationClip, AnimationClip>(thisPair.Key, OriginalNametoNewClip[thisName]);
-                    combinedList.Add(thisKeyPair);
+                    if (OriginalNametoNewClip.ContainsKey(thisName))
+                    {
+                        var thisKeyPair = new KeyValuePair<AnimationClip, AnimationClip>(thisPair.Key, OriginalNametoNewClip[thisName]);
+                        combinedList.Add(thisKeyPair);
+                    }
+                    else
+                    {
+                        Debug.LogWarning(thisName + " Was not in the Dictionary");
+                    }
                 }
                 return combinedList;
                 Dictionary<string, AnimationClip> GetAnimationClips()
                 {
                     var thisDict = new Dictionary<string, AnimationClip>();
-                    foreach (var thisPair in characterAnimationData.listOfSprites())
+                    foreach (var thisPair in characterAnimationData.animations)
                     {
+                        thisPair.stateName = thisPair.stateEnum.ToString();
                         //getting data
-                        var animationClip = CreateAnimation(thisPair.Value, thisPair.Key);//Getting Clip
-                        animationClip.name = thisPair.Key + "-" + characterAnimationData.ToString();//setting name for Animation Clip This Help you know which clips                        
-                        thisDict.Add(thisPair.Key, animationClip);
+                        var animationClip = CreateAnimation(thisPair.frames, thisPair);//Getting Clip
+                        animationClip.name = thisPair.stateName + "-" + characterAnimationData.ToString();//setting name for Animation Clip This Help you know which clips                        
+                        thisDict.Add(thisPair.stateName, animationClip);
                         //Save the animation clip
                         SaveClip(animationClip, true);
                     }
@@ -112,22 +118,30 @@ public class CharacterAnimationDataEditor : Editor
                             AssetDatabase.SaveAssets();
                         }
                     }
-                    AnimationClip CreateAnimation(Sprite[] frames, string name)
+                    AnimationClip CreateAnimation(Sprite[] frames, AnimationClipData animationClipData)
                     {
-                        string nameOfAnimation = name;
-                        AnimationClip originalClip = AssetDatabase.LoadAssetAtPath("Assets/Animation/" + nameOfAnimation + ".anim", typeof(AnimationClip)) as AnimationClip;
+                        string nameOfAnimation = animationClipData.stateName;
+                        //AnimationClip originalClip = AssetDatabase.LoadAssetAtPath("Assets/Animation/" + nameOfAnimation + ".anim", typeof(AnimationClip)) as AnimationClip;
                         Debug.Log(nameOfAnimation);
 
                         AnimationClip clip = new AnimationClip();
-                        clip.name = "Unassigned " + nameOfAnimation + " Animation";
+                        clip.name = characterAnimationData.name + " " + nameOfAnimation + " Animation";
 
                         // Set up the animation clip
                         clip.frameRate = frames.Length; // The animation frame rate
+
                         ObjectReferenceKeyframe[] spriteFrames = new ObjectReferenceKeyframe[frames.Length];
                         for (int i = 0; i < frames.Length; i++)
                         {
                             spriteFrames[i] = new ObjectReferenceKeyframe();
-                            spriteFrames[i].time = i / clip.frameRate;
+                            float speedMultipler = ((clip.frameRate) * (animationClipData.speed));
+                            if (speedMultipler <= 0)
+                            {
+                                Debug.LogError("Incorrect Speed Multipler of " + speedMultipler + " for " + animationClipData.stateName + " Will change it to 1f");
+                                speedMultipler = 1f;
+                                animationClipData.speed = speedMultipler;
+                            }
+                            spriteFrames[i].time = i / speedMultipler;
                             spriteFrames[i].value = frames[i];
                             //Debug.Log(frames[i]);
                         }
@@ -136,9 +150,10 @@ public class CharacterAnimationDataEditor : Editor
                         AnimationUtility.SetObjectReferenceCurve(clip, EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"), spriteFrames);
                         //AnimationClipSettings Being Created
                         AnimationClipSettings animationClipSettings = new AnimationClipSettings();
-                        animationClipSettings.loopTime = originalClip.isLooping;//Mess with this to refine loops
+                        //animationClipSettings.loopTime = originalClip.isLooping;//Mess with this to refine loops
+                        animationClipSettings.loopTime = animationClipData.isLooping;//Mess with this to refine loops
+                        animationClipSettings.stopTime = clip.length;
                         //animationClipSettings.stopTime = 1f;
-                        animationClipSettings.stopTime = 1f;
                         //AnimationClipSettings Being Set
                         AnimationUtility.SetAnimationClipSettings(clip, animationClipSettings);
                         return clip;

@@ -12,23 +12,9 @@ public class CharacterAnimationData : ScriptableObject
     //Sprite Stats
     public float spriteOffsetX;
     public float spriteOffsetY;
-    public Sprite[] Walk;
-    public Sprite[] Idle;
-    public Sprite[] RegularAttack;
-    public Sprite[] SpecialAttack;
+    public List<AnimationClipData> animations;
     // Add other unique data fields as needed
     [SerializeReference] public AnimatorOverrideController GeneratedAnimatorOverrideController;
-
-    public Dictionary<string, Sprite[]> listOfSprites()
-    {
-        var thisDict = new Dictionary<string, Sprite[]>();
-        thisDict.Add(nameof(Walk), Walk);
-        thisDict.Add(nameof(Idle), Idle);
-        thisDict.Add(nameof(RegularAttack), RegularAttack);
-        thisDict.Add(nameof(SpecialAttack), SpecialAttack);
-        return thisDict;
-    }
-
 
 }
 public enum CharacterName
@@ -38,4 +24,13 @@ public enum CharacterName
     RedPriestessGirl,
     GreenRedDude,
     OrcBarbarianGreen
+}
+[Serializable]
+public class AnimationClipData
+{
+    public string stateName;
+    public CharacterAnimationState stateEnum;
+    public Sprite[] frames;
+    public bool isLooping = true;
+    public float speed = 1;
 }

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpecialAttack-OrcArcherGreen (CharacterAnimationData)
+  m_Name: Idle-GoblinBarrelGreen (CharacterAnimationData)
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -18,19 +18,32 @@ AnimationClip:
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves:
-  - curve: []
+  - curve:
+    - time: 0
+      value: {fileID: 676800152, guid: 423cc46c9160b0f4783193adfb6069ae, type: 3}
+    - time: 0.5
+      value: {fileID: -1229021441, guid: 4cefc948bbfb4254985880f98358bd74, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 60
+  m_SampleRate: 2
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 676800152, guid: 423cc46c9160b0f4783193adfb6069ae, type: 3}
+    - {fileID: -1229021441, guid: 4cefc948bbfb4254985880f98358bd74, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
