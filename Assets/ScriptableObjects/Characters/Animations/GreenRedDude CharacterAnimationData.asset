@@ -37,16 +37,6 @@ MonoBehaviour:
     - {fileID: 443505917, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
     - {fileID: -705041071, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
     - {fileID: 1804122713, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-    isLooping: 1
-    speed: 1
-  - stateName: SpecialAttack
-    stateEnum: 3
-    frames: []
-    isLooping: 1
-    speed: 1
-  - stateName: SpecialAttack
-    stateEnum: 3
-    frames: []
-    isLooping: 1
+    isLooping: 0
     speed: 1
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 0620a4d250de69c4d8ce511c0ca1dab8, type: 2}

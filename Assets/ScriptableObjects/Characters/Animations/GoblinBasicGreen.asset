@@ -50,6 +50,6 @@ MonoBehaviour:
     - {fileID: -2064485320, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
     - {fileID: -1375248246, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
     - {fileID: 1590607876, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
-    isLooping: 1
-    speed: 1
+    isLooping: 0
+    speed: 0.8
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 7bf8fe832941842418b64bb19e7f453b, type: 2}

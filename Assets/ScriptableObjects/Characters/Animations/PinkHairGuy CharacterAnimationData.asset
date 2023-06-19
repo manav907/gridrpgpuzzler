@@ -37,6 +37,6 @@ MonoBehaviour:
     - {fileID: -872131439, guid: 4588065920eafd34fa98511bbe368761, type: 3}
     - {fileID: -1670769258, guid: 4588065920eafd34fa98511bbe368761, type: 3}
     - {fileID: 665491784, guid: 4588065920eafd34fa98511bbe368761, type: 3}
-    isLooping: 1
+    isLooping: 0
     speed: 1
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: c28b187119e142c44a9c9bdb610d7267, type: 2}
