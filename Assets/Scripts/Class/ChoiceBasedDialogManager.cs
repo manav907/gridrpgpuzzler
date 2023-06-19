@@ -52,7 +52,7 @@ public class ChoiceBasedDialogManager
 public class DialogEvent
 {
 
-    [SerializeField] public SerializableDictionary<CharacterName, Dialog> OrderOfDialogs;
+    [SerializeField] public SerializableDictionary<string, Dialog> OrderOfDialogs;
     [SerializeField] public List<Choice> AvaiableChoices;
     public bool isChoiceContained(Choice newChoic)
     {
@@ -101,11 +101,11 @@ public class BranchID
 [System.Serializable]
 public class Choice
 {
-    [SerializeField] CharacterName subjectCharacter;
+    [SerializeField] string subjectCharacter;
     [SerializeField] public Actions performedAction;
-    [SerializeField] CharacterName objectCharacter;
+    [SerializeField] string objectCharacter;
 
-    public Choice(CharacterName subjectCharacter, Actions performedAction, CharacterName objectCharacter)
+    public Choice(string subjectCharacter, Actions performedAction, string objectCharacter)
     {
         this.subjectCharacter = subjectCharacter;
         this.performedAction = performedAction;

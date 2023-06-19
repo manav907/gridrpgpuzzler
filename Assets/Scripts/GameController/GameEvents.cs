@@ -20,7 +20,7 @@ public class GameEvents : MonoBehaviour
     int TotalPlayers;
     int Survivors;
     int turnLoop;
-    CharacterName currentCharacterName;
+    string currentCharacterName;
 
     [Header("SFX")]
     public AudioClip[] sfx;
@@ -36,14 +36,14 @@ public class GameEvents : MonoBehaviour
         turnManager = scriptManager.GetComponent<TurnManager>();
         MapManager mapManager = scriptManager.GetComponent<MapManager>();
     }
-    Dictionary<CharacterName, Transform> NameTagToTransform;
+    Dictionary<string, Transform> NameTagToTransform;
     public void setUpCamera()
     {
-        NameTagToTransform = new Dictionary<CharacterName, Transform>();
+        NameTagToTransform = new Dictionary<string, Transform>();
 
         foreach (var GO in turnManager.ListOfInteractableCharacters)
         {
-            CharacterName nameEnum = GO.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum;
+            string nameEnum = GO.GetComponent<CharacterControllerScript>().CharacterDataSO.name;
             if (NameTagToTransform.ContainsKey(nameEnum))
             {
             }
@@ -82,7 +82,7 @@ public class GameEvents : MonoBehaviour
     public void sendChoice(GameObject subjectCharacter, TypeOfAction abilityPerfomed, GameObject objectCharacter)
     {
         EventInMotion = true;
-        Choice newChoice = new Choice(subjectCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum, Choice.Actions.Observed, objectCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum);
+        Choice newChoice = new Choice(subjectCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.name, Choice.Actions.Observed, objectCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.name);
         if (abilityPerfomed != TypeOfAction.apply_SelfMove)
             newChoice.performedAction = Choice.Actions.Attacked;
         DeathCheckOnChoice();
@@ -157,7 +157,7 @@ public class GameEvents : MonoBehaviour
     public void TriggerNextDialog()
     {
         turnLoop = turnManager.TurnLoop;
-        currentCharacterName = TurnManager.thisCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.NameEnum;
+        currentCharacterName = TurnManager.thisCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.name;
         if (TriggerNextDialogAction != null)
             TriggerNextDialogAction();
     }

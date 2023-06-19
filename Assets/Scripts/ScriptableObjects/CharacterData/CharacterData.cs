@@ -8,7 +8,7 @@ public class CharacterData : ScriptableObject
 {
     public int InstanceID;
     public string characterName = "GenericCharacter";
-    public CharacterName NameEnum;
+    //public CharacterName NameEnum;
     [SerializeReference]public CharacterAnimationData characterAnimationData;
     public bool isPlayerCharacter = true;
     public string Faction;
@@ -29,7 +29,6 @@ public class CharacterData : ScriptableObject
     {
         InstanceID = characterData.InstanceID;
         characterName = characterData.characterName;
-        NameEnum = characterData.NameEnum;
         isPlayerCharacter = characterData.isPlayerCharacter;
         health = characterData.health;
         attackDamage = characterData.attackDamage;
@@ -49,7 +48,6 @@ public class CharacterData : ScriptableObject
         }
         InstanceID = characterData.InstanceID;
         characterName = characterData.characterName;
-        NameEnum = characterData.NameEnum;
         isPlayerCharacter = characterData.isPlayerCharacter;
         health = characterData.health;
         attackDamage = characterData.attackDamage;
