@@ -15,7 +15,7 @@ MonoBehaviour:
   InstanceID: 1
   characterName: Ninjask
   NameEnum: 3
-  characterAnimationData: {fileID: 11400000, guid: adb96c03a75a05b4d9bf2ecf44a5880f, type: 2}
+  characterAnimationData: {fileID: 11400000, guid: ca7998038f9d33747892c6beacab9cce, type: 2}
   isPlayerCharacter: 1
   Faction: 
   health: 1

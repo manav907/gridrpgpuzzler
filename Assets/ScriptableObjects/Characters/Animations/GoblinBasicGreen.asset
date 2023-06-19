@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
+  m_Name: GoblinBasicGreen
+  m_EditorClassIdentifier: 
+  spriteOffsetX: -0.1
+  spriteOffsetY: -0.2
+  Walk:
+  - {fileID: 396682530, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: 2123228207, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: -1235132775, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: -789471863, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: 690815160, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: -302395293, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: -904093068, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: 1686096140, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: 702209080, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  - {fileID: -1175697616, guid: bdeebdf71d961864eacb8c74d656d5b9, type: 3}
+  Idle:
+  - {fileID: -2131449551, guid: 5c515c6832369124b90226f4aae8a492, type: 3}
+  - {fileID: 1476706642, guid: 5f947ca001e1e684c88e503bb11615e1, type: 3}
+  RegularAttack:
+  - {fileID: 586130660, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: -467157131, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: 1687766984, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: 1287637415, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: -122171735, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: -1700578878, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: 1428375532, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: -2064485320, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: -1375248246, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  - {fileID: 1590607876, guid: 85c263ca120580b4a89c5fc42131c22c, type: 3}
+  SpecialAttack: []
+  GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 7bf8fe832941842418b64bb19e7f453b, type: 2}
