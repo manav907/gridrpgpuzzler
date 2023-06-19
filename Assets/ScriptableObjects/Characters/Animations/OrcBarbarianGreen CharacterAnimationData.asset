@@ -12,26 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
   m_Name: OrcBarbarianGreen CharacterAnimationData
   m_EditorClassIdentifier: 
+  spriteOffsetX: 0
   spriteOffsetY: 0
-  Walk:
-  - {fileID: 1711364271, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
-  - {fileID: -919233659, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
-  - {fileID: 944881907, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
-  - {fileID: 1858481815, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
-  - {fileID: -1605476614, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
-  - {fileID: -382233416, guid: 096c49b1729d9ea4c8f0182b1a18bee6, type: 3}
-  Idle:
-  - {fileID: -1957765876, guid: 096c49b1729d9ea4c8f0182b1a18bee6, type: 3}
-  - {fileID: 216876488, guid: 096c49b1729d9ea4c8f0182b1a18bee6, type: 3}
-  - {fileID: 775777996, guid: 096c49b1729d9ea4c8f0182b1a18bee6, type: 3}
-  RegularAttack:
-  - {fileID: 40946496, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
-  - {fileID: 319929834, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
-  - {fileID: 22879732, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
-  - {fileID: -1611503959, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
-  - {fileID: -364826477, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
-  - {fileID: 2085992708, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
-  - {fileID: 1611846065, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
-  - {fileID: 783423471, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
-  - {fileID: -626397988, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+  animations:
+  - stateName: Walk
+    stateEnum: 1
+    frames:
+    - {fileID: 1711364271, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
+    - {fileID: -919233659, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
+    - {fileID: 944881907, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
+    - {fileID: 1858481815, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
+    - {fileID: -1605476614, guid: a494a99f2eb691a4f9b243bbda339be4, type: 3}
+    - {fileID: -382233416, guid: 096c49b1729d9ea4c8f0182b1a18bee6, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: Idle
+    stateEnum: 0
+    frames:
+    - {fileID: -1957765876, guid: 096c49b1729d9ea4c8f0182b1a18bee6, type: 3}
+    - {fileID: 216876488, guid: 096c49b1729d9ea4c8f0182b1a18bee6, type: 3}
+    - {fileID: 775777996, guid: 096c49b1729d9ea4c8f0182b1a18bee6, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: RegularAttack
+    stateEnum: 2
+    frames:
+    - {fileID: 40946496, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    - {fileID: 319929834, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    - {fileID: 22879732, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    - {fileID: -1611503959, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    - {fileID: -364826477, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    - {fileID: 2085992708, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    - {fileID: 1611846065, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    - {fileID: 783423471, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    - {fileID: -626397988, guid: 19520f92aa70a214fbb91e3aaaedb9e0, type: 3}
+    isLooping: 1
+    speed: 1
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: bfb4ff73c6c7e6146a9a64cb5854334e, type: 2}

@@ -10,20 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
-  m_Name: GreenRedDude
+  m_Name: GoblinBasicGreen
   m_EditorClassIdentifier: 
-  InstanceID: 1
-  characterName: Ninjask
-  NameEnum: 3
-  characterAnimationData: {fileID: 11400000, guid: 9fe4e66c2b15e424ba8f69822530d26c, type: 2}
-  isPlayerCharacter: 1
-  Faction: 
+  InstanceID: 2
+  characterName: Goblin Basic Green
+  characterAnimationData: {fileID: 11400000, guid: 61b5e32c27444b54385a9e0ffa69c57f, type: 2}
+  isPlayerCharacter: 0
+  Faction: Enemies
   health: 1
   attackDamage: 1
-  speedValue: 8
+  speedValue: 3
   rangeOfVision: 5
-  canWalkOn: 00000000
+  canWalkOn: 0000000002000000
   LadderAbility:
-  - {fileID: 11400000, guid: d1cbae79bdc4c4040843070851debcbb, type: 2}
-  - {fileID: 11400000, guid: 7ad13331415d0144abf19dee07a7abc6, type: 2}
+  - {fileID: 11400000, guid: 9215bd0b3ef5f9e4cb5a434c0d810f67, type: 2}
+  - {fileID: 11400000, guid: 2ee913e6db606ab42a3124bfb98fc05e, type: 2}
   - {fileID: 11400000, guid: 6efe7ecb0904b864cbe7959f70e64fcf, type: 2}

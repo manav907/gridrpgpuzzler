@@ -14,34 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteOffsetX: 0
   spriteOffsetY: 0
-  Walk:
-  - {fileID: -471391697, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
-  - {fileID: -1884764792, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
-  - {fileID: -985320025, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
-  - {fileID: -199884625, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
-  - {fileID: -1486571659, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
-  - {fileID: -1024857599, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
-  Idle:
-  - {fileID: 469388169, guid: b5f28bb8b5dc9ea4584bc87d64e325f3, type: 3}
-  - {fileID: 497990035, guid: 122d072ca60caee4a9bf899d2216f35f, type: 3}
-  RegularAttack:
-  - {fileID: -1723027438, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: 674144456, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -1729041429, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -252236526, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: 966023906, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -1794132620, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -754354580, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: 1434912986, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -1768438269, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: 1637342076, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: 1548301280, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -1144744367, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: 1941839658, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: 1850492985, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -113343605, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -22333730, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: -1369311886, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  - {fileID: 501455917, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
-  SpecialAttack: []
+  animations:
+  - stateName: Walk
+    stateEnum: 1
+    frames:
+    - {fileID: -471391697, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
+    - {fileID: -1884764792, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
+    - {fileID: -985320025, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
+    - {fileID: -199884625, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
+    - {fileID: -1486571659, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
+    - {fileID: -1024857599, guid: 6e097c24290c86a4586b50ecf7e7e7a5, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: Idle
+    stateEnum: 0
+    frames:
+    - {fileID: 469388169, guid: b5f28bb8b5dc9ea4584bc87d64e325f3, type: 3}
+    - {fileID: 497990035, guid: 122d072ca60caee4a9bf899d2216f35f, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: RegularAttack
+    stateEnum: 2
+    frames:
+    - {fileID: -1723027438, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: 674144456, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -1729041429, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -252236526, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: 966023906, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -1794132620, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -754354580, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: 1434912986, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -1768438269, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: 1637342076, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: 1548301280, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -1144744367, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: 1941839658, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: 1850492985, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -113343605, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -22333730, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: -1369311886, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    - {fileID: 501455917, guid: 35f0ce9907368b743add94a182b454d4, type: 3}
+    isLooping: 1
+    speed: 1
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 02f6753724ff98841b780a9cfb90259d, type: 2}

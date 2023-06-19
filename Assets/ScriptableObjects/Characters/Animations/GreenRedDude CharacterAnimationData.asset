@@ -12,17 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
   m_Name: GreenRedDude CharacterAnimationData
   m_EditorClassIdentifier: 
+  spriteOffsetX: 0
   spriteOffsetY: 0
-  Walk:
-  - {fileID: 443505917, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  - {fileID: -705041071, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  - {fileID: 1804122713, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  Idle:
-  - {fileID: 1779093491, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  - {fileID: 2037996223, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  - {fileID: 1583217870, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  RegularAttack:
-  - {fileID: 443505917, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  - {fileID: -705041071, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
-  - {fileID: 1804122713, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+  animations:
+  - stateName: Walk
+    stateEnum: 1
+    frames:
+    - {fileID: 443505917, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    - {fileID: -705041071, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    - {fileID: 1804122713, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: Idle
+    stateEnum: 0
+    frames:
+    - {fileID: 1779093491, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    - {fileID: 2037996223, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    - {fileID: 1583217870, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: RegularAttack
+    stateEnum: 2
+    frames:
+    - {fileID: 443505917, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    - {fileID: -705041071, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    - {fileID: 1804122713, guid: 86c7a46499ffccd4b983c327c72907bc, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: SpecialAttack
+    stateEnum: 3
+    frames: []
+    isLooping: 1
+    speed: 1
+  - stateName: SpecialAttack
+    stateEnum: 3
+    frames: []
+    isLooping: 1
+    speed: 1
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 0620a4d250de69c4d8ce511c0ca1dab8, type: 2}

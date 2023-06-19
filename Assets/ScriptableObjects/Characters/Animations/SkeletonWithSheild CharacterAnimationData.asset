@@ -12,22 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3583e8de86968da4aab0ad0251befa11, type: 3}
   m_Name: SkeletonWithSheild CharacterAnimationData
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimationData
+  spriteOffsetX: 0
   spriteOffsetY: 0
-  Walk:
-  - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  Idle:
-  - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  RegularAttack:
-  - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: -1412445130, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: 417994268, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
-  - {fileID: 40462287, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+  animations:
+  - stateName: Walk
+    stateEnum: 1
+    frames:
+    - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: Idle
+    stateEnum: 0
+    frames:
+    - {fileID: -1682670780, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: 522653645, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: -1595341053, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: -469184511, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    isLooping: 1
+    speed: 1
+  - stateName: RegularAttack
+    stateEnum: 2
+    frames:
+    - {fileID: 106594559, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: -1412445130, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: 417994268, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    - {fileID: 40462287, guid: 04cb7fd9f85fae64ea3390272235f109, type: 3}
+    isLooping: 1
+    speed: 1
   GeneratedAnimatorOverrideController: {fileID: 22100000, guid: 3dd0e93564d4c8c46800ba653ff63fbe, type: 2}
