@@ -35,6 +35,14 @@ public class SerializableDictionary<TKey, TValue>
         DictCache = dict;
         return dict;
     }
+    public void AddDict(Dictionary<TKey, TValue> original)
+    {
+        foreach (var pair in original)
+        {
+            KeyPair<TKey, TValue> keyPair = new KeyPair<TKey, TValue>(pair.Key, pair.Value);
+            this.KeyValuePairs.Add(keyPair);
+        }
+    }
     public void CopyDict(Dictionary<TKey, TValue> original)
     {
         KeyValuePairs = new List<KeyPair<TKey, TValue>>();

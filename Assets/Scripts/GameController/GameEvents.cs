@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class GameEvents : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class GameEvents : MonoBehaviour
     public UniversalCalculator universalCalculator;
     [Header("TileMaps")]
     public List<TileData> tileDatas;
+
+    [Header("Conflicts")]
+    [SerializeField] public List<TileBase> TileLayerConflict;
     public static GameEvents current;
     [Header("Dialog Stuff")]
     [SerializeField] TMPro.TextMeshProUGUI textBox;
@@ -39,7 +43,7 @@ public class GameEvents : MonoBehaviour
         onCharacterDeath += delegate { Debug.Log("Even dEath Called"); };
         turnManager = scriptManager.GetComponent<TurnManager>();
         mapManager = scriptManager.GetComponent<MapManager>();
-        universalCalculator =scriptManager.GetComponent<UniversalCalculator>();
+        universalCalculator = scriptManager.GetComponent<UniversalCalculator>();
     }
     Dictionary<string, Transform> NameTagToTransform;
     public void setUpCamera()

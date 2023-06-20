@@ -19,6 +19,8 @@ public class MapManager : MonoBehaviour
     Dictionary<Vector3Int, GameObject> PosToCharGO;
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
+
+
     public void setVariables()
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
@@ -44,7 +46,7 @@ public class MapManager : MonoBehaviour
     }
     public void OverWriteMapDataToSO()
     {
-        pullToTileMapStore(Obstacles, LoadThisLevel.Obstacles);
+        pullToTileMapStore(Obstacles, LoadThisLevel.Ground_Floor_Over);
         pullToTileMapStore(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pullToTileMapStore(Ground_Floor, LoadThisLevel.Ground_Floor);
         pullToTileMapStore(Character_Placement, LoadThisLevel.Character_Placeholder);
@@ -60,7 +62,7 @@ public class MapManager : MonoBehaviour
                     dict.Add(pos, tile);
                 }
             }
-            tileMapStore.CopyDict(dict);
+            tileMapStore.AddDict(dict);
         }
 
     }
@@ -215,18 +217,11 @@ public class MapManager : MonoBehaviour
                     }
                     else
                     {
-                        var TileLayerConflict = UserDataManager.currentLevel.TileLayerConflict.returnDict();
-                        if (TileLayerConflict.ContainsKey(tile))
-                        {
-                            walkRequirements = TileLayerConflict[tile];
-                        }
-                        else
-                        {
-                            Debug.LogError("Yo This Tile was not in the Dictionary Catorize it in the LevelData So");
-                            //KeyPair<TileBase, GroundFloorType> keyPair = new KeyPair<TileBase, GroundFloorType>(tile, GroundFloorType.NotSet);
-                            UserDataManager.currentLevel.TileLayerConflict.Add(tile, GroundFloorType.NotSet);
-                            return;
-                        }
+                        var TileLayerConflict = GameEvents.current.TileLayerConflict;
+                        Debug.LogError("Yo This Tile was not in the Dictionary Catorize it in GameEvent");
+                        //KeyPair<TileBase, GroundFloorType> keyPair = new KeyPair<TileBase, GroundFloorType>(tile, GroundFloorType.NotSet);
+                        GameEvents.current.TileLayerConflict.Add(tile);
+                        return;
                     }
                     if (walkRequirements != GroundFloorType.NotSet)
                         NEWgroundFloorTypeWalkRequireMents.Add(walkRequirements);
