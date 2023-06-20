@@ -24,4 +24,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f9825792c11e7d441941c68fc078d204, type: 2}
   - {fileID: 11400000, guid: aa78eb12a0dc77444ba666cb5e011b33, type: 2}
   - {fileID: 11400000, guid: 237ed48a893b0d342aad25205876a561, type: 2}
+  - {fileID: 11400000, guid: ed9c89c04a02c354090545da328ee1dc, type: 2}
+  - {fileID: 11400000, guid: 04e66fd18d3cbe94786a6174b2bebeb5, type: 2}
+  - {fileID: 11400000, guid: b90b7449ab42cef459690ecb062a4773, type: 2}
+  - {fileID: 11400000, guid: d700bdc100ec3c04b950a8e5613128d3, type: 2}
+  - {fileID: 11400000, guid: 4592d8dfae1c61145a7b62b290702c07, type: 2}
   groundFloorType: 0
