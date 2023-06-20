@@ -152,4 +152,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 96b98d95702772546b3007a07740174e, type: 2}
   - {fileID: 11400000, guid: d94f35980ce04234f9dfcf1826323d94, type: 2}
   - {fileID: 11400000, guid: d01d739e42754e440b741e74132fb73e, type: 2}
-  groundFloorType: 3
+  groundFloorType: 4

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InstanceID: 1
   characterName: Ninjask
-  NameEnum: 2
   characterAnimationData: {fileID: 11400000, guid: 4433d9d783aef9844a4f70ca655365f6, type: 2}
   isPlayerCharacter: 1
   Faction: 
@@ -22,7 +21,7 @@ MonoBehaviour:
   attackDamage: 1
   speedValue: 6
   rangeOfVision: 5
-  canWalkOn: 00000000
+  canWalkOn: 01000000
   LadderAbility:
   - {fileID: 11400000, guid: d1cbae79bdc4c4040843070851debcbb, type: 2}
   - {fileID: 11400000, guid: 7ad13331415d0144abf19dee07a7abc6, type: 2}

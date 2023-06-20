@@ -9,7 +9,9 @@ public class GameEvents : MonoBehaviour
 {
     [Header("Reffrences")]
     [SerializeField] GameObject scriptManager;
-    TurnManager turnManager;
+    public TurnManager turnManager;
+    public MapManager mapManager;
+    public UniversalCalculator universalCalculator;
     public static GameEvents current;
     [Header("Dialog Stuff")]
     [SerializeField] TMPro.TextMeshProUGUI textBox;
@@ -34,7 +36,8 @@ public class GameEvents : MonoBehaviour
         current = this;
         onCharacterDeath += delegate { Debug.Log("Even dEath Called"); };
         turnManager = scriptManager.GetComponent<TurnManager>();
-        MapManager mapManager = scriptManager.GetComponent<MapManager>();
+        mapManager = scriptManager.GetComponent<MapManager>();
+        universalCalculator =scriptManager.GetComponent<UniversalCalculator>();
     }
     Dictionary<string, Transform> NameTagToTransform;
     public void setUpCamera()

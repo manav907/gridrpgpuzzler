@@ -36,6 +36,7 @@ public class MapManager : MonoBehaviour
         if (UserDataManager.currentLevel == null)
         {
             //Debug.LogError("Incorrect Scene Loaded Loading last Known Scene");
+            UserDataManager.currentLevel = LoadThisLevel;
             return;
         }
         LoadThisLevel = UserDataManager.currentLevel;
@@ -61,10 +62,10 @@ public class MapManager : MonoBehaviour
             }
             tileMapStore.CopyDict(dict);
         }
-        
+
     }
     public void LoadMapDataFromSO()
-    {        
+    {
         pushToTileMap(Obstacles, LoadThisLevel.Obstacles);
         pushToTileMap(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pushToTileMap(Ground_Floor, LoadThisLevel.Ground_Floor);
@@ -165,7 +166,7 @@ public class MapManager : MonoBehaviour
                     //Null Key Check to make sure CellData is instanciated only once for multiple tiles at the same Cell
                     if (!cellDataDir.ContainsKey(pos))
                     {
-                        cellDataDir.Add(pos, new CellData(this.gameObject, pos));
+                        cellDataDir.Add(pos, new CellData(pos));
                     }
                 }
             }
@@ -181,15 +182,15 @@ public class MapManager : MonoBehaviour
         public List<TileData> tileDatas;
         public Vector3Int cellPos;
         //Declaring Scripts From Game Controller
-        UniversalCalculator universalCalculator;
-        MapManager mapManager;
+        //UniversalCalculator universalCalculator;
+        //MapManager mapManager;
         //Declaring Objects From Game Controller
-        List<Tilemap> OrderOfTileMaps;
-        Dictionary<TileBase, TileData> dataFromTiles;
+        //List<Tilemap> OrderOfTileMaps;
+        //Dictionary<TileBase, TileData> dataFromTiles;
         //Characters
         public GameObject characterAtCell;
         //Constructer For Initilizing CellData
-        public CellData(GameObject gameController, Vector3Int pos)
+        public CellData(Vector3Int pos)
         {
             //Initilizing Variables
             groundFloorTypeWalkRequireMents = new List<GroundFloorType>();
@@ -197,13 +198,6 @@ public class MapManager : MonoBehaviour
             tileDatas = new List<TileData>();
             //Setting pos this is Very Important
             this.cellPos = pos;
-            //Getting Scripts From Game Controller
-            mapManager = gameController.GetComponent<MapManager>();
-            universalCalculator = gameController.GetComponent<UniversalCalculator>();
-
-            //Getting Objects From Game Controller
-            OrderOfTileMaps = mapManager.allTileMaps;
-            dataFromTiles = mapManager.dataFromTiles;
             //Populating CellData Here
             refreshCellData();
         }
@@ -213,28 +207,44 @@ public class MapManager : MonoBehaviour
             List<GroundFloorType> NEWgroundFloorTypeWalkRequireMents = new List<GroundFloorType>();
             List<TileBase> NEWtilesOnCell = new List<TileBase>();
             List<TileData> NEWtileDatas = new List<TileData>();
-            foreach (Tilemap tilemap in OrderOfTileMaps)
+            foreach (Tilemap tilemap in GameEvents.current.mapManager.allTileMaps)
             {
                 TileBase tile = tilemap.GetTile(cellPos);
                 //Debug.Log("Checking Tilemap " + tilemap + " and the tile was " + tile + " :: on th position of" + cellPos);
                 if (tile != null)
                 {
-                    GroundFloorType walkRequirements = dataFromTiles[tile].groundFloorType;
-                    TileBase tilesOnCell = tile;
-                    TileData tileData = dataFromTiles[tile];
 
-                    NEWgroundFloorTypeWalkRequireMents.Add(walkRequirements);
-                    NEWtilesOnCell.Add(tilesOnCell);
-                    NEWtileDatas.Add(tileData);
+                    if (GameEvents.current.mapManager.dataFromTiles.ContainsKey(tile))
+                    {
+                        //Debug.Log(GameEvents.current.mapManager.dataFromTiles);
+                        TileData tileData = GameEvents.current.mapManager.dataFromTiles[tile];
+                        GroundFloorType walkRequirements = GameEvents.current.mapManager.dataFromTiles[tile].groundFloorType;
+                        NEWgroundFloorTypeWalkRequireMents.Add(walkRequirements);
+                        NEWtilesOnCell.Add(tile);
+                        NEWtileDatas.Add(tileData);
+
+                    }
+                    else if (UserDataManager.currentLevel.TileLayerConflict.returnDict().ContainsKey(cellPos))
+                    {
+
+                    }
+                    else
+                    {
+
+                        Debug.LogError("Yo This Tile was not in the Dictionary Catorize it in the LevelData So");
+                        //KeyPair<TileBase, GroundFloorType> keyPair = new KeyPair<TileBase, GroundFloorType>(tile, GroundFloorType.NotSet);
+                        UserDataManager.currentLevel.TileLayerConflict.Add(cellPos, new KeyPair<TileBase, GroundFloorType>(tile, GroundFloorType.NotSet));
+                        return;
+                    }
                 }
                 else
                 {
                     //Debug.Log("Tile Was Null Somehow! On TileMap " + tilemap);
                 }
             }
-            groundFloorTypeWalkRequireMents = universalCalculator.CompareAndReplace(groundFloorTypeWalkRequireMents, NEWgroundFloorTypeWalkRequireMents, false);
-            tilesOnCell = universalCalculator.CompareAndReplace(tilesOnCell, NEWtilesOnCell, false);
-            tileDatas = universalCalculator.CompareAndReplace(tileDatas, NEWtileDatas, false);
+            groundFloorTypeWalkRequireMents = GameEvents.current.universalCalculator.CompareAndReplace(groundFloorTypeWalkRequireMents, NEWgroundFloorTypeWalkRequireMents, false);
+            tilesOnCell = GameEvents.current.universalCalculator.CompareAndReplace(tilesOnCell, NEWtilesOnCell, false);
+            tileDatas = GameEvents.current.universalCalculator.CompareAndReplace(tileDatas, NEWtileDatas, false);
         }
         public void ReadInfo()
         {
@@ -250,8 +260,9 @@ public class MapManager : MonoBehaviour
 //Defining Global NameSapce
 public enum GroundFloorType
 {
-    Normal,
-    Water,
-    Fire,
-    StructuresNonWalkable
+    NotSet = 0,
+    Normal = 1,
+    Water = 2,
+    Fire = 3,
+    StructuresNonWalkable = 4
 };

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,17 @@ using UnityEngine;
 [System.Serializable]
 public class SerializableDictionary<TKey, TValue>
 {
+
+    [SerializeField] public List<KeyPair<TKey, TValue>> KeyValuePairs;
     public SerializableDictionary()
     {
         KeyValuePairs = new List<KeyPair<TKey, TValue>>();
     }
-    [SerializeField] public List<KeyPair<TKey, TValue>> KeyValuePairs;
+    public void Add(TKey key, TValue value)
+    {
+        var newKeyPair = new KeyPair<TKey, TValue>(key, value);
+        KeyValuePairs.Add(newKeyPair);
+    }
 
     public Dictionary<TKey, TValue> returnDict()
     {
