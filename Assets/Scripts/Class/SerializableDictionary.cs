@@ -18,14 +18,21 @@ public class SerializableDictionary<TKey, TValue>
         var newKeyPair = new KeyPair<TKey, TValue>(key, value);
         KeyValuePairs.Add(newKeyPair);
     }
+    Dictionary<TKey, TValue> DictCache;
 
     public Dictionary<TKey, TValue> returnDict()
     {
         var dict = new Dictionary<TKey, TValue>();
         foreach (var pair in KeyValuePairs)
         {
-            dict.Add(pair.key, pair.value);
+            if (!dict.ContainsKey(pair.key))
+                dict.Add(pair.key, pair.value);
+            else
+            {
+                Debug.LogError(pair.key + " was Omited Might be Intended");
+            }
         }
+        DictCache = dict;
         return dict;
     }
     public void CopyDict(Dictionary<TKey, TValue> original)

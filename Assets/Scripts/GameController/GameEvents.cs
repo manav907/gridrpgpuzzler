@@ -12,6 +12,8 @@ public class GameEvents : MonoBehaviour
     public TurnManager turnManager;
     public MapManager mapManager;
     public UniversalCalculator universalCalculator;
+    [Header("TileMaps")]
+    public List<TileData> tileDatas;
     public static GameEvents current;
     [Header("Dialog Stuff")]
     [SerializeField] TMPro.TextMeshProUGUI textBox;

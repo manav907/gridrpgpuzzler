@@ -247,21 +247,23 @@ public class UniversalCalculator : MonoBehaviour
     {
         if (DebugCompare == true)
         {
-            if (originalList.GetType() == CompareToList.GetType())
+            if (originalList.Equals(CompareToList))
+            { return originalList; }
+
+            string debugLine = originalList.Count + " is the number of itmes in original list and in the new list the bumber of itesms are " + CompareToList.Count;
+            //Debug.Log(originalList.Count + " is the number of itmes in original list and in the new list the bumber of itesms are " + CompareToList.Count);
+            for (int i = 0; i < originalList.Count; i++)
             {
-                //Debug.Log("Same Type of List Will Contine");
-                Debug.Log(originalList.Count + " is the number of itmes in original list and in the new list the bumber of itesms are " + CompareToList.Count);
-                for (int i = 0; i < originalList.Count; i++)
+                if (originalList[i].Equals(CompareToList[i]))
                 {
-                    Debug.Log("Original Item " + originalList[i] + " was replaced by" + CompareToList[i]);
+                    debugLine += "\n " + " Matched element " + i;
+                }
+                else
+                {
+                    debugLine += "\n " + " Replaced element " + i + " " + originalList[i] + " to " + CompareToList[i];
                 }
             }
-
-            else
-            {
-                Debug.Log("Not the Same will return original List");
-                return originalList;
-            }
+            Debug.Log(debugLine);
         }
         return CompareToList;
     }

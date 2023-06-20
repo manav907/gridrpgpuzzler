@@ -19,7 +19,7 @@ public class LevelDataSO : ScriptableObject
     [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Character_Placeholder;
     [SerializeField] public SerializableDictionary<TileBase, CharacterData> TileToChar;
     [Header("Conflicts")]
-    [SerializeField] public SerializableDictionary<Vector3Int, KeyPair<TileBase, GroundFloorType>> TileLayerConflict;
+    [SerializeField] public SerializableDictionary<TileBase, GroundFloorType> TileLayerConflict;
     public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir()
     {
         var data = new Dictionary<Vector3Int, CharacterData>();
@@ -43,5 +43,9 @@ public class LevelDataSO : ScriptableObject
             }
         }
         return data;
+    }
+    public void CheckTileLayers()
+    {
+        
     }
 }

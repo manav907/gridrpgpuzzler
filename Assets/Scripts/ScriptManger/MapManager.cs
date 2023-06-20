@@ -14,7 +14,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] Tilemap Ground_Floor_Over;
     [SerializeField] Tilemap Ground_Floor;
     [SerializeField] Tilemap Character_Placement;
-    [SerializeField] List<TileData> listOfTileDataScriptableObjects;
+    //[SerializeField] List<TileData> listOfTileDataScriptableObjects;
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
     Dictionary<Vector3Int, GameObject> PosToCharGO;
     UniversalCalculator universalCalculator;
@@ -88,7 +88,7 @@ public class MapManager : MonoBehaviour
     void setTilesDir()
     {
         dataFromTiles = new Dictionary<TileBase, TileData>();
-        foreach (var ScriptableObjects in listOfTileDataScriptableObjects)
+        foreach (var ScriptableObjects in GameEvents.current.tileDatas)
             foreach (var tileFound in ScriptableObjects.tiles)
             {
                 dataFromTiles.Add(tileFound, ScriptableObjects);
@@ -178,8 +178,6 @@ public class MapManager : MonoBehaviour
     {
         //Declaring Variables for use in Script
         public List<GroundFloorType> groundFloorTypeWalkRequireMents;
-        public List<TileBase> tilesOnCell;
-        public List<TileData> tileDatas;
         public Vector3Int cellPos;
         //Declaring Scripts From Game Controller
         //UniversalCalculator universalCalculator;
@@ -194,8 +192,6 @@ public class MapManager : MonoBehaviour
         {
             //Initilizing Variables
             groundFloorTypeWalkRequireMents = new List<GroundFloorType>();
-            tilesOnCell = new List<TileBase>();
-            tileDatas = new List<TileData>();
             //Setting pos this is Very Important
             this.cellPos = pos;
             //Populating CellData Here
@@ -205,46 +201,39 @@ public class MapManager : MonoBehaviour
         {
             //Creating New Variables to Comapare
             List<GroundFloorType> NEWgroundFloorTypeWalkRequireMents = new List<GroundFloorType>();
-            List<TileBase> NEWtilesOnCell = new List<TileBase>();
-            List<TileData> NEWtileDatas = new List<TileData>();
             foreach (Tilemap tilemap in GameEvents.current.mapManager.allTileMaps)
             {
                 TileBase tile = tilemap.GetTile(cellPos);
                 //Debug.Log("Checking Tilemap " + tilemap + " and the tile was " + tile + " :: on th position of" + cellPos);
                 if (tile != null)
                 {
+                    GroundFloorType walkRequirements = GroundFloorType.NotSet;
 
                     if (GameEvents.current.mapManager.dataFromTiles.ContainsKey(tile))
                     {
-                        //Debug.Log(GameEvents.current.mapManager.dataFromTiles);
-                        TileData tileData = GameEvents.current.mapManager.dataFromTiles[tile];
-                        GroundFloorType walkRequirements = GameEvents.current.mapManager.dataFromTiles[tile].groundFloorType;
-                        NEWgroundFloorTypeWalkRequireMents.Add(walkRequirements);
-                        NEWtilesOnCell.Add(tile);
-                        NEWtileDatas.Add(tileData);
-
-                    }
-                    else if (UserDataManager.currentLevel.TileLayerConflict.returnDict().ContainsKey(cellPos))
-                    {
-
+                        walkRequirements = GameEvents.current.mapManager.dataFromTiles[tile].groundFloorType;
                     }
                     else
                     {
-
-                        Debug.LogError("Yo This Tile was not in the Dictionary Catorize it in the LevelData So");
-                        //KeyPair<TileBase, GroundFloorType> keyPair = new KeyPair<TileBase, GroundFloorType>(tile, GroundFloorType.NotSet);
-                        UserDataManager.currentLevel.TileLayerConflict.Add(cellPos, new KeyPair<TileBase, GroundFloorType>(tile, GroundFloorType.NotSet));
-                        return;
+                        var TileLayerConflict = UserDataManager.currentLevel.TileLayerConflict.returnDict();
+                        if (TileLayerConflict.ContainsKey(tile))
+                        {
+                            walkRequirements = TileLayerConflict[tile];
+                        }
+                        else
+                        {
+                            Debug.LogError("Yo This Tile was not in the Dictionary Catorize it in the LevelData So");
+                            //KeyPair<TileBase, GroundFloorType> keyPair = new KeyPair<TileBase, GroundFloorType>(tile, GroundFloorType.NotSet);
+                            UserDataManager.currentLevel.TileLayerConflict.Add(tile, GroundFloorType.NotSet);
+                            return;
+                        }
                     }
-                }
-                else
-                {
-                    //Debug.Log("Tile Was Null Somehow! On TileMap " + tilemap);
+                    if (walkRequirements != GroundFloorType.NotSet)
+                        NEWgroundFloorTypeWalkRequireMents.Add(walkRequirements);
                 }
             }
             groundFloorTypeWalkRequireMents = GameEvents.current.universalCalculator.CompareAndReplace(groundFloorTypeWalkRequireMents, NEWgroundFloorTypeWalkRequireMents, false);
-            tilesOnCell = GameEvents.current.universalCalculator.CompareAndReplace(tilesOnCell, NEWtilesOnCell, false);
-            tileDatas = GameEvents.current.universalCalculator.CompareAndReplace(tileDatas, NEWtileDatas, false);
+
         }
         public void ReadInfo()
         {

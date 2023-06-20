@@ -885,11 +885,6 @@ MonoBehaviour:
   Ground_Floor_Over: {fileID: 957306169}
   Ground_Floor: {fileID: 901888352}
   Character_Placement: {fileID: 317658189}
-  listOfTileDataScriptableObjects:
-  - {fileID: 11400000, guid: cf96a52dbe483ab4ebde73314693d934, type: 2}
-  - {fileID: 11400000, guid: cef59eb637bef15499926ba58c5f0c7f, type: 2}
-  - {fileID: 11400000, guid: 058d9a1f02de28e4cafb4f10cdad59a6, type: 2}
-  - {fileID: 11400000, guid: 3fca5c45e50d3234c9c4531fb8678f1e, type: 2}
 --- !u!114 &732592034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3498,6 +3493,11 @@ MonoBehaviour:
   turnManager: {fileID: 0}
   mapManager: {fileID: 0}
   universalCalculator: {fileID: 0}
+  tileDatas:
+  - {fileID: 11400000, guid: cf96a52dbe483ab4ebde73314693d934, type: 2}
+  - {fileID: 11400000, guid: cef59eb637bef15499926ba58c5f0c7f, type: 2}
+  - {fileID: 11400000, guid: 058d9a1f02de28e4cafb4f10cdad59a6, type: 2}
+  - {fileID: 11400000, guid: 3fca5c45e50d3234c9c4531fb8678f1e, type: 2}
   textBox: {fileID: 1945140950}
   imagePortraitReffrence: {fileID: 1671386377}
   images:
