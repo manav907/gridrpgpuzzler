@@ -10,7 +10,6 @@ public class MapManager : MonoBehaviour
 {
     [SerializeField] public LevelDataSO LoadThisLevel;
     List<Tilemap> allTileMaps;
-    [SerializeField] Tilemap Obstacles;
     [SerializeField] Tilemap Ground_Floor_Over;
     [SerializeField] Tilemap Ground_Floor;
     [SerializeField] Tilemap Character_Placement;
@@ -46,7 +45,6 @@ public class MapManager : MonoBehaviour
     }
     public void OverWriteMapDataToSO()
     {
-        pullToTileMapStore(Obstacles, LoadThisLevel.Ground_Floor_Over);
         pullToTileMapStore(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pullToTileMapStore(Ground_Floor, LoadThisLevel.Ground_Floor);
         pullToTileMapStore(Character_Placement, LoadThisLevel.Character_Placeholder);
@@ -62,13 +60,12 @@ public class MapManager : MonoBehaviour
                     dict.Add(pos, tile);
                 }
             }
-            tileMapStore.AddDict(dict);
+            tileMapStore.CopyDict(dict);
         }
 
     }
     public void LoadMapDataFromSO()
     {
-        pushToTileMap(Obstacles, LoadThisLevel.Obstacles);
         pushToTileMap(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pushToTileMap(Ground_Floor, LoadThisLevel.Ground_Floor);
         pushToTileMap(Character_Placement, LoadThisLevel.Character_Placeholder);
@@ -155,7 +152,6 @@ public class MapManager : MonoBehaviour
     void setCellDataDir()
     {
         allTileMaps = new List<Tilemap>();
-        allTileMaps.Add(Obstacles);
         allTileMaps.Add(Ground_Floor);
         allTileMaps.Add(Ground_Floor_Over);
         cellDataDir = new Dictionary<Vector3Int, CellData>();
