@@ -72,10 +72,11 @@ public class MapManager : MonoBehaviour
         pushToTileMap(Ground_Floor_Over, LoadThisLevel.Ground_Floor_Over);
         pushToTileMap(Ground_Floor, LoadThisLevel.Ground_Floor);
         pushToTileMap(Character_Placement, LoadThisLevel.Character_Placeholder);
-        void pushToTileMap(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore)
+        void pushToTileMap(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore, bool ClearAllTiles = true)
         {
             var dict = tileMapStore.returnDict();
-            tilemap.ClearAllTiles();
+            if (ClearAllTiles)//This is used when you want to combine tilemaps be super carefull when using this
+                tilemap.ClearAllTiles();
             foreach (var pair in dict)
             {
                 Vector3Int pos = pair.Key;
