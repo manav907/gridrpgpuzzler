@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="Main" style="flex-grow: 1; flex-direction: column; justify-content: flex-start;">
         <ui:VisualElement name="TopBar" style="height: 7.5%; flex-direction: row; justify-content: center;">
-            <ui:Button text="Restart" display-tooltip-when-elided="true" usage-hints="None" style="flex-basis: 20%; font-size: 30px;" />
-            <ui:Button text="Exit Game" display-tooltip-when-elided="true" style="flex-basis: 20%; font-size: 30px;" />
+            <ui:Button text="Restart" display-tooltip-when-elided="true" usage-hints="None" name="restartButton" style="flex-basis: 20%; font-size: 30px;" />
+            <ui:Button text="Exit Game" display-tooltip-when-elided="true" name="exitButton" style="flex-basis: 20%; font-size: 30px;" />
         </ui:VisualElement>
         <ui:VisualElement name="GameUI" style="flex-grow: 1; flex-direction: row; align-items: auto; justify-content: flex-end;">
             <ui:VisualElement name="SideButtons" style="width: 15%; height: 100%;">
@@ -12,7 +12,7 @@
         <ui:VisualElement name="DialogBox" style="font-size: 100%; background-image: url(&apos;project://database/Assets/Pallet/BetaPallet/tilemap.png?fileID=-1870214800&amp;guid=03d189a1734c66d4db5020448a7223f9&amp;type=3#tilemap_468&apos;); height: 20%; max-height: 500px; flex-direction: column; align-items: stretch; justify-content: flex-end; -unity-background-scale-mode: stretch-to-fill; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0;">
             <ui:VisualElement name="TopBarForDialog" style="position: relative; display: flex; visibility: visible; flex-direction: row; font-size: 30px; height: 30%; flex-grow: 1;">
                 <ui:Label text=" " display-tooltip-when-elided="true" enable-rich-text="true" style="width: 80%; font-size: 26px; white-space: nowrap; -unity-text-align: upper-left;" />
-                <ui:Button text="Next" display-tooltip-when-elided="true" style="flex-grow: 1; font-size: 24px;" />
+                <ui:Button text="Next" display-tooltip-when-elided="true" name="NextButton" style="flex-grow: 1; font-size: 24px;" />
             </ui:VisualElement>
             <ui:Label text="all Dialog Text Here fsfskl fjksdlfjdsjfkl jfklkjlsdjkldfjklas jdkljkldjakldjakldjakldjkladjklad klajdkla" display-tooltip-when-elided="true" style="flex-grow: 1; font-size: 30%; white-space: normal; height: 75%; -unity-text-align: upper-left;" />
         </ui:VisualElement>

@@ -142,7 +142,8 @@ public class CharacterControllerScript : MonoBehaviour
             if (controlCharacter)
             {
                 GameEvents.current.TriggerNextDialog();//Disable this laeter
-                buttonManager.InstantiateButtons(ladderList);
+                //buttonManager.InstantiateButtons(ladderList);
+                GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(ladderList);
                 turnManager.setCameraPos(getCharV3Int());
             }
             else

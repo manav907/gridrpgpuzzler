@@ -611,9 +611,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 418979304}
-  - component: {fileID: 418979302}
   - component: {fileID: 418979303}
+  - component: {fileID: 418979302}
+  - component: {fileID: 418979304}
   m_Layer: 5
   m_Name: InGameUI
   m_TagString: Untagged
@@ -637,16 +637,8 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 6db13319cd9967742a260441bb1dff78, type: 3}
   m_SortingOrder: 0
---- !u!222 &418979303
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 418979301}
-  m_CullTransparentMesh: 1
---- !u!224 &418979304
-RectTransform:
+--- !u!4 &418979303
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -660,11 +652,18 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &418979304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418979301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b1bec2032fb334dacf9ecfcbb8733e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3548,6 +3547,8 @@ MonoBehaviour:
   scriptManager: {fileID: 732592026}
   turnManager: {fileID: 0}
   mapManager: {fileID: 0}
+  moveDictionaryManager: {fileID: 0}
+  inGameUI: {fileID: 418979304}
   universalCalculator: {fileID: 0}
   tileDatas:
   - {fileID: 11400000, guid: cf96a52dbe483ab4ebde73314693d934, type: 2}

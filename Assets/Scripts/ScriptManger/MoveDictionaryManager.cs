@@ -84,7 +84,8 @@ public class MoveDictionaryManager : MonoBehaviour
             if (characterCS.doActionPointsRemainAfterAbility() == false)
             {
                 CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-                buttonManager.clearButtons();
+                //buttonManager.clearButtons();
+                GameEvents.current.inGameUI.ClearButtons();
                 this.GetComponent<TurnManager>().endTurn();
             }
             else

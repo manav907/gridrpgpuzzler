@@ -12,6 +12,8 @@ public class GameEvents : MonoBehaviour
     [SerializeField] GameObject scriptManager;
     public TurnManager turnManager;
     public MapManager mapManager;
+    public MoveDictionaryManager moveDictionaryManager;
+    public InGameUI inGameUI;
     public UniversalCalculator universalCalculator;
     [Header("TileMaps")]
     public List<TileData> tileDatas;
@@ -44,6 +46,7 @@ public class GameEvents : MonoBehaviour
         turnManager = scriptManager.GetComponent<TurnManager>();
         mapManager = scriptManager.GetComponent<MapManager>();
         universalCalculator = scriptManager.GetComponent<UniversalCalculator>();
+        moveDictionaryManager =scriptManager.GetComponent<MoveDictionaryManager>();
     }
     Dictionary<string, Transform> NameTagToTransform;
     public void setUpCamera()

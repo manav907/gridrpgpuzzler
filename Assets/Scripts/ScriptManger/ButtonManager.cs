@@ -66,6 +66,11 @@ public class ButtonManager : MonoBehaviour
             //Assigning On Click Functions
             Button thisButton = ActionButtons[i].GetComponent<Button>();
             thisButton.onClick.RemoveAllListeners();
+            GameEvents.current.inGameUI.addButton(stringOfAbilityName, delegate
+            {
+                moveDictionaryManager.doAction(compundAbility);
+                //Debug.Log("Button clicked: " + listCDHTEXT);
+            });
             thisButton.onClick.AddListener(delegate
             {
                 moveDictionaryManager.doAction(compundAbility);
