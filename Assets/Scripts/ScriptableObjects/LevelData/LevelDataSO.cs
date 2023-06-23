@@ -4,8 +4,6 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "New LevelData", menuName = "Level Data")]
