@@ -9,7 +9,7 @@
             <ui:VisualElement name="SideButtons" style="height: auto;">
                 <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" />
             </ui:VisualElement>
-            <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/BetaPallet/tilemap.png?fileID=-1870214800&amp;guid=03d189a1734c66d4db5020448a7223f9&amp;type=3#tilemap_468&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-scale: initial; align-items: center; flex-direction: row; align-self: center; height: 32px; justify-content: flex-start;">
+            <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/BetaPallet/tilemap.png?fileID=-1870214800&amp;guid=03d189a1734c66d4db5020448a7223f9&amp;type=3#tilemap_468&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-scale: initial; align-items: center; flex-direction: row; align-self: center; height: 10%; justify-content: flex-start; width: 100%;">
                 <ui:VisualElement name="CurrentCharacterData" style="width: auto; height: auto; max-width: 35px; max-height: 35px;" />
                 <ui:Label text="This tip can be sper long but that does not matter" display-tooltip-when-elided="true" name="Tip" style="-unity-text-align: lower-left; -unity-text-outline-color: rgb(0, 0, 0); text-shadow: -1px 1px 0 rgb(0, 0, 0); color: rgb(255, 255, 255); font-size: 26px; -unity-text-outline-width: 0.2px;" />
             </ui:VisualElement>

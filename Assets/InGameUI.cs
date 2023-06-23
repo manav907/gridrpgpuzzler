@@ -27,6 +27,7 @@ public class InGameUI : MonoBehaviour
         DialogBoxBar = root.Q<VisualElement>("DialogBox");
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
+        setUpUI();
 
 
         restartButton.clicked += GameEvents.current.reloadScene;
@@ -35,18 +36,23 @@ public class InGameUI : MonoBehaviour
 
         //initilizeArcadeModeGrid();
     }
-    public Sprite sprite;
-    public void setTip(string tip)
+    void setUpUI()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
+        //Debug.Log(TipBox.style.backgroundSize + " " + TipBox.style.backgroundRepeat);
+        TipBox.style.backgroundRepeat = new BackgroundRepeat(Repeat.Repeat, Repeat.Repeat);
+        TipBox.style.backgroundSize = new BackgroundSize(BackgroundSizeType.Contain);
+        Tip.text = "Kill All Enemies";
+    }
+    public Sprite sprite;
+    public void setTip(string tip)
+    {
+
+        //setUpUI();
+        Debug.Log(TipBox.style.backgroundSize + " " + TipBox.style.backgroundRepeat);
         Tip.text = tip;
-        //TipBox.style.backgroundRepeat = new BackgroundRepeat(Repeat.Repeat, Repeat.Repeat);
-        TipBox.style.backgroundRepeat = new BackgroundRepeat(Repeat.Round, Repeat.Round);
-        TipBox.style.backgroundSize = new BackgroundSize(BackgroundSizeType.Cover);
-        //TipBox.style.backgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Center);
-        //TipBox.style.backgroundPositionY = new BackgroundPosition(BackgroundPositionKeyword.Center);
     }
     public void MakeButtonsFromLadderCollapseFunction(List<LadderCollapseFunction> list)
     {
