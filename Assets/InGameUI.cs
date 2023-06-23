@@ -10,7 +10,8 @@ public class InGameUI : MonoBehaviour
     public Button exitButton;
     public Button NextButton;
     public Button AblityButtonExample;
-    public Label NameHint;
+    public VisualElement TipBox;
+    public Label Tip;
     public VisualElement AbilityButtonSideBar;
     public VisualElement DialogBoxBar;
 
@@ -24,7 +25,8 @@ public class InGameUI : MonoBehaviour
         AblityButtonExample = root.Q<Button>("ExampleButton");
         AbilityButtonSideBar = root.Q<VisualElement>("SideButtons");
         DialogBoxBar = root.Q<VisualElement>("DialogBox");
-        NameHint = root.Q<Label>("NameHint");
+        Tip = root.Q<Label>("Tip");
+        TipBox = root.Q<Label>("TipBox");
 
 
         restartButton.clicked += GameEvents.current.reloadScene;
@@ -33,9 +35,10 @@ public class InGameUI : MonoBehaviour
 
         //initilizeArcadeModeGrid();
     }
+    public Sprite sprite;
     public void setTip(string tip)
     {
-        NameHint.text = tip;
+        Tip.text = tip;
     }
     public void MakeButtonsFromLadderCollapseFunction(List<LadderCollapseFunction> list)
     {

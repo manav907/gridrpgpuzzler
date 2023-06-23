@@ -388,7 +388,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -2, y: 1, z: 0}
+  - first: {x: -3, y: -1, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 2
@@ -398,7 +398,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -1, y: 2, z: 0}
+  - first: {x: -2, y: 0, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 2
@@ -530,6 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b1bec2032fb334dacf9ecfcbb8733e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: -1870214800, guid: 03d189a1734c66d4db5020448a7223f9, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
