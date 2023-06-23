@@ -11,7 +11,6 @@ public class MoveDictionaryManager : MonoBehaviour
     MapManager mapManager;
     DataManager dataManager;
     UniversalCalculator universalCalculator;
-    ButtonManager buttonManager;
     [Header("Read Only Data")]
     private float moveTimeSpeed = 0.12f;
     private float waitBetweenOpetaions = 0.4f;
@@ -37,7 +36,6 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
-        buttonManager = this.GetComponent<ButtonManager>();
         dataManager = GetComponent<DataManager>();
         SetMoveDictionary();
     }
@@ -109,9 +107,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
     void addToolTip(string Tip, bool resetTip = false)
     {
-        if (resetTip == true)
-            toolTip.text = "";
-        toolTip.text += Tip;
+        GameEvents.current.inGameUI.setTip(Tip);
     }
     bool BasicActionInProgress = false;
     Vector3Int theroticalCurrentPos;

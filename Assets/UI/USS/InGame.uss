@@ -1,0 +1,9 @@
+.ButtonsThatShrinkToFit {
+    flex-basis: 10%;
+    font-size: 100%;
+    white-space: normal;
+    max-width: none;
+    max-height: initial;
+    -unity-text-align: middle-center;
+    width: auto;
+}

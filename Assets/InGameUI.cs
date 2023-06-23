@@ -10,6 +10,7 @@ public class InGameUI : MonoBehaviour
     public Button exitButton;
     public Button NextButton;
     public Button AblityButtonExample;
+    public Label NameHint;
     public VisualElement AbilityButtonSideBar;
     public VisualElement DialogBoxBar;
 
@@ -23,6 +24,7 @@ public class InGameUI : MonoBehaviour
         AblityButtonExample = root.Q<Button>("ExampleButton");
         AbilityButtonSideBar = root.Q<VisualElement>("SideButtons");
         DialogBoxBar = root.Q<VisualElement>("DialogBox");
+        NameHint = root.Q<Label>("NameHint");
 
 
         restartButton.clicked += GameEvents.current.reloadScene;
@@ -30,6 +32,10 @@ public class InGameUI : MonoBehaviour
         //backButtons.clicked += backButtonPressed;
 
         //initilizeArcadeModeGrid();
+    }
+    public void setTip(string tip)
+    {
+        NameHint.text = tip;
     }
     public void MakeButtonsFromLadderCollapseFunction(List<LadderCollapseFunction> list)
     {
@@ -66,7 +72,7 @@ public class InGameUI : MonoBehaviour
         newButton.name = nameOFButton;
         newButton.text = nameOFButton;
         newButton.style.height = AblityButtonExample.style.height;
-        newButton.style.fontSize = AblityButtonExample.style.fontSize;
+        //newButton.style.fontSize = AblityButtonExample.style.fontSize;
         newButton.clicked += action;
 
         return newButton;

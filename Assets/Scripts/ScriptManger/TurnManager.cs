@@ -17,7 +17,6 @@ public class TurnManager : MonoBehaviour
     }
     [Header("Reffrences to Important Game Objects")]
     GameObject gameController;
-    ButtonManager buttonManager;
     MapManager mapManager;
     MoveDictionaryManager moveDictionaryManager;
     ReticalManager reticalManager;
@@ -40,7 +39,6 @@ public class TurnManager : MonoBehaviour
     {
         OrderOfInteractableCharacters = new List<GameObject>();
         ListOfInteractableCharacters = new List<GameObject>();
-        buttonManager = this.gameObject.GetComponent<ButtonManager>();
         mapManager = this.GetComponent<MapManager>();
         moveDictionaryManager = this.GetComponent<MoveDictionaryManager>();
         reticalManager = this.GetComponent<ReticalManager>();
@@ -48,9 +46,7 @@ public class TurnManager : MonoBehaviour
         dataManager = GetComponent<DataManager>();
 
         gameController = this.gameObject;
-
-
-        buttonManager.setVariables();
+        
         dataManager.setVariables();
         mapManager.setVariables();
         moveDictionaryManager.setVariables();

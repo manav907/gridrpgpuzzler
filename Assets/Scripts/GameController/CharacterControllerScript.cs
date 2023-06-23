@@ -29,8 +29,6 @@ public class CharacterControllerScript : MonoBehaviour
     public CharacterData CharacterDataSO;
     public Vector3Int CellPosOfCharcter;
     [SerializeField] private TMPro.TextMeshPro Heatlh;
-    //[SerializeField] private TextMesh Heatlh;
-    private ButtonManager buttonManager;
     private MapManager mapManager;
     private TurnManager turnManager;
     public AnimationControllerScript animationControllerScript;
@@ -40,7 +38,6 @@ public class CharacterControllerScript : MonoBehaviour
 
     public void InitilizeCharacter(GameObject gameController)
     {
-        buttonManager = gameController.GetComponent<ButtonManager>();
         mapManager = gameController.GetComponent<MapManager>();
         turnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
