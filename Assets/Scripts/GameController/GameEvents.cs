@@ -46,7 +46,7 @@ public class GameEvents : MonoBehaviour
         turnManager = scriptManager.GetComponent<TurnManager>();
         mapManager = scriptManager.GetComponent<MapManager>();
         universalCalculator = scriptManager.GetComponent<UniversalCalculator>();
-        moveDictionaryManager =scriptManager.GetComponent<MoveDictionaryManager>();
+        moveDictionaryManager = scriptManager.GetComponent<MoveDictionaryManager>();
     }
     Dictionary<string, Transform> NameTagToTransform;
     public void setUpCamera()
@@ -117,19 +117,20 @@ public class GameEvents : MonoBehaviour
     }
     public void setText(string text)
     {
-        textBox.text = text;
+        inGameUI.setTip(text);
     }
     void CheckWinCondidion()
     {
         string gameWinDialog = "Event of Game Win";
         void winGameDialog()
         {
-            textBox.text = gameWinDialog;
+            //textBox.text = gameWinDialog;
+            setText(gameWinDialog);
 
-            //Setting Portrait transparency to 0
+           /*  //Setting Portrait transparency to 0
             Color spriteColor = imagePortraitReffrence.color;
             spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
-            imagePortraitReffrence.color = spriteColor;
+            imagePortraitReffrence.color = spriteColor; */
         }
         if (TotalEnemies == 0)
         {

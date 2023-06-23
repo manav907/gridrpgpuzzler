@@ -26,7 +26,7 @@ public class InGameUI : MonoBehaviour
         AbilityButtonSideBar = root.Q<VisualElement>("SideButtons");
         DialogBoxBar = root.Q<VisualElement>("DialogBox");
         Tip = root.Q<Label>("Tip");
-        TipBox = root.Q<Label>("TipBox");
+        TipBox = root.Q<VisualElement>("TipBox");
 
 
         restartButton.clicked += GameEvents.current.reloadScene;
@@ -38,7 +38,15 @@ public class InGameUI : MonoBehaviour
     public Sprite sprite;
     public void setTip(string tip)
     {
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        Tip = root.Q<Label>("Tip");
+        TipBox = root.Q<VisualElement>("TipBox");
         Tip.text = tip;
+        //TipBox.style.backgroundRepeat = new BackgroundRepeat(Repeat.Repeat, Repeat.Repeat);
+        TipBox.style.backgroundRepeat = new BackgroundRepeat(Repeat.Round, Repeat.Round);
+        TipBox.style.backgroundSize = new BackgroundSize(BackgroundSizeType.Cover);
+        //TipBox.style.backgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Center);
+        //TipBox.style.backgroundPositionY = new BackgroundPosition(BackgroundPositionKeyword.Center);
     }
     public void MakeButtonsFromLadderCollapseFunction(List<LadderCollapseFunction> list)
     {
@@ -46,7 +54,6 @@ public class InGameUI : MonoBehaviour
         for (int i = 0; i < list.Count; i++)
         {
             LadderCollapseFunction ladderCollapseFunction = list[i];
-            Debug.Log(ladderCollapseFunction);
             Action newAction = delegate { GameEvents.current.moveDictionaryManager.doAction(ladderCollapseFunction); };
 
             if (i >= actionsAssigned.Count)

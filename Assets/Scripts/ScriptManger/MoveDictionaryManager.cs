@@ -88,7 +88,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             else
             {
-                //StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Walk));
+                characterCS.BeginThisCharacterTurn();
             }
 
         }
