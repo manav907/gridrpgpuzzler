@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -189,6 +189,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 19eae719f71dbe646bc8bb3e6eaf0450, type: 2}
   - {fileID: 11400000, guid: bc17f350a44ac3f49b279bc3f544c36b, type: 2}
   - {fileID: 11400000, guid: 4a67248bfa0c4d74c8e20e6e6a5fe98f, type: 2}
+  - {fileID: 11400000, guid: d74ef8f13349c9347b9a55f8fd69d2e0, type: 2}
   - {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
   GridXLimit: 5
 --- !u!1 &615890425
@@ -231,9 +232,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

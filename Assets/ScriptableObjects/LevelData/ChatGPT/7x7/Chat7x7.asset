@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5222714fd87614146a8cf0525881ae67, type: 3}
-  m_Name: ExampleLevel
+  m_Name: Chat7x7
   m_EditorClassIdentifier: 
   Ground_Floor_Over:
     KeyValuePairs:

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 583c29115c7017e4bbba3c9f6bc16fc8, type: 3}
-  m_Name: newGen
+  m_Name: Chat7x7Prompt
   m_EditorClassIdentifier: 
   GridIntXCutOff: 7
   promptData: '1 1 1 1 1 1 1 1 2 0 0 3 1 1 1 0 3 0 0 0 1 1 1 1 0 1 0 1 1 0 0 0 0

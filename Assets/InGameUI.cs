@@ -51,7 +51,7 @@ public class InGameUI : MonoBehaviour
     {
 
         //setUpUI();
-        Debug.Log(TipBox.style.backgroundSize + " " + TipBox.style.backgroundRepeat);
+        //Debug.Log(TipBox.style.backgroundSize + " " + TipBox.style.backgroundRepeat);
         Tip.text = tip;
     }
     public void MakeButtonsFromLadderCollapseFunction(List<LadderCollapseFunction> list)
