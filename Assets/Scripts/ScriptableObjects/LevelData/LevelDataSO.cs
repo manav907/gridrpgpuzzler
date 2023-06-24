@@ -10,13 +10,12 @@ using UnityEngine.Tilemaps;
 public class LevelDataSO : ScriptableObject
 {
     [Header("TileMapData")]
-    [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Obstacles;
     [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor_Over;
     [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Ground_Floor;
     [Header("CharacterData")]
     [SerializeField] public SerializableDictionary<Vector3Int, TileBase> Character_Placeholder;
-    [SerializeField] public SerializableDictionary<TileBase, CharacterData> TileToChar;
-    
+    public LevelGenerator inputLevel;
+
     public Dictionary<Vector3Int, CharacterData> GenerateV3IntToCharacterDataDir()
     {
         var data = new Dictionary<Vector3Int, CharacterData>();
@@ -40,5 +39,11 @@ public class LevelDataSO : ScriptableObject
             }
         }
         return data;
+    }
+    public void createLevel()
+    {
+        Ground_Floor = inputLevel.Ground_Floor;
+        Character_Placeholder = inputLevel.Character_Placeholder;
+        Ground_Floor_Over = inputLevel.Ground_Floor_Over;
     }
 }
