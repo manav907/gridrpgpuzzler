@@ -9,7 +9,6 @@ public class MoveDictionaryManager : MonoBehaviour
     TurnManager turnManager;
     ReticalManager reticalManager;
     MapManager mapManager;
-    DataManager dataManager;
     UniversalCalculator universalCalculator;
     [Header("Read Only Data")]
     private float moveTimeSpeed = 0.12f;
@@ -23,20 +22,18 @@ public class MoveDictionaryManager : MonoBehaviour
     //[SerializeField] Ability currentAblity;
     [Header("Debug Data")]
     [SerializeField][TextArea] string ValidTargetListDebugInfo;
-    bool EditMapMode { get { return dataManager.EditMapMode; } }
-    int alternateRange { get { return dataManager.alternateRange; } }
-    bool checkValidActionTiles { get { return dataManager.checkValidActionTiles; } }
+    public bool EditMapMode = false;
+    [SerializeField] int alternateRange = 50;
+    [SerializeField] bool checkValidActionTiles = true;
 
     bool ShouldContinue;
-    [Header("Tool Tips")]
-    [SerializeField] private TMPro.TextMeshProUGUI toolTip;
     public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
-        dataManager = GetComponent<DataManager>();
+        
         SetMoveDictionary();
     }
 

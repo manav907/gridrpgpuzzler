@@ -20,7 +20,7 @@ public class LevelDataSO : ScriptableObject
     {
         var data = new Dictionary<Vector3Int, CharacterData>();
         Dictionary<Vector3Int, TileBase> Character_Placeholder = this.Character_Placeholder.returnDict();
-        Dictionary<TileBase, CharacterData> TileToChar = DataManager.current.tiltoCad.returnDict();
+        Dictionary<TileBase, CharacterData> TileToChar = GameEvents.current.tiltoCad.returnDict();
         foreach (var dataPair in Character_Placeholder)
         {
 

@@ -675,7 +675,6 @@ GameObject:
   - component: {fileID: 732592033}
   - component: {fileID: 732592034}
   - component: {fileID: 732592035}
-  - component: {fileID: 732592036}
   m_Layer: 0
   m_Name: ScriptManager
   m_TagString: Untagged
@@ -771,6 +770,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ValidTargetListDebugInfo: 
+  EditMapMode: 0
+  alternateRange: 50
+  checkValidActionTiles: 0
   toolTip: {fileID: 0}
 --- !u!114 &732592035
 MonoBehaviour:
@@ -784,38 +786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedb9c6d4a464264e928dfb0c6b14ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &732592036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 732592026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e01eff684a788c4e987850a8c348fe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EditMapMode: 0
-  alternateRange: 25
-  checkValidActionTiles: 0
-  tiltoCad:
-    KeyValuePairs:
-    - key: {fileID: 11400000, guid: 5b2adebf03ece5345b3a3a4ec34e13a9, type: 2}
-      value: {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
-    - key: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
-      value: {fileID: 11400000, guid: d18dc25da05cb7044b938c5a595aa3fb, type: 2}
-    - key: {fileID: 11400000, guid: c5b0130d31bc58f49b9d60835a5aa92a, type: 2}
-      value: {fileID: 11400000, guid: 5ae9fabda933b73429302837d58ac7f6, type: 2}
-    - key: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
-      value: {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
-    - key: {fileID: 11400000, guid: a22676e38653dad498de081a53b04e0a, type: 2}
-      value: {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
-    - key: {fileID: 11400000, guid: 757555f4ffae5bd47994053eac55b3d4, type: 2}
-      value: {fileID: 11400000, guid: 4e0008d6e885c484aa17b7513ba5f5d6, type: 2}
-    - key: {fileID: 11400000, guid: 7cf7cb54ec2f4d543937af14b2225f5e, type: 2}
-      value: {fileID: 11400000, guid: c20b30345564aaf469d8b2cb29563257, type: 2}
-  mapManager: {fileID: 0}
 --- !u!1 &898572561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,7 +1242,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 13
+      m_TileSpriteIndex: 14
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1312,7 +1282,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 12
+      m_TileSpriteIndex: 13
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2637,12 +2607,12 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 79
     m_Data: {fileID: -1959868721, guid: 506e2378e1bde6d43b1d192e7a531e2a, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 815120456, guid: 506e2378e1bde6d43b1d192e7a531e2a, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1044541866, guid: 506e2378e1bde6d43b1d192e7a531e2a, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 5
     m_Data: {fileID: -338116574, guid: 506e2378e1bde6d43b1d192e7a531e2a, type: 3}
   - m_RefCount: 2
@@ -2748,6 +2718,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cef59eb637bef15499926ba58c5f0c7f, type: 2}
   - {fileID: 11400000, guid: 058d9a1f02de28e4cafb4f10cdad59a6, type: 2}
   - {fileID: 11400000, guid: 3fca5c45e50d3234c9c4531fb8678f1e, type: 2}
+  tiltoCad:
+    KeyValuePairs:
+    - key: {fileID: 11400000, guid: 5b2adebf03ece5345b3a3a4ec34e13a9, type: 2}
+      value: {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
+    - key: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
+      value: {fileID: 11400000, guid: d18dc25da05cb7044b938c5a595aa3fb, type: 2}
+    - key: {fileID: 11400000, guid: c5b0130d31bc58f49b9d60835a5aa92a, type: 2}
+      value: {fileID: 11400000, guid: 5ae9fabda933b73429302837d58ac7f6, type: 2}
+    - key: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
+      value: {fileID: 11400000, guid: 51a007b691f1883489a38e7c31499656, type: 2}
+    - key: {fileID: 11400000, guid: a22676e38653dad498de081a53b04e0a, type: 2}
+      value: {fileID: 11400000, guid: 67866821609a015499d3d26f0262533f, type: 2}
+    - key: {fileID: 11400000, guid: 757555f4ffae5bd47994053eac55b3d4, type: 2}
+      value: {fileID: 11400000, guid: 4e0008d6e885c484aa17b7513ba5f5d6, type: 2}
+    - key: {fileID: 11400000, guid: 7cf7cb54ec2f4d543937af14b2225f5e, type: 2}
+      value: {fileID: 11400000, guid: c20b30345564aaf469d8b2cb29563257, type: 2}
   TileLayerConflict: []
   textBox: {fileID: 0}
   imagePortraitReffrence: {fileID: 0}

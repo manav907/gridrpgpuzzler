@@ -13,7 +13,7 @@ public class CharacterControllerScript : MonoBehaviour
     {
         get
         {
-            if (dataManager.EditMapMode == false)
+            if (moveDictionaryManager.EditMapMode == false)
                 return isPlayerCharacter;
             return true;
         }
@@ -32,7 +32,6 @@ public class CharacterControllerScript : MonoBehaviour
     private MapManager mapManager;
     private TurnManager turnManager;
     public AnimationControllerScript animationControllerScript;
-    DataManager dataManager;
     UniversalCalculator universalCalculator;
     [SerializeField] List<LadderCollapseFunction> ladderList;
 
@@ -41,7 +40,7 @@ public class CharacterControllerScript : MonoBehaviour
         mapManager = gameController.GetComponent<MapManager>();
         turnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
-        dataManager = gameController.GetComponent<DataManager>();
+        
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
         //Initilizing
         try

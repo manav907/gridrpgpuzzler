@@ -17,6 +17,7 @@ public class GameEvents : MonoBehaviour
     public UniversalCalculator universalCalculator;
     [Header("TileMaps")]
     public List<TileData> tileDatas;
+    public SerializableDictionary<TileBase, CharacterData> tiltoCad;
 
     [Header("Conflicts")]
     [SerializeField] public List<TileBase> TileLayerConflict;
@@ -127,10 +128,10 @@ public class GameEvents : MonoBehaviour
             //textBox.text = gameWinDialog;
             setText(gameWinDialog);
 
-           /*  //Setting Portrait transparency to 0
-            Color spriteColor = imagePortraitReffrence.color;
-            spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
-            imagePortraitReffrence.color = spriteColor; */
+            /*  //Setting Portrait transparency to 0
+             Color spriteColor = imagePortraitReffrence.color;
+             spriteColor.a = 0f; // Set alpha channel to 0 (fully transparent)
+             imagePortraitReffrence.color = spriteColor; */
         }
         if (TotalEnemies == 0)
         {
