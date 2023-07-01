@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -75,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -111,6 +116,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -123,6 +129,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -135,6 +142,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -144,10 +152,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_0
       rect:
         serializedVersion: 2
-        x: 6
+        x: 0
         y: 0
-        width: 23
-        height: 18
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,7 +163,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8c120ed54201d1478d7150bc2c77df4
+      spriteID: 2e1465eb52bb00048a6e4f89e5887295
       internalID: -449718637
       vertices: []
       indices: 
@@ -165,10 +173,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_1
       rect:
         serializedVersion: 2
-        x: 44
+        x: 38
         y: 0
-        width: 23
-        height: 16
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,7 +184,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a341818820d168e4fa5d58d6289d58c1
+      spriteID: 11ba57dbfcf70bb458ad91b3b36ce6f7
       internalID: -2008106479
       vertices: []
       indices: 
@@ -186,10 +194,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_2
       rect:
         serializedVersion: 2
-        x: 81
-        y: 4
-        width: 22
-        height: 14
+        x: 76
+        y: 0
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,7 +205,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4174896c34b9a3940b6a9e76101a9483
+      spriteID: c54820f3f7fea2c448ffc15836f5a051
       internalID: 178291502
       vertices: []
       indices: 
@@ -207,10 +215,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_3
       rect:
         serializedVersion: 2
-        x: 119
-        y: 5
-        width: 23
-        height: 15
+        x: 114
+        y: 0
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,7 +226,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ca356eaae317294f9273800b5887f30
+      spriteID: c80c5bfe529be1f4ebbf7079c5b036d8
       internalID: -50309809
       vertices: []
       indices: 
@@ -228,10 +236,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_4
       rect:
         serializedVersion: 2
-        x: 157
-        y: 4
-        width: 24
-        height: 17
+        x: 152
+        y: 0
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,7 +247,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71ee02564449a394591baad304be5ac5
+      spriteID: 54735cac2a8fad04f9c1a72f9505bea6
       internalID: 1938308862
       vertices: []
       indices: 
@@ -249,10 +257,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_5
       rect:
         serializedVersion: 2
-        x: 196
+        x: 190
         y: 0
-        width: 23
-        height: 18
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,7 +268,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19106664d7101154e873402c08be5d92
+      spriteID: dab9c057d8cf7a4428db92d8b02a7708
       internalID: -1353703594
       vertices: []
       indices: 
@@ -270,10 +278,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_6
       rect:
         serializedVersion: 2
-        x: 234
+        x: 228
         y: 0
-        width: 23
-        height: 16
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,7 +289,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f7c94ae1d8c9404b98b929b3568c87c
+      spriteID: c1fe14d74f3415e45a3fc72607807b79
       internalID: -1721590782
       vertices: []
       indices: 
@@ -291,10 +299,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_7
       rect:
         serializedVersion: 2
-        x: 271
-        y: 4
-        width: 22
-        height: 14
+        x: 266
+        y: 0
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,7 +310,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd4e3335c095ba24eb0e9f0d0d52dd36
+      spriteID: 38f69593afa3e5042b44c79ef73b4e7c
       internalID: -536690797
       vertices: []
       indices: 
@@ -312,10 +320,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_8
       rect:
         serializedVersion: 2
-        x: 309
-        y: 5
-        width: 22
-        height: 15
+        x: 304
+        y: 0
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -323,7 +331,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 679d953daae129e4eaa4ffa6746bf323
+      spriteID: 3d44ee3d2cbbdfd4da5e61d42d941546
       internalID: 110021029
       vertices: []
       indices: 
@@ -333,10 +341,10 @@ TextureImporter:
       name: Goblin_Barrel_01_Move_10x1_9
       rect:
         serializedVersion: 2
-        x: 347
-        y: 4
-        width: 23
-        height: 17
+        x: 342
+        y: 0
+        width: 38
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -344,7 +352,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e5eca870bbe6994da9cff9a0f25b957
+      spriteID: 3d57bd026ea31514bb42f1a43aa08adb
       internalID: 1528336606
       vertices: []
       indices: 
@@ -362,18 +370,17 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Goblin_Barrel_01_Move_10x1_0: -449718637
+      Goblin_Barrel_01_Move_10x1_1: -2008106479
       Goblin_Barrel_01_Move_10x1_2: 178291502
-      Goblin_Barrel_01_Move_10x1_8: 110021029
-      Goblin_Barrel_01_Move_10x1_7: -536690797
+      Goblin_Barrel_01_Move_10x1_3: -50309809
       Goblin_Barrel_01_Move_10x1_4: 1938308862
       Goblin_Barrel_01_Move_10x1_5: -1353703594
-      Goblin_Barrel_01_Move_10x1_1: -2008106479
-      Goblin_Barrel_01_Move_10x1_3: -50309809
       Goblin_Barrel_01_Move_10x1_6: -1721590782
+      Goblin_Barrel_01_Move_10x1_7: -536690797
+      Goblin_Barrel_01_Move_10x1_8: 110021029
       Goblin_Barrel_01_Move_10x1_9: 1528336606
-  spritePackingTag: 
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

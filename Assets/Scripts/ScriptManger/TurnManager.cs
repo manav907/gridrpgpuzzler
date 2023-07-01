@@ -33,7 +33,7 @@ public class TurnManager : MonoBehaviour
     [Header("Current Turn Data")]
     public static GameObject thisCharacter;
     CharacterControllerScript thisCharacterData;
-    [SerializeField] int TurnCountInt = 0;
+    int TurnCountInt = 0;
     void GetGameObjects()
     {
         OrderOfInteractableCharacters = new List<GameObject>();
@@ -134,8 +134,7 @@ public class TurnManager : MonoBehaviour
         }
         beginTurnIfPossible();
     }
-    [Header("Turn Stuff")]
-    public int TurnLoop = -1;
+    int TurnLoop = -1;
     void recalculateOrder()
     {
         //reticalManager.reDrawShadows();

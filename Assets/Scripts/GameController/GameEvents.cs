@@ -10,9 +10,9 @@ public class GameEvents : MonoBehaviour
 {
     [Header("Reffrences")]
     [SerializeField] GameObject scriptManager;
-    public TurnManager turnManager;
-    public MapManager mapManager;
-    public MoveDictionaryManager moveDictionaryManager;
+    [HideInInspector] public TurnManager turnManager;
+    [HideInInspector] public MapManager mapManager;
+    [HideInInspector] public MoveDictionaryManager moveDictionaryManager;
     public InGameUI inGameUI;
     public UniversalCalculator universalCalculator;
     [Header("TileMaps")]
@@ -170,8 +170,6 @@ public class GameEvents : MonoBehaviour
     public event Action TriggerNextDialogAction;
     public void TriggerNextDialog()
     {
-        turnLoop = turnManager.TurnLoop;
-        currentCharacterName = TurnManager.thisCharacter.GetComponent<CharacterControllerScript>().CharacterDataSO.name;
         if (TriggerNextDialogAction != null)
             TriggerNextDialogAction();
     }
