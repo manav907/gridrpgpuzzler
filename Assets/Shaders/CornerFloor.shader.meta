@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: eadc6d659beabaf429cdc90b6e12ed8f
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _MainTex: {instanceID: 0}
+  - _CornerTile1: {instanceID: 0}
+  - _CornerTile2: {instanceID: 0}
+  - _CornerTile3: {instanceID: 0}
+  - _CornerTile4: {instanceID: 0}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
