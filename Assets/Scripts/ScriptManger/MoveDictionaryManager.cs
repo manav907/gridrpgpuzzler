@@ -33,7 +33,7 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
-        
+
         SetMoveDictionary();
     }
 
@@ -159,6 +159,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         lastTime = currentTime;
                     }
                     //
+                    GameEvents.current.inGameUI.ClearButtons();//Clearing Buttons while action is in progress
                     ActionEffectParams actionEffectParams = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
                     TypeOfAction actiontype = actionEffectParams.typeOfAction;
                     AnimationMovementType animationMovementType = actionEffectParams.animationMovementType;
@@ -193,6 +194,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle, false));
                         yield return new WaitForSeconds(waitBetweenOpetaions);
                     }
+
                     if (animationLoopType == AnimationLoopType.forAction)
                     {
                         yield return StartCoroutine(animationActionFunction());
