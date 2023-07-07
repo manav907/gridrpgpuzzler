@@ -116,7 +116,7 @@ public class MoveDictionaryManager : MonoBehaviour
     Dictionary<string, List<Vector3Int>> variableNameToData;
     public void doAction(LadderCollapseFunction ladderCollapseFunction)
     {
-        //theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+        theroticalCurrentPos = characterCS.getCharV3Int();
         //Debug.Log("doAction Cast as V3" + theroticalCurrentPos);
         setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
         StartCoroutine(SequenceOfEvents());
