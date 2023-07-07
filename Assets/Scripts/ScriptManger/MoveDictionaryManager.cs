@@ -249,6 +249,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         //Declaring Variables
         float rangeOfAction = basicAction.getRangeOfAction();
+        float magnititudeOfAction = basicAction.getMagnititudeOfAction();
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction + " was zero");
         List<Vector3Int> listOfValidtargets = getValidTargetList(basicAction);
@@ -259,6 +260,7 @@ public class MoveDictionaryManager : MonoBehaviour
         //SettingUPReticle
         reticalManager.reticalShapes = basicAction.areaOfEffectType;
         reticalManager.rangeOfAction = rangeOfAction;
+        reticalManager.magnititideOfAction = magnititudeOfAction;
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
@@ -487,6 +489,7 @@ public enum AbilityName
 public class ActionInputParams
 {
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
+    [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
     public ReticalShapes areaOfEffectType;
     public ValidTileType validTileType;
     public OptimalTargetTip optimalTargetTip;
@@ -507,6 +510,11 @@ public class ActionInputParams
     public float getRangeOfAction()
     {
         return (float)rangeOfActionEnum / 10;
+    }
+    public float getMagnititudeOfAction()
+    {
+        return (float)magnititudeOfActionEnum / 10;
+
     }
 }
 public enum CoRoutineStateCheck

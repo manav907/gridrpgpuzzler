@@ -13,6 +13,7 @@ public class ReticalManager : MonoBehaviour
     public ReticalShapes reticalShapes = ReticalShapes.SSingle;
     public Vector3Int fromPoint = Vector3Int.zero;
     public float rangeOfAction;
+    public float magnititideOfAction;
 
     [Header("Retical References")]
     [SerializeField] Vector3 reticalPos;
@@ -77,7 +78,7 @@ public class ReticalManager : MonoBehaviour
         {
 
             //retiacalTiles.AddRange(universalCalculator.getSimpleArc(fromPoint, atPoint, rangeOfAction));
-            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, rangeOfAction));
+            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, magnititideOfAction));
             retiacalTiles.Remove(fromPoint);
         }
         else if (reticalShapes == ReticalShapes.S3x3)
