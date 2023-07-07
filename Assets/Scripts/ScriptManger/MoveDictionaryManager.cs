@@ -43,6 +43,8 @@ public class MoveDictionaryManager : MonoBehaviour
         //Debug.Log(thisCharacter.name);//
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
         theroticalCurrentPos = characterCS.getCharV3Int();
+        reticalManager.fromPoint = theroticalCurrentPos;
+        //Debug.Log("GetThisCharData" + theroticalCurrentPos);
     }
     Dictionary<TypeOfAction, Action> abilityNameToAction;
 
@@ -114,7 +116,8 @@ public class MoveDictionaryManager : MonoBehaviour
     Dictionary<string, List<Vector3Int>> variableNameToData;
     public void doAction(LadderCollapseFunction ladderCollapseFunction)
     {
-        theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+        //theroticalCurrentPos = universalCalculator.castAsV3Int(thisCharacter.transform.position);
+        //Debug.Log("doAction Cast as V3" + theroticalCurrentPos);
         setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
         StartCoroutine(SequenceOfEvents());
         IEnumerator SequenceOfEvents()
