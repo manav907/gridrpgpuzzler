@@ -40,11 +40,9 @@ public class MoveDictionaryManager : MonoBehaviour
     public void getThisCharacterData()
     {
         thisCharacter = TurnManager.thisCharacter;
-        //Debug.Log(thisCharacter.name);//
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
         theroticalCurrentPos = characterCS.getCharV3Int();
         reticalManager.fromPoint = theroticalCurrentPos;
-        //Debug.Log("GetThisCharData" + theroticalCurrentPos);
     }
     Dictionary<TypeOfAction, Action> abilityNameToAction;
 
@@ -71,10 +69,8 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void apply_SelfMove()
         {
-            var movePoints = new List<Vector3Int>();
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
             mapManager.UpdateCharacterPosistion(currentPosition, universalCalculator.castAsV3Int(tryHere), thisCharacter);
-            movePoints.Add(universalCalculator.castAsV3Int(tryHere));
         }
         void apply_TryEndTurn()
         {
@@ -109,7 +105,7 @@ public class MoveDictionaryManager : MonoBehaviour
         GameEvents.current.inGameUI.setTip(Tip);
     }
     bool BasicActionInProgress = false;
-    Vector3Int theroticalCurrentPos;
+    [SerializeField] Vector3Int theroticalCurrentPos;
     int stageOfAction;
 
     string currentVarirable;
@@ -117,7 +113,6 @@ public class MoveDictionaryManager : MonoBehaviour
     public void doAction(LadderCollapseFunction ladderCollapseFunction)
     {
         theroticalCurrentPos = characterCS.getCharV3Int();
-        //Debug.Log("doAction Cast as V3" + theroticalCurrentPos);
         setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
         StartCoroutine(SequenceOfEvents());
         IEnumerator SequenceOfEvents()
@@ -193,6 +188,7 @@ public class MoveDictionaryManager : MonoBehaviour
                     }
                     IEnumerator afterAnimationOfAction()
                     {
+                        theroticalCurrentPos = characterCS.getCharV3Int();
                         StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
                         StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle, false));
                         yield return new WaitForSeconds(waitBetweenOpetaions);
@@ -260,6 +256,9 @@ public class MoveDictionaryManager : MonoBehaviour
         ShouldContinue = false;
 
         List<Vector3Int> tempData = new List<Vector3Int>();
+        //SettingUPReticle
+        reticalManager.reticalShapes = basicAction.areaOfEffectType;
+        reticalManager.rangeOfAction = rangeOfAction;
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
@@ -272,8 +271,7 @@ public class MoveDictionaryManager : MonoBehaviour
         else//if it is the player character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-            reticalManager.reticalShapes = basicAction.areaOfEffectType;
-            reticalManager.rangeOfAction = rangeOfAction;
+
             addToolTip("select Purple Tile To Contine with Action " + basicAction + " Or Right Click to Cancel", true);
 
             setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
@@ -283,12 +281,15 @@ public class MoveDictionaryManager : MonoBehaviour
 
             tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
 
+
             reticalManager.reticalShapes = ReticalShapes.SSingle;
         }
         if (basicAction.updateTheroticalPos)
         {
-            theroticalCurrentPos = universalCalculator.castAsV3Int(tryHere);
+            theroticalCurrentPos = tempData.Last();
+            tryHere = theroticalCurrentPos;
         }
+
         foreach (Vector3Int pos in tempData)
         {
             if (DeterminValidTileTarget(pos))
@@ -332,6 +333,7 @@ public class MoveDictionaryManager : MonoBehaviour
         bool CheckMovePoint()
         {
             if (ShouldContinue && listOfValidtargets.Contains(universalCalculator.castAsV3Int(tryHere)) && listOfValidtargets.Count != 0)
+            //if (ShouldContinue && listOfValidtargets.Count != 0)
             {
                 return true;
             }

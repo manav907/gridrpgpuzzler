@@ -96,7 +96,8 @@ public class ReticalManager : MonoBehaviour
     {
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
-        return Grid.WorldToCell(worldPos);
+        //return Grid.WorldToCell(worldPos);
+        return universalCalculator.generateSingleSnapPoints(fromPoint, universalCalculator.castAsV3Int(Grid.WorldToCell(worldPos)))[0];
     }
     //Tile Stuff
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles
