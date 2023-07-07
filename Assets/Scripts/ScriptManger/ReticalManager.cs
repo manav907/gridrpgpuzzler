@@ -69,9 +69,9 @@ public class ReticalManager : MonoBehaviour
         var retiacalTiles = new List<Vector3Int>();
         if (reticalShapes == ReticalShapes.SSingle)
         {
-            //retiacalTiles.Add(atPoint);
+            retiacalTiles.Add(atPoint);
             //Debug.Log(fromPoint + " " + TurnManager.thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int());
-            retiacalTiles.AddRange(universalCalculator.generateSingleSnapPoints(fromPoint, atPoint));
+            //retiacalTiles.AddRange(universalCalculator.generateSingleSnapPoints(fromPoint, atPoint));
         }
         else if (reticalShapes == ReticalShapes.SSweep)
         {
