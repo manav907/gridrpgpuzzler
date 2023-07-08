@@ -40,7 +40,7 @@ public class CharacterControllerScript : MonoBehaviour
         mapManager = gameController.GetComponent<MapManager>();
         turnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
-        
+
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
         //Initilizing
         try
@@ -114,14 +114,13 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
     public int actionPoints = 1;
+    public int defaultActionPoints = 1;
     public bool doActionPointsRemainAfterAbility()
     {
-        actionPoints--;
-        if (actionPoints == 0)
+        if (actionPoints <= 0)
             return false;
         else
         {
-            determineAction();
             return true;
         }
     }
@@ -133,8 +132,6 @@ public class CharacterControllerScript : MonoBehaviour
         {
             //animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
             StartCoroutine(animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Walk));
-            actionPoints = 1;//Remove This later
-                             //buttonManager.clearButtons();
             if (controlCharacter)
             {
                 GameEvents.current.TriggerNextDialog();//Disable this laeter
@@ -150,12 +147,20 @@ public class CharacterControllerScript : MonoBehaviour
     }
     [SerializeField] Vector3Int currentTarget;
     int GhostVision = 1;
-    Dictionary<TypeOfAction, LadderCollapseFunction> abilityMap()
+    Dictionary<TypeOfAction, List<LadderCollapseFunction>> abilityMap()
     {
-        var newDict = new Dictionary<TypeOfAction, LadderCollapseFunction>();
+        var newDict = new Dictionary<TypeOfAction, List<LadderCollapseFunction>>();
         foreach (var ability in ladderList)
         {
-            newDict.Add(ability.primaryUseForAction, ability);
+            if (ability.ActionPointCost <= actionPoints)
+            {
+                if (!newDict.ContainsKey(ability.primaryUseForAction))
+                {
+                    newDict.Add(ability.primaryUseForAction, new List<LadderCollapseFunction>());
+                }
+                newDict[ability.primaryUseForAction].Add(ability);
+            }
+
         }
         return newDict;
     }
@@ -164,56 +169,69 @@ public class CharacterControllerScript : MonoBehaviour
 
         if (checkAI)
             Debug.Log("Determining Action");
-        Vector3Int thisCharpos = getCharV3Int();
-        var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
         var optionsofAbilities = abilityMap();
-        //GhostVision for tracking after leaving Vision
-        var targetList = listOfPossibleTargets(VisionList);
-        var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage].SetDataAtIndex[0]);
-
-        //Debug.LogError("AI Stuf Needs Rework");
-        if (targetList.Count == 0)
+        if (actionPoints > 0)
         {
-            if (checkAI)
-                Debug.Log("Ideling");
-            moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_TryEndTurn]);
-            return;
+            Vector3Int thisCharpos = getCharV3Int();
+            var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
+
+            //GhostVision for tracking after leaving Vision
+            var targetList = listOfPossibleTargets(VisionList);
+
+            List<Vector3Int> attackRangeList = new List<Vector3Int>();
+            if (optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
+            {
+                attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0]);
+            }
+            //Debug.LogError("AI Stuf Needs Rework");
+            if (targetList.Count == 0)
+            {
+                if (checkAI)
+                    Debug.Log("Ideling");
+                moveDictionaryManager.callForceEndTurn();
+                return;
+            }
+            else
+            {
+                currentTarget = selectOptimalTarget();
+                if (attackRangeList.Contains(currentTarget) && optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
+                {
+                    if (checkAI)
+                        Debug.Log("Attacking");
+                    //moveDictionaryManager.doAction(AbilityName.Attack);
+                    moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
+                }
+                else if (true && optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
+                {
+                    if (checkAI)
+                        Debug.Log("Moving");
+                    moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+                }
+            }
+            //determineAction();
+            List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
+            {
+                var OrderOfInteractableCharacters = turnManager.OrderOfInteractableCharacters;
+                List<Vector3Int> thisList = new List<Vector3Int>();
+                foreach (GameObject character in OrderOfInteractableCharacters)
+                {
+                    CharacterControllerScript CSS = character.GetComponent<CharacterControllerScript>();
+                    Vector3Int positionofCSS = CSS.getCharV3Int();
+                    if (visionList.Contains(positionofCSS))//if Character is in vision
+                        if (CSS.controlCharacter)//if is Player Character
+                            thisList.Add(positionofCSS);
+                }
+                thisList.Remove(thisCharpos);
+                return thisList;
+            }
+            Vector3Int selectOptimalTarget()
+            {
+                return universalCalculator.SortListAccordingtoDistanceFromPoint(targetList, getCharV3Int())[0];
+            }
         }
         else
         {
-            currentTarget = selectOptimalTarget();
-            if (attackRangeList.Contains(currentTarget))
-            {
-                if (checkAI)
-                    Debug.Log("Attacking");
-                //moveDictionaryManager.doAction(AbilityName.Attack);
-                moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage]);
-            }
-            else if (true)//if character not in attack range
-            {
-                if (checkAI)
-                    Debug.Log("Moving");
-                moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove]);
-            }
-        }
-        List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
-        {
-            var OrderOfInteractableCharacters = turnManager.OrderOfInteractableCharacters;
-            List<Vector3Int> thisList = new List<Vector3Int>();
-            foreach (GameObject character in OrderOfInteractableCharacters)
-            {
-                CharacterControllerScript CSS = character.GetComponent<CharacterControllerScript>();
-                Vector3Int positionofCSS = CSS.getCharV3Int();
-                if (visionList.Contains(positionofCSS))//if Character is in vision
-                    if (CSS.controlCharacter)//if is Player Character
-                        thisList.Add(positionofCSS);
-            }
-            thisList.Remove(thisCharpos);
-            return thisList;
-        }
-        Vector3Int selectOptimalTarget()
-        {
-            return universalCalculator.SortListAccordingtoDistanceFromPoint(targetList, getCharV3Int())[0];
+            moveDictionaryManager.callForceEndTurn();
         }
     }
     public Vector3Int getCharV3Int()

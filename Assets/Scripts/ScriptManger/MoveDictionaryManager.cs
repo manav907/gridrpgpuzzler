@@ -44,6 +44,10 @@ public class MoveDictionaryManager : MonoBehaviour
         theroticalCurrentPos = characterCS.getCharV3Int();
         reticalManager.fromPoint = theroticalCurrentPos;
     }
+    public void callForceEndTurn()
+    {
+        abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
+    }
     Dictionary<TypeOfAction, Action> abilityNameToAction;
 
     void SetMoveDictionary()
@@ -74,17 +78,9 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void apply_TryEndTurn()
         {
-            if (characterCS.doActionPointsRemainAfterAbility() == false)
-            {
-                CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-                //buttonManager.clearButtons();
-                GameEvents.current.inGameUI.ClearButtons();
-                this.GetComponent<TurnManager>().endTurn();
-            }
-            else
-            {
-                characterCS.BeginThisCharacterTurn();
-            }
+            CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
+            GameEvents.current.inGameUI.ClearButtons();
+            this.GetComponent<TurnManager>().endTurn();
 
         }
         /* void DoubleTeam())
@@ -112,6 +108,16 @@ public class MoveDictionaryManager : MonoBehaviour
     Dictionary<string, List<Vector3Int>> variableNameToData;
     public void doAction(LadderCollapseFunction ladderCollapseFunction)
     {
+        if (characterCS.actionPoints < ladderCollapseFunction.ActionPointCost)
+        {
+            addToolTip("The Ability " + ladderCollapseFunction.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
+            return;
+        }
+        else if (ladderCollapseFunction.primaryUseForAction == TypeOfAction.apply_TryEndTurn)
+        {
+            abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
+            return;
+        }
         theroticalCurrentPos = characterCS.getCharV3Int();
         setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
         StartCoroutine(SequenceOfEvents());
@@ -221,7 +227,14 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
-                abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
+                characterCS.actionPoints = characterCS.actionPoints - ladderCollapseFunction.ActionPointCost;
+                if (characterCS.doActionPointsRemainAfterAbility())
+                    characterCS.BeginThisCharacterTurn();
+                else
+                {
+                callForceEndTurn();
+                }
+                //abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
                 ///Debug.LogError("Hey End Turn is Disableed");
             }
             yield return null;

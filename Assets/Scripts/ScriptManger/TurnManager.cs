@@ -89,7 +89,9 @@ public class TurnManager : MonoBehaviour
         else
         {
             setCharacterData();//sets new chracterData
+            thisCharacterData.actionPoints = thisCharacterData.defaultActionPoints;
             thisCharacterData.BeginThisCharacterTurn();
+
         }
         void triggerGameEnd()
         {
