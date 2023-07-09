@@ -6,7 +6,6 @@ public class LadderCollapseFunction : ScriptableObject
 {
     public string Name;
     public TypeOfAction primaryUseForAction;
-    public int ActionPointCost = 1;
     public List<string> Varirables;
     public SerializableDictionary<LadderCollapseFunctionEnums, string> invokeFunction;
     public List<ActionInputParams> SetDataAtIndex;

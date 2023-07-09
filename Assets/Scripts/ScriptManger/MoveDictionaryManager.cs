@@ -108,7 +108,9 @@ public class MoveDictionaryManager : MonoBehaviour
     Dictionary<string, List<Vector3Int>> variableNameToData;
     public void doAction(LadderCollapseFunction ladderCollapseFunction)
     {
-        if (characterCS.actionPoints < ladderCollapseFunction.ActionPointCost)
+        int costOfaction = 0;
+        costOfaction = characterCS.abilityToCost.returnDict()[ladderCollapseFunction];
+        if (characterCS.actionPoints < costOfaction)
         {
             addToolTip("The Ability " + ladderCollapseFunction.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
             return;
@@ -227,12 +229,12 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
-                characterCS.actionPoints = characterCS.actionPoints - ladderCollapseFunction.ActionPointCost;
+                characterCS.actionPoints = characterCS.actionPoints - costOfaction;
                 if (characterCS.doActionPointsRemainAfterAbility())
                     characterCS.BeginThisCharacterTurn();
                 else
                 {
-                callForceEndTurn();
+                    callForceEndTurn();
                 }
                 //abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
                 ///Debug.LogError("Hey End Turn is Disableed");

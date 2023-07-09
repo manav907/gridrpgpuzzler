@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: EndTurn
   primaryUseForAction: 3
-  ActionPointCost: 0
   Varirables:
   - 'New Varirable '
   invokeFunction:
@@ -27,5 +26,5 @@ MonoBehaviour:
   DoActionFromDataAtIndex:
   - typeOfAction: 3
     doActionTillKeyFrameAnimation: 0
-    animationMovementType: 0
-    loopType: 0
+    animationMovementType: 1
+    loopType: 1

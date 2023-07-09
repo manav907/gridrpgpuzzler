@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
-  m_Name: PinkHairGuy
+  m_Name: Dwarf
   m_EditorClassIdentifier: 
   InstanceID: 1
   characterName: Dwarf
@@ -21,9 +21,20 @@ MonoBehaviour:
   attackDamage: 1
   speedValue: 7
   rangeOfVision: 5
+  defaultActionPoints: 1
   canWalkOn: 01000000
   LadderAbility:
   - {fileID: 11400000, guid: d1cbae79bdc4c4040843070851debcbb, type: 2}
   - {fileID: 11400000, guid: 7ad13331415d0144abf19dee07a7abc6, type: 2}
   - {fileID: 11400000, guid: ea844d5ebae2f534f9d4509e13283985, type: 2}
   - {fileID: 11400000, guid: 6efe7ecb0904b864cbe7959f70e64fcf, type: 2}
+  abilityToCost:
+    KeyValuePairs:
+    - key: {fileID: 11400000, guid: 7ad13331415d0144abf19dee07a7abc6, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: d1cbae79bdc4c4040843070851debcbb, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: ea844d5ebae2f534f9d4509e13283985, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: 6efe7ecb0904b864cbe7959f70e64fcf, type: 2}
+      value: 0

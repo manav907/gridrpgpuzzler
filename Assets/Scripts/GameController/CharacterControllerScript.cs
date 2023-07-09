@@ -33,7 +33,7 @@ public class CharacterControllerScript : MonoBehaviour
     private TurnManager turnManager;
     public AnimationControllerScript animationControllerScript;
     UniversalCalculator universalCalculator;
-    [SerializeField] List<LadderCollapseFunction> ladderList;
+    public SerializableDictionary<LadderCollapseFunction, int> abilityToCost;
 
     public void InitilizeCharacter(GameObject gameController)
     {
@@ -63,8 +63,8 @@ public class CharacterControllerScript : MonoBehaviour
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
             //Rewordk This
-            //ladderList.AddRange(GlobalCal.createCopyListUsingConstructor(CharacterDataSO.LadderAbility));
-            ladderList = CharacterDataSO.LadderAbility;
+            defaultActionPoints = CharacterDataSO.defaultActionPoints;
+            abilityToCost = CharacterDataSO.abilityToCost;
             //Setting Data
             //Setting Specific Name
             this.name = characterName + " " + CharacterDataSO.InstanceID;
@@ -75,16 +75,6 @@ public class CharacterControllerScript : MonoBehaviour
             animationControllerScript.setVariables(CharacterDataSO.characterAnimationData);
             //Methods
         }
-    }
-    public void saveCharacterDataToCSO()
-    {
-        CharacterDataSO.characterName = characterName;
-        CharacterDataSO.isPlayerCharacter = isPlayerCharacter;
-        CharacterDataSO.health = health;
-        CharacterDataSO.attackDamage = attackDamage;
-        CharacterDataSO.speedValue = speedValue;
-        CharacterDataSO.rangeOfVision = rangeOfVision;
-        CharacterDataSO.canWalkOn = canWalkOn;
     }
     public bool CheckIfCharacterIsDead()
     {
@@ -135,8 +125,9 @@ public class CharacterControllerScript : MonoBehaviour
             if (controlCharacter)
             {
                 GameEvents.current.TriggerNextDialog();//Disable this laeter
-                //buttonManager.InstantiateButtons(ladderList);
-                GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(ladderList);
+                List<LadderCollapseFunction> allAbilities = new List<LadderCollapseFunction>();
+                allAbilities.AddRange(abilityToCost.Keys());
+                GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(allAbilities);
                 turnManager.setCameraPos(getCharV3Int());
             }
             else
@@ -150,17 +141,17 @@ public class CharacterControllerScript : MonoBehaviour
     Dictionary<TypeOfAction, List<LadderCollapseFunction>> abilityMap()
     {
         var newDict = new Dictionary<TypeOfAction, List<LadderCollapseFunction>>();
-        foreach (var ability in ladderList)
+        foreach (var keypair in abilityToCost.KeyValuePairs)
         {
-            if (ability.ActionPointCost <= actionPoints)
+            if (keypair.value <= actionPoints)
             {
-                if (!newDict.ContainsKey(ability.primaryUseForAction))
+                if (!newDict.ContainsKey(keypair.key.primaryUseForAction))
                 {
-                    newDict.Add(ability.primaryUseForAction, new List<LadderCollapseFunction>());
+                    newDict.Add(keypair.key.primaryUseForAction, new List<LadderCollapseFunction>());
                 }
-                newDict[ability.primaryUseForAction].Add(ability);
+                newDict[keypair.key.primaryUseForAction].Add(keypair.key);
+                Debug.Log(characterName + " Character added " + keypair.key.Name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
             }
-
         }
         return newDict;
     }

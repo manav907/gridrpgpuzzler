@@ -21,8 +21,17 @@ MonoBehaviour:
   attackDamage: 2
   speedValue: 3
   rangeOfVision: 5
+  defaultActionPoints: 3
   canWalkOn: 0100000002000000
   LadderAbility:
   - {fileID: 11400000, guid: 9215bd0b3ef5f9e4cb5a434c0d810f67, type: 2}
   - {fileID: 11400000, guid: edbbb701ab4f8ec4db41429ad0935730, type: 2}
   - {fileID: 11400000, guid: 6efe7ecb0904b864cbe7959f70e64fcf, type: 2}
+  abilityToCost:
+    KeyValuePairs:
+    - key: {fileID: 11400000, guid: 9215bd0b3ef5f9e4cb5a434c0d810f67, type: 2}
+      value: 3
+    - key: {fileID: 11400000, guid: d1cbae79bdc4c4040843070851debcbb, type: 2}
+      value: 2
+    - key: {fileID: 11400000, guid: 2ee913e6db606ab42a3124bfb98fc05e, type: 2}
+      value: 1

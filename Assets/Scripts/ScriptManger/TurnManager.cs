@@ -95,7 +95,7 @@ public class TurnManager : MonoBehaviour
         }
         void triggerGameEnd()
         {
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
             GameEvents.current.setText("Game Over");
         }
         void setCharacterData()
