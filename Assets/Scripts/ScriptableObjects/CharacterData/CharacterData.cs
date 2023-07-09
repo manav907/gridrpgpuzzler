@@ -19,7 +19,6 @@ public class CharacterData : ScriptableObject
     public int defaultActionPoints = 1;
     //Custom Data Types
     public List<GroundFloorType> canWalkOn;
-    public List<LadderCollapseFunction> LadderAbility;
     public SerializableDictionary<LadderCollapseFunction, int> abilityToCost;
 
     public CharacterData()
@@ -36,7 +35,6 @@ public class CharacterData : ScriptableObject
         speedValue = characterData.speedValue;
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        LadderAbility = new List<LadderCollapseFunction>(characterData.LadderAbility);
         defaultActionPoints = characterData.defaultActionPoints;
         abilityToCost = characterData.abilityToCost;
         Faction = characterData.Faction;
@@ -57,7 +55,6 @@ public class CharacterData : ScriptableObject
         speedValue = characterData.speedValue;
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        LadderAbility = new List<LadderCollapseFunction>(characterData.LadderAbility);
         defaultActionPoints = characterData.defaultActionPoints;
         abilityToCost = characterData.abilityToCost;
         Faction = characterData.Faction;

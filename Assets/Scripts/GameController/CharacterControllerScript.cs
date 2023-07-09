@@ -150,7 +150,7 @@ public class CharacterControllerScript : MonoBehaviour
                     newDict.Add(keypair.key.primaryUseForAction, new List<LadderCollapseFunction>());
                 }
                 newDict[keypair.key.primaryUseForAction].Add(keypair.key);
-                Debug.Log(characterName + " Character added " + keypair.key.Name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
+                //Debug.Log(characterName + " Character added " + keypair.key.Name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
             }
         }
         return newDict;
