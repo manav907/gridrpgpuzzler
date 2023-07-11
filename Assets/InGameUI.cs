@@ -68,7 +68,13 @@ public class InGameUI : MonoBehaviour
                 actionsAssigned[i] = newAction;
             addButton(ladderCollapseFunction.Name, actionsAssigned[i]);
         }
+        if (endTurn == null)
+        {
+            endTurn = delegate { GameEvents.current.turnManager.endTurn(); };
+        }
+        AbilityButtonSideBar.Add(InstansiateButton("End Turn", endTurn));
     }
+    Action endTurn;
     List<Action> actionsAssigned;
     public void ClearButtons()
     {

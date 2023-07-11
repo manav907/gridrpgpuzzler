@@ -179,7 +179,7 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 if (checkAI)
                     Debug.Log("Ideling");
-                moveDictionaryManager.callForceEndTurn();
+                turnManager.endTurn();
                 return;
             }
             else
@@ -222,7 +222,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
         else
         {
-            moveDictionaryManager.callForceEndTurn();
+            turnManager.endTurn();
         }
     }
     public Vector3Int getCharV3Int()

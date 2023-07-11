@@ -10,10 +10,8 @@ public class ReticalManager : MonoBehaviour
     TurnManager turnManager;
 
     [Header("Retical Shape")]
-    public ReticalShapes reticalShapes = ReticalShapes.SSingle;
+    public ActionInputParams actionInputParams;
     public Vector3Int fromPoint = Vector3Int.zero;
-    public float rangeOfAction;
-    public float magnititideOfAction;
 
     [Header("Retical References")]
     [SerializeField] Vector3 reticalPos;
@@ -68,20 +66,20 @@ public class ReticalManager : MonoBehaviour
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
-        if (reticalShapes == ReticalShapes.SSingle)
+        if (actionInputParams.areaOfEffectType == ReticalShapes.SSingle)
         {
             retiacalTiles.Add(atPoint);
             //Debug.Log(fromPoint + " " + TurnManager.thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int());
             //retiacalTiles.AddRange(universalCalculator.generateSingleSnapPoints(fromPoint, atPoint));
         }
-        else if (reticalShapes == ReticalShapes.SSweep)
+        else if (actionInputParams.areaOfEffectType == ReticalShapes.SSweep)
         {
 
             //retiacalTiles.AddRange(universalCalculator.getSimpleArc(fromPoint, atPoint, rangeOfAction));
-            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, magnititideOfAction));
+            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, actionInputParams.getMagnititudeOfAction()));
             retiacalTiles.Remove(fromPoint);
         }
-        else if (reticalShapes == ReticalShapes.S3x3)
+        else if (actionInputParams.areaOfEffectType == ReticalShapes.S3x3)
         {
             retiacalTiles.AddRange(
                 universalCalculator.generateRangeFrom2Vectors(
@@ -89,12 +87,24 @@ public class ReticalManager : MonoBehaviour
         }
         return retiacalTiles;
     }
+    ActionInputParams defaultShape;
+    public void resetShape()
+    {
+        if (defaultShape == null)
+        {
+            defaultShape = new ActionInputParams();
+        }
+        actionInputParams = defaultShape;
+    }
     public Vector3Int getMovePoint()
     {
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
-        //return Grid.WorldToCell(worldPos);
-        return universalCalculator.generateSingleSnapPoints(fromPoint, universalCalculator.castAsV3Int(Grid.WorldToCell(worldPos)))[0];
+        if (actionInputParams.targetType == TargetType.CellNearest)
+            return universalCalculator.generateSingleSnapPoints(fromPoint, universalCalculator.castAsV3Int(Grid.WorldToCell(worldPos)))[0];
+        else if (actionInputParams.targetType == TargetType.CellTargeted)
+            return Grid.WorldToCell(worldPos);
+        return Grid.WorldToCell(worldPos);
     }
     //Tile Stuff
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles

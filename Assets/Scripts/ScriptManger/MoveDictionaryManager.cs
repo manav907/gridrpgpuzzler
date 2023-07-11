@@ -12,7 +12,6 @@ public class MoveDictionaryManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     [Header("Read Only Data")]
     private float moveTimeSpeed = 0.12f;
-    private float waitBetweenOpetaions = 0.4f;
     [Header("Character Data")]
     GameObject thisCharacter;
     CharacterControllerScript characterCS;
@@ -44,10 +43,6 @@ public class MoveDictionaryManager : MonoBehaviour
         theroticalCurrentPos = characterCS.getCharV3Int();
         reticalManager.fromPoint = theroticalCurrentPos;
     }
-    public void callForceEndTurn()
-    {
-        abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
-    }
     Dictionary<TypeOfAction, Action> abilityNameToAction;
 
     void SetMoveDictionary()
@@ -56,8 +51,6 @@ public class MoveDictionaryManager : MonoBehaviour
         abilityNameToAction.Add(TypeOfAction.apply_SelfMove, apply_SelfMove);
         abilityNameToAction.Add(TypeOfAction.apply_Damage, apply_Damage);
         abilityNameToAction.Add(TypeOfAction.apply_Heal, apply_Heal);
-        abilityNameToAction.Add(TypeOfAction.apply_TryEndTurn, apply_TryEndTurn);
-        abilityNameToAction.Add(TypeOfAction.RestartScene, Restart);
 
         void apply_Damage()
         {
@@ -76,20 +69,8 @@ public class MoveDictionaryManager : MonoBehaviour
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
             mapManager.UpdateCharacterPosistion(currentPosition, universalCalculator.castAsV3Int(tryHere), thisCharacter);
         }
-        void apply_TryEndTurn()
-        {
-            CharacterControllerScript targetCharacter = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-            GameEvents.current.inGameUI.ClearButtons();
-            this.GetComponent<TurnManager>().endTurn();
-
-        }
         /* void DoubleTeam())
         { characterCS.actionPoints += 1; } */
-        void Restart()
-        {
-            GameEvents.current.reloadScene();
-            //Debug.Log("Restart Function not created");
-        }
         void checkCharacters(CharacterControllerScript targetCharacter)
         {
             targetCharacter.CheckIfCharacterIsDead();
@@ -113,11 +94,6 @@ public class MoveDictionaryManager : MonoBehaviour
         if (characterCS.actionPoints < costOfaction)
         {
             addToolTip("The Ability " + ladderCollapseFunction.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
-            return;
-        }
-        else if (ladderCollapseFunction.primaryUseForAction == TypeOfAction.apply_TryEndTurn)
-        {
-            abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
             return;
         }
         theroticalCurrentPos = characterCS.getCharV3Int();
@@ -199,7 +175,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         theroticalCurrentPos = characterCS.getCharV3Int();
                         StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
                         StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle, false));
-                        yield return new WaitForSeconds(waitBetweenOpetaions);
+                        yield return new WaitForSeconds(UserDataManager.waitAction);
                     }
 
                     if (animationLoopType == AnimationLoopType.forAction)
@@ -234,7 +210,7 @@ public class MoveDictionaryManager : MonoBehaviour
                     characterCS.BeginThisCharacterTurn();
                 else
                 {
-                    callForceEndTurn();
+                    turnManager.endTurn();
                 }
                 //abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
                 ///Debug.LogError("Hey End Turn is Disableed");
@@ -273,9 +249,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
         List<Vector3Int> tempData = new List<Vector3Int>();
         //SettingUPReticle
-        reticalManager.reticalShapes = basicAction.areaOfEffectType;
-        reticalManager.rangeOfAction = rangeOfAction;
-        reticalManager.magnititideOfAction = magnititudeOfAction;
+        reticalManager.actionInputParams = basicAction;
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
@@ -284,7 +258,7 @@ public class MoveDictionaryManager : MonoBehaviour
             tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
             ShouldContinue = true;
             //yield return new WaitForSeconds(0.5f);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(UserDataManager.waitAI);
         }
         else//if it is the player character
         {
@@ -300,7 +274,7 @@ public class MoveDictionaryManager : MonoBehaviour
             tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
 
 
-            reticalManager.reticalShapes = ReticalShapes.SSingle;
+            reticalManager.resetShape();
         }
         if (basicAction.updateTheroticalPos)
         {
@@ -496,10 +470,11 @@ public class MoveDictionaryManager : MonoBehaviour
 [Serializable]
 public class ActionInputParams
 {
+    public TargetType targetType;
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
     [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
     public ReticalShapes areaOfEffectType;
-    public OptimalTargetTip optimalTargetTip;
+    //public OptimalTargetTip optimalTargetTip;
     public bool ignoreValidTargetsCheck = false;
     public ValidTargets validTargets;
     public bool includeSelf;
@@ -527,7 +502,11 @@ public class ActionInputParams
 public enum TargetType
 {
     CellTargeted,
-    VectorTargeted
+    CellNearest,
+    VectorFirstValid,
+    VectorLastValid,
+    VectorOptimal,
+    VectorAll
 }
 public enum CoRoutineStateCheck
 {
@@ -548,8 +527,6 @@ public enum TypeOfAction
     apply_Damage,
     apply_Heal,
     apply_SelfMove,
-    apply_TryEndTurn,
-    RestartScene
 }
 public enum BoolEnum
 {
