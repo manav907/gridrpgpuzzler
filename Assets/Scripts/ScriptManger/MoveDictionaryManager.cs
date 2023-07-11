@@ -283,7 +283,8 @@ public class MoveDictionaryManager : MonoBehaviour
             tryHere = characterCS.getTarget(listOfValidtargets);
             tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
             ShouldContinue = true;
-            yield return new WaitForSeconds(0.5f);
+            //yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
         else//if it is the player character
         {
@@ -425,18 +426,18 @@ public class MoveDictionaryManager : MonoBehaviour
         bool requireCharacter = false;
         bool reverseRequireCharacterCondiditon = false;
         //listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
-        if (action.validTileType == ValidTileType.PointTargeted)
+        if (action.ignoreValidTargetsCheck)
         {
-
             disregardWalkablity = true;
+            requireCharacter = false;
         }
-        else if (action.validTileType == ValidTileType.EmptyCellTargeted)
+        else if (action.validTargets == ValidTargets.Empty)
         {
 
             requireCharacter = true;
             reverseRequireCharacterCondiditon = true;
         }
-        else if (action.validTileType == ValidTileType.UnitTargeted)
+        else// if (action.validTileType == ValidTileType.UnitTargeted)
         {
             requireCharacter = true;
         }
@@ -461,6 +462,7 @@ public class MoveDictionaryManager : MonoBehaviour
             {/*Do Nothing since all conditions are fine*/}
             else
             {
+
                 //For Debugging
                 if (checkValidActionTiles)
                 {
@@ -481,24 +483,15 @@ public class MoveDictionaryManager : MonoBehaviour
                 i--;
             }
         }
+        if (action.includeSelf && !listOfRanges.Contains(theroticalCurrentPos))
+        {
+            listOfRanges.Add(theroticalCurrentPos);
+            Debug.Log("ForceAddedSelf");
+        }
         if (checkValidActionTiles)
             Debug.Log(ValidTargetListDebugInfo);
         return listOfRanges;
     }
-}
-public enum AbilityName
-{
-    EndTurn,
-    Move,
-    Attack,
-    DoubleAttack,
-    OpenInventory,
-    CloseInventory,
-    FireBall,
-    HeartPickup,
-    DoubleTeam,
-    AxeSweep,
-    Restart
 }
 [Serializable]
 public class ActionInputParams
@@ -506,8 +499,8 @@ public class ActionInputParams
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
     [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
     public ReticalShapes areaOfEffectType;
-    public ValidTileType validTileType;
     public OptimalTargetTip optimalTargetTip;
+    public bool ignoreValidTargetsCheck = false;
     public ValidTargets validTargets;
     public bool includeSelf;
     public bool updateTheroticalPos = true;
@@ -519,7 +512,6 @@ public class ActionInputParams
     {
         rangeOfActionEnum = given.rangeOfActionEnum;
         areaOfEffectType = given.areaOfEffectType;
-        validTileType = given.validTileType;
         validTargets = given.validTargets;
     }
     public float getRangeOfAction()
@@ -531,6 +523,11 @@ public class ActionInputParams
         return (float)magnititudeOfActionEnum / 10;
 
     }
+}
+public enum TargetType
+{
+    CellTargeted,
+    VectorTargeted
 }
 public enum CoRoutineStateCheck
 {
@@ -568,12 +565,6 @@ public enum RangeOfActionEnum
     r20 = 20,
     r25 = 25,
     r30 = 30
-}
-public enum ValidTileType
-{
-    PointTargeted,
-    UnitTargeted,
-    EmptyCellTargeted
 }
 public enum ValidTargets
 {
