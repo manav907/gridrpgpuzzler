@@ -27,10 +27,8 @@ public class LadderCollapseFunction : ScriptableObject
 public class ActionEffectParams
 {
     public TypeOfAction typeOfAction;
-    //public CharacterAnimationState setUpActionAnimation;
     public CharacterAnimationState doActionTillKeyFrameAnimation;
     public AnimationMovementType animationMovementType;
-    //public CharacterAnimationState windupActionAnimation;
     public AnimationLoopType loopType;
 }
 public class AnimationParameter

@@ -29,13 +29,15 @@ MonoBehaviour:
       value: SecondPos
   SetDataAtIndex:
   - rangeOfActionEnum: 15
+    magnititudeOfActionEnum: 0
     areaOfEffectType: 0
     validTileType: 2
     optimalTargetTip: 0
     validTargets: 0
-    includeSelf: 0
+    includeSelf: 1
     updateTheroticalPos: 1
   - rangeOfActionEnum: 15
+    magnititudeOfActionEnum: 0
     areaOfEffectType: 0
     validTileType: 2
     optimalTargetTip: 0

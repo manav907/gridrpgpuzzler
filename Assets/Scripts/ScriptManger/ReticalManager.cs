@@ -87,10 +87,6 @@ public class ReticalManager : MonoBehaviour
                 universalCalculator.generateRangeFrom2Vectors(
                 atPoint + Vector3Int.up + Vector3Int.left, atPoint + Vector3Int.right + Vector3Int.down));
         }
-        else if (reticalShapes == ReticalShapes.SEndTurn)
-        {
-            retiacalTiles.Add(fromPoint);
-        }
         return retiacalTiles;
     }
     public Vector3Int getMovePoint()
@@ -164,7 +160,5 @@ public enum ReticalShapes
     SSingle,
     S3x3,
     SSweep,
-    SArrow,
-    SEndTurn
-
+    SArrow
 }

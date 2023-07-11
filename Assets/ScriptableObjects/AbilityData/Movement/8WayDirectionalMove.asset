@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Move
   primaryUseForAction: 2
-  ActionPointCost: 1
   Varirables:
   - MoveTo
   invokeFunction:
@@ -30,7 +29,7 @@ MonoBehaviour:
     validTileType: 2
     optimalTargetTip: 0
     validTargets: 0
-    includeSelf: 0
+    includeSelf: 1
     updateTheroticalPos: 1
   DoActionFromDataAtIndex:
   - typeOfAction: 2
