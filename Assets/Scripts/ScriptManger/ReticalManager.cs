@@ -46,7 +46,12 @@ public class ReticalManager : MonoBehaviour
     }
     void Start()
     {
+
+        defaultShape = new ActionInputParams();
+        ValidPosToShapeData = new Dictionary<Vector3Int, List<Vector3Int>>();
+
         lastMovePoint = getMovePoint();
+        ResetReticalInputParams();
     }
     void FixedUpdate()
     {
@@ -60,30 +65,29 @@ public class ReticalManager : MonoBehaviour
             reticalPos = currentMovePoint;
             lastMovePoint = currentMovePoint;
             //Setting Retical Tiles
-            reDrawReticalTiles(generateShape(currentMovePoint));
+            //reDrawReticalTiles(generateShape(currentMovePoint));
+            if (ValidPosToShapeData.ContainsKey(currentMovePoint))
+                reDrawReticalTiles(ValidPosToShapeData[currentMovePoint]);
         }
     }
     //Retical Stuff
     ActionInputParams defaultShape;
     public void ResetReticalInputParams()
     {
-        if (defaultShape == null)
-        {
-            defaultShape = new ActionInputParams();
-        }
         actionInputParams = defaultShape;
     }
-    Dictionary<Vector3Int, List<Vector3Int>> ValidPosToShapeData;
+    public Dictionary<Vector3Int, List<Vector3Int>> ValidPosToShapeData;
     public void UpdateReticalInputParams(ActionInputParams inputParams, List<Vector3Int> ValidTiles)
     {
         //Needs Optimization for perfoemce
-        //if (ValidPosToShapeData == null)
+        for (int i = 0; i < ValidTiles.Count; i++)
         {
-            ValidPosToShapeData = new Dictionary<Vector3Int, List<Vector3Int>>();
-        }
-        foreach (Vector3Int validTile in ValidTiles)
-        {
-            ValidPosToShapeData.Add(validTile, generateShape(validTile));
+            var newShape = generateShape(ValidTiles[i]);
+            if (ValidPosToShapeData.ContainsKey(ValidTiles[i]))
+            {
+                ValidPosToShapeData.Remove(ValidTiles[i]);
+            }
+            ValidPosToShapeData[ValidTiles[i]] = newShape;
         }
     }
     public List<Vector3Int> generateShape(Vector3Int atPoint)

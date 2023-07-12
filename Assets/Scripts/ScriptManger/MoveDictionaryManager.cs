@@ -249,54 +249,46 @@ public class MoveDictionaryManager : MonoBehaviour
 
         List<Vector3Int> tempData = new List<Vector3Int>();
         //SettingUPReticle
-        reticalManager.UpdateReticalInputParams(basicAction,listOfValidtargets);
+        reticalManager.UpdateReticalInputParams(basicAction, listOfValidtargets);
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);
             tryHere = characterCS.getTarget(listOfValidtargets);
-            tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
+            tempData = reticalManager.ValidPosToShapeData[universalCalculator.castAsV3Int(tryHere)];
             ShouldContinue = true;
-            //yield return new WaitForSeconds(0.5f);
             yield return new WaitForSeconds(UserDataManager.waitAI);
         }
         else//if it is the player character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-
             addToolTip("select Purple Tile To Contine with Action " + basicAction + " Or Right Click to Cancel", true);
-
             setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
-
             tryHere = reticalManager.getMovePoint();
-
-            tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
-
-
+            if (reticalManager.ValidPosToShapeData.ContainsKey(universalCalculator.castAsV3Int(tryHere)))
+                tempData = reticalManager.ValidPosToShapeData[universalCalculator.castAsV3Int(tryHere)];
             reticalManager.ResetReticalInputParams();
         }
-        if (basicAction.updateTheroticalPos)
-        {
-            theroticalCurrentPos = tempData.Last();
-            tryHere = theroticalCurrentPos;
-        }
 
-        foreach (Vector3Int pos in tempData)
-        {
-            if (DeterminValidTileTarget(pos))
-                variableNameToData[currentVarirable].Add(pos);
-        }
         //variableNameToData[currentVarirable] = tempData;
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
-
+            if (basicAction.updateTheroticalPos)
+            {
+                theroticalCurrentPos = tempData.Last();
+                tryHere = theroticalCurrentPos;
+            }
+            foreach (Vector3Int pos in tempData)
+            {
+                if (DeterminValidTileTarget(pos))
+                    variableNameToData[currentVarirable].Add(pos);
+            }
             BasicActionInProgress = false;
             setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
         }
         else
         {
-
             setGetInputCoRoutineState(CoRoutineStateCheck.Misinput);
             BasicActionInProgress = false;
         }
@@ -309,7 +301,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 addToolTip("No Valid Tiles for This Action; Select an Button To Perform an Action", true);
                 setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
                 //Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
-                getValidTargetList(basicAction);
+                //getValidTargetList(basicAction);
                 ShouldContinue = false;
                 return true;
             }
