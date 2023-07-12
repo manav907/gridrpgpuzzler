@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,39 @@ public class LadderCollapseFunction : ScriptableObject
         DoActionFromDataAtIndex = (given.DoActionFromDataAtIndex);
     }
 }
-[System.Serializable]
+[Serializable]
+public class ActionInputParams
+{
+    //public TargetType targetType;
+    [SerializeField] RangeOfActionEnum rangeOfActionEnum;
+    [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
+    public ReticalShapes areaOfEffectType;
+    //public OptimalTargetTip optimalTargetTip;
+    public bool ignoreValidTargetsCheck = false;
+    public ValidTargets validTargets;
+    public bool includeSelf;
+    public bool updateTheroticalPos = true;
+    public ActionInputParams()
+    {
+
+    }
+    public ActionInputParams(ActionInputParams given)
+    {
+        rangeOfActionEnum = given.rangeOfActionEnum;
+        areaOfEffectType = given.areaOfEffectType;
+        validTargets = given.validTargets;
+    }
+    public float getRangeOfAction()
+    {
+        return (float)rangeOfActionEnum / 10;
+    }
+    public float getMagnititudeOfAction()
+    {
+        return (float)magnititudeOfActionEnum / 10;
+
+    }
+}
+[Serializable]
 public class ActionEffectParams
 {
     public TypeOfAction typeOfAction;
