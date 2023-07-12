@@ -735,12 +735,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f14ff5b3c9a43d4b9581c18cdd5ee88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reticalShapes: 0
+  actionInputParams:
+    rangeOfActionEnum: 0
+    magnititudeOfActionEnum: 0
+    areaOfEffectType: 0
+    ignoreValidTargetsCheck: 0
+    validTargets: 0
+    includeSelf: 0
+    updateTheroticalPos: 1
   fromPoint: {x: 3, y: 1, z: 0}
-  rangeOfAction: 1.5
-  magnititideOfAction: 0
   reticalPos: {x: 0, y: 0, z: 0}
   lastMovePoint: {x: 0, y: 0, z: 0}
+  currentInputType: 1
   Grid: {fileID: 898572565}
   reticalTile: {fileID: 11400000, guid: 30728d21a12a30b49bac5fa6874733cc, type: 2}
   validReticalTilesTilemap: {fileID: 1055295942}

@@ -15,18 +15,18 @@ MonoBehaviour:
   Name: Attack
   primaryUseForAction: 0
   Varirables:
-  - MoveTo
+  - AttackOn
   invokeFunction:
     KeyValuePairs:
     - key: 0
-      value: MoveTo
+      value: AttackOn
     - key: 1
-      value: MoveTo
+      value: AttackOn
   SetDataAtIndex:
   - rangeOfActionEnum: 15
+    magnititudeOfActionEnum: 0
     areaOfEffectType: 0
-    validTileType: 1
-    optimalTargetTip: 0
+    ignoreValidTargetsCheck: 0
     validTargets: 1
     includeSelf: 0
     updateTheroticalPos: 0

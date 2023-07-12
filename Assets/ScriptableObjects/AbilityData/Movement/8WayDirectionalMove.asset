@@ -26,8 +26,7 @@ MonoBehaviour:
   - rangeOfActionEnum: 15
     magnititudeOfActionEnum: 0
     areaOfEffectType: 0
-    validTileType: 2
-    optimalTargetTip: 0
+    ignoreValidTargetsCheck: 0
     validTargets: 0
     includeSelf: 1
     updateTheroticalPos: 1
