@@ -255,7 +255,6 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);
             tryHere = characterCS.getTarget(listOfValidtargets);
-            tempData = reticalManager.ValidPosToShapeData[universalCalculator.castAsV3Int(tryHere)];
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
         }
@@ -266,14 +265,15 @@ public class MoveDictionaryManager : MonoBehaviour
             setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
-            if (reticalManager.ValidPosToShapeData.ContainsKey(universalCalculator.castAsV3Int(tryHere)))
-                tempData = reticalManager.ValidPosToShapeData[universalCalculator.castAsV3Int(tryHere)];
-            reticalManager.ResetReticalInputParams();
         }
-
+        reticalManager.ResetReticalInputParams();
         //variableNameToData[currentVarirable] = tempData;
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
+            if (reticalManager.ValidPosToShapeData.ContainsKey(universalCalculator.castAsV3Int(tryHere)))
+            { tempData = reticalManager.ValidPosToShapeData[universalCalculator.castAsV3Int(tryHere)]; }
+            else
+            { Debug.Log("InvalidTile"); }
             if (basicAction.updateTheroticalPos)
             {
                 theroticalCurrentPos = tempData.Last();
@@ -461,7 +461,7 @@ public class MoveDictionaryManager : MonoBehaviour
         if (action.includeSelf && !listOfRanges.Contains(theroticalCurrentPos))
         {
             listOfRanges.Add(theroticalCurrentPos);
-            Debug.Log("ForceAddedSelf");
+            //Debug.Log("ForceAddedSelf");
         }
         if (checkValidActionTiles)
             Debug.Log(ValidTargetListDebugInfo);

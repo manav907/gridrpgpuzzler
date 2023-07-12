@@ -49,7 +49,6 @@ public class ReticalManager : MonoBehaviour
 
         defaultShape = new ActionInputParams();
         ValidPosToShapeData = new Dictionary<Vector3Int, List<Vector3Int>>();
-
         lastMovePoint = getMovePoint();
         ResetReticalInputParams();
     }
@@ -65,9 +64,7 @@ public class ReticalManager : MonoBehaviour
             reticalPos = currentMovePoint;
             lastMovePoint = currentMovePoint;
             //Setting Retical Tiles
-            //reDrawReticalTiles(generateShape(currentMovePoint));
-            if (ValidPosToShapeData.ContainsKey(currentMovePoint))
-                reDrawReticalTiles(ValidPosToShapeData[currentMovePoint]);
+            reDrawReticalTiles(selectShape(currentMovePoint));
         }
     }
     //Retical Stuff
@@ -79,6 +76,8 @@ public class ReticalManager : MonoBehaviour
     public Dictionary<Vector3Int, List<Vector3Int>> ValidPosToShapeData;
     public void UpdateReticalInputParams(ActionInputParams inputParams, List<Vector3Int> ValidTiles)
     {
+        actionInputParams = inputParams;
+        ValidPosToShapeData.Clear();
         //Needs Optimization for perfoemce
         for (int i = 0; i < ValidTiles.Count; i++)
         {
@@ -90,18 +89,28 @@ public class ReticalManager : MonoBehaviour
             ValidPosToShapeData[ValidTiles[i]] = newShape;
         }
     }
+    List<Vector3Int> selectShape(Vector3Int currentMovePoint)
+    {
+        if (currentInputType == inputType.MouseClick)
+        {
+            if (ValidPosToShapeData.ContainsKey(currentMovePoint))
+                return ValidPosToShapeData[currentMovePoint];
+        }
+        else if (currentInputType == inputType.Swipe)
+        {
+            return ValidPosToShapeData[currentMovePoint];
+        }
+        return (new List<Vector3Int>()/* {currentMovePoint} */);
+    }
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
         if (actionInputParams.areaOfEffectType == ReticalShapes.SSingle)
         {
             retiacalTiles.Add(atPoint);
-            //Debug.Log(fromPoint + " " + TurnManager.thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int());
-            //retiacalTiles.AddRange(universalCalculator.generateSingleSnapPoints(fromPoint, atPoint));
         }
         else if (actionInputParams.areaOfEffectType == ReticalShapes.SSweep)
         {
-
             //retiacalTiles.AddRange(universalCalculator.getSimpleArc(fromPoint, atPoint, rangeOfAction));
             retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, actionInputParams.getMagnititudeOfAction()));
             retiacalTiles.Remove(fromPoint);
