@@ -16,6 +16,7 @@ public class ReticalManager : MonoBehaviour
     [Header("Retical References")]
     [SerializeField] Vector3 reticalPos;
     [SerializeField] Vector3 lastMovePoint;
+    [SerializeField] inputType currentInputType;
     [Header("Grid References")]
     public Tilemap Grid;
 
@@ -63,6 +64,28 @@ public class ReticalManager : MonoBehaviour
         }
     }
     //Retical Stuff
+    ActionInputParams defaultShape;
+    public void ResetReticalInputParams()
+    {
+        if (defaultShape == null)
+        {
+            defaultShape = new ActionInputParams();
+        }
+        actionInputParams = defaultShape;
+    }
+    Dictionary<Vector3Int, List<Vector3Int>> ValidPosToShapeData;
+    public void UpdateReticalInputParams(ActionInputParams inputParams, List<Vector3Int> ValidTiles)
+    {
+        //Needs Optimization for perfoemce
+        //if (ValidPosToShapeData == null)
+        {
+            ValidPosToShapeData = new Dictionary<Vector3Int, List<Vector3Int>>();
+        }
+        foreach (Vector3Int validTile in ValidTiles)
+        {
+            ValidPosToShapeData.Add(validTile, generateShape(validTile));
+        }
+    }
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
@@ -87,24 +110,25 @@ public class ReticalManager : MonoBehaviour
         }
         return retiacalTiles;
     }
-    ActionInputParams defaultShape;
-    public void resetShape()
-    {
-        if (defaultShape == null)
-        {
-            defaultShape = new ActionInputParams();
-        }
-        actionInputParams = defaultShape;
-    }
+
     public Vector3Int getMovePoint()
     {
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
-        if (actionInputParams.targetType == TargetType.CellNearest)
-            return universalCalculator.generateSingleSnapPoints(fromPoint, universalCalculator.castAsV3Int(Grid.WorldToCell(worldPos)))[0];
-        else if (actionInputParams.targetType == TargetType.CellTargeted)
-            return Grid.WorldToCell(worldPos);
+        if (currentInputType == inputType.MouseClick)
+        {
+
+        }
+        else if (currentInputType == inputType.Swipe)
+        {
+            return universalCalculator.make9WaySnapPoints(fromPoint, universalCalculator.castAsV3Int(Grid.WorldToCell(worldPos)))[0];
+        }
         return Grid.WorldToCell(worldPos);
+    }
+    enum inputType
+    {
+        MouseClick,
+        Swipe,
     }
     //Tile Stuff
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles

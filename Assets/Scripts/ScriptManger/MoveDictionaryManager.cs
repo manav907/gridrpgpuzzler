@@ -249,7 +249,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
         List<Vector3Int> tempData = new List<Vector3Int>();
         //SettingUPReticle
-        reticalManager.actionInputParams = basicAction;
+        reticalManager.UpdateReticalInputParams(basicAction,listOfValidtargets);
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
@@ -274,7 +274,7 @@ public class MoveDictionaryManager : MonoBehaviour
             tempData = reticalManager.generateShape(universalCalculator.castAsV3Int(tryHere));
 
 
-            reticalManager.resetShape();
+            reticalManager.ResetReticalInputParams();
         }
         if (basicAction.updateTheroticalPos)
         {
@@ -304,7 +304,16 @@ public class MoveDictionaryManager : MonoBehaviour
         //Methods
         bool CheckContinue()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (listOfValidtargets.Count == 0)
+            {
+                addToolTip("No Valid Tiles for This Action; Select an Button To Perform an Action", true);
+                setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
+                //Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
+                getValidTargetList(basicAction);
+                ShouldContinue = false;
+                return true;
+            }
+            else if (Input.GetMouseButtonDown(0))
             {
                 addToolTip("Select an Button To Perform an Action", true);
                 setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
@@ -470,7 +479,7 @@ public class MoveDictionaryManager : MonoBehaviour
 [Serializable]
 public class ActionInputParams
 {
-    public TargetType targetType;
+    //public TargetType targetType;
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
     [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
     public ReticalShapes areaOfEffectType;
