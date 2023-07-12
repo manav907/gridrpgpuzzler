@@ -23,7 +23,7 @@ MonoBehaviour:
     - key: 1
       value: MoveTo
   SetDataAtIndex:
-  - rangeOfActionEnum: 15
+  - rangeOfActionEnum: 30
     magnititudeOfActionEnum: 0
     areaOfEffectType: 0
     ignoreValidTargetsCheck: 0
