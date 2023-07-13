@@ -156,7 +156,11 @@ public class UniversalCalculator : MonoBehaviour
                 }
         }
         return retiacalTiles;
-    }
+    }/* 
+    public Vector3Int getNearestPoint(Vector3Int fromPoint, List<Vector3Int> toWardsPoint)
+    {
+        SortListAccordingtoDistanceFromPoint(toWardsPoint,fromPoint);
+    } */
     public Vector3Int getNormalizedDirection(Vector3Int fromPoint, Vector3Int atPoint)
     {
         return Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));

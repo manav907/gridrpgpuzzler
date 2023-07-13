@@ -83,8 +83,7 @@ public class ReticalManager : MonoBehaviour
         ValidPosToShapeData.Clear();
         for (int i = 0; i < ValidTiles.Count; i++)
         {
-            ValidPosToShapeData[ValidTiles[i]] = generateShape(ValidTiles[i]);
-            //ValidPosToShapeData.Add(ValidTiles[i], generateShape(ValidTiles[i]));
+            ValidPosToShapeData[ValidTiles[i]] = generateShape(ValidTiles[i]);//ValidPosToShapeData.Add(ValidTiles[i], generateShape(ValidTiles[i]));
         }
     }
     List<Vector3Int> selectShape(Vector3Int currentMovePoint)

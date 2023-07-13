@@ -373,9 +373,9 @@ public class MoveDictionaryManager : MonoBehaviour
             rangeOfAction = alternateRange;
 
         Vector3Int centerPos = theroticalCurrentPos;
-        //List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
-        List<Vector3Int> listOfRanges = universalCalculator.generateDirectionalRange(centerPos, rangeOfAction, universalCalculator.generate9WayReffence());
-        //List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
+        List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
+        //List<Vector3Int> listOfRanges = universalCalculator.generateDirectionalRange(centerPos, rangeOfAction, universalCalculator.generate9WayReffence());
+
         bool disregardWalkablity = false;
         bool requireCharacter = false;
         bool reverseRequireCharacterCondiditon = false;
@@ -415,26 +415,27 @@ public class MoveDictionaryManager : MonoBehaviour
         return listOfRanges;
         void CheckVectorValidity()
         {
+            //Direction is really important or else First And Last Does not Work
+            listOfRanges = universalCalculator.SortListAccordingtoDistanceFromPoint(listOfRanges, theroticalCurrentPos);
             var normalizedDirectionToTilePos = universalCalculator.DirectionToCellSnapData(theroticalCurrentPos, listOfRanges);
+
             var listOfVectorRanges = new List<Vector3Int>();
             if (action.targetType == TargetType.AnyValid)
             {
                 listOfVectorRanges = listOfRanges;
             }
-            if (action.targetType == TargetType.FirstValid)
-            {
+            else
                 foreach (var direction in normalizedDirectionToTilePos)
                 {
-                    listOfVectorRanges.Add(direction.Value.First());
+                    if (action.targetType == TargetType.FirstValid)
+                    {
+                        listOfVectorRanges.Add(direction.Value.First());
+                    }
+                    else if (action.targetType == TargetType.LastValid)
+                    {
+                        listOfVectorRanges.Add(direction.Value.Last());
+                    }
                 }
-            }
-            else if (action.targetType == TargetType.LastValid)
-            {
-                foreach (var direction in normalizedDirectionToTilePos)
-                {
-                    listOfVectorRanges.Add(direction.Value.Last());
-                }
-            }
             listOfRanges = listOfVectorRanges;
 
         }
