@@ -113,15 +113,15 @@ public class UniversalCalculator : MonoBehaviour
         }
         return outputList;
     }
-    public List<Vector3Int> generate9WayRange(Vector3Int thisPoint, float rangeOfAction)
+    public List<Vector3Int> generateDirectionalRange(Vector3Int fromPoint, float rangeOfAction, List<Vector3Int> reffrences)
     {
         int range = Mathf.FloorToInt(rangeOfAction);
         List<Vector3Int> output = new List<Vector3Int>();
         while (range != 0)
         {
-            foreach (var reffence in generate9WayReffence())
+            foreach (var reffence in reffrences)
             {
-                output.Add(new Vector3Int(reffence.x * range, reffence.y * range, 0) + thisPoint);
+                output.Add(new Vector3Int(reffence.x * range, reffence.y * range, 0) + fromPoint);
             }
             range--;
         }
@@ -173,7 +173,7 @@ public class UniversalCalculator : MonoBehaviour
         }
         return output;
     }
-    public Dictionary<Vector3Int, List<Vector3Int>> DirectionToShapeDir(Vector3Int fromPoint, List<Vector3Int> toWardsPoint)
+    public Dictionary<Vector3Int, List<Vector3Int>> DirectionToCellSnapData(Vector3Int fromPoint, List<Vector3Int> toWardsPoint)
     {
         var dict = new Dictionary<Vector3Int, List<Vector3Int>>();
         foreach (var point in toWardsPoint)

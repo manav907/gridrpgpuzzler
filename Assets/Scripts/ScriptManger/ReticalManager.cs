@@ -18,6 +18,7 @@ public class ReticalManager : MonoBehaviour
     [SerializeField] Vector3 reticalPos;
     [SerializeField] Vector3 lastMovePoint;
     [SerializeField] inputType currentInputType;
+    [SerializeField] bool Snap = true;
     [Header("Grid References")]
     public Tilemap Grid;
 
@@ -81,15 +82,13 @@ public class ReticalManager : MonoBehaviour
     {
         actionInputParams = inputParams;
         ValidPosToShapeData.Clear();
-        //Needs Optimization for perfoemce
         for (int i = 0; i < ValidTiles.Count; i++)
         {
-            var newShape = generateShape(ValidTiles[i]);
-            if (ValidPosToShapeData.ContainsKey(ValidTiles[i]))
+            AddTile();
+            void AddTile()
             {
-                ValidPosToShapeData.Remove(ValidTiles[i]);
+                ValidPosToShapeData.Add(ValidTiles[i], generateShape(ValidTiles[i]));
             }
-            ValidPosToShapeData[ValidTiles[i]] = newShape;
         }
     }
     List<Vector3Int> selectShape(Vector3Int currentMovePoint)
@@ -104,34 +103,42 @@ public class ReticalManager : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
         Vector3Int GridCellPos = Grid.WorldToCell(worldPos);
-        if (currentInputType == inputType.CellBased)
+        if (Snap)
         {
-            return GridCellPos;
-        }
-        else if (currentInputType == inputType.CellSnapNear)
-        {
-            //ValidPosToShapeData.Keys
+            if (ValidPosToShapeData.Keys.ToList().Contains(GridCellPos))
+            {
+                return GridCellPos;
+            }
             var list = universalCalculator.SortListAccordingtoDistanceFromPoint(ValidPosToShapeData.Keys.ToList(), GridCellPos);
             if (list.Count > 0)
                 return list[0];
             return GridCellPos;
-
+        }
+        else
+        {
+            return GridCellPos;
         }
         var DirectionToShapeDir = universalCalculator.PointsInDirectionFilter(fromPoint, GridCellPos, ValidPosToShapeData.Keys.ToList());
         if (DirectionToShapeDir.Count == 0)
             return GridCellPos;
-        if (currentInputType == inputType.VectorFurthest)
-            return DirectionToShapeDir.Last();
-        if (currentInputType == inputType.VectorNearest)
-            return DirectionToShapeDir.First();
+        else
+        {
+            if (currentInputType == inputType.VectorFurthest)
+                return DirectionToShapeDir.Last();
+            if (currentInputType == inputType.VectorNearest)
+                return DirectionToShapeDir.First();
+        }
+
+
+
+
 
         Debug.LogError("Using Default Escape This Should not Happen");
         return GridCellPos;
     }
     enum inputType
     {
-        CellBased,
-        CellSnapNear,
+        AnyCell,
         VectorFurthest,
         VectorNearest,
     }
