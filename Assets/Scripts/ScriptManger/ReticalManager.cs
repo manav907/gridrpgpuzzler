@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
+using System.Linq;
 
 public class ReticalManager : MonoBehaviour
 {
@@ -89,18 +90,58 @@ public class ReticalManager : MonoBehaviour
             ValidPosToShapeData[ValidTiles[i]] = newShape;
         }
     }
+    public Vector3Int parseInput(Vector3Int currentMovePoint)
+    {
+
+        if (currentInputType == inputType.CellBased)
+        {
+            //Pick the same Cell
+        }
+        else if (currentInputType == inputType.MagnititudeBased)
+        {
+            currentMovePoint += fromPoint;
+        }
+        //if (ValidPosToShapeData.ContainsKey(currentMovePoint))
+        return currentMovePoint;
+    }
     List<Vector3Int> selectShape(Vector3Int currentMovePoint)
     {
-        if (currentInputType == inputType.MouseClick)
-        {
-            if (ValidPosToShapeData.ContainsKey(currentMovePoint))
-                return ValidPosToShapeData[currentMovePoint];
-        }
-        else if (currentInputType == inputType.Swipe)
-        {
+        currentMovePoint = parseInput(currentMovePoint);
+        if (ValidPosToShapeData.ContainsKey(currentMovePoint))
             return ValidPosToShapeData[currentMovePoint];
-        }
         return (new List<Vector3Int>()/* {currentMovePoint} */);
+    }
+
+    public Vector3Int getMovePoint()
+    {
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        worldPos.z = 0f;
+        Vector3Int GridCellPos = Grid.WorldToCell(worldPos);
+        if (currentInputType == inputType.CellBased)
+        {
+            return GridCellPos;
+        }
+        else if (currentInputType == inputType.CellSnapNear)
+        {
+            //ValidPosToShapeData.Keys
+            var list = universalCalculator.SortListAccordingtoDistanceFromPoint(ValidPosToShapeData.Keys.ToList(), GridCellPos);
+            if (list.Count > 0)
+                return list[0];
+            return GridCellPos;
+
+        }
+        else if (currentInputType == inputType.MagnititudeBased)
+        {
+            return universalCalculator.get9WayMagnititude(fromPoint, GridCellPos)[0];
+        }
+        Debug.Log("Check Get Move Poijt");
+        return GridCellPos;
+    }
+    enum inputType
+    {
+        CellBased,
+        CellSnapNear,
+        MagnititudeBased,
     }
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
@@ -124,25 +165,7 @@ public class ReticalManager : MonoBehaviour
         return retiacalTiles;
     }
 
-    public Vector3Int getMovePoint()
-    {
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        worldPos.z = 0f;
-        if (currentInputType == inputType.MouseClick)
-        {
 
-        }
-        else if (currentInputType == inputType.Swipe)
-        {
-            return universalCalculator.make9WaySnapPoints(fromPoint, universalCalculator.castAsV3Int(Grid.WorldToCell(worldPos)))[0];
-        }
-        return Grid.WorldToCell(worldPos);
-    }
-    enum inputType
-    {
-        MouseClick,
-        Swipe,
-    }
     //Tile Stuff
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles
     {

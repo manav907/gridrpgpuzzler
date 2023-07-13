@@ -174,11 +174,11 @@ public class UniversalCalculator : MonoBehaviour
         return arcTiles;
 
     }
-    public List<Vector3Int> make9WaySnapPoints(Vector3Int fromPoint, Vector3Int atPoint)
+    public List<Vector3Int> get9WayMagnititude(Vector3Int fromPoint, Vector3Int atPoint)
     {
         var list = new List<Vector3Int>();
         Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
-        list.Add(direction + fromPoint);
+        list.Add(direction);
         return list;
     }
 

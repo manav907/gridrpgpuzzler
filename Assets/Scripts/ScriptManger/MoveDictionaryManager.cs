@@ -264,7 +264,7 @@ public class MoveDictionaryManager : MonoBehaviour
             addToolTip("select Purple Tile To Contine with Action " + basicAction + " Or Right Click to Cancel", true);
             setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
-            tryHere = reticalManager.getMovePoint();
+            tryHere = reticalManager.parseInput(reticalManager.getMovePoint());
         }
         reticalManager.ResetReticalInputParams();
         //variableNameToData[currentVarirable] = tempData;
