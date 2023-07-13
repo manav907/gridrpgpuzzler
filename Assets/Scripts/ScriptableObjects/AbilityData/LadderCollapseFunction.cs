@@ -40,12 +40,6 @@ public class ActionInputParams
     {
 
     }
-    public ActionInputParams(ActionInputParams given)
-    {
-        rangeOfActionEnum = given.rangeOfActionEnum;
-        areaOfEffectType = given.areaOfEffectType;
-        validTargets = given.validTargets;
-    }
     public float getRangeOfAction()
     {
         return (float)rangeOfActionEnum / 10;

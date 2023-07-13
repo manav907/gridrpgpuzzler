@@ -51,7 +51,7 @@ public class LadderCollapseFunctionEditor : Editor
             {
                 if (ladderCollapseFunction.SetDataAtIndex.Count < currentsetDataWithID + 1)
                 {
-                    ladderCollapseFunction.SetDataAtIndex.Add(new ActionInputParams(new ActionInputParams()));
+                    ladderCollapseFunction.SetDataAtIndex.Add(new ActionInputParams());
                 }
                 SerializedProperty SetDataAtIndexKeyPairs = serializedObject.FindProperty("SetDataAtIndex");
                 SerializedProperty SetDataAtIndexKeyPair = SetDataAtIndexKeyPairs.GetArrayElementAtIndex(currentsetDataWithID);
