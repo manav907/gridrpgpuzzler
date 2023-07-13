@@ -119,7 +119,7 @@ public class ReticalManager : MonoBehaviour
         }
         else if (currentInputType == inputType.MagnititudeBased)
         {
-            return universalCalculator.get9WayMagnititude(fromPoint, GridCellPos)[0] + fromPoint;
+            return universalCalculator.getNormalizedDirection(fromPoint, GridCellPos) + fromPoint;
         }
         Debug.Log("Check Get Move Poijt");
         return GridCellPos;

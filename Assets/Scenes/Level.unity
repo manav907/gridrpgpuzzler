@@ -746,7 +746,7 @@ MonoBehaviour:
   fromPoint: {x: 3, y: 1, z: 0}
   reticalPos: {x: 0, y: 0, z: 0}
   lastMovePoint: {x: 0, y: 0, z: 0}
-  currentInputType: 0
+  currentInputType: 2
   Grid: {fileID: 898572565}
   reticalTile: {fileID: 11400000, guid: 30728d21a12a30b49bac5fa6874733cc, type: 2}
   validReticalTilesTilemap: {fileID: 1055295942}

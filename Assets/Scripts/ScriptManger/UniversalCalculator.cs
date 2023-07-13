@@ -113,15 +113,42 @@ public class UniversalCalculator : MonoBehaviour
         }
         return outputList;
     }
+    public List<Vector3Int> generate9WayRange(Vector3Int thisPoint, float rangeOfAction)
+    {
+        int range = Mathf.FloorToInt(rangeOfAction);
+        List<Vector3Int> output = new List<Vector3Int>();
+        while (range != 0)
+        {
+            foreach (var reffence in generate9WayReffence())
+            {
+                output.Add(new Vector3Int(reffence.x * range, reffence.y * range, 0) + thisPoint);
+            }
+            range--;
+        }
+        output.Reverse();
+        return output;
+    }
+    public List<Vector3Int> generate9WayReffence()
+    {
+        List<Vector3Int> reffrence = new List<Vector3Int>();
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                reffrence.Add(new Vector3Int(j, i, 0));
+            }
+        }
+        return reffrence;
+    }
     public List<Vector3Int> getSimpleArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction)
     {
         var retiacalTiles = new List<Vector3Int>();
-        Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
+        Vector3Int direction = getNormalizedDirection(atPoint, fromPoint);
         int xDirection = direction.x;
         int yDirection = direction.y;
         foreach (Vector3Int pos in generateTaxiRangeFromPoint(fromPoint, rangeOfAction))
         {
-            Vector3Int consideredDirection = Vector3Int.RoundToInt(Vector3.Normalize(pos - fromPoint));
+            Vector3Int consideredDirection = getNormalizedDirection(pos, fromPoint);
             if ((consideredDirection.x != -xDirection || consideredDirection.y != -yDirection))
                 if ((consideredDirection.x == xDirection && consideredDirection.y == yDirection) || (consideredDirection.x == 0 || consideredDirection.y == 0))
                 {
@@ -130,10 +157,14 @@ public class UniversalCalculator : MonoBehaviour
         }
         return retiacalTiles;
     }
+    public Vector3Int getNormalizedDirection(Vector3Int fromPoint, Vector3Int atPoint)
+    {
+        return Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
+    }
     public List<Vector3Int> getSmallAxeArc(Vector3Int fromPoint, Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
-        Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
+        Vector3Int direction = getNormalizedDirection(atPoint, fromPoint);
         Vector3Int first = new Vector3Int();
         Vector3Int second = new Vector3Int();
         if (direction.x != 0 && direction.y != 0)
@@ -154,13 +185,12 @@ public class UniversalCalculator : MonoBehaviour
     public List<Vector3Int> generateComplexArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction, bool doAxeCheck = true)
     {
         var arcTiles = new List<Vector3Int>();
-        //Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
-        Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
+        Vector3Int direction = getNormalizedDirection(atPoint, fromPoint);
         int xDirection = direction.x;
         int yDirection = direction.y;
         foreach (Vector3Int pos in generateTaxiRangeFromPoint(fromPoint, rangeOfAction))
         {
-            Vector3Int consideredDirection = Vector3Int.RoundToInt(Vector3.Normalize(pos - fromPoint));
+            Vector3Int consideredDirection = getNormalizedDirection(pos, fromPoint);
             bool SpearCheck = consideredDirection.x == xDirection || consideredDirection.y == yDirection;
             bool AxeCheck;
             if (doAxeCheck)//This is smaller
@@ -174,14 +204,6 @@ public class UniversalCalculator : MonoBehaviour
         return arcTiles;
 
     }
-    public List<Vector3Int> get9WayMagnititude(Vector3Int fromPoint, Vector3Int atPoint)
-    {
-        var list = new List<Vector3Int>();
-        Vector3Int direction = Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
-        list.Add(direction);
-        return list;
-    }
-
     ///List Handeling
     public int SelectRandomBetweenZeroAndInt(int ListCount)
     {

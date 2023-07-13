@@ -27,7 +27,7 @@ public class LadderCollapseFunction : ScriptableObject
 [Serializable]
 public class ActionInputParams
 {
-    //public TargetType targetType;
+    public TargetType targetType;
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
     [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
     public ReticalShapes areaOfEffectType;
@@ -69,12 +69,9 @@ public enum OptimalTargetTip
 }
 public enum TargetType
 {
-    CellTargeted,
-    CellNearest,
-    VectorFirstValid,
-    VectorLastValid,
-    VectorOptimal,
-    VectorAll
+    AnyValid,
+    FirstValid,
+    LastValid,
 }
 
 

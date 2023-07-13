@@ -372,7 +372,8 @@ public class MoveDictionaryManager : MonoBehaviour
             rangeOfAction = alternateRange;
 
         Vector3Int centerPos = theroticalCurrentPos;
-        List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
+        //List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
+        List<Vector3Int> listOfRanges = universalCalculator.generate9WayRange(centerPos, rangeOfAction);
         //List<Vector3Int> listOfNonNullTiles = new List<Vector3Int>(mapManager.cellDataDir.Keys);
         bool disregardWalkablity = false;
         bool requireCharacter = false;
@@ -385,7 +386,6 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else if (action.validTargets == ValidTargets.Empty)
         {
-
             requireCharacter = true;
             reverseRequireCharacterCondiditon = true;
         }
@@ -400,41 +400,9 @@ public class MoveDictionaryManager : MonoBehaviour
         //listOfRanges.Remove(centerPos);
         ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
-        for (int i = 0; i < listOfRanges.Count; i++)
-        {
-            //Normal Checks         
-            bool hasWalkability = disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
-            bool requireCharacterCondition = requireCharacter ? mapManager.isCellHoldingCharacer(listOfRanges[i]) : true;
-            if (reverseRequireCharacterCondiditon)
-            {
-                requireCharacterCondition = !requireCharacterCondition;
-            }
+        CheckVectorValidity();
+        CheckTileValidity();
 
-            if (hasWalkability && requireCharacterCondition)
-            {/*Do Nothing since all conditions are fine*/}
-            else
-            {
-
-                //For Debugging
-                if (checkValidActionTiles)
-                {
-                    bool condtion = false;//Will be reassigned later                        
-                    string debugLine = "For Action " + action + " Point " + listOfRanges[i] + " was Invalid as Tile ";
-                    string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
-                    if (!requireCharacterCondition)
-                    {
-                        condtion = requireCharacterCondition;
-                        debugLine += needConditon + "Character Here; ";
-                    }
-                    if (rangeOfAction == 0)
-                        debugLine += "The Range of Action was " + rangeOfAction;
-                    ValidTargetListDebugInfo += debugLine + "\n";
-                }
-                //Actual Code 
-                listOfRanges.RemoveAt(i);
-                i--;
-            }
-        }
         if (action.includeSelf && !listOfRanges.Contains(theroticalCurrentPos))
         {
             listOfRanges.Add(theroticalCurrentPos);
@@ -443,6 +411,73 @@ public class MoveDictionaryManager : MonoBehaviour
         if (checkValidActionTiles)
             Debug.Log(ValidTargetListDebugInfo);
         return listOfRanges;
+        void CheckVectorValidity()
+        {
+            var normalizedDirectionToTilePos = new Dictionary<Vector3Int, List<Vector3Int>>();
+            foreach (var pos in listOfRanges)
+            {
+                var normalizedDirection = universalCalculator.getNormalizedDirection(pos, theroticalCurrentPos);
+                if (!normalizedDirectionToTilePos.ContainsKey(normalizedDirection))
+                {
+                    normalizedDirectionToTilePos.Add(normalizedDirection, new List<Vector3Int>());
+                }
+                normalizedDirectionToTilePos[normalizedDirection].Add(pos);
+            }
+
+            if (action.targetType == TargetType.AnyValid)
+            {
+                //Debug.log("Error")    ;
+            }
+            else if (action.targetType == TargetType.FirstValid)
+            {
+
+            }
+            else if (action.targetType == TargetType.LastValid)
+            {
+
+            }
+            else
+                Debug.Log("Error");
+
+        }
+        void CheckTileValidity()
+        {
+            for (int i = 0; i < listOfRanges.Count; i++)
+            {
+                //Normal Checks         
+                bool hasWalkability = disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
+                bool requireCharacterCondition = requireCharacter ? mapManager.isCellHoldingCharacer(listOfRanges[i]) : true;
+                if (reverseRequireCharacterCondiditon)
+                {
+                    requireCharacterCondition = !requireCharacterCondition;
+                }
+
+                if (hasWalkability && requireCharacterCondition)
+                {/*Do Nothing since all conditions are fine*/}
+                else
+                {
+
+                    //For Debugging
+                    if (checkValidActionTiles)
+                    {
+                        bool condtion = false;//Will be reassigned later                        
+                        string debugLine = "For Action " + action + " Point " + listOfRanges[i] + " was Invalid as Tile ";
+                        string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
+                        if (!requireCharacterCondition)
+                        {
+                            condtion = requireCharacterCondition;
+                            debugLine += needConditon + "Character Here; ";
+                        }
+                        if (rangeOfAction == 0)
+                            debugLine += "The Range of Action was " + rangeOfAction;
+                        ValidTargetListDebugInfo += debugLine + "\n";
+                    }
+                    //Actual Code 
+                    listOfRanges.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
     }
 }
 
