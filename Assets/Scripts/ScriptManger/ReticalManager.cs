@@ -73,6 +73,8 @@ public class ReticalManager : MonoBehaviour
     public void ResetReticalInputParams()
     {
         actionInputParams = defaultShape;
+        ValidPosToShapeData.Clear();
+        ClearAllTiles(validReticalTilesTilemap);
     }
     public Dictionary<Vector3Int, List<Vector3Int>> ValidPosToShapeData;
     public void UpdateReticalInputParams(ActionInputParams inputParams, List<Vector3Int> ValidTiles)
@@ -90,23 +92,8 @@ public class ReticalManager : MonoBehaviour
             ValidPosToShapeData[ValidTiles[i]] = newShape;
         }
     }
-    public Vector3Int parseInput(Vector3Int currentMovePoint)
-    {
-
-        if (currentInputType == inputType.CellBased)
-        {
-            //Pick the same Cell
-        }
-        else if (currentInputType == inputType.MagnititudeBased)
-        {
-            currentMovePoint += fromPoint;
-        }
-        //if (ValidPosToShapeData.ContainsKey(currentMovePoint))
-        return currentMovePoint;
-    }
     List<Vector3Int> selectShape(Vector3Int currentMovePoint)
     {
-        currentMovePoint = parseInput(currentMovePoint);
         if (ValidPosToShapeData.ContainsKey(currentMovePoint))
             return ValidPosToShapeData[currentMovePoint];
         return (new List<Vector3Int>()/* {currentMovePoint} */);
@@ -132,7 +119,7 @@ public class ReticalManager : MonoBehaviour
         }
         else if (currentInputType == inputType.MagnititudeBased)
         {
-            return universalCalculator.get9WayMagnititude(fromPoint, GridCellPos)[0];
+            return universalCalculator.get9WayMagnititude(fromPoint, GridCellPos)[0] + fromPoint;
         }
         Debug.Log("Check Get Move Poijt");
         return GridCellPos;
