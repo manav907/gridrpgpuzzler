@@ -17,7 +17,6 @@ public class ReticalManager : MonoBehaviour
     [Header("Retical References")]
     [SerializeField] Vector3 reticalPos;
     [SerializeField] Vector3 lastMovePoint;
-    [SerializeField] inputType currentInputType;
     [SerializeField] bool Snap = true;
     [Header("Grid References")]
     public Tilemap Grid;
@@ -84,11 +83,8 @@ public class ReticalManager : MonoBehaviour
         ValidPosToShapeData.Clear();
         for (int i = 0; i < ValidTiles.Count; i++)
         {
-            AddTile();
-            void AddTile()
-            {
-                ValidPosToShapeData.Add(ValidTiles[i], generateShape(ValidTiles[i]));
-            }
+            ValidPosToShapeData[ValidTiles[i]] = generateShape(ValidTiles[i]);
+            //ValidPosToShapeData.Add(ValidTiles[i], generateShape(ValidTiles[i]));
         }
     }
     List<Vector3Int> selectShape(Vector3Int currentMovePoint)
@@ -103,44 +99,13 @@ public class ReticalManager : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
         Vector3Int GridCellPos = Grid.WorldToCell(worldPos);
-        if (Snap)
+        if (Snap && !ValidPosToShapeData.Keys.ToList().Contains(GridCellPos))
         {
-            if (ValidPosToShapeData.Keys.ToList().Contains(GridCellPos))
-            {
-                return GridCellPos;
-            }
             var list = universalCalculator.SortListAccordingtoDistanceFromPoint(ValidPosToShapeData.Keys.ToList(), GridCellPos);
             if (list.Count > 0)
                 return list[0];
-            return GridCellPos;
         }
-        else
-        {
-            return GridCellPos;
-        }
-        var DirectionToShapeDir = universalCalculator.PointsInDirectionFilter(fromPoint, GridCellPos, ValidPosToShapeData.Keys.ToList());
-        if (DirectionToShapeDir.Count == 0)
-            return GridCellPos;
-        else
-        {
-            if (currentInputType == inputType.VectorFurthest)
-                return DirectionToShapeDir.Last();
-            if (currentInputType == inputType.VectorNearest)
-                return DirectionToShapeDir.First();
-        }
-
-
-
-
-
-        Debug.LogError("Using Default Escape This Should not Happen");
         return GridCellPos;
-    }
-    enum inputType
-    {
-        AnyCell,
-        VectorFurthest,
-        VectorNearest,
     }
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {

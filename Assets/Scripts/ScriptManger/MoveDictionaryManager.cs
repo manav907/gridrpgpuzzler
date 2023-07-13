@@ -416,15 +416,6 @@ public class MoveDictionaryManager : MonoBehaviour
         void CheckVectorValidity()
         {
             var normalizedDirectionToTilePos = universalCalculator.DirectionToCellSnapData(theroticalCurrentPos, listOfRanges);
-            /* foreach (var pos in listOfRanges)
-            {
-                var normalizedDirection = universalCalculator.getNormalizedDirection(pos, theroticalCurrentPos);
-                if (!normalizedDirectionToTilePos.ContainsKey(normalizedDirection))
-                {
-                    normalizedDirectionToTilePos.Add(normalizedDirection, new List<Vector3Int>());
-                }
-                normalizedDirectionToTilePos[normalizedDirection].Add(pos);
-            } */
             var listOfVectorRanges = new List<Vector3Int>();
             if (action.targetType == TargetType.AnyValid)
             {
@@ -444,35 +435,6 @@ public class MoveDictionaryManager : MonoBehaviour
                     listOfVectorRanges.Add(direction.Value.Last());
                 }
             }
-
-            /* for (int i = 0; i < listOfRanges.Count; i++)
-            {
-                if (action.targetType == TargetType.AnyValid)
-                {
-                    listOfVectorRanges = listOfRanges;
-                    i = listOfRanges.Count;
-                    continue;
-                }
-                if (normalizedDirectionToTilePos.ContainsKey(listOfRanges[i]))
-                {
-                    if (action.targetType == TargetType.FirstValid)
-                    {
-                        if (normalizedDirectionToTilePos[listOfRanges[i]].First() == listOfRanges[i])
-                        {
-                            listOfVectorRanges.Add(listOfRanges[i]);
-                            continue;
-                        }
-                    }
-                    else if (action.targetType == TargetType.LastValid)
-                    {
-                        if (normalizedDirectionToTilePos[listOfRanges[i]].Last() == listOfRanges[i])
-                        {
-                            listOfVectorRanges.Add(listOfRanges[i]);
-                            continue;
-                        }
-                    }
-                }
-            } */
             listOfRanges = listOfVectorRanges;
 
         }
