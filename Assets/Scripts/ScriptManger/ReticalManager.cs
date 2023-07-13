@@ -117,18 +117,23 @@ public class ReticalManager : MonoBehaviour
             return GridCellPos;
 
         }
-        else if (currentInputType == inputType.MagnititudeBased)
-        {
-            return universalCalculator.getNormalizedDirection(fromPoint, GridCellPos) + fromPoint;
-        }
-        Debug.Log("Check Get Move Poijt");
+        var DirectionToShapeDir = universalCalculator.PointsInDirectionFilter(fromPoint, GridCellPos, ValidPosToShapeData.Keys.ToList());
+        if (DirectionToShapeDir.Count == 0)
+            return GridCellPos;
+        if (currentInputType == inputType.VectorFurthest)
+            return DirectionToShapeDir.Last();
+        if (currentInputType == inputType.VectorNearest)
+            return DirectionToShapeDir.First();
+
+        Debug.LogError("Using Default Escape This Should not Happen");
         return GridCellPos;
     }
     enum inputType
     {
         CellBased,
         CellSnapNear,
-        MagnititudeBased,
+        VectorFurthest,
+        VectorNearest,
     }
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {

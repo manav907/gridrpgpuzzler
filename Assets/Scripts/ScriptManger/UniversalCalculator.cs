@@ -161,6 +161,32 @@ public class UniversalCalculator : MonoBehaviour
     {
         return Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
     }
+    public List<Vector3Int> PointsInDirectionFilter(Vector3Int fromPoint, Vector3Int toPoint, List<Vector3Int> checkPoints)
+    {
+        var dircetion = getNormalizedDirection(fromPoint, toPoint);
+        var output = new List<Vector3Int>();
+        foreach (var point in checkPoints)
+        {
+            var pointDirection = getNormalizedDirection(fromPoint, point);
+            if (pointDirection == dircetion)
+                output.Add(point);
+        }
+        return output;
+    }
+    public Dictionary<Vector3Int, List<Vector3Int>> DirectionToShapeDir(Vector3Int fromPoint, List<Vector3Int> toWardsPoint)
+    {
+        var dict = new Dictionary<Vector3Int, List<Vector3Int>>();
+        foreach (var point in toWardsPoint)
+        {
+            var dircetion = getNormalizedDirection(fromPoint, point);
+            if (!dict.ContainsKey(dircetion))
+            {
+                dict.Add(dircetion, new List<Vector3Int>());
+            }
+            dict[dircetion].Add(point);
+        }
+        return dict;
+    }
     public List<Vector3Int> getSmallAxeArc(Vector3Int fromPoint, Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
