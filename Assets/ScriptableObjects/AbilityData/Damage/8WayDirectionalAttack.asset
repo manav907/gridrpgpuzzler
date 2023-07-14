@@ -23,8 +23,9 @@ MonoBehaviour:
     - key: 1
       value: AttackOn
   SetDataAtIndex:
-  - rangeOfActionEnum: 15
-    magnititudeOfActionEnum: 0
+  - targetType: 2
+    rangeOfActionEnum: 30
+    magnititudeOfActionEnum: 10
     areaOfEffectType: 0
     ignoreValidTargetsCheck: 0
     validTargets: 1

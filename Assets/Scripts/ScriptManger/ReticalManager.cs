@@ -34,12 +34,6 @@ public class ReticalManager : MonoBehaviour
     {
         reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
     }
-    [Header("Shadow References")]
-    [SerializeField] Tilemap shadowTilemap;
-    [SerializeField] TileBase shadowTilePrefab;
-    Vector3Int topleftoffset;
-    Vector3Int downrightoffset;
-
     public void setVariables()
     {
         universalCalculator = this.GetComponent<UniversalCalculator>();
@@ -47,7 +41,6 @@ public class ReticalManager : MonoBehaviour
     }
     void Start()
     {
-
         defaultShape = new ActionInputParams();
         ValidPosToShapeData = new Dictionary<Vector3Int, List<Vector3Int>>();
         lastMovePoint = getMovePoint();
@@ -115,7 +108,6 @@ public class ReticalManager : MonoBehaviour
         }
         else if (actionInputParams.areaOfEffectType == ReticalShapes.SSweep)
         {
-            //retiacalTiles.AddRange(universalCalculator.getSimpleArc(fromPoint, atPoint, rangeOfAction));
             retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, actionInputParams.getMagnititudeOfAction()));
             retiacalTiles.Remove(fromPoint);
         }
@@ -127,8 +119,6 @@ public class ReticalManager : MonoBehaviour
         }
         return retiacalTiles;
     }
-
-
     //Tile Stuff
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles
     {
@@ -140,46 +130,12 @@ public class ReticalManager : MonoBehaviour
     void ClearAllTiles(Tilemap thistilemap)
     {
         thistilemap.ClearAllTiles();
-    }
-    //Shadow Stuff
-    public bool DrawShadows = false;
-    public List<Vector3Int> reDrawShadows()
-    {
-
-        //getting edges of camera
-        var topleft = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
-        var downright = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
-        //assigning offsets
-        topleftoffset = new Vector3Int(-2, 1, 0);
-        downrightoffset = new Vector3Int(1, -2, 0);
-        topleft = topleft + topleftoffset;
-        downright = downright + downrightoffset;
-        //generating ranges
-        List<Vector3Int> shadowRange = universalCalculator.generateRangeFrom2Vectors(topleft, downright);
-        if (!DrawShadows)
-        { return null; }
-        //reDrawTiles(shadowRange, shadowTilemap, shadowTilePrefab);
-        SetTiles(shadowRange, shadowTilemap, shadowTilePrefab);
-
-        var OrderOfInteractableCharacters = this.gameObject.GetComponent<TurnManager>().OrderOfInteractableCharacters;
-        foreach (GameObject thisChar in OrderOfInteractableCharacters)
-        {
-            CharacterControllerScript thisCDH = thisChar.GetComponent<CharacterControllerScript>();
-            if (thisCDH.isPlayerCharacter == true)
-                SetVision(thisCDH.getCharV3Int(), thisCDH.rangeOfVision);//Need to change this otherwise animations break shadows
-        }
-        return shadowRange;
-    }
+    }  
     public void setReticalToFromPoint()
     {
         List<Vector3Int> thisPos = new List<Vector3Int>() { };
         thisPos.Add(fromPoint);
         reDrawReticalTiles(thisPos);
-    }
-    //Methods
-    void SetVision(Vector3Int thisPoint, int rangeOfAction)
-    {
-        SetTiles(universalCalculator.generateRangeFromPoint(thisPoint, rangeOfAction), shadowTilemap, null);
     }
     public void reDrawTiles(List<Vector3Int> theseTiles, Tilemap onTileMap, TileBase thisTile)//Needs review
     {
