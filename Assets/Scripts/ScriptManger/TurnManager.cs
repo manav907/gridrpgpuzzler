@@ -124,7 +124,7 @@ public class TurnManager : MonoBehaviour
     public void endTurn()
     {
         GameEvents.current.inGameUI.ClearButtons();
-        thisCharacterData.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle);
+        StartCoroutine(thisCharacterData.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle));
         TurnCountInt++;
         if (TurnCountInt >= OrderOfInteractableCharacters.Count)
         {

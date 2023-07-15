@@ -255,7 +255,7 @@ public class CharacterControllerScript : MonoBehaviour
 
 
             }
-            Debug.LogError("Had to use fallback");
+            //Debug.LogError("Had to use fallback");
 
         }
         selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];

@@ -167,7 +167,8 @@ public class MoveDictionaryManager : MonoBehaviour
                         theroticalCurrentPos = characterCS.getCharV3Int();
                         StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
                         StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle, false));
-                        yield return new WaitForSeconds(UserDataManager.waitAction);
+                        if (!UserDataManager.skipAnimations)
+                            yield return new WaitForSeconds(UserDataManager.waitAction);
                     }
 
                     if (animationLoopType == AnimationLoopType.forAction)
@@ -180,12 +181,12 @@ public class MoveDictionaryManager : MonoBehaviour
                         if (animationLoopType == AnimationLoopType.forEachPoint)
                             yield return StartCoroutine(animationActionFunction());
                         abilityNameToAction[actiontype]();//The Actual Action
-                        if (animationLoopType == AnimationLoopType.forEachPoint)
-                            yield return afterAnimationOfAction();
+                        
                     }
-                    yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                    StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle));
-                    //characterCS.animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
+                    yield return afterAnimationOfAction();
+
+
+
                     currentdoActionWithID++;
                 }
                 else if (keyPair.key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)

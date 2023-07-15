@@ -7,8 +7,6 @@ public class AnimationControllerScript : MonoBehaviour
 {
     public void setVariables(CharacterAnimationData characterAnimationData)
     {
-        //Debug.Log(characterAnimationData);
-
         animator.runtimeAnimatorController = characterAnimationData.GeneratedAnimatorOverrideController;
         spriteHolder.position = new Vector3(spriteHolder.position.x + characterAnimationData.spriteOffsetX, spriteHolder.position.y + characterAnimationData.spriteOffsetY, spriteHolder.position.z);
     }
@@ -18,25 +16,12 @@ public class AnimationControllerScript : MonoBehaviour
     {
         return TurnManager.thisCharacter == this.gameObject;
     }
-    public void ToggleCharacterTurnAnimation()
-    {
-        if (checkifCharacterTurn())
-        {
-            //setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
-            StartCoroutine(setAnimationAndWaitForIt(CharacterAnimationState.Walk));
-        }
-        else
-        {
-            //setCharacterAnimationAndReturnLength(CharacterAnimationState.Idle);
-            StartCoroutine(setAnimationAndWaitForIt(CharacterAnimationState.Idle));
-        }
-    }
     public CharacterAnimationState currentState;
     public IEnumerator setAnimationAndWaitForIt(CharacterAnimationState state, bool wait = true)
     {
         currentState = state;
         refreshCharacterAnimation();
-        if (wait)
+        if (wait && !UserDataManager.skipAnimations)
             yield return StartCoroutine(waitForAnimation(state));
 
     }
