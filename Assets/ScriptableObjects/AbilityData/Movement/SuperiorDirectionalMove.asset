@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e1960a27c9e934082b09f75c1a622b, type: 3}
   m_Name: SuperiorDirectionalMove
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Jump Or Diagonal
   primaryUseForAction: 2
   Varirables:
   - 'New Varirable '
@@ -23,11 +23,11 @@ MonoBehaviour:
     - key: 1
       value: 'New Varirable '
   SetDataAtIndex:
-  - rangeOfActionEnum: 20
+  - targetType: 2
+    rangeOfActionEnum: 20
     magnititudeOfActionEnum: 0
     areaOfEffectType: 0
-    validTileType: 2
-    optimalTargetTip: 0
+    ignoreValidTargetsCheck: 0
     validTargets: 0
     includeSelf: 1
     updateTheroticalPos: 1

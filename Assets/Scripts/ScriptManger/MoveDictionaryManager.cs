@@ -20,10 +20,7 @@ public class MoveDictionaryManager : MonoBehaviour
     [Header("Current Ablity")]
     //[SerializeField] Ability currentAblity;
     [Header("Debug Data")]
-    [SerializeField][TextArea] string ValidTargetListDebugInfo;
-    public bool EditMapMode = false;
-    [SerializeField] int alternateRange = 50;
-    [SerializeField] bool checkValidActionTiles = true;
+    public bool ControlAI = false;
 
     bool ShouldContinue;
     public void setVariables()
@@ -230,33 +227,33 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         GetInputState = newState;
     }
-    IEnumerator getInput(ActionInputParams basicAction)
+    IEnumerator getInput(ActionInputParams actionInputParams)
     {
         //Declaring Variables
-        float rangeOfAction = basicAction.getRangeOfAction();
-        float magnititudeOfAction = basicAction.getMagnititudeOfAction();
+        float rangeOfAction = actionInputParams.getRangeOfAction();
+        float magnititudeOfAction = actionInputParams.getMagnititudeOfAction();
         if (rangeOfAction == 0)
             Debug.Log(rangeOfAction + " was zero");
         yield return null;
-        List<Vector3Int> listOfValidtargets = getValidTargetList(basicAction);
+        List<Vector3Int> listOfValidtargets = getValidTargetList(actionInputParams, theroticalCurrentPos);
         reticalManager.fromPoint = theroticalCurrentPos;
         ShouldContinue = false;
 
         List<Vector3Int> tempData = new List<Vector3Int>();
         //SettingUPReticle
-        reticalManager.UpdateReticalInputParams(basicAction, listOfValidtargets);
+        reticalManager.UpdateReticalInputParams(actionInputParams, listOfValidtargets);
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);
-            tryHere = characterCS.getTarget(listOfValidtargets);
+            tryHere = characterCS.getTarget(listOfValidtargets, actionInputParams);
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
         }
         else//if it is the player character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
-            addToolTip("select Purple Tile To Contine with Action " + basicAction + " Or Right Click to Cancel");
+            addToolTip("select Purple Tile To Contine with Action " + actionInputParams + " Or Right Click to Cancel");
             setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = (reticalManager.getMovePoint());
@@ -267,7 +264,7 @@ public class MoveDictionaryManager : MonoBehaviour
             { tempData = reticalManager.ValidPosToShapeData[tryHere]; }
             else
             { Debug.Log("InvalidTile"); }
-            if (basicAction.updateTheroticalPos)
+            if (actionInputParams.updateTheroticalPos)
             {
                 theroticalCurrentPos = tempData.Last();
                 tryHere = theroticalCurrentPos;
@@ -324,7 +321,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         bool DeterminValidTileTarget(Vector3Int checkPos)
         {
-            ValidTargets requitedCondtion = basicAction.validTargets;
+            ValidTargets requitedCondtion = actionInputParams.validTargets;
             if (mapManager.cellDataDir.ContainsKey(checkPos))
             {
 
@@ -364,25 +361,20 @@ public class MoveDictionaryManager : MonoBehaviour
 
         }
     }
-    public List<Vector3Int> getValidTargetList(ActionInputParams action)
+    public List<Vector3Int> getValidTargetList(ActionInputParams action, Vector3Int fromPoint)
     {
         float rangeOfAction;
-        if (!EditMapMode)
-            rangeOfAction = action.getRangeOfAction();
-        else
-            rangeOfAction = alternateRange;
-
-        Vector3Int centerPos = theroticalCurrentPos;
-        List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(centerPos, rangeOfAction);
+        rangeOfAction = action.getRangeOfAction();
+        List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(fromPoint, rangeOfAction);
+        listOfRanges = universalCalculator.SortListAccordingtoDistanceFromPoint(listOfRanges, theroticalCurrentPos);//Sorts Points Accoding to Distance
         //List<Vector3Int> listOfRanges = universalCalculator.generateDirectionalRange(centerPos, rangeOfAction, universalCalculator.generate9WayReffence());
 
-        bool disregardWalkablity = false;
+        bool checkWalkability = true;
         bool requireCharacter = false;
         bool reverseRequireCharacterCondiditon = false;
-        //listOfRanges = universalCalculator.filterOutList(listOfRanges, listOfNonNullTiles);
         if (action.ignoreValidTargetsCheck)
         {
-            disregardWalkablity = true;
+            checkWalkability = false;
             requireCharacter = false;
         }
         else if (action.validTargets == ValidTargets.Empty)
@@ -398,27 +390,19 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             listOfRanges.Remove(theroticalCurrentPos);
         }
-        //listOfRanges.Remove(centerPos);
-        ValidTargetListDebugInfo = "Data for Invalid Tiles \n";
         //The Following Removes Invalid Tiles
-
         CheckTileValidity();
         CheckVectorValidity();
-
         if (action.includeSelf && !listOfRanges.Contains(theroticalCurrentPos))
         {
             listOfRanges.Add(theroticalCurrentPos);
             //Debug.Log("ForceAddedSelf");
         }
-        if (checkValidActionTiles)
-            Debug.Log(ValidTargetListDebugInfo);
         return listOfRanges;
         void CheckVectorValidity()
         {
-            //Direction is really important or else First And Last Does not Work
-            listOfRanges = universalCalculator.SortListAccordingtoDistanceFromPoint(listOfRanges, theroticalCurrentPos);
+            //Direction and Distance are very Important Check For those if you are having problems
             var normalizedDirectionToTilePos = universalCalculator.DirectionToCellSnapData(theroticalCurrentPos, listOfRanges);
-
             var listOfVectorRanges = new List<Vector3Int>();
             if (action.targetType == TargetType.AnyValid)
             {
@@ -441,39 +425,17 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void CheckTileValidity()
         {
-            for (int i = 0; i < listOfRanges.Count; i++)
+            for (int i = listOfRanges.Count - 1; i >= 0; i--)
             {
-                //Normal Checks         
-                bool hasWalkability = disregardWalkablity ? true : mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS);
                 bool requireCharacterCondition = requireCharacter ? mapManager.isCellHoldingCharacer(listOfRanges[i]) : true;
                 if (reverseRequireCharacterCondiditon)
                 {
                     requireCharacterCondition = !requireCharacterCondition;
                 }
 
-                if (hasWalkability && requireCharacterCondition)
-                {/*Do Nothing since all conditions are fine*/}
-                else
+                if (!requireCharacterCondition || (checkWalkability && !mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS)))
                 {
-
-                    //For Debugging
-                    if (checkValidActionTiles)
-                    {
-                        bool condtion = false;//Will be reassigned later                        
-                        string debugLine = "For Action " + action + " Point " + listOfRanges[i] + " was Invalid as Tile ";
-                        string needConditon = (condtion) ? "Impossible Condition Occured for " : "Required ";//Used to Concatinate String
-                        if (!requireCharacterCondition)
-                        {
-                            condtion = requireCharacterCondition;
-                            debugLine += needConditon + "Character Here; ";
-                        }
-                        if (rangeOfAction == 0)
-                            debugLine += "The Range of Action was " + rangeOfAction;
-                        ValidTargetListDebugInfo += debugLine + "\n";
-                    }
-                    //Actual Code 
                     listOfRanges.RemoveAt(i);
-                    i--;
                 }
             }
         }

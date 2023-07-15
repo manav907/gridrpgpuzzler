@@ -13,7 +13,7 @@ public class CharacterControllerScript : MonoBehaviour
     {
         get
         {
-            if (moveDictionaryManager.EditMapMode == false)
+            if (moveDictionaryManager.ControlAI == false)
                 return isPlayerCharacter;
             return true;
         }
@@ -136,7 +136,7 @@ public class CharacterControllerScript : MonoBehaviour
             }
         }
     }
-    [SerializeField] Vector3Int currentTarget;
+    [SerializeField] Vector3Int destinationTarget;
     int GhostVision = 1;
     Dictionary<TypeOfAction, List<LadderCollapseFunction>> abilityMap()
     {
@@ -172,7 +172,7 @@ public class CharacterControllerScript : MonoBehaviour
             List<Vector3Int> attackRangeList = new List<Vector3Int>();
             if (optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
             {
-                attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0]);
+                attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
             }
             //Debug.LogError("AI Stuf Needs Rework");
             if (targetList.Count == 0)
@@ -184,8 +184,8 @@ public class CharacterControllerScript : MonoBehaviour
             }
             else
             {
-                currentTarget = selectOptimalTarget();
-                if (attackRangeList.Contains(currentTarget) && optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
+                destinationTarget = selectOptimalTarget();
+                if (attackRangeList.Contains(destinationTarget) && optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
                 {
                     if (checkAI)
                         Debug.Log("Attacking");
@@ -232,17 +232,23 @@ public class CharacterControllerScript : MonoBehaviour
         Debug.LogError("Fata chara erro");
         return Vector3Int.zero;
     }
-
-
-    public Vector3Int getTarget(List<Vector3Int> validTargets)
+    public Vector3Int getTarget(List<Vector3Int> validTiles, ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
-        Vector3Int target = universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];
-        if (checkAI)
+        Vector3Int considerPoint = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
+        if (actionInputParams.updateTheroticalPos)
         {
-            Debug.Log("Chosen Target " + target);
+            float distanceFromCurrentLocation = Vector3Int.Distance(getCharV3Int(), destinationTarget);
+            float distanceFromFurtureLocation = Vector3Int.Distance(considerPoint, considerPoint);
+            if (distanceFromCurrentLocation < distanceFromFurtureLocation)
+            {
+                Debug.Log("Choosing to Stay");
+                return getCharV3Int();
+            }
         }
-        return target;
+        return considerPoint;
+
+
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
     }
