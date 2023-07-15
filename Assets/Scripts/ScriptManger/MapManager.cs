@@ -101,11 +101,8 @@ public class MapManager : MonoBehaviour
         {
             return false;
         }
-        //foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].tileDatas.Select(tileData => tileData.groundFloorType).ToList())
         //This get data From SO
-        foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)
-            //This Gets Cached Data
-            //If This Loop Completes without returning False then that means that all tiles at this tilePos are Walkable
+        foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)//This Gets Cached Data
             if (!characterDataHolder.canWalkOn.Contains(groundFloorType))
                 return false;
         return true;

@@ -13,7 +13,7 @@ public class CharacterControllerScript : MonoBehaviour
     {
         get
         {
-            if (moveDictionaryManager.EditMapMode == false)
+            if (moveDictionaryManager.ControlAI == false)
                 return isPlayerCharacter;
             return true;
         }
@@ -136,7 +136,7 @@ public class CharacterControllerScript : MonoBehaviour
             }
         }
     }
-    [SerializeField] Vector3Int currentTarget;
+    [SerializeField] Vector3Int destinationTarget;
     int GhostVision = 1;
     Dictionary<TypeOfAction, List<LadderCollapseFunction>> abilityMap()
     {
@@ -172,7 +172,7 @@ public class CharacterControllerScript : MonoBehaviour
             List<Vector3Int> attackRangeList = new List<Vector3Int>();
             if (optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
             {
-                attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0]);
+                attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
             }
             //Debug.LogError("AI Stuf Needs Rework");
             if (targetList.Count == 0)
@@ -184,8 +184,8 @@ public class CharacterControllerScript : MonoBehaviour
             }
             else
             {
-                currentTarget = selectOptimalTarget();
-                if (attackRangeList.Contains(currentTarget) && optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
+                destinationTarget = selectOptimalTarget();
+                if (attackRangeList.Contains(destinationTarget) && optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
                 {
                     if (checkAI)
                         Debug.Log("Attacking");
@@ -229,20 +229,62 @@ public class CharacterControllerScript : MonoBehaviour
     {
         if (mapManager.cellDataDir[CellPosOfCharcter].characterAtCell = this.gameObject)
             return CellPosOfCharcter;
-        Debug.LogError("Fata chara erro");
+        Debug.LogError("Fata error");
         return Vector3Int.zero;
     }
-
-
-    public Vector3Int getTarget(List<Vector3Int> validTargets)
+    public Vector3Int getTarget(List<Vector3Int> validTiles, ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
-        Vector3Int target = universalCalculator.SortListAccordingtoDistanceFromPoint(validTargets, currentTarget)[0];
-        if (checkAI)
+        validTiles.Remove(getCharV3Int());
+        List<Vector3Int> pointsToConsider = new List<Vector3Int>();
+        pointsToConsider.Add(universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0]);
+        pointsToConsider.Add(universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[1]);
+        if (actionInputParams.updateTheroticalPos)
         {
-            Debug.Log("Chosen Target " + target);
+            float distanceFromCurrentLocation = Vector3Int.Distance(getCharV3Int(), destinationTarget);
+            float distanceFromFirstLocation = Vector3Int.Distance(pointsToConsider[0], destinationTarget);
+            float distanceFromSecondLocation = Vector3Int.Distance(pointsToConsider[1], destinationTarget);
+            if (distanceFromFirstLocation == distanceFromSecondLocation)
+            {
+                if (distanceFromCurrentLocation < distanceFromFirstLocation)
+                {
+                    Vector3Int nextConsiderPoint = universalCalculator.SortListAccordingtoDistanceFromPoint(moveDictionaryManager.getValidTargetList(actionInputParams, pointsToConsider[0]), destinationTarget)[0];
+                    distanceFromFirstLocation = Vector3Int.Distance(nextConsiderPoint, destinationTarget);
+                    if (distanceFromCurrentLocation < distanceFromFirstLocation)
+                    {
+                        return getCharV3Int();
+
+                    }
+                }
+                if (distanceFromCurrentLocation < distanceFromSecondLocation)
+                {
+                    Vector3Int nextConsiderPoint = universalCalculator.SortListAccordingtoDistanceFromPoint(moveDictionaryManager.getValidTargetList(actionInputParams, pointsToConsider[0]), destinationTarget)[0];
+                    distanceFromSecondLocation = Vector3Int.Distance(nextConsiderPoint, destinationTarget);
+                    if (distanceFromCurrentLocation < distanceFromSecondLocation)
+                    {
+                        return getCharV3Int();
+
+                    }
+                    return pointsToConsider[1];
+                }
+            }
+            if (distanceFromCurrentLocation < distanceFromFirstLocation)
+            {
+                Vector3Int nextConsiderPoint = universalCalculator.SortListAccordingtoDistanceFromPoint(moveDictionaryManager.getValidTargetList(actionInputParams, pointsToConsider[0]), destinationTarget)[0];
+                distanceFromFirstLocation = Vector3Int.Distance(nextConsiderPoint, destinationTarget);
+                if (distanceFromCurrentLocation < distanceFromFirstLocation)
+                {
+                    Debug.Log("Choosing to Stay");
+                    return getCharV3Int();
+
+                }
+                return pointsToConsider[0];
+            }
+
         }
-        return target;
+        return pointsToConsider[0];
+
+
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
     }
