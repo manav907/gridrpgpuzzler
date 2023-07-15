@@ -246,9 +246,10 @@ public class MoveDictionaryManager : MonoBehaviour
         if (!characterCS.controlCharacter)//if Non Player Character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);
-            tryHere = characterCS.getTarget(listOfValidtargets, actionInputParams);
+            tryHere = characterCS.getTarget(actionInputParams);
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
+
         }
         else//if it is the player character
         {
@@ -260,6 +261,8 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
+
+
             if (reticalManager.ValidPosToShapeData.ContainsKey(tryHere))
             { tempData = reticalManager.ValidPosToShapeData[tryHere]; }
             else
@@ -317,6 +320,13 @@ public class MoveDictionaryManager : MonoBehaviour
             {
                 return true;
             }
+            if (!characterCS.controlCharacter)
+            {
+                Debug.LogError("AI Exception");
+                turnManager.endTurn();
+            }
+
+
             return false;
         }
         bool DeterminValidTileTarget(Vector3Int checkPos)

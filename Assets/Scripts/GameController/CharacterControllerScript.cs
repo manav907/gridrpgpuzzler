@@ -27,7 +27,8 @@ public class CharacterControllerScript : MonoBehaviour
     public string faction;
     public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
-    public Vector3Int CellPosOfCharcter;
+    public Vector3Int currentCellPosOfCharcter;
+    public List<Vector3Int> lastCellPosOfCharacter;
     [SerializeField] private TMPro.TextMeshPro Heatlh;
     private MapManager mapManager;
     private TurnManager turnManager;
@@ -227,65 +228,51 @@ public class CharacterControllerScript : MonoBehaviour
     }
     public Vector3Int getCharV3Int()
     {
-        if (mapManager.cellDataDir[CellPosOfCharcter].characterAtCell = this.gameObject)
-            return CellPosOfCharcter;
+        if (mapManager.cellDataDir[currentCellPosOfCharcter].characterAtCell = this.gameObject)
+            return currentCellPosOfCharcter;
         Debug.LogError("Fata error");
         return Vector3Int.zero;
     }
-    public Vector3Int getTarget(List<Vector3Int> validTiles, ActionInputParams actionInputParams)
+    public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
-        validTiles.Remove(getCharV3Int());
-        List<Vector3Int> pointsToConsider = new List<Vector3Int>();
-        pointsToConsider.Add(universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0]);
-        pointsToConsider.Add(universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[1]);
+        List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+        //
+        Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
         if (actionInputParams.updateTheroticalPos)
         {
-            float distanceFromCurrentLocation = Vector3Int.Distance(getCharV3Int(), destinationTarget);
-            float distanceFromFirstLocation = Vector3Int.Distance(pointsToConsider[0], destinationTarget);
-            float distanceFromSecondLocation = Vector3Int.Distance(pointsToConsider[1], destinationTarget);
-            if (distanceFromFirstLocation == distanceFromSecondLocation)
+            for (int i = 0; i < validTiles.Count; i++)
             {
-                if (distanceFromCurrentLocation < distanceFromFirstLocation)
+                if (lastCellPosOfCharacter.Contains(validTiles[i]))
                 {
-                    Vector3Int nextConsiderPoint = universalCalculator.SortListAccordingtoDistanceFromPoint(moveDictionaryManager.getValidTargetList(actionInputParams, pointsToConsider[0]), destinationTarget)[0];
-                    distanceFromFirstLocation = Vector3Int.Distance(nextConsiderPoint, destinationTarget);
-                    if (distanceFromCurrentLocation < distanceFromFirstLocation)
-                    {
-                        return getCharV3Int();
-
-                    }
-                }
-                if (distanceFromCurrentLocation < distanceFromSecondLocation)
-                {
-                    Vector3Int nextConsiderPoint = universalCalculator.SortListAccordingtoDistanceFromPoint(moveDictionaryManager.getValidTargetList(actionInputParams, pointsToConsider[0]), destinationTarget)[0];
-                    distanceFromSecondLocation = Vector3Int.Distance(nextConsiderPoint, destinationTarget);
-                    if (distanceFromCurrentLocation < distanceFromSecondLocation)
-                    {
-                        return getCharV3Int();
-
-                    }
-                    return pointsToConsider[1];
+                    lastCellPosOfCharacter.Remove(validTiles[i]);
+                    i--;
                 }
             }
-            if (distanceFromCurrentLocation < distanceFromFirstLocation)
+            if (selectedValidTile == getCharV3Int())
             {
-                Vector3Int nextConsiderPoint = universalCalculator.SortListAccordingtoDistanceFromPoint(moveDictionaryManager.getValidTargetList(actionInputParams, pointsToConsider[0]), destinationTarget)[0];
-                distanceFromFirstLocation = Vector3Int.Distance(nextConsiderPoint, destinationTarget);
-                if (distanceFromCurrentLocation < distanceFromFirstLocation)
-                {
-                    Debug.Log("Choosing to Stay");
-                    return getCharV3Int();
+                //Debug.Log("Trying to find optimal point");          
 
-                }
-                return pointsToConsider[0];
+
             }
+            Debug.LogError("Had to use fallback");
 
         }
-        return pointsToConsider[0];
+        selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
+
+        addToLastCellPosOfCharacter(selectedValidTile);
+        return selectedValidTile;
 
 
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
+    }
+    void addToLastCellPosOfCharacter(Vector3Int pos)
+    {
+        lastCellPosOfCharacter.Add(pos);
+        if (lastCellPosOfCharacter.Count > 3)
+        {
+            lastCellPosOfCharacter.RemoveAt(0);
+        }
     }
 }
