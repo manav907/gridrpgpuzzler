@@ -12,11 +12,11 @@ public class AnimationControllerScriptEditor : Editor
     {
         DrawDefaultInspector();
         AnimationControllerScript characterData = target as AnimationControllerScript;
-        CharacterAnimationState newState = (CharacterAnimationState)EditorGUILayout.EnumPopup(characterData.currentState);
+        /* CharacterAnimationState newState = (CharacterAnimationState)EditorGUILayout.EnumPopup(characterData.currentState);
         if (characterData.currentState != newState)
         {
             characterData.currentState = newState;
             characterData.refreshCharacterAnimation();
-        }
+        } */
     }
 }

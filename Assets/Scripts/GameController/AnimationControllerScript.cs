@@ -16,13 +16,28 @@ public class AnimationControllerScript : MonoBehaviour
     {
         return TurnManager.thisCharacter == this.gameObject;
     }
-    public CharacterAnimationState currentState;
+    //public CharacterAnimationState currentState;
     public IEnumerator setAnimationAndWaitForIt(CharacterAnimationState state, bool wait = true)
     {
-        currentState = state;
-        refreshCharacterAnimation();
-        if (wait && !UserDataManager.skipAnimations)
-            yield return StartCoroutine(waitForAnimation(state));
+        var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (animatorStateInfo.IsName(state.ToString()))
+        {
+            //Debug.Log("not Changing");
+        }
+        else
+        {
+            animator.SetTrigger(state.ToString());
+            if (true)
+            {
+                var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+                Debug.Log(gameObject.name +
+                "\n" + " State Info: " + state.ToString() + " " + "Current State Matches?: " + animatorStateInfo.IsName(state.ToString()) +
+                "\n" + " Clip Info: " + animatorClipInfo.name);
+            }            
+        }
+        //if (wait && !UserDataManager.skipAnimations)
+        if (wait)
+                yield return StartCoroutine(waitForAnimation(state));
 
     }
     public IEnumerator waitForAnimation(CharacterAnimationState state)
@@ -41,26 +56,6 @@ public class AnimationControllerScript : MonoBehaviour
             //Debug.Log("Waiting for the Wrong animation");
             return false;
         }
-    }
-    public void refreshCharacterAnimation()
-    {
-
-        var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
-        var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (animatorStateInfo.ToString() != currentState.ToString())
-        {
-            animator.SetTrigger(currentState.ToString());
-            float duration = animatorStateInfo.length;
-            if (true)
-            {
-                Debug.Log(gameObject.name +
-                "\n" + " State Info: " + currentState.ToString() + " " + animatorStateInfo.length + " " + animatorStateInfo.speed + " " + animatorStateInfo.speed +
-                "\n" + " Clip Info: " + animatorClipInfo.name + " " + animatorClipInfo.length + " " + animatorClipInfo.frameRate + " " + animatorClipInfo.apparentSpeed);
-            }
-        }
-
-
-
     }
 }
 public enum CharacterAnimationState
