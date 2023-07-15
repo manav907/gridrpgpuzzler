@@ -167,7 +167,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         theroticalCurrentPos = characterCS.getCharV3Int();
                         StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
                         StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle, false));
-                        if (!UserDataManager.skipAnimations)
+                        if (!UserDataManager.skipWaitTime)
                             yield return new WaitForSeconds(UserDataManager.waitAction);
                     }
 
@@ -181,7 +181,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         if (animationLoopType == AnimationLoopType.forEachPoint)
                             yield return StartCoroutine(animationActionFunction());
                         abilityNameToAction[actiontype]();//The Actual Action
-                        
+
                     }
                     yield return afterAnimationOfAction();
 

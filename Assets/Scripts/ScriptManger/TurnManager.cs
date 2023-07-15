@@ -88,6 +88,7 @@ public class TurnManager : MonoBehaviour
             triggerGameEnd();
         else
         {
+            //Debug.Log("New Turn");
             setCharacterData();//sets new chracterData
             thisCharacterData.actionPoints = thisCharacterData.defaultActionPoints;
             thisCharacterData.BeginThisCharacterTurn();
@@ -123,6 +124,7 @@ public class TurnManager : MonoBehaviour
 
     public void endTurn()
     {
+        
         GameEvents.current.inGameUI.ClearButtons();
         StartCoroutine(thisCharacterData.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle));
         TurnCountInt++;
