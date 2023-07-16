@@ -247,7 +247,7 @@ public class MoveDictionaryManager : MonoBehaviour
         if (!characterCS.controlCharacter)//if Non Player Character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);
-            tryHere = characterCS.getTarget(actionInputParams);
+            tryHere = characterCS.getTarget(actionInputParams); 
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
 

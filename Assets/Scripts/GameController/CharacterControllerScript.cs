@@ -186,8 +186,12 @@ public class CharacterControllerScript : MonoBehaviour
                 }
                 else if (true && optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
                 {
-
-                    moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+                    if (Vector3Int.Distance(destinationTarget, getCharV3Int()) == 1)
+                    {
+                        turnManager.endTurn();
+                    }
+                    else
+                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
                 }
             }
             //determineAction();
@@ -226,33 +230,45 @@ public class CharacterControllerScript : MonoBehaviour
     public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
+
+        Vector3Int destinationTargetCopy = destinationTarget;
         if (actionInputParams.updateTheroticalPos)
         {
-            int Erro = 8;
+            if (Vector3Int.Distance(destinationTargetCopy, getBasicDirection()) < Vector3Int.Distance(destinationTargetCopy, getCharV3Int()))
+                return getBasicDirection();
+            Debug.Log("Cal");
+            int moveBudget = 15;
 
             List<Vector3Int> currentlyAvailableOptions = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
             List<Vector3Int> exploredTiles = new List<Vector3Int>();
-            while (!currentlyAvailableOptions.Contains(destinationTarget) && Erro != 0)
+            while (!currentlyAvailableOptions.Contains(destinationTargetCopy) && moveBudget != 0)
             {
-                List<Vector3Int> options = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
+                List<Vector3Int> options = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTargetCopy);
                 foreach (Vector3Int pos in exploredTiles)
                 {
                     options.Remove(pos);
                 }
-                destinationTarget = universalCalculator.SortListAccordingtoDistanceFromPoint(options, getCharV3Int())[0];
-                exploredTiles.Add(destinationTarget);
+                if (options.Count == 0)
+                    return getCharV3Int();
+                destinationTargetCopy = universalCalculator.SortListAccordingtoDistanceFromPoint(options, getCharV3Int())[0];
+                exploredTiles.Add(destinationTargetCopy);
             }
-            return destinationTarget;
+            return destinationTargetCopy;
         }
 
 
 
 
 
+        return getBasicDirection();
 
-        List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
-        Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
-        return selectedValidTile;
+
+        Vector3Int getBasicDirection()
+        {
+            List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+            Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTargetCopy)[0];
+            return selectedValidTile;
+        }
 
 
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
