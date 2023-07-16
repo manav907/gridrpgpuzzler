@@ -226,36 +226,32 @@ public class CharacterControllerScript : MonoBehaviour
     public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
-
-        List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
-        validTiles.Remove(getCharV3Int());
-        //
-        Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
         if (actionInputParams.updateTheroticalPos)
         {
             int Erro = 8;
-            List<Vector3Int> avaliaabletiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
-            List<Vector3Int> lastCellPosOfCharacter = new List<Vector3Int>();
-            while (destinationTarget != getCharV3Int() && Erro != 0)
-            {
-                validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
 
-                //validTiles.Remove(destinationTarget);
-                foreach (Vector3Int pos in lastCellPosOfCharacter)
+            List<Vector3Int> currentlyAvailableOptions = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+            List<Vector3Int> exploredTiles = new List<Vector3Int>();
+            while (!currentlyAvailableOptions.Contains(destinationTarget) && Erro != 0)
+            {
+                List<Vector3Int> options = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
+                foreach (Vector3Int pos in exploredTiles)
                 {
-                    validTiles.Remove(pos);
+                    options.Remove(pos);
                 }
-                destinationTarget = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int())[0];
-                lastCellPosOfCharacter.Add(destinationTarget);
-                if (avaliaabletiles.Contains(destinationTarget))
-                {
-                    return destinationTarget;
-                }
-                Erro--;
+                destinationTarget = universalCalculator.SortListAccordingtoDistanceFromPoint(options, getCharV3Int())[0];
+                exploredTiles.Add(destinationTarget);
             }
+            return destinationTarget;
         }
-        validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
-        selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
+
+
+
+
+
+
+        List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+        Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
         return selectedValidTile;
 
 
