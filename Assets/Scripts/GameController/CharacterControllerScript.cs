@@ -19,7 +19,6 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
     public bool isPlayerCharacter = true;
-    [SerializeField] private bool checkAI = false;
     public int health;
     public int attackDamage;
     public int speedValue;
@@ -158,9 +157,6 @@ public class CharacterControllerScript : MonoBehaviour
     }
     void determineAction()
     {
-
-        if (checkAI)
-            Debug.Log("Determining Action");
         var optionsofAbilities = abilityMap();
         if (actionPoints > 0)
         {
@@ -178,8 +174,6 @@ public class CharacterControllerScript : MonoBehaviour
             //Debug.LogError("AI Stuf Needs Rework");
             if (targetList.Count == 0)
             {
-                if (checkAI)
-                    Debug.Log("Ideling");
                 turnManager.endTurn();
                 return;
             }
@@ -188,26 +182,12 @@ public class CharacterControllerScript : MonoBehaviour
                 destinationTarget = selectOptimalTarget();
                 if (attackRangeList.Contains(destinationTarget) && optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
                 {
-                    if (checkAI)
-                        Debug.Log("Attacking");
-                    //moveDictionaryManager.doAction(AbilityName.Attack);
                     moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
                 }
                 else if (true && optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
                 {
-                    if (checkAI)
-                        Debug.Log("Moving");
 
-                    if (getTarget(optionsofAbilities[TypeOfAction.apply_SelfMove][0].SetDataAtIndex[0]) == getCharV3Int())
-                    {
-                        if (optionsofAbilities[TypeOfAction.apply_SelfMove].Count > 1)
-                            moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][1]);
-                    }
-                    else
-                    {
-
-                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
-                    }
+                    moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
                 }
             }
             //determineAction();
@@ -252,30 +232,6 @@ public class CharacterControllerScript : MonoBehaviour
         Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
         if (actionInputParams.updateTheroticalPos)
         {
-            for (int i = 0; i < validTiles.Count; i++)
-            {
-                if (lastCellPosOfCharacter.Contains(validTiles[i]))
-                {
-                    lastCellPosOfCharacter.Remove(validTiles[i]);
-                    i--;
-                }
-            }
-            /* if (selectedValidTile == getCharV3Int())
-            {
-                Vector3Int newDirection = universalCalculator.getNormalizedDirection(getCharV3Int(), destinationTarget);
-                List<Vector3Int> DirectionsToConsider = new List<Vector3Int>();
-                foreach (Vector3Int option in validTiles)
-                {
-                    Vector3Int considerDirection = universalCalculator.getNormalizedDirection(option, destinationTarget);
-                    if (!DirectionsToConsider.Contains(considerDirection))
-                    {
-                        DirectionsToConsider.Add(considerDirection);
-                        Debug.Log(considerDirection);
-                    }
-                }
-                Debug.Log("Trying to find optimal point");
-            } */
-            //Debug.LogError("Had to use fallback");
 
         }
         selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
