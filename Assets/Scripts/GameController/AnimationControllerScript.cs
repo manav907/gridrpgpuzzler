@@ -27,23 +27,21 @@ public class AnimationControllerScript : MonoBehaviour
         else
         {
             animator.SetTrigger(state.ToString());
-            if (true)
+            /* if (true)
             {
                 var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
                 Debug.Log(gameObject.name +
                 "\n" + " State Info: " + state.ToString() + " " + "Current State Matches?: " + animatorStateInfo.IsName(state.ToString()) +
                 "\n" + " Clip Info: " + animatorClipInfo.name);
-            }            
+            }   */
         }
-        //if (wait && !UserDataManager.skipAnimations)
-        if (wait)
+        if (!UserDataManager.skipAnimations)
+            if (wait)
                 yield return StartCoroutine(waitForAnimation(state));
 
     }
     public IEnumerator waitForAnimation(CharacterAnimationState state)
     {
-
-        //Debug.Log("Waiting for animation " + state.ToString());
         yield return new WaitUntil(() =>
         {
             return isTheCorrectAnimation();

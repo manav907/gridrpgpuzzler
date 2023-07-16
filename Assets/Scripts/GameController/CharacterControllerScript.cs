@@ -197,7 +197,17 @@ public class CharacterControllerScript : MonoBehaviour
                 {
                     if (checkAI)
                         Debug.Log("Moving");
-                    moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+
+                    if (getTarget(optionsofAbilities[TypeOfAction.apply_SelfMove][0].SetDataAtIndex[0]) == getCharV3Int())
+                    {
+                        if (optionsofAbilities[TypeOfAction.apply_SelfMove].Count > 1)
+                            moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][1]);
+                    }
+                    else
+                    {
+
+                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+                    }
                 }
             }
             //determineAction();
@@ -237,6 +247,7 @@ public class CharacterControllerScript : MonoBehaviour
     //validTargets depends on the action being performed
     {
         List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+        validTiles.Remove(getCharV3Int());
         //
         Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
         if (actionInputParams.updateTheroticalPos)
@@ -249,12 +260,21 @@ public class CharacterControllerScript : MonoBehaviour
                     i--;
                 }
             }
-            if (selectedValidTile == getCharV3Int())
+            /* if (selectedValidTile == getCharV3Int())
             {
-                //Debug.Log("Trying to find optimal point");          
-
-
-            }
+                Vector3Int newDirection = universalCalculator.getNormalizedDirection(getCharV3Int(), destinationTarget);
+                List<Vector3Int> DirectionsToConsider = new List<Vector3Int>();
+                foreach (Vector3Int option in validTiles)
+                {
+                    Vector3Int considerDirection = universalCalculator.getNormalizedDirection(option, destinationTarget);
+                    if (!DirectionsToConsider.Contains(considerDirection))
+                    {
+                        DirectionsToConsider.Add(considerDirection);
+                        Debug.Log(considerDirection);
+                    }
+                }
+                Debug.Log("Trying to find optimal point");
+            } */
             //Debug.LogError("Had to use fallback");
 
         }
