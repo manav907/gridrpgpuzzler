@@ -226,7 +226,7 @@ public class CharacterControllerScript : MonoBehaviour
     public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
-        List<Vector3Int> avaliaabletiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+
         List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
         validTiles.Remove(getCharV3Int());
         //
@@ -234,43 +234,32 @@ public class CharacterControllerScript : MonoBehaviour
         if (actionInputParams.updateTheroticalPos)
         {
             int Erro = 8;
-
+            List<Vector3Int> avaliaabletiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+            List<Vector3Int> lastCellPosOfCharacter = new List<Vector3Int>();
             while (destinationTarget != getCharV3Int() && Erro != 0)
             {
                 validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
+
                 //validTiles.Remove(destinationTarget);
                 foreach (Vector3Int pos in lastCellPosOfCharacter)
                 {
                     validTiles.Remove(pos);
                 }
-                Vector3Int newtarget = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int())[0];
-                //if (Vector3Int.Distance(destinationTarget, getCharV3Int()) == actionInputParams.getRangeOfAction())
-                if (avaliaabletiles.Contains(newtarget))
-                {
-                    Debug.Log(destinationTarget + " Was Chosen");
-                    return newtarget;
-                }
                 destinationTarget = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int())[0];
-                addToLastCellPosOfCharacter(destinationTarget);
+                lastCellPosOfCharacter.Add(destinationTarget);
+                if (avaliaabletiles.Contains(destinationTarget))
+                {
+                    return destinationTarget;
+                }
                 Erro--;
             }
-            Debug.Log("Failed ti get Soltuion");
         }
         validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
         selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
-        addToLastCellPosOfCharacter(selectedValidTile);
         return selectedValidTile;
 
 
         //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
         //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
-    }
-    void addToLastCellPosOfCharacter(Vector3Int pos)
-    {
-        lastCellPosOfCharacter.Add(pos);
-        if (lastCellPosOfCharacter.Count > 3)
-        {
-            lastCellPosOfCharacter.RemoveAt(0);
-        }
     }
 }
