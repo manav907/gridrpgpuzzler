@@ -226,16 +226,38 @@ public class CharacterControllerScript : MonoBehaviour
     public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
+        List<Vector3Int> avaliaabletiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
         List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
         validTiles.Remove(getCharV3Int());
         //
         Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
         if (actionInputParams.updateTheroticalPos)
         {
+            int Erro = 8;
 
+            while (destinationTarget != getCharV3Int() && Erro != 0)
+            {
+                validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
+                //validTiles.Remove(destinationTarget);
+                foreach (Vector3Int pos in lastCellPosOfCharacter)
+                {
+                    validTiles.Remove(pos);
+                }
+                Vector3Int newtarget = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int())[0];
+                //if (Vector3Int.Distance(destinationTarget, getCharV3Int()) == actionInputParams.getRangeOfAction())
+                if (avaliaabletiles.Contains(newtarget))
+                {
+                    Debug.Log(destinationTarget + " Was Chosen");
+                    return newtarget;
+                }
+                destinationTarget = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int())[0];
+                addToLastCellPosOfCharacter(destinationTarget);
+                Erro--;
+            }
+            Debug.Log("Failed ti get Soltuion");
         }
+        validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
         selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTarget)[0];
-
         addToLastCellPosOfCharacter(selectedValidTile);
         return selectedValidTile;
 

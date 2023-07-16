@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ground_Floor_Over:
     KeyValuePairs:
+    - key: {x: -2, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 7b0316c67fb982245ad55a6c43639b14, type: 2}
     - key: {x: -1, y: -7, z: 0}
       value: {fileID: 11400000, guid: 7b0316c67fb982245ad55a6c43639b14, type: 2}
     - key: {x: -5, y: -6, z: 0}
@@ -372,8 +374,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
   Character_Placeholder:
     KeyValuePairs:
-    - key: {x: -2, y: -7, z: 0}
-      value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
     - key: {x: 0, y: -7, z: 0}
       value: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
     - key: {x: -1, y: -6, z: 0}

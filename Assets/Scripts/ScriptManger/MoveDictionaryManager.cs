@@ -326,8 +326,6 @@ public class MoveDictionaryManager : MonoBehaviour
                 Debug.LogError("AI Exception");
                 turnManager.endTurn();
             }
-
-
             return false;
         }
         bool DeterminValidTileTarget(Vector3Int checkPos)
@@ -377,7 +375,7 @@ public class MoveDictionaryManager : MonoBehaviour
         float rangeOfAction;
         rangeOfAction = action.getRangeOfAction();
         List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(fromPoint, rangeOfAction);
-        listOfRanges = universalCalculator.SortListAccordingtoDistanceFromPoint(listOfRanges, theroticalCurrentPos);//Sorts Points Accoding to Distance
+        listOfRanges = universalCalculator.SortListAccordingtoDistanceFromPoint(listOfRanges, fromPoint);//Sorts Points Accoding to Distance
         //List<Vector3Int> listOfRanges = universalCalculator.generateDirectionalRange(centerPos, rangeOfAction, universalCalculator.generate9WayReffence());
 
         bool checkWalkability = true;
@@ -399,21 +397,21 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         if (!action.includeSelf)
         {
-            listOfRanges.Remove(theroticalCurrentPos);
+            listOfRanges.Remove(fromPoint);
         }
         //The Following Removes Invalid Tiles
         CheckTileValidity();
         CheckVectorValidity();
-        if (action.includeSelf && !listOfRanges.Contains(theroticalCurrentPos))
+        if (action.includeSelf && !listOfRanges.Contains(fromPoint))
         {
-            listOfRanges.Add(theroticalCurrentPos);
+            listOfRanges.Add(fromPoint);
             //Debug.Log("ForceAddedSelf");
         }
         return listOfRanges;
         void CheckVectorValidity()
         {
             //Direction and Distance are very Important Check For those if you are having problems
-            var normalizedDirectionToTilePos = universalCalculator.DirectionToCellSnapData(theroticalCurrentPos, listOfRanges);
+            var normalizedDirectionToTilePos = universalCalculator.DirectionToCellSnapData(fromPoint, listOfRanges);
             var listOfVectorRanges = new List<Vector3Int>();
             if (action.targetType == TargetType.AnyValid)
             {
