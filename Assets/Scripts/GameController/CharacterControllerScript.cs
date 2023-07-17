@@ -27,7 +27,6 @@ public class CharacterControllerScript : MonoBehaviour
     public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
     public Vector3Int currentCellPosOfCharcter;
-    public List<Vector3Int> lastCellPosOfCharacter;
     [SerializeField] private TMPro.TextMeshPro Heatlh;
     private MapManager mapManager;
     private TurnManager turnManager;
@@ -180,18 +179,18 @@ public class CharacterControllerScript : MonoBehaviour
             else
             {
                 destinationTarget = selectOptimalTarget();
-                if (attackRangeList.Contains(destinationTarget) && optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
+                if (attackRangeList.Contains(destinationTarget))
                 {
-                    moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
+                    if (optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
+                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
+                        else
+                        {
+                            turnManager.endTurn();
+                        }
                 }
                 else if (true && optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
                 {
-                    if (Vector3Int.Distance(destinationTarget, getCharV3Int()) == 1)
-                    {
-                        turnManager.endTurn();
-                    }
-                    else
-                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+                    moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
                 }
             }
             //determineAction();
@@ -227,6 +226,7 @@ public class CharacterControllerScript : MonoBehaviour
         Debug.LogError("Fata error");
         return Vector3Int.zero;
     }
+    public Vector3Int lastLocation;
     public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
@@ -234,24 +234,29 @@ public class CharacterControllerScript : MonoBehaviour
         Vector3Int destinationTargetCopy = destinationTarget;
         if (actionInputParams.updateTheroticalPos)
         {
-            if (Vector3Int.Distance(destinationTargetCopy, getBasicDirection()) < Vector3Int.Distance(destinationTargetCopy, getCharV3Int()))
-                return getBasicDirection();
             Debug.Log("Calculating Special Path for Character " + characterName + " From Pos " + getCharV3Int() + " to Location " + destinationTargetCopy);
             int moveBudget = 15;
 
             List<Vector3Int> currentlyAvailableOptions = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+            if (currentlyAvailableOptions.Contains(lastLocation))
+            {
+                currentlyAvailableOptions.Remove(lastLocation);
+                Debug.Log("options");
+            }
             List<Vector3Int> exploredTiles = new List<Vector3Int>();
             while (!currentlyAvailableOptions.Contains(destinationTargetCopy) && moveBudget != 0)
             {
                 List<Vector3Int> options = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTargetCopy);
                 foreach (Vector3Int pos in exploredTiles)
                 {
+                    Debug.Log(pos);
                     options.Remove(pos);
                 }
                 if (options.Count == 0)
                 {
-                    Debug.Log("No Optimal Path Found returning same location");
-                    return getCharV3Int();
+
+                    Debug.Log("No Optimal Path Found returning basic direction");
+                    return getBasicDirection();
                 }
                 destinationTargetCopy = universalCalculator.SortListAccordingtoDistanceFromPoint(options, getCharV3Int())[0];
                 exploredTiles.Add(destinationTargetCopy);

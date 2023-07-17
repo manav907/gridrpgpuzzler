@@ -112,7 +112,6 @@ public class MapManager : MonoBehaviour
         PosToCharGO.Add(newPos, character);
         cellDataDir[newPos].characterAtCell = character;
         character.GetComponent<CharacterControllerScript>().currentCellPosOfCharcter = newPos;
-        character.GetComponent<CharacterControllerScript>().lastCellPosOfCharacter = new List<Vector3Int>() { newPos };
     }
     public void RemoveCharacterFromPos(Vector3Int Pos)
     {

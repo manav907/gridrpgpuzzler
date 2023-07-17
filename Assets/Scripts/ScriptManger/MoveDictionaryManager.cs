@@ -63,6 +63,7 @@ public class MoveDictionaryManager : MonoBehaviour
         void apply_SelfMove()
         {
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
+            characterCS.lastLocation = (currentPosition);
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
         }
         /* void DoubleTeam())
@@ -247,7 +248,7 @@ public class MoveDictionaryManager : MonoBehaviour
         if (!characterCS.controlCharacter)//if Non Player Character
         {
             reticalManager.reDrawValidTiles(listOfValidtargets);
-            tryHere = characterCS.getTarget(actionInputParams); 
+            tryHere = characterCS.getTarget(actionInputParams);
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
 
