@@ -236,7 +236,7 @@ public class CharacterControllerScript : MonoBehaviour
         {
             if (Vector3Int.Distance(destinationTargetCopy, getBasicDirection()) < Vector3Int.Distance(destinationTargetCopy, getCharV3Int()))
                 return getBasicDirection();
-            Debug.Log("Cal");
+            Debug.Log("Calculating Special Path for Character " + characterName + " From Pos " + getCharV3Int() + " to Location " + destinationTargetCopy);
             int moveBudget = 15;
 
             List<Vector3Int> currentlyAvailableOptions = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
@@ -249,7 +249,10 @@ public class CharacterControllerScript : MonoBehaviour
                     options.Remove(pos);
                 }
                 if (options.Count == 0)
+                {
+                    Debug.Log("No Optimal Path Found returning same location");
                     return getCharV3Int();
+                }
                 destinationTargetCopy = universalCalculator.SortListAccordingtoDistanceFromPoint(options, getCharV3Int())[0];
                 exploredTiles.Add(destinationTargetCopy);
             }

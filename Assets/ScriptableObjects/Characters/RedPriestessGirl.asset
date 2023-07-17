@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RedPriestessGirl
   m_EditorClassIdentifier: 
   InstanceID: 1
-  characterName: Ninjask
+  characterName: Dwarf 2
   characterAnimationData: {fileID: 11400000, guid: 4433d9d783aef9844a4f70ca655365f6, type: 2}
   isPlayerCharacter: 1
   Faction: 
