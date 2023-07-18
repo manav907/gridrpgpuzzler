@@ -156,6 +156,8 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
     - key: {x: -5, y: -9, z: 0}
       value: {fileID: 11400000, guid: 726e10e51943f87469f4bec8658bb429, type: 2}
+    - key: {x: -4, y: -9, z: 0}
+      value: {fileID: 11400000, guid: 726e10e51943f87469f4bec8658bb429, type: 2}
     - key: {x: -2, y: -9, z: 0}
       value: {fileID: 11400000, guid: 0ec5cfdd4993e104c81e15f249320923, type: 2}
     - key: {x: 1, y: -9, z: 0}
@@ -168,6 +170,10 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 1ae4a8ff970492843ac3d8429d0cb9c5, type: 2}
     - key: {x: -7, y: -8, z: 0}
       value: {fileID: 11400000, guid: fca79f5e5a24b334793e19cba8569d35, type: 2}
+    - key: {x: -5, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 726e10e51943f87469f4bec8658bb429, type: 2}
+    - key: {x: -3, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 726e10e51943f87469f4bec8658bb429, type: 2}
     - key: {x: -4, y: -4, z: 0}
       value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
     - key: {x: -3, y: -3, z: 0}

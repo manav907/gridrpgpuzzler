@@ -53,9 +53,9 @@ public class BasicCameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //mapManager.getCellData(reticalManager.getMovePoint());
-            Vector3Int thisPos = reticalManager.getIntPoint();
+            Vector3Int thisPos = reticalManager.getIntPoint();/* 
             List<Vector3Int> endPoints = new List<Vector3Int>() { thisPos };
-            mapManager.findOptimalPath(reticalManager.fromPoint, endPoints, reticalManager.actionInputParams);
+            mapManager.findOptimalPath(reticalManager.fromPoint, endPoints, reticalManager.actionInputParams); */
             //Debug.Log("At Pos " + thisPos + " AnyCharacter here was = " + mapManager.isCellHoldingCharacer(thisPos));
             //mapManager.cellDataDir[thisPos].ReadInfo();
         }

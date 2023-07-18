@@ -371,7 +371,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         return false;
     }
-    public List<Vector3Int> getValidTargetList(ActionInputParams action, Vector3Int fromPoint)
+    public List<Vector3Int> getValidTargetList(ActionInputParams action, Vector3Int fromPoint, bool ignoreCharacters = false)
     {
         float rangeOfAction;
         rangeOfAction = action.getRangeOfAction();
@@ -395,6 +395,11 @@ public class MoveDictionaryManager : MonoBehaviour
         else// if (action.validTileType == ValidTileType.UnitTargeted)
         {
             requireCharacter = true;
+        }
+        if (ignoreCharacters)
+        {
+            requireCharacter = false;
+            reverseRequireCharacterCondiditon = false;
         }
         if (!action.includeSelf)
         {

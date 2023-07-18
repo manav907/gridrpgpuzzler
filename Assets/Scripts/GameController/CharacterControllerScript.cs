@@ -244,15 +244,17 @@ public class CharacterControllerScript : MonoBehaviour
         Vector3Int destinationTargetCopy = destinationTarget;
         if (actionInputParams.updateTheroticalPos)
         {
-            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams);
+            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams, true);
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
             {
-                Debug.LogError("using FallBAck");
-                return getCharV3Int();//need to recheck why the basic direction does not work
-                //return getBasicDirection();
+                Debug.Log("using FallBAck");
+                //return getCharV3Int();//need to recheck why the basic direction does not work
+                return getBasicDirection();
             }
             Vector3Int chosenPath = validPathToObjective[0];
+            if (!moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int()).Contains(chosenPath))
+                return getCharV3Int();
             return chosenPath;
         }
         return getBasicDirection();
@@ -269,6 +271,10 @@ public class CharacterControllerScript : MonoBehaviour
             destinationTargetCopy = destinationTarget;
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTargetCopy);
             validTiles.Remove(destinationTargetCopy);
+            if (validTiles.Count == 0)
+            {
+                validTiles.Add(getBasicDirection());
+            }
             return universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int());
         }
     }

@@ -257,14 +257,21 @@ public class MapManager : MonoBehaviour
         }
     }
     MoveDictionaryManager moveDictionaryManager;
-    public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, ActionInputParams actionInputParams)
+    public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, ActionInputParams actionInputParams, bool ignoreCharacters = false)
     {
         string AStarDebug = "Starting Astar Navigation from Point " + startPos + " to End pos " + endPos + "\n";
         List<Node> openList = new List<Node>();
         List<Vector3Int> closeList = new List<Vector3Int>();
         List<Node> historyNode = new List<Node>();
+        //
+        if (endPos.Count == 0)
+        {
+            return new List<Vector3Int>() { startPos };
+        }
+        //
         openList.Add(generateNodeData(startPos, null));
         closeList.Add(startPos);
+
 
         int maxLoops = 0;
         while (maxLoops != 20)
@@ -281,7 +288,7 @@ public class MapManager : MonoBehaviour
                 PrintDebug("Path Found");
                 return reconstructPath(currentNode);
             }
-            foreach (Vector3Int neighbourPoint in moveDictionaryManager.getValidTargetList(actionInputParams, currentNode.nodeID))
+            foreach (Vector3Int neighbourPoint in moveDictionaryManager.getValidTargetList(actionInputParams, currentNode.nodeID, ignoreCharacters))
             {
                 if (closeList.Contains(neighbourPoint))
                     continue;
@@ -328,7 +335,7 @@ public class MapManager : MonoBehaviour
                 Text += "\n" + node.nodeID;
                 node = node.previousNode;
             }
-            Debug.Log(Text);
+            //Debug.Log(Text);
             path.Reverse();
             return path;
         }

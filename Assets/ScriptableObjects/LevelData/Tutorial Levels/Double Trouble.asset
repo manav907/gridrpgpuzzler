@@ -26,6 +26,8 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 5570f8ba989b4df42b3642dba1a65250, type: 2}
     - key: {x: -3, y: -5, z: 0}
       value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
+    - key: {x: 1, y: -5, z: 0}
+      value: {fileID: 11400000, guid: f054ce658ca128d43804544b024dc006, type: 2}
     - key: {x: -6, y: -4, z: 0}
       value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
     - key: {x: -3, y: -3, z: 0}
@@ -36,6 +38,8 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 778889c7f682efd40a6acd95375cc91d, type: 2}
     - key: {x: -5, y: -2, z: 0}
       value: {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
+    - key: {x: -2, y: -2, z: 0}
+      value: {fileID: 11400000, guid: f054ce658ca128d43804544b024dc006, type: 2}
     - key: {x: 2, y: -2, z: 0}
       value: {fileID: 11400000, guid: b9abf0e98c58846498a51caaa1e73136, type: 2}
     - key: {x: 3, y: -2, z: 0}
