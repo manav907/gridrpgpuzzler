@@ -183,10 +183,10 @@ public class CharacterControllerScript : MonoBehaviour
                 {
                     if (optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
                         moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
-                        else
-                        {
-                            turnManager.endTurn();
-                        }
+                    else
+                    {
+                        turnManager.endTurn();
+                    }
                 }
                 else if (true && optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
                 {
@@ -234,34 +234,16 @@ public class CharacterControllerScript : MonoBehaviour
         Vector3Int destinationTargetCopy = destinationTarget;
         if (actionInputParams.updateTheroticalPos)
         {
-            //Debug.Log("Calculating Special Path for Character " + characterName + " From Pos " + getCharV3Int() + " to Location " + destinationTargetCopy);
-            int moveBudget = 15;
-
-            List<Vector3Int> currentlyAvailableOptions = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
-            if (currentlyAvailableOptions.Contains(lastLocation))
+            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams);
+            validPathToObjective.Remove(currentCellPosOfCharcter);
+            if (validPathToObjective.Count == 0)
             {
-                currentlyAvailableOptions.Remove(lastLocation);
-                //Debug.Log("options");
+                return getBasicDirection();
             }
-            List<Vector3Int> exploredTiles = new List<Vector3Int>();
-            while (!currentlyAvailableOptions.Contains(destinationTargetCopy) && moveBudget != 0)
-            {
-                List<Vector3Int> options = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTargetCopy);
-                foreach (Vector3Int pos in exploredTiles)
-                {
-                    //Debug.Log(pos);
-                    options.Remove(pos);
-                }
-                if (options.Count == 0)
-                {
-
-                    //Debug.Log("No Optimal Path Found returning basic direction");
-                    return getBasicDirection();
-                }
-                destinationTargetCopy = universalCalculator.SortListAccordingtoDistanceFromPoint(options, getCharV3Int())[0];
-                exploredTiles.Add(destinationTargetCopy);
-            }
-            return destinationTargetCopy;
+            Debug.Log(validPathToObjective.Count);
+            Vector3Int chosenPath = validPathToObjective[0];
+            //if (Vector3Int.Distance(chosenPath, destinationTargetCopy) > Vector3Int.Distance(getCharV3Int(), destinationTargetCopy))
+            return chosenPath;
         }
 
 
@@ -273,8 +255,17 @@ public class CharacterControllerScript : MonoBehaviour
 
         Vector3Int getBasicDirection()
         {
+            destinationTargetCopy = destinationTarget;
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
             Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTargetCopy)[0];
+            return selectedValidTile;
+        }
+        Vector3Int getUseableTarget()
+        {
+            destinationTargetCopy = destinationTarget;
+            List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTargetCopy);
+            validTiles.Remove(destinationTargetCopy);
+            Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int())[0];
             return selectedValidTile;
         }
 

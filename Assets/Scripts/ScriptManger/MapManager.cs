@@ -265,7 +265,7 @@ public class MapManager : MonoBehaviour
         openList.Add(generateNodeData(startPos, null));
         closeList.Add(startPos);
 
-        int maxLoops = 20;
+        int maxLoops = 50;
         while (maxLoops != 0)
         {
             openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
@@ -274,8 +274,7 @@ public class MapManager : MonoBehaviour
             AStarDebug += "\n Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
             if (currentNode.nodeID == endPos)
             {
-                Debug.Log("Path Found");
-                Debug.Log(AStarDebug);
+                PrintDebug("Path Found");
                 return reconstructPath(currentNode);
             }
             foreach (Vector3Int neighbourPoint in moveDictionaryManager.getValidTargetList(actionInputParams, currentNode.nodeID))
@@ -293,9 +292,12 @@ public class MapManager : MonoBehaviour
             maxLoops--;
 
         }
-        Debug.Log(AStarDebug);
-        Debug.Log("Failed as max loops were" + maxLoops);
+        PrintDebug("Failed as max loops were" + maxLoops);
         return new List<Vector3Int>();
+        void PrintDebug(string prefix)
+        {
+            Debug.Log(prefix + "\n " + AStarDebug);
+        }
 
 
         Node generateNodeData(Vector3Int pos, Node previousNode = null)
@@ -314,15 +316,14 @@ public class MapManager : MonoBehaviour
         {
             List<Vector3Int> path = new List<Vector3Int>();
             string Text = "PathData";
-            int earyly = 10;
-            while (node.previousNode != null && earyly != 0)
+            while (node.previousNode != null)
             {
                 path.Add(node.previousNode.nodeID);
                 Text += "\n" + node.previousNode.nodeID;
                 node = node.previousNode;
-                earyly--;
             }
-            Debug.Log(Text);
+            //Debug.Log(Text);
+            path.Reverse();
             return path;
         }
 
