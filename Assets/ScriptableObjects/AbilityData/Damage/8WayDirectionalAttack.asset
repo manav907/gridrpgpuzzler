@@ -28,7 +28,7 @@ MonoBehaviour:
     magnititudeOfActionEnum: 10
     areaOfEffectType: 0
     ignoreValidTargetsCheck: 0
-    validTargets: 1
+    validTargets: 2
     includeSelf: 0
     updateTheroticalPos: 0
   DoActionFromDataAtIndex:

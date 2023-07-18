@@ -262,6 +262,7 @@ public class MapManager : MonoBehaviour
         string AStarDebug = "Starting Astar Navigation from Point " + startPos + " to End pos " + endPos + "\n";
         List<Node> openList = new List<Node>();
         List<Vector3Int> closeList = new List<Vector3Int>();
+        List<Node> historyNode = new List<Node>();
         openList.Add(generateNodeData(startPos, null));
         closeList.Add(startPos);
 
@@ -287,24 +288,25 @@ public class MapManager : MonoBehaviour
 
                 currentNode.addNeighbours(neighbourNode);
                 openList.Add(neighbourNode);
+                historyNode.Add(neighbourNode);
             }
 
             maxLoops--;
 
         }
         PrintDebug("Failed as max loops were" + maxLoops);
-        return new List<Vector3Int>();
+        //return new List<Vector3Int>();
+        historyNode = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(historyNode, getFCost));
+        return reconstructPath(historyNode[1]);
         void PrintDebug(string prefix)
         {
-            //Debug.Log(prefix + "\n " + AStarDebug);
+            Debug.Log(prefix + "\n " + AStarDebug);
         }
-
-
         Node generateNodeData(Vector3Int pos, Node previousNode = null)
         {
             float Hcost = Vector3Int.Distance(pos, endPos);//distance to endPoint
             float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint
-            //AStarDebug += " " + pos + " had H and G cost of " + Hcost + " " + Gcost;
+            AStarDebug += " " + pos + " had H and G cost of " + Hcost + " " + Gcost;
             Node currentNode = new Node(pos, Hcost, Gcost, previousNode);
             return currentNode;
         }
@@ -322,11 +324,10 @@ public class MapManager : MonoBehaviour
                 Text += "\n" + node.previousNode.nodeID;
                 node = node.previousNode;
             }
-            //Debug.Log(Text);
+            Debug.Log(Text);
             path.Reverse();
             return path;
         }
-
     }
 }
 //Defining Global NameSapce

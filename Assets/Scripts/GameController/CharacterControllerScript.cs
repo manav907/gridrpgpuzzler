@@ -170,6 +170,19 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 destinationTarget = selectOptimalTarget();
                 var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
+                for (int i = 0; i < attackRangeList.Count; i++)
+                {
+                    if (!moveDictionaryManager.CheckIfTargetis(attackRangeList[i], ValidTargets.Enemies))
+                    {
+                        //Debug.Log("Will Remove this Target is not an Enemy");
+                        attackRangeList.Remove(attackRangeList[i]);
+                        i--;
+                    }
+                    else
+                    {
+                        //Debug.Log("This is an Enemy");
+                    }
+                }
                 if (attackRangeList.Count > 0)
                 {
                     if (costIndex[optionsofAbilities[TypeOfAction.apply_Damage][0]] <= actionPoints)
@@ -225,7 +238,6 @@ public class CharacterControllerScript : MonoBehaviour
         Debug.LogError("Fata error");
         return Vector3Int.zero;
     }
-    public Vector3Int lastLocation;
     public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
@@ -236,9 +248,10 @@ public class CharacterControllerScript : MonoBehaviour
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
             {
-                return getBasicDirection();
+                Debug.LogError("using FallBAck");
+                return getCharV3Int();//need to recheck why the basic direction does not work
+                //return getBasicDirection();
             }
-            //Debug.Log(validPathToObjective.Count);
             Vector3Int chosenPath = validPathToObjective[0];
             return chosenPath;
         }
@@ -247,6 +260,7 @@ public class CharacterControllerScript : MonoBehaviour
         {
             destinationTargetCopy = destinationTarget;
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
+            //Debug.Log(validTiles.Contains(getCharV3Int()));;
             Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTargetCopy)[0];
             return selectedValidTile;
         }

@@ -23,13 +23,13 @@ MonoBehaviour:
     - key: 1
       value: AttackOn
   SetDataAtIndex:
-  - rangeOfActionEnum: 10
+  - targetType: 0
+    rangeOfActionEnum: 10
     magnititudeOfActionEnum: 0
     areaOfEffectType: 0
-    optimalTargetTip: 0
     ignoreValidTargetsCheck: 0
-    validTargets: 1
-    includeSelf: 1
+    validTargets: 2
+    includeSelf: 0
     updateTheroticalPos: 0
   DoActionFromDataAtIndex:
   - typeOfAction: 0

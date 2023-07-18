@@ -264,7 +264,7 @@ public class UniversalCalculator : MonoBehaviour
             {
                 //thisDistance += 0.001f;
                 // add a small random value to the distance
-                thisDistance += rand.Next(1, 100) / 1000.0f;
+                thisDistance += 1 / 1000.0f;
             }
             newList.Add(thisDistance, element);
         }

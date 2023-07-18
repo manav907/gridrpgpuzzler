@@ -63,7 +63,6 @@ public class MoveDictionaryManager : MonoBehaviour
         void apply_SelfMove()
         {
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
-            characterCS.lastLocation = (currentPosition);
             mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
         }
         /* void DoubleTeam())
@@ -276,7 +275,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             foreach (Vector3Int pos in tempData)
             {
-                if (DeterminValidTileTarget(pos))
+                if (CheckIfTargetis(pos, actionInputParams.validTargets))
                     variableNameToData[currentVarirable].Add(pos);
             }
             setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
@@ -329,47 +328,48 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             return false;
         }
-        bool DeterminValidTileTarget(Vector3Int checkPos)
+
+    }
+    public bool CheckIfTargetis(Vector3Int checkPos, ValidTargets validTargets)
+    {
+        ValidTargets requitedCondtion = validTargets;
+        if (mapManager.cellDataDir.ContainsKey(checkPos))
         {
-            ValidTargets requitedCondtion = actionInputParams.validTargets;
-            if (mapManager.cellDataDir.ContainsKey(checkPos))
+            if (requitedCondtion == ValidTargets.Empty)
             {
-
-                if (requitedCondtion == ValidTargets.Empty)
+                return !mapManager.isCellHoldingCharacer(checkPos);
+            }
+            else if (mapManager.isCellHoldingCharacer(checkPos))
+            {
+                string faction = mapManager.cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
+                string factionOfCaster = thisCharacter.GetComponent<CharacterControllerScript>().faction;
+                //Debug.Log("Checking Factions between " + faction + " and " + factionOfCaster + " for condition " + requitedCondtion);
+                //Debug.Log(faction == factionOfCaster);
+                switch (requitedCondtion)
                 {
-                    return !mapManager.isCellHoldingCharacer(checkPos);
-                }
-                else if (mapManager.isCellHoldingCharacer(checkPos))
-                {
-                    string faction = mapManager.cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
-                    string factionOfCaster = thisCharacter.GetComponent<CharacterControllerScript>().faction;
-                    switch (requitedCondtion)
-                    {
-                        case ValidTargets.AnyFaction:
-                            {
+                    case ValidTargets.AnyFaction:
+                        {
+                            return true;
+                        }
+                    case ValidTargets.Enemies:
+                        {
+                            if (factionOfCaster != faction)
                                 return true;
-                            }
-                        case ValidTargets.Enemies:
-                            {
-                                if (factionOfCaster != faction)
-                                    return true;
-                                else
-                                    return false;
-                            }
-                        case ValidTargets.Allies:
-                            {
-                                if (factionOfCaster == faction)
-                                    return true;
-                                else
-                                    return false;
-                            }
+                            else
+                                return false;
+                        }
+                    case ValidTargets.Allies:
+                        {
+                            if (factionOfCaster == faction)
+                                return true;
+                            else
+                                return false;
+                        }
 
-                    }
                 }
             }
-            return false;
-
         }
+        return false;
     }
     public List<Vector3Int> getValidTargetList(ActionInputParams action, Vector3Int fromPoint)
     {
