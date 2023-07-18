@@ -264,13 +264,12 @@ public class CharacterControllerScript : MonoBehaviour
             Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTargetCopy)[0];
             return selectedValidTile;
         }
-        Vector3Int getUseableTarget()
+        List<Vector3Int> getUseableTarget()
         {
             destinationTargetCopy = destinationTarget;
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTargetCopy);
             validTiles.Remove(destinationTargetCopy);
-            Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int())[0];
-            return selectedValidTile;
+            return universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int());
         }
     }
 }

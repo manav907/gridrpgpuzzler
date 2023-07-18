@@ -257,7 +257,7 @@ public class MapManager : MonoBehaviour
         }
     }
     MoveDictionaryManager moveDictionaryManager;
-    public List<Vector3Int> findOptimalPath(Vector3Int startPos, Vector3Int endPos, ActionInputParams actionInputParams)
+    public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, ActionInputParams actionInputParams)
     {
         string AStarDebug = "Starting Astar Navigation from Point " + startPos + " to End pos " + endPos + "\n";
         List<Node> openList = new List<Node>();
@@ -269,11 +269,14 @@ public class MapManager : MonoBehaviour
         int maxLoops = 0;
         while (maxLoops != 20)
         {
+            if (openList.Count == 0)
+                Debug.Log(AStarDebug);
             openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
             Node currentNode = openList.First();
             openList.Remove(currentNode);
             AStarDebug += "\nStep " + maxLoops + ": Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
-            if (currentNode.nodeID == endPos)
+
+            if (endPos.Contains(currentNode.nodeID))
             {
                 PrintDebug("Path Found");
                 return reconstructPath(currentNode);
@@ -300,11 +303,12 @@ public class MapManager : MonoBehaviour
         return reconstructPath(historyNode[0]);
         void PrintDebug(string prefix)
         {
-            Debug.Log(prefix + "\n " + AStarDebug);
+            //Debug.Log(prefix + "\n " + AStarDebug);
         }
         Node generateNodeData(Vector3Int pos, Node previousNode = null)
         {
-            float Hcost = Vector3Int.Distance(pos, endPos);//distance to endPoint
+            Vector3Int closestEndPos = universalCalculator.SortListAccordingtoDistanceFromPoint(endPos, pos).First();
+            float Hcost = Vector3Int.Distance(pos, closestEndPos);//distance to endPoint
             float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint
             AStarDebug += " " + pos + " had H and G cost of " + Hcost + " " + Gcost;
             Node currentNode = new Node(pos, Hcost, Gcost, previousNode);
