@@ -7,7 +7,6 @@ using UnityEngine;
 public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
-
     [HideInInspector]
     public bool controlCharacter
     {
@@ -33,13 +32,11 @@ public class CharacterControllerScript : MonoBehaviour
     public AnimationControllerScript animationControllerScript;
     UniversalCalculator universalCalculator;
     public SerializableDictionary<LadderCollapseFunction, int> abilityToCost;
-
     public void InitilizeCharacter(GameObject gameController)
     {
         mapManager = gameController.GetComponent<MapManager>();
         turnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
-
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
         //Initilizing
         try
@@ -58,7 +55,6 @@ public class CharacterControllerScript : MonoBehaviour
             speedValue = CharacterDataSO.speedValue;
             rangeOfVision = CharacterDataSO.rangeOfVision;
             faction = CharacterDataSO.Faction;
-
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
             //Rewordk This
@@ -81,7 +77,6 @@ public class CharacterControllerScript : MonoBehaviour
         if (health <= 0)
         {
             //Debug.Log(this.name + " Character has Died");
-
             KillCharacter();
             return true;
         }
@@ -142,7 +137,7 @@ public class CharacterControllerScript : MonoBehaviour
         var newDict = new Dictionary<TypeOfAction, List<LadderCollapseFunction>>();
         foreach (var keypair in abilityToCost.KeyValuePairs)
         {
-            if (keypair.value <= actionPoints)
+            //if (keypair.value <= actionPoints)
             {
                 if (!newDict.ContainsKey(keypair.key.primaryUseForAction))
                 {
@@ -157,46 +152,44 @@ public class CharacterControllerScript : MonoBehaviour
     void determineAction()
     {
         var optionsofAbilities = abilityMap();
+        var costIndex = abilityToCost.returnDict();
         if (actionPoints > 0)
         {
             Vector3Int thisCharpos = getCharV3Int();
             var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
-
             //GhostVision for tracking after leaving Vision
             var targetList = listOfPossibleTargets(VisionList);
-
-            List<Vector3Int> attackRangeList = new List<Vector3Int>();
-
-            attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
-
             //Debug.LogError("AI Stuf Needs Rework");
             if (targetList.Count == 0)
             {
                 turnManager.endTurn();
+                //Debug.Log("Ideling");
                 return;
             }
             else
             {
                 destinationTarget = selectOptimalTarget();
-                if (attackRangeList.Contains(destinationTarget))
+                var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
+                if (attackRangeList.Count > 0)
                 {
-                    Debug.Log("target Locked");
-                    if (optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
-                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
-                    else if (optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
+                    if (costIndex[optionsofAbilities[TypeOfAction.apply_Damage][0]] <= actionPoints)
                     {
-                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
                     }
                     else
                     {
                         turnManager.endTurn();
                     }
                 }
-                else if (optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
+                else if (costIndex[optionsofAbilities[TypeOfAction.apply_SelfMove][0]] <= actionPoints)
                 {
                     moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
                 }
-
+                else
+                {
+                    Debug.Log("no Action Points for apply move");
+                    turnManager.endTurn();
+                }
             }
             //determineAction();
             List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
@@ -221,6 +214,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
         else
         {
+            Debug.Log("no Action Points");
             turnManager.endTurn();
         }
     }
@@ -235,7 +229,6 @@ public class CharacterControllerScript : MonoBehaviour
     public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
-
         Vector3Int destinationTargetCopy = destinationTarget;
         if (actionInputParams.updateTheroticalPos)
         {
@@ -249,14 +242,7 @@ public class CharacterControllerScript : MonoBehaviour
             Vector3Int chosenPath = validPathToObjective[0];
             return chosenPath;
         }
-
-
-
-
-
         return getBasicDirection();
-
-
         Vector3Int getBasicDirection()
         {
             destinationTargetCopy = destinationTarget;
@@ -272,9 +258,5 @@ public class CharacterControllerScript : MonoBehaviour
             Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int())[0];
             return selectedValidTile;
         }
-
-
-        //For Moving it selects the closet point to target which when character is at point black range(not attacking when it should) just moves around the target character
-        //For Attacking since the determineAction confirms a target(currentTarget) exist in valid targets the universalCalculator returns the currentTarget
     }
 }
