@@ -85,12 +85,17 @@ public class ReticalManager : MonoBehaviour
             return ValidPosToShapeData[currentMovePoint];
         return (new List<Vector3Int>()/* {currentMovePoint} */);
     }
-
-    public Vector3Int getMovePoint()
+    public Vector3Int getIntPoint()
     {
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPos.z = 0f;
         Vector3Int GridCellPos = Grid.WorldToCell(worldPos);
+        return GridCellPos;
+    }
+
+    public Vector3Int getMovePoint()
+    {
+        Vector3Int GridCellPos = getIntPoint();
         if (Snap && !ValidPosToShapeData.Keys.ToList().Contains(GridCellPos))
         {
             var list = universalCalculator.SortListAccordingtoDistanceFromPoint(ValidPosToShapeData.Keys.ToList(), GridCellPos);
@@ -98,6 +103,7 @@ public class ReticalManager : MonoBehaviour
                 return list[0];
         }
         return GridCellPos;
+
     }
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
@@ -130,7 +136,7 @@ public class ReticalManager : MonoBehaviour
     void ClearAllTiles(Tilemap thistilemap)
     {
         thistilemap.ClearAllTiles();
-    }  
+    }
     public void setReticalToFromPoint()
     {
         List<Vector3Int> thisPos = new List<Vector3Int>() { };

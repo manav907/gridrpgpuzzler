@@ -240,7 +240,7 @@ public class UniversalCalculator : MonoBehaviour
         var random = new System.Random();
         return random.Next(ListCount);
     }
-    List<T> convertSortedListToNormalList<T>(SortedList<float, T> inputList)
+    public List<T> convertSortedListToNormalList<T>(SortedList<float, T> inputList)
     {
         return inputList.Values.ToList();
     }

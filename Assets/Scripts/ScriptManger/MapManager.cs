@@ -24,6 +24,7 @@ public class MapManager : MonoBehaviour
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         turnManager = GetComponent<TurnManager>();
+        moveDictionaryManager = GetComponent<MoveDictionaryManager>();
         LoadCorrectScene();
 
         LoadMapDataFromSO();
@@ -231,6 +232,98 @@ public class MapManager : MonoBehaviour
             //universalCalculator.DebugEachItemInList(groundFloorTypeWalkRequireMents);
             //universalCalculator.DebugEachItemInList(tilesOnCell);
             //universalCalculator.DebugEachItemInList(tileDatas);
+        }
+
+    }
+    class Node
+    {
+        public Vector3Int nodeID;
+        Dictionary<Node, float> NeighbourToTotalCost;
+        float HeuristicCost;//distance to endPoint
+        float GScore;//distance to startPoint
+        public float FScore => GScore + HeuristicCost;
+        public Node previousNode;
+        public Node(Vector3Int Id, float HeuristicCost, float GScore, Node previousNode)
+        {
+            nodeID = Id;
+            NeighbourToTotalCost = new Dictionary<Node, float>();
+            this.HeuristicCost = HeuristicCost;
+            this.GScore = GScore;
+            this.previousNode = previousNode;
+        }
+        public void addNeighbours(Node neighbour)//, float HCost, float GCost)
+        {
+            NeighbourToTotalCost.Add(neighbour, neighbour.FScore);
+        }
+    }
+    MoveDictionaryManager moveDictionaryManager;
+    public List<Vector3Int> findOptimalPath(Vector3Int startPos, Vector3Int endPos, ActionInputParams actionInputParams)
+    {
+        string AStarDebug = "Starting Astar Navigation from Point " + startPos + " to End pos " + endPos + "\n";
+        List<Node> openList = new List<Node>();
+        List<Vector3Int> closeList = new List<Vector3Int>();
+        openList.Add(generateNodeData(startPos, null));
+        closeList.Add(startPos);
+
+        int maxLoops = 20;
+        while (maxLoops != 0)
+        {
+            openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
+            Node currentNode = openList.First();
+            openList.Remove(currentNode);
+            AStarDebug += "\n Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
+            if (currentNode.nodeID == endPos)
+            {
+                Debug.Log("Path Found");
+                Debug.Log(AStarDebug);
+                return reconstructPath(currentNode);
+            }
+            foreach (Vector3Int neighbourPoint in moveDictionaryManager.getValidTargetList(actionInputParams, currentNode.nodeID))
+            {
+                if (closeList.Contains(neighbourPoint))
+                    continue;
+                else
+                    closeList.Add(neighbourPoint);
+                Node neighbourNode = generateNodeData(neighbourPoint, currentNode);
+
+                currentNode.addNeighbours(neighbourNode);
+                openList.Add(neighbourNode);
+            }
+
+            maxLoops--;
+
+        }
+        Debug.Log(AStarDebug);
+        Debug.Log("Failed as max loops were" + maxLoops);
+        return new List<Vector3Int>();
+
+
+        Node generateNodeData(Vector3Int pos, Node previousNode = null)
+        {
+            float Hcost = Vector3Int.Distance(pos, endPos);//distance to endPoint
+            float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint
+            //AStarDebug += " " + pos + " had H and G cost of " + Hcost + " " + Gcost;
+            Node currentNode = new Node(pos, Hcost, Gcost, previousNode);
+            return currentNode;
+        }
+        float getFCost(Node node)
+        {
+            return node.FScore;
+        }
+        List<Vector3Int> reconstructPath(Node node)
+        {
+            List<Vector3Int> path = new List<Vector3Int>();
+            string Text = "PathData";
+            int earyly = 10;
+            while (node.previousNode != null && earyly != 0)
+            {
+                path.Add(node.previousNode.nodeID);
+                Text += "\n" + node.previousNode.nodeID;
+                node = node.previousNode;
+                earyly--;
+            }
+            Debug.Log(Text);
+            return path;
         }
 
     }
