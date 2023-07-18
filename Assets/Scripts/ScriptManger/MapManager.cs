@@ -272,7 +272,7 @@ public class MapManager : MonoBehaviour
             openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
             Node currentNode = openList.First();
             openList.Remove(currentNode);
-            AStarDebug += "\n Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
+            AStarDebug += "\nStep " + maxLoops + ": Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
             if (currentNode.nodeID == endPos)
             {
                 PrintDebug("Path Found");
@@ -297,7 +297,7 @@ public class MapManager : MonoBehaviour
         PrintDebug("Failed as max loops were" + maxLoops);
         //return new List<Vector3Int>();
         historyNode = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(historyNode, getFCost));
-        return reconstructPath(historyNode[1]);
+        return reconstructPath(historyNode[0]);
         void PrintDebug(string prefix)
         {
             Debug.Log(prefix + "\n " + AStarDebug);
@@ -320,8 +320,8 @@ public class MapManager : MonoBehaviour
             string Text = "PathData";
             while (node.previousNode != null)
             {
-                path.Add(node.previousNode.nodeID);
-                Text += "\n" + node.previousNode.nodeID;
+                path.Add(node.nodeID);
+                Text += "\n" + node.nodeID;
                 node = node.previousNode;
             }
             Debug.Log(Text);
