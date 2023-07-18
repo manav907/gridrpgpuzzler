@@ -296,7 +296,7 @@ public class MapManager : MonoBehaviour
         return new List<Vector3Int>();
         void PrintDebug(string prefix)
         {
-            Debug.Log(prefix + "\n " + AStarDebug);
+            //Debug.Log(prefix + "\n " + AStarDebug);
         }
 
 

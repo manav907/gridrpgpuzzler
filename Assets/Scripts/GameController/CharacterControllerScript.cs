@@ -166,10 +166,9 @@ public class CharacterControllerScript : MonoBehaviour
             var targetList = listOfPossibleTargets(VisionList);
 
             List<Vector3Int> attackRangeList = new List<Vector3Int>();
-            if (optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
-            {
-                attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
-            }
+
+            attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
+
             //Debug.LogError("AI Stuf Needs Rework");
             if (targetList.Count == 0)
             {
@@ -181,17 +180,23 @@ public class CharacterControllerScript : MonoBehaviour
                 destinationTarget = selectOptimalTarget();
                 if (attackRangeList.Contains(destinationTarget))
                 {
+                    Debug.Log("target Locked");
                     if (optionsofAbilities.ContainsKey(TypeOfAction.apply_Damage))
                         moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
+                    else if (optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
+                    {
+                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+                    }
                     else
                     {
                         turnManager.endTurn();
                     }
                 }
-                else if (true && optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
+                else if (optionsofAbilities.ContainsKey(TypeOfAction.apply_SelfMove))//if character not in attack range
                 {
                     moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
                 }
+
             }
             //determineAction();
             List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
@@ -240,9 +245,8 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 return getBasicDirection();
             }
-            Debug.Log(validPathToObjective.Count);
+            //Debug.Log(validPathToObjective.Count);
             Vector3Int chosenPath = validPathToObjective[0];
-            //if (Vector3Int.Distance(chosenPath, destinationTargetCopy) > Vector3Int.Distance(getCharV3Int(), destinationTargetCopy))
             return chosenPath;
         }
 
