@@ -266,8 +266,8 @@ public class MapManager : MonoBehaviour
         openList.Add(generateNodeData(startPos, null));
         closeList.Add(startPos);
 
-        int maxLoops = 50;
-        while (maxLoops != 0)
+        int maxLoops = 0;
+        while (maxLoops != 20)
         {
             openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
             Node currentNode = openList.First();
@@ -291,7 +291,7 @@ public class MapManager : MonoBehaviour
                 historyNode.Add(neighbourNode);
             }
 
-            maxLoops--;
+            maxLoops++;
 
         }
         PrintDebug("Failed as max loops were" + maxLoops);
