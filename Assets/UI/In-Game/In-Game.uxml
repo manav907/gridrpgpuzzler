@@ -4,6 +4,7 @@
         <ui:VisualElement name="TopBar" style="height: auto; flex-direction: row; justify-content: flex-start;">
             <ui:Button text="Restart" display-tooltip-when-elided="true" usage-hints="None" name="restartButton" class="ButtonsThatShrinkToFit" />
             <ui:Button text="Exit Game" display-tooltip-when-elided="true" name="exitButton" class="ButtonsThatShrinkToFit" />
+            <ui:Toggle name="QuickSnap" style="background-image: none; background-color: rgba(0, 131, 149, 0);" />
         </ui:VisualElement>
         <ui:VisualElement name="GameUI" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: space-between;">
             <ui:VisualElement name="SideButtons" style="height: auto;">

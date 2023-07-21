@@ -17,7 +17,6 @@ public class ReticalManager : MonoBehaviour
     [Header("Retical References")]
     [SerializeField] Vector3 reticalPos;
     [SerializeField] Vector3 lastMovePoint;
-    [SerializeField] bool Snap = true;
     [Header("Grid References")]
     public Tilemap Grid;
 
@@ -96,7 +95,7 @@ public class ReticalManager : MonoBehaviour
     public Vector3Int getMovePoint()
     {
         Vector3Int GridCellPos = getIntPoint();
-        if (Snap && !ValidPosToShapeData.Keys.ToList().Contains(GridCellPos))
+        if (UserDataManager.Snap && !ValidPosToShapeData.Keys.ToList().Contains(GridCellPos))
         {
             var list = universalCalculator.SortListAccordingtoDistanceFromPoint(ValidPosToShapeData.Keys.ToList(), GridCellPos);
             if (list.Count > 0)

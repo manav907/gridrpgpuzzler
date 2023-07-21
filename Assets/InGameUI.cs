@@ -8,6 +8,7 @@ public class InGameUI : MonoBehaviour
 {
     public Button restartButton;
     public Button exitButton;
+    public Toggle QuickSnap;
     public Button NextButton;
     public Button AblityButtonExample;
     public VisualElement TipBox;
@@ -27,14 +28,22 @@ public class InGameUI : MonoBehaviour
         DialogBoxBar = root.Q<VisualElement>("DialogBox");
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
+        QuickSnap = root.Q<Toggle>("QuickSnap");
         setUpUI();
 
 
         restartButton.clicked += GameEvents.current.reloadScene;
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
+
+        UserDataManager.Snap = false;
+        QuickSnap.RegisterValueChangedCallback(toogleQuickSnap);
         //backButtons.clicked += backButtonPressed;
 
         //initilizeArcadeModeGrid();
+    }
+    void toogleQuickSnap(ChangeEvent<bool> s)
+    {
+        UserDataManager.Snap = s.newValue;
     }
     void setUpUI()
     {

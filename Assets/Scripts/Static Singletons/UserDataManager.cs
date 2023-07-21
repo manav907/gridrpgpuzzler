@@ -10,4 +10,5 @@ public static class UserDataManager
     public static float waitAction = 0.4f;
     public static bool skipWaitTime = true;
     public static bool skipAnimations = true;
+    public static bool Snap = true;
 }

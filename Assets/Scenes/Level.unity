@@ -571,7 +571,7 @@ MonoBehaviour:
   fromPoint: {x: 3, y: 1, z: 0}
   reticalPos: {x: 0, y: 0, z: 0}
   lastMovePoint: {x: 0, y: 0, z: 0}
-  Snap: 1
+  Snap: 0
   Grid: {fileID: 898572565}
   reticalTile: {fileID: 11400000, guid: 30728d21a12a30b49bac5fa6874733cc, type: 2}
   validReticalTilesTilemap: {fileID: 1055295942}
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d46bf0b395e13d4eac05cf805f12c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadThisLevel: {fileID: 11400000, guid: 19eae719f71dbe646bc8bb3e6eaf0450, type: 2}
+  LoadThisLevel: {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
   Ground_Floor_Over: {fileID: 957306169}
   Ground_Floor: {fileID: 901888352}
   Character_Placement: {fileID: 317658189}
