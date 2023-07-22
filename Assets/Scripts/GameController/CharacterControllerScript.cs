@@ -249,10 +249,14 @@ public class CharacterControllerScript : MonoBehaviour
             if (validPathToObjective.Count == 0)
             {
                 Debug.Log("using FallBAck");
-                //return getCharV3Int();//need to recheck why the basic direction does not work
                 return getBasicDirection();
             }
             Vector3Int chosenPath = validPathToObjective[0];
+            if (chosenPath == getCharV3Int())
+            {
+                Debug.Log("no Vaid Path Found");
+                return getBasicDirection();
+            }
             if (!moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int()).Contains(chosenPath))
                 return getCharV3Int();
             return chosenPath;

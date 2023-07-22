@@ -18,7 +18,7 @@ public static class UserDataManager
 
         if (GameEvents.current.inGameUI.enableEditorQuickMode)
         {
-            float quickModeTime = 0.0001f;
+            float quickModeTime = 00f;
             Snap = true;
             skipAnimations = true;
             skipWaitTime = true;

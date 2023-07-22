@@ -259,7 +259,7 @@ public class MapManager : MonoBehaviour
     MoveDictionaryManager moveDictionaryManager;
     public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, ActionInputParams actionInputParams, bool ignoreCharacters = false)
     {
-        string AStarDebug = "Starting Astar Navigation from Point " + startPos + " to End pos " + endPos + "\n";
+        string AStarDebug = "Starting Astar Navigation from Point " + startPos;
         List<Node> openList = new List<Node>();
         List<Vector3Int> closeList = new List<Vector3Int>();
         List<Node> historyNode = new List<Node>();
@@ -281,7 +281,7 @@ public class MapManager : MonoBehaviour
             openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
             Node currentNode = openList.First();
             openList.Remove(currentNode);
-            AStarDebug += "\nStep " + maxLoops + ": Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
+            AStarDebug += "\n  Step " + maxLoops + ": Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
 
             if (endPos.Contains(currentNode.nodeID))
             {
@@ -300,9 +300,7 @@ public class MapManager : MonoBehaviour
                 openList.Add(neighbourNode);
                 historyNode.Add(neighbourNode);
             }
-
             maxLoops++;
-
         }
         PrintDebug("Failed as max loops were" + maxLoops);
         //return new List<Vector3Int>();
@@ -310,14 +308,31 @@ public class MapManager : MonoBehaviour
         return reconstructPath(historyNode[0]);
         void PrintDebug(string prefix)
         {
-            //Debug.Log(prefix + "\n " + AStarDebug);
+            Debug.Log(prefix + "\n " + AStarDebug);
+            Debug.Break();
         }
         Node generateNodeData(Vector3Int pos, Node previousNode = null)
         {
+
             Vector3Int closestEndPos = universalCalculator.SortListAccordingtoDistanceFromPoint(endPos, pos).First();
             float Hcost = Vector3Int.Distance(pos, closestEndPos);//distance to endPoint
             float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint
-            AStarDebug += " " + pos + " had H and G cost of " + Hcost + " " + Gcost;
+
+
+
+
+            AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
+            //if (previousNode != null && previousNode.previousNode != null)
+            /* if (previousNode != null)
+            {
+                //Vector3Int nextNodeinTheSameDirection = universalCalculator.getNormalizedDirection(previousNode.previousNode.nodeID, previousNode.nodeID) + previousNode.nodeID;
+                Vector3Int AlignmentToEndPos = universalCalculator.getNormalizedDirection(pos, closestEndPos);
+                if (AlignmentToEndPos.x == 0 || AlignmentToEndPos.y == 0)
+                {
+                    Hcost = Hcost + 0.1f;
+                    AStarDebug += (" Hcost was Modified and now is " + Hcost + " alignent was " + AlignmentToEndPos);
+                }
+            } */
             Node currentNode = new Node(pos, Hcost, Gcost, previousNode);
             return currentNode;
         }
