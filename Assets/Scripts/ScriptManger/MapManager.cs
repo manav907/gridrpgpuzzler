@@ -35,6 +35,7 @@ public class MapManager : MonoBehaviour
     }
     void LoadCorrectScene()
     {
+        Debug.ClearDeveloperConsole();
         if (UserDataManager.currentLevel == null)
         {
             //Debug.LogError("Incorrect Scene Loaded Loading last Known Scene");
@@ -288,7 +289,7 @@ public class MapManager : MonoBehaviour
                 PrintDebug("Path Found");
                 return reconstructPath(currentNode);
             }
-            foreach (Vector3Int neighbourPoint in moveDictionaryManager.getValidTargetList(actionInputParams, currentNode.nodeID, ignoreCharacters))
+            foreach (Vector3Int neighbourPoint in moveDictionaryManager.getValidTargetList(actionInputParams, currentNode.nodeID, ignoreCharacters, endPos))
             {
                 if (closeList.Contains(neighbourPoint))
                     continue;
@@ -308,8 +309,8 @@ public class MapManager : MonoBehaviour
         return reconstructPath(historyNode[0]);
         void PrintDebug(string prefix)
         {
-            Debug.Log(prefix + "\n " + AStarDebug);
-            Debug.Break();
+            //Debug.Log(prefix + "\n " + AStarDebug);
+            //Debug.Break();
         }
         Node generateNodeData(Vector3Int pos, Node previousNode = null)
         {
@@ -322,7 +323,6 @@ public class MapManager : MonoBehaviour
 
 
             AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
-            //if (previousNode != null && previousNode.previousNode != null)
             /* if (previousNode != null)
             {
                 //Vector3Int nextNodeinTheSameDirection = universalCalculator.getNormalizedDirection(previousNode.previousNode.nodeID, previousNode.nodeID) + previousNode.nodeID;

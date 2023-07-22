@@ -226,10 +226,14 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
   Character_Placeholder:
     KeyValuePairs:
+    - key: {x: -3, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
+    - key: {x: -1, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
     - key: {x: -2, y: -5, z: 0}
       value: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
-    - key: {x: -3, y: -3, z: 0}
+    - key: {x: -3, y: -2, z: 0}
       value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
-    - key: {x: -1, y: -3, z: 0}
+    - key: {x: -1, y: -2, z: 0}
       value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
   inputLevel: {fileID: 0}

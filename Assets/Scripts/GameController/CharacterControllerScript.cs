@@ -244,7 +244,8 @@ public class CharacterControllerScript : MonoBehaviour
         Vector3Int destinationTargetCopy = destinationTarget;
         if (actionInputParams.updateTheroticalPos)
         {
-            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams, true);
+            //var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams, true);
+            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), new List<Vector3Int>() { destinationTargetCopy }, actionInputParams, true);
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
             {
@@ -267,6 +268,7 @@ public class CharacterControllerScript : MonoBehaviour
             destinationTargetCopy = destinationTarget;
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
             //Debug.Log(validTiles.Contains(getCharV3Int()));;
+            getUseableTarget();//not being used actually
             Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTargetCopy)[0];
             return selectedValidTile;
         }

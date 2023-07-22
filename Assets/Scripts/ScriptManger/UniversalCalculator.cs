@@ -251,7 +251,7 @@ public class UniversalCalculator : MonoBehaviour
     }
 
     System.Random rand = new System.Random(64);
-    public SortedList<float, T> sortListWithVar<T>(List<T> thisList, Func<T, float> thisFloat)
+    public SortedList<float, T> sortListWithVar<T>(List<T> thisList, Func<T, float> thisFloat, Func<T, float> tieBreaker = null)
     // here Func<T, float> thisFloat represent a function that takes Function of the float distance or float speed 
     //with variable T(from point or GameObject) then calculates a float value 
     //which is representrdd by the later part of Func<T, float> thisFloat
@@ -260,6 +260,13 @@ public class UniversalCalculator : MonoBehaviour
         foreach (var element in thisList)
         {
             float thisDistance = thisFloat(element);
+            if (newList.ContainsKey(thisDistance))
+            {
+                if (tieBreaker != null)
+                {
+                    thisDistance += tieBreaker(element);
+                }
+            }
             while (newList.ContainsKey(thisDistance))
             {
                 //thisDistance += 0.001f;
@@ -271,11 +278,21 @@ public class UniversalCalculator : MonoBehaviour
         return newList;
     }
 
-    public List<Vector3Int> SortListAccordingtoDistanceFromPoint(List<Vector3Int> thisV3IntList, Vector3Int toPoint)
+    public List<Vector3Int> SortListAccordingtoDistanceFromPoint(List<Vector3Int> thisV3IntList, Vector3Int toPoint, bool alignToPoint = true)
     {
-        SortedList<float, Vector3Int> sortedListOfDistance = sortListWithVar(thisV3IntList, distance);
-        return convertSortedListToNormalList(sortedListOfDistance);
+        if (!alignToPoint)
+        {
+            return convertSortedListToNormalList(sortListWithVar(thisV3IntList, distance, isAligned));
+        }
+        return convertSortedListToNormalList(sortListWithVar(thisV3IntList, distance));
         //declaring necessary function to be used as a delegate
+        float isAligned(Vector3Int fromPoint)
+        {
+            Vector3Int AlignmentToEndPos = getNormalizedDirection(fromPoint, toPoint);
+            if (AlignmentToEndPos.x == 0 || AlignmentToEndPos.y == 0)
+                return 1 / 10;
+            return 0 / 10;
+        }
         float distance(Vector3Int fromPoint)
         {
             return Vector3Int.Distance(fromPoint, toPoint);

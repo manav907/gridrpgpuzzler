@@ -371,7 +371,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         return false;
     }
-    public List<Vector3Int> getValidTargetList(ActionInputParams action, Vector3Int fromPoint, bool ignoreCharacters = false)
+    public List<Vector3Int> getValidTargetList(ActionInputParams action, Vector3Int fromPoint, bool ignoreCharacters = false, List<Vector3Int> ignoreConditionsForPos = null)
     {
         float rangeOfAction;
         rangeOfAction = action.getRangeOfAction();
@@ -440,6 +440,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         void CheckTileValidity()
         {
+            List<Vector3Int> removedTiles = new List<Vector3Int>();
             for (int i = listOfRanges.Count - 1; i >= 0; i--)
             {
                 bool requireCharacterCondition = requireCharacter ? mapManager.isCellHoldingCharacer(listOfRanges[i]) : true;
@@ -450,6 +451,8 @@ public class MoveDictionaryManager : MonoBehaviour
 
                 if (!requireCharacterCondition || (checkWalkability && !mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS)))
                 {
+                    if (ignoreConditionsForPos != null && ignoreConditionsForPos.Contains(listOfRanges[i]))
+                        continue;
                     listOfRanges.RemoveAt(i);
                 }
             }
