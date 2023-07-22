@@ -317,22 +317,7 @@ public class MapManager : MonoBehaviour
 
             Vector3Int closestEndPos = universalCalculator.SortListAccordingtoDistanceFromPoint(endPos, pos).First();
             float Hcost = Vector3Int.Distance(pos, closestEndPos);//distance to endPoint
-            float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint
-
-
-
-
-            AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
-            /* if (previousNode != null)
-            {
-                //Vector3Int nextNodeinTheSameDirection = universalCalculator.getNormalizedDirection(previousNode.previousNode.nodeID, previousNode.nodeID) + previousNode.nodeID;
-                Vector3Int AlignmentToEndPos = universalCalculator.getNormalizedDirection(pos, closestEndPos);
-                if (AlignmentToEndPos.x == 0 || AlignmentToEndPos.y == 0)
-                {
-                    Hcost = Hcost + 0.1f;
-                    AStarDebug += (" Hcost was Modified and now is " + Hcost + " alignent was " + AlignmentToEndPos);
-                }
-            } */
+            float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
             Node currentNode = new Node(pos, Hcost, Gcost, previousNode);
             return currentNode;
         }

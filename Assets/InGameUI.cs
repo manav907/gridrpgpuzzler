@@ -107,6 +107,8 @@ public class InGameUI : MonoBehaviour
         newButton.name = nameOFButton;
         newButton.text = nameOFButton;
         newButton.style.height = AblityButtonExample.style.height;
+
+        newButton.AddToClassList("ButtonsThatShrinkToFit");
         //newButton.style.fontSize = AblityButtonExample.style.fontSize;
         newButton.clicked += action;
 

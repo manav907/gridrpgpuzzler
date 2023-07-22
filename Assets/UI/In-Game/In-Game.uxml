@@ -1,14 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/USS/InGame.uss?fileID=7433441132597879392&amp;guid=ad89e57ffcecd1c4f929e5f0fb39c42c&amp;type=3#InGame" />
     <ui:VisualElement name="Main" style="flex-grow: 1; flex-direction: column; justify-content: flex-start;">
-        <ui:VisualElement name="TopBar" style="height: auto; flex-direction: row; justify-content: flex-start;">
+        <ui:VisualElement name="TopBar" style="height: 7.5%; align-self: flex-start; width: 30%; flex-direction: row;">
             <ui:Button text="Restart" display-tooltip-when-elided="true" usage-hints="None" name="restartButton" class="ButtonsThatShrinkToFit" />
             <ui:Button text="Exit Game" display-tooltip-when-elided="true" name="exitButton" class="ButtonsThatShrinkToFit" />
             <ui:Toggle name="QuickSnap" style="background-image: none; background-color: rgba(0, 131, 149, 0);" />
         </ui:VisualElement>
         <ui:VisualElement name="GameUI" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: space-between;">
-            <ui:VisualElement name="SideButtons" style="height: auto;">
-                <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" />
+            <ui:VisualElement name="SideButtons" style="width: 10%;">
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
             </ui:VisualElement>
             <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/BetaPallet/tilemap.png?fileID=-1870214800&amp;guid=03d189a1734c66d4db5020448a7223f9&amp;type=3#tilemap_468&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-scale: initial; align-items: center; flex-direction: row; align-self: center; height: 10%; justify-content: flex-start; width: 100%;">
                 <ui:VisualElement name="CurrentCharacterData" style="width: auto; height: auto; max-width: 35px; max-height: 35px;" />
