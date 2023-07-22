@@ -6,6 +6,9 @@ using UnityEngine.UIElements;
 
 public class InGameUI : MonoBehaviour
 {
+    [Header("EditorSettings")]
+    public bool enableEditorQuickMode = true;
+    [Header("Other")]
     public Button restartButton;
     public Button exitButton;
     public Toggle QuickSnap;
@@ -35,7 +38,8 @@ public class InGameUI : MonoBehaviour
         restartButton.clicked += GameEvents.current.reloadScene;
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
 
-        UserDataManager.Snap = false;
+
+        UserDataManager.setSetting();
         QuickSnap.RegisterValueChangedCallback(toogleQuickSnap);
         //backButtons.clicked += backButtonPressed;
 
