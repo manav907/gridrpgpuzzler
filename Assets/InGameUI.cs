@@ -61,6 +61,12 @@ public class InGameUI : MonoBehaviour
     void setUpUI()
     {
         ControlScheme.text = "Pick Mode";
+#if UNITY_EDITOR
+        if (GameEvents.current.inGameUI.enableEditorQuickMode)
+        {
+            ControlScheme.text = "Editor Snap Mode";
+        }
+#endif
 
         var root = GetComponent<UIDocument>().rootVisualElement;
         Tip = root.Q<Label>("Tip");
