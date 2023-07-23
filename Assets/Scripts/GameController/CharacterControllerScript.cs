@@ -86,7 +86,6 @@ public class CharacterControllerScript : MonoBehaviour
         void KillCharacter()
         {
             GameEvents.current.DeathEvent(this.GetComponent<CharacterControllerScript>());
-
             isALive = false;
             Vector3Int thisCharPos = universalCalculator.castAsV3Int(this.gameObject.transform.position);
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
@@ -245,7 +244,6 @@ public class CharacterControllerScript : MonoBehaviour
     {
         if (actionInputParams.updateTheroticalPos)
         {
-            //var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams, true);
             var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams, true);
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)

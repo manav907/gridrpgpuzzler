@@ -1,5 +1,5 @@
 .ButtonsThatShrinkToFit {
-    font-size: 50%;
+    font-size: 70%;
     white-space: normal;
     -unity-text-align: middle-center;
     background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=1948302057&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_4');

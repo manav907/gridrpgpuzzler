@@ -11,7 +11,7 @@ public class InGameUI : MonoBehaviour
     [Header("Other")]
     public Button restartButton;
     public Button exitButton;
-    public Toggle QuickSnap;
+    public Button ControlScheme;
     public Button NextButton;
     public Button AblityButtonExample;
     public VisualElement TipBox;
@@ -31,40 +31,44 @@ public class InGameUI : MonoBehaviour
         DialogBoxBar = root.Q<VisualElement>("DialogBox");
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
-        QuickSnap = root.Q<Toggle>("QuickSnap");
+        ControlScheme = root.Q<Button>("ControlScheme");
         setUpUI();
 
 
         restartButton.clicked += GameEvents.current.reloadScene;
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
-
+        ControlScheme.clicked += swithControlScheme;
 
         UserDataManager.setSetting();
-        QuickSnap.RegisterValueChangedCallback(toogleQuickSnap);
+
         //backButtons.clicked += backButtonPressed;
 
         //initilizeArcadeModeGrid();
     }
-    void toogleQuickSnap(ChangeEvent<bool> s)
+    void swithControlScheme()
     {
-        UserDataManager.Snap = s.newValue;
+        if (UserDataManager.Snap == false)
+        {
+            UserDataManager.Snap = true;
+            ControlScheme.text = "Snap Mode";
+        }
+        else if (UserDataManager.Snap == true)
+        {
+            UserDataManager.Snap = false;
+            ControlScheme.text = "Pick Mode";
+        }
     }
     void setUpUI()
     {
+        ControlScheme.text = "Pick Mode";
+
         var root = GetComponent<UIDocument>().rootVisualElement;
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
-        //Debug.Log(TipBox.style.backgroundSize + " " + TipBox.style.backgroundRepeat);
-        /* TipBox.style.backgroundRepeat = new BackgroundRepeat(Repeat.Repeat, Repeat.Repeat);
-        TipBox.style.backgroundSize = new BackgroundSize(BackgroundSizeType.Contain); */
         Tip.text = "Kill All Enemies";
     }
-    public Sprite sprite;
     public void setTip(string tip)
     {
-
-        //setUpUI();
-        //Debug.Log(TipBox.style.backgroundSize + " " + TipBox.style.backgroundRepeat);
         Tip.text = tip;
     }
     public void MakeButtonsFromLadderCollapseFunction(List<LadderCollapseFunction> list)

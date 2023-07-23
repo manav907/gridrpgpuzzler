@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/USS/InGame.uss?fileID=7433441132597879392&amp;guid=ad89e57ffcecd1c4f929e5f0fb39c42c&amp;type=3#InGame" />
     <ui:VisualElement name="Main" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; font-size: 26px;">
-        <ui:VisualElement name="TopBar" style="height: 7.5%; align-self: flex-start; width: 30%; flex-direction: row;">
+        <ui:VisualElement name="TopBar" style="height: 10%; align-self: flex-start; width: auto; flex-direction: row;">
             <ui:Button text="Restart" display-tooltip-when-elided="true" usage-hints="None" name="restartButton" class="ButtonsThatShrinkToFit" />
             <ui:Button text="Exit Game" display-tooltip-when-elided="true" name="exitButton" class="ButtonsThatShrinkToFit" />
-            <ui:Toggle name="QuickSnap" style="background-image: none; background-color: rgba(0, 131, 149, 0);" />
+            <ui:Button text="Pick Mode" display-tooltip-when-elided="true" name="ControlScheme" class="ButtonsThatShrinkToFit" />
         </ui:VisualElement>
         <ui:VisualElement name="GameUI" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: space-between;">
             <ui:VisualElement name="SideButtons" style="width: 10%;">

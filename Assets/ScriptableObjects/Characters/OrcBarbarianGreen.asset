@@ -20,7 +20,7 @@ MonoBehaviour:
   health: 2
   attackDamage: 2
   speedValue: 3
-  rangeOfVision: 5
+  rangeOfVision: 6
   defaultActionPoints: 2
   canWalkOn: 01000000
   abilityToCost:
@@ -29,3 +29,4 @@ MonoBehaviour:
       value: 2
     - key: {fileID: 11400000, guid: 2ee913e6db606ab42a3124bfb98fc05e, type: 2}
       value: 1
+  smartPosistiong: 0
