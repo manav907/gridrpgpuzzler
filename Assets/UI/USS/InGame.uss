@@ -2,9 +2,9 @@
     font-size: 100%;
     white-space: normal;
     -unity-text-align: middle-center;
-    background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-1406899023&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_35');
+    background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-147754866&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_13');
     background-color: rgba(56, 56, 56, 0);
-    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-scale-mode: scale-and-crop;
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
@@ -12,12 +12,19 @@
     flex-grow: 1;
     flex-basis: auto;
     min-height: 5%;
+    -unity-slice-top: 1;
+    -unity-slice-left: 32;
+    -unity-slice-right: 32;
 }
 
 .ButtonsThatShrinkToFit:hover {
     background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-290088662&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_34');
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-slice-top: 1;
 }
 
 .ButtonsThatShrinkToFit:active {
     background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-1087135383&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_33');
+    -unity-slice-top: 1;
+    -unity-background-scale-mode: scale-and-crop;
 }
