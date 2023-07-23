@@ -55,8 +55,8 @@ public class InGameUI : MonoBehaviour
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
         //Debug.Log(TipBox.style.backgroundSize + " " + TipBox.style.backgroundRepeat);
-        TipBox.style.backgroundRepeat = new BackgroundRepeat(Repeat.Repeat, Repeat.Repeat);
-        TipBox.style.backgroundSize = new BackgroundSize(BackgroundSizeType.Contain);
+        /* TipBox.style.backgroundRepeat = new BackgroundRepeat(Repeat.Repeat, Repeat.Repeat);
+        TipBox.style.backgroundSize = new BackgroundSize(BackgroundSizeType.Contain); */
         Tip.text = "Kill All Enemies";
     }
     public Sprite sprite;
