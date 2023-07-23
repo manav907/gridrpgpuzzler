@@ -11,7 +11,7 @@
                 <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
                 <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
             </ui:VisualElement>
-            <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/BetaPallet/tilemap.png?fileID=-1870214800&amp;guid=03d189a1734c66d4db5020448a7223f9&amp;type=3#tilemap_468&apos;); -unity-background-scale-mode: scale-to-fit; -unity-slice-scale: initial; align-items: center; flex-direction: row; align-self: center; height: 10%; justify-content: flex-start; width: 100%;">
+            <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-1672342397&amp;guid=d63068fd6a521394e8f6640e8677bf54&amp;type=3#Spritesheet_UI_Flat_Button_02_0&apos;); -unity-background-scale-mode: scale-and-crop; align-items: center; flex-direction: row; align-self: center; height: 10%; justify-content: flex-start; width: 100%; -unity-slice-scale: 1px;">
                 <ui:VisualElement name="CurrentCharacterData" style="width: auto; height: auto; max-width: 35px; max-height: 35px;" />
                 <ui:Label text="This tip can be sper long but that does not matter" display-tooltip-when-elided="true" name="Tip" style="-unity-text-align: lower-left; -unity-text-outline-color: rgb(0, 0, 0); text-shadow: -1px 1px 0 rgb(0, 0, 0); color: rgb(255, 255, 255); font-size: 26px; -unity-text-outline-width: 0.2px;" />
             </ui:VisualElement>
