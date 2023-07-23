@@ -17,15 +17,16 @@ public class CharacterData : ScriptableObject
     public int speedValue = 3;
     public int rangeOfVision = 2;
     public int defaultActionPoints = 1;
-    //Custom Data Types
+    //AI
     public List<GroundFloorType> canWalkOn;
     public SerializableDictionary<LadderCollapseFunction, int> abilityToCost;
+    public bool smartPosistiong = false;
 
     public CharacterData()
     {
 
     }
-    public CharacterData(CharacterData characterData)
+    /* public CharacterData(CharacterData characterData)
     {
         InstanceID = characterData.InstanceID;
         characterName = characterData.characterName;
@@ -39,7 +40,8 @@ public class CharacterData : ScriptableObject
         abilityToCost = characterData.abilityToCost;
         Faction = characterData.Faction;
         characterAnimationData = characterData.characterAnimationData;
-    }
+        smartPosistiong = characterData.smartPosistiong;
+    } */
     public void ReplaceDataWithPreset(CharacterData characterData)
     {
         if (characterData == null)
@@ -59,6 +61,7 @@ public class CharacterData : ScriptableObject
         abilityToCost = characterData.abilityToCost;
         Faction = characterData.Faction;
         characterAnimationData = characterData.characterAnimationData;
+        smartPosistiong = characterData.smartPosistiong;
     }
 
 }

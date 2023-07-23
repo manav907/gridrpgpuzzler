@@ -23,6 +23,7 @@ public class CharacterControllerScript : MonoBehaviour
     public int speedValue;
     public int rangeOfVision;
     public string faction;
+    public bool smartPosistiong = false;
     public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
     public Vector3Int currentCellPosOfCharcter;
@@ -55,6 +56,7 @@ public class CharacterControllerScript : MonoBehaviour
             speedValue = CharacterDataSO.speedValue;
             rangeOfVision = CharacterDataSO.rangeOfVision;
             faction = CharacterDataSO.Faction;
+            smartPosistiong = CharacterDataSO.smartPosistiong;
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
             //Rewordk This
@@ -241,11 +243,10 @@ public class CharacterControllerScript : MonoBehaviour
     public Vector3Int getTarget(ActionInputParams actionInputParams)
     //validTargets depends on the action being performed
     {
-        Vector3Int destinationTargetCopy = destinationTarget;
         if (actionInputParams.updateTheroticalPos)
         {
             //var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams, true);
-            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), new List<Vector3Int>() { destinationTargetCopy }, actionInputParams, true);
+            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams, true);
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
             {
@@ -262,21 +263,22 @@ public class CharacterControllerScript : MonoBehaviour
                 return getCharV3Int();
             return chosenPath;
         }
+        Debug.LogError("Using Ultimate Fallback");
         return getBasicDirection();
         Vector3Int getBasicDirection()
         {
-            destinationTargetCopy = destinationTarget;
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
             //Debug.Log(validTiles.Contains(getCharV3Int()));;
             getUseableTarget();//not being used actually
-            Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, destinationTargetCopy)[0];
+            Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getUseableTarget()[0])[0];
             return selectedValidTile;
         }
         List<Vector3Int> getUseableTarget()
         {
-            destinationTargetCopy = destinationTarget;
-            List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTargetCopy);
-            validTiles.Remove(destinationTargetCopy);
+            if (smartPosistiong == false)
+                return new List<Vector3Int>() { destinationTarget };
+            List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
+            validTiles.Remove(destinationTarget);
             if (validTiles.Count == 0)
             {
                 validTiles.Add(getBasicDirection());
