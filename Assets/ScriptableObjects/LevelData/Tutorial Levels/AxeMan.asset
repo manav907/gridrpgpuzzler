@@ -195,7 +195,7 @@ MonoBehaviour:
   Character_Placeholder:
     KeyValuePairs:
     - key: {x: -6, y: -3, z: 0}
-      value: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
+      value: {fileID: 11400000, guid: c4cfea9fe5f1e9545b0f8d4b308ffe9b, type: 2}
     - key: {x: -7, y: 0, z: 0}
       value: {fileID: 11400000, guid: 757555f4ffae5bd47994053eac55b3d4, type: 2}
     - key: {x: -5, y: 0, z: 0}

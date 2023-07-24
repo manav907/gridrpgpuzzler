@@ -124,7 +124,7 @@ public class TurnManager : MonoBehaviour
 
     public void endTurn()
     {
-        
+
         GameEvents.current.inGameUI.ClearButtons();
         StartCoroutine(thisCharacterData.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle));
         TurnCountInt++;
@@ -148,7 +148,7 @@ public class TurnManager : MonoBehaviour
 
         List<GameObject> SortBySpeed(List<GameObject> thisList)
         {
-            SortedList<float, GameObject> sortedList = universalCalculator.sortListWithVar(thisList, speed);
+            SortedList<float, GameObject> sortedList = universalCalculator.sortListWithVar(thisList, speed, speedTieBreaker);
             thisList = sortedList.Values.ToList();
             thisList.Reverse();
             return thisList;
@@ -157,6 +157,11 @@ public class TurnManager : MonoBehaviour
             float speed(GameObject thisGameObject)
             {
                 return thisGameObject.GetComponent<CharacterControllerScript>().speedValue;
+            }
+            float speedTieBreaker(GameObject thisGameObject)
+            {
+                //return thisGameObject.GetComponent<CharacterControllerScript>().speedValue - 1 / 10f;
+                return -1 / 10f;
             }
         }
     }

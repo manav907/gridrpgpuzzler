@@ -261,27 +261,20 @@ public class CharacterControllerScript : MonoBehaviour
                 return getCharV3Int();
             return chosenPath;
         }
-        else//used for attackeing
-        {
-            return getBasicDirection();
-        }
+        return getBasicDirection();
         Vector3Int getBasicDirection()
         {
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
-            //Debug.Log(validTiles.Contains(getCharV3Int()));;
-            getUseableTarget();//not being used actually
             Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getUseableTarget()[0])[0];
             return selectedValidTile;
         }
         List<Vector3Int> getUseableTarget()
         {
-            if (smartPosistiong == false)
-                return new List<Vector3Int>() { destinationTarget };
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
             validTiles.Remove(destinationTarget);
-            if (validTiles.Count == 0)
+            if (smartPosistiong == false || validTiles.Count == 0)
             {
-                validTiles.Add(getBasicDirection());
+                return new List<Vector3Int>() { destinationTarget };
             }
             return universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int());
         }
