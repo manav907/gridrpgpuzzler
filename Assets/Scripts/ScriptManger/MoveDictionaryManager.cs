@@ -237,8 +237,9 @@ public class MoveDictionaryManager : MonoBehaviour
             Debug.Log(rangeOfAction + " was zero");
         yield return null;
         List<Vector3Int> listOfValidtargets = getValidTargetList(actionInputParams, theroticalCurrentPos);
-        reticalManager.fromPoint = theroticalCurrentPos;
-        StartCoroutine(reticalManager.redrawGhostTile(rangeOfAction));
+        List<Vector3Int> listOfPossibleValidTargets = universalCalculator.generateTaxiRangeFromPoint(theroticalCurrentPos, rangeOfAction);
+        reticalManager.fromPoint = theroticalCurrentPos;//setting from point
+        reticalManager.reDrawValidTiles(listOfValidtargets, listOfPossibleValidTargets);//this sets the Valid Tiles Overlay
         ShouldContinue = false;
 
         List<Vector3Int> tempData = new List<Vector3Int>();
@@ -247,7 +248,6 @@ public class MoveDictionaryManager : MonoBehaviour
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
-            reticalManager.reDrawValidTiles(listOfValidtargets);
             tryHere = characterCS.getTarget(actionInputParams);
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
@@ -255,7 +255,6 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else//if it is the player character
         {
-            reticalManager.reDrawValidTiles(listOfValidtargets);//this sets the Valid Tiles Overlay
             addToolTip("select Purple Tile To Contine with Action " + actionInputParams + " Or Right Click to Cancel");
             setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
@@ -285,7 +284,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             setGetInputCoRoutineState(CoRoutineStateCheck.Misinput);
         }
-        reticalManager.reDrawValidTiles();
+        reticalManager.reDrawValidTiles(new List<Vector3Int>(), new List<Vector3Int>());
         reticalManager.ResetReticalInputParams();
         //Methods
         bool CheckContinue()

@@ -29,18 +29,12 @@ public class ReticalManager : MonoBehaviour
     }
     [Header("Valid Tilemap References")]
     [SerializeField] private Tilemap validTilesTileMap;
-    public void reDrawValidTiles(List<Vector3Int> validTilesList = null)
+    public void reDrawValidTiles(List<Vector3Int> validTilesList, List<Vector3Int> possibleValidTilesList)
     {
         reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
+        reDrawTiles(possibleValidTilesList, GhostTiles, reticalTile);
     }
     [SerializeField] private Tilemap GhostTiles;
-    public IEnumerator redrawGhostTile(float rangeOfAction)
-    {
-        GhostTiles.ClearAllTiles();
-        reDrawTiles(universalCalculator.generateTaxiRangeFromPoint(fromPoint, rangeOfAction), GhostTiles, reticalTile);
-        yield return new WaitForSeconds(UserDataManager.ghostTileWait);
-        GhostTiles.ClearAllTiles();
-    }
     public void setVariables()
     {
         universalCalculator = this.GetComponent<UniversalCalculator>();

@@ -8,7 +8,6 @@ public static class UserDataManager
     public static float waitAI = 0.25f;
     public static float waitTurn = 0.5f;
     public static float waitAction = 0.4f;
-    public static float ghostTileWait = 0.25f;
     public static bool skipWaitTime = false;
     public static bool skipAnimations = false;
     public static bool Snap = false;
