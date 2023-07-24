@@ -261,8 +261,10 @@ public class CharacterControllerScript : MonoBehaviour
                 return getCharV3Int();
             return chosenPath;
         }
-        Debug.LogError("Using Ultimate Fallback");
-        return getBasicDirection();
+        else//used for attackeing
+        {
+            return getBasicDirection();
+        }
         Vector3Int getBasicDirection()
         {
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());

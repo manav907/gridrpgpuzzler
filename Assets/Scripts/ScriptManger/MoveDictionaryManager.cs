@@ -238,6 +238,7 @@ public class MoveDictionaryManager : MonoBehaviour
         yield return null;
         List<Vector3Int> listOfValidtargets = getValidTargetList(actionInputParams, theroticalCurrentPos);
         reticalManager.fromPoint = theroticalCurrentPos;
+        StartCoroutine(reticalManager.redrawGhostTile(rangeOfAction));
         ShouldContinue = false;
 
         List<Vector3Int> tempData = new List<Vector3Int>();

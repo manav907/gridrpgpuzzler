@@ -33,6 +33,14 @@ public class ReticalManager : MonoBehaviour
     {
         reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
     }
+    [SerializeField] private Tilemap GhostTiles;
+    public IEnumerator redrawGhostTile(float rangeOfAction)
+    {
+        GhostTiles.ClearAllTiles();
+        reDrawTiles(universalCalculator.generateTaxiRangeFromPoint(fromPoint, rangeOfAction), GhostTiles, reticalTile);
+        yield return new WaitForSeconds(UserDataManager.ghostTileWait);
+        GhostTiles.ClearAllTiles();
+    }
     public void setVariables()
     {
         universalCalculator = this.GetComponent<UniversalCalculator>();
