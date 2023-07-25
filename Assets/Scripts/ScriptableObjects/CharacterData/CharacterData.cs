@@ -20,28 +20,6 @@ public class CharacterData : ScriptableObject
     //AI
     public List<GroundFloorType> canWalkOn;
     public SerializableDictionary<LadderCollapseFunction, int> abilityToCost;
-    public bool smartPosistiong = false;
-
-    public CharacterData()
-    {
-
-    }
-    /* public CharacterData(CharacterData characterData)
-    {
-        InstanceID = characterData.InstanceID;
-        characterName = characterData.characterName;
-        isPlayerCharacter = characterData.isPlayerCharacter;
-        health = characterData.health;
-        attackDamage = characterData.attackDamage;
-        speedValue = characterData.speedValue;
-        rangeOfVision = characterData.rangeOfVision;
-        canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        defaultActionPoints = characterData.defaultActionPoints;
-        abilityToCost = characterData.abilityToCost;
-        Faction = characterData.Faction;
-        characterAnimationData = characterData.characterAnimationData;
-        smartPosistiong = characterData.smartPosistiong;
-    } */
     public void ReplaceDataWithPreset(CharacterData characterData)
     {
         if (characterData == null)
@@ -61,7 +39,6 @@ public class CharacterData : ScriptableObject
         abilityToCost = characterData.abilityToCost;
         Faction = characterData.Faction;
         characterAnimationData = characterData.characterAnimationData;
-        smartPosistiong = characterData.smartPosistiong;
     }
 
 }

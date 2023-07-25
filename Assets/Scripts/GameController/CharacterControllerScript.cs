@@ -23,7 +23,6 @@ public class CharacterControllerScript : MonoBehaviour
     public int speedValue;
     public int rangeOfVision;
     public string faction;
-    public bool smartPosistiong = false;
     public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
     public Vector3Int currentCellPosOfCharcter;
@@ -56,7 +55,6 @@ public class CharacterControllerScript : MonoBehaviour
             speedValue = CharacterDataSO.speedValue;
             rangeOfVision = CharacterDataSO.rangeOfVision;
             faction = CharacterDataSO.Faction;
-            smartPosistiong = CharacterDataSO.smartPosistiong;
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
             //Rewordk This
@@ -272,7 +270,7 @@ public class CharacterControllerScript : MonoBehaviour
         {
             List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
             validTiles.Remove(destinationTarget);
-            if (smartPosistiong == false || validTiles.Count == 0)
+            if (UserDataManager.SmartPosistioning == false || validTiles.Count == 0)
             {
                 return new List<Vector3Int>() { destinationTarget };
             }

@@ -11,6 +11,7 @@ public static class UserDataManager
     public static bool skipWaitTime = false;
     public static bool skipAnimations = false;
     public static bool Snap = false;
+    public static bool SmartPosistioning = false;
     public static void setSetting()
     {
         //UserDataManager.Snap = false;

@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     public Button arcadeModeButton;
     public Button settingButtons;
     public Button backButtons;
+    public Button difficulty;
     public VisualElement Modes;
     public VisualElement ButtonGrid;
     public List<LevelDataSO> arcadeModeLevels;
@@ -20,16 +21,31 @@ public class UIController : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
         storyModeButon = root.Q<Button>("StoryMode");
         arcadeModeButton = root.Q<Button>("ArcadeMode");
+        difficulty = root.Q<Button>("Difficulty");
         backButtons = root.Q<Button>("Back");
         Modes = root.Q<VisualElement>("Modes");
         ButtonGrid = root.Q<VisualElement>("ButtonGird");
 
 
+
+        difficulty.clicked += difficultyToggled;
         storyModeButon.clicked += storyModeButonPressed;
         arcadeModeButton.clicked += arcadeModeButtonPressed;
         backButtons.clicked += backButtonPressed;
 
         initilizeArcadeModeGrid();
+    }
+    void difficultyToggled()
+    {
+        UserDataManager.SmartPosistioning = !UserDataManager.SmartPosistioning;
+        if (UserDataManager.SmartPosistioning)
+        {
+            difficulty.text = "Smart AI";
+        }
+        else if (!UserDataManager.SmartPosistioning)
+        {
+            difficulty.text = "Basic AI";
+        }
     }
     void storyModeButonPressed()
     {
@@ -65,10 +81,11 @@ public class UIController : MonoBehaviour
                 var button = new Button();
                 //Getting Data
                 LevelDataSO currentData = arcadeModeLevels[currentButtonID];
-                
+
                 //Assigning Names
                 string nameOFButton = currentData.name;
                 button.text = nameOFButton;
+                button.AddToClassList("ButtonsThatShrinkToFit");
                 //assigning Function
                 button.clicked += LoadThisScene;
 
