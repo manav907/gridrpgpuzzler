@@ -6,15 +6,12 @@ using UnityEngine;
 [CustomEditor(typeof(MapManager))]
 public class MapManagerEditor : Editor
 {
+
     public override void OnInspectorGUI()
     {
         MapManager mapManager = target as MapManager;
         DrawDefaultInspector();
-        if (GUILayout.Button("LoadMapDataFromSO"))
-        {
-            UnityEditor.AssetDatabase.Refresh();
-            mapManager.LoadMapDataFromSO();
-        }
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("OverWriteMapDataToSO"))
         {
             mapManager.OverWriteMapDataToSO();
@@ -22,5 +19,12 @@ public class MapManagerEditor : Editor
             UnityEditor.AssetDatabase.SaveAssets();
             UnityEditor.AssetDatabase.Refresh();
         }
+        if (GUILayout.Button("LoadMapDataFromSO"))
+        {
+            UnityEditor.AssetDatabase.Refresh();
+            mapManager.LoadMapDataFromSO();
+        }
+
+        GUILayout.EndHorizontal();
     }
 }

@@ -13,20 +13,18 @@ MonoBehaviour:
   m_Name: Structures_Walkable
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: deae00807db5f764ea0ef2695a63b383, type: 2}
-  - {fileID: 11400000, guid: b9abf0e98c58846498a51caaa1e73136, type: 2}
-  - {fileID: 11400000, guid: 0ec5cfdd4993e104c81e15f249320923, type: 2}
+  - {fileID: 11400000, guid: a8c712bede53a484e98be774ffce7200, type: 2}
+  - {fileID: 11400000, guid: f2041ed21f6b528489d75a37d531eb1c, type: 2}
+  - {fileID: 11400000, guid: 29b16ed3f7b2e2246ad5d79a59e7e6f8, type: 2}
   - {fileID: 11400000, guid: 778889c7f682efd40a6acd95375cc91d, type: 2}
-  - {fileID: 11400000, guid: 58f2051221ac9a4418c0f5bef9f72e11, type: 2}
-  - {fileID: 11400000, guid: a0f8733fa5590094c9036d5c645b7677, type: 2}
-  - {fileID: 11400000, guid: 00d0dbe3ea22c554c8bd87fdb2c0e84c, type: 2}
-  - {fileID: 11400000, guid: 3f9ac13cc28d0884db5f21f97b3e65af, type: 2}
-  - {fileID: 11400000, guid: f9825792c11e7d441941c68fc078d204, type: 2}
-  - {fileID: 11400000, guid: aa78eb12a0dc77444ba666cb5e011b33, type: 2}
-  - {fileID: 11400000, guid: 237ed48a893b0d342aad25205876a561, type: 2}
-  - {fileID: 11400000, guid: ed9c89c04a02c354090545da328ee1dc, type: 2}
-  - {fileID: 11400000, guid: 04e66fd18d3cbe94786a6174b2bebeb5, type: 2}
-  - {fileID: 11400000, guid: b90b7449ab42cef459690ecb062a4773, type: 2}
-  - {fileID: 11400000, guid: d700bdc100ec3c04b950a8e5613128d3, type: 2}
-  - {fileID: 11400000, guid: 4592d8dfae1c61145a7b62b290702c07, type: 2}
+  - {fileID: 11400000, guid: f5d5a9e95ce26ca4081010dae88307fb, type: 2}
+  - {fileID: 11400000, guid: dce19b10ec5a86f47b6f00107260a351, type: 2}
+  - {fileID: 11400000, guid: 0ec5cfdd4993e104c81e15f249320923, type: 2}
+  - {fileID: 11400000, guid: 726e10e51943f87469f4bec8658bb429, type: 2}
+  - {fileID: 11400000, guid: 81bcb5f4b3440854baeb18057522fc47, type: 2}
+  - {fileID: 11400000, guid: 6ddf6007e6ac9724d88f2de74368ca04, type: 2}
+  - {fileID: 11400000, guid: 81f8b0db36ff1d649bdfefb791ca0609, type: 2}
+  - {fileID: 11400000, guid: e29611ae159752342961c5472732bdb8, type: 2}
+  - {fileID: 11400000, guid: ec7b67b0fae806d46a6fcf867ebaf3a8, type: 2}
+  - {fileID: 11400000, guid: 0c0abf46b57f71d4f81af7063cebce88, type: 2}
   groundFloorType: 1

@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/USS/InGame.uss?fileID=7433441132597879392&amp;guid=ad89e57ffcecd1c4f929e5f0fb39c42c&amp;type=3#InGame" />
     <ui:VisualElement name="Main" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; font-size: 26px;">
-        <ui:VisualElement name="TopBar" style="height: 10%; align-self: flex-start; width: auto; flex-direction: row;">
+        <ui:VisualElement name="TopBar" style="height: auto; align-self: flex-start; width: auto; flex-direction: row;">
             <ui:Button text="Restart" display-tooltip-when-elided="true" usage-hints="None" name="restartButton" class="ButtonsThatShrinkToFit" />
             <ui:Button text="Exit Game" display-tooltip-when-elided="true" name="exitButton" class="ButtonsThatShrinkToFit" />
             <ui:Button text="Pick Mode" display-tooltip-when-elided="true" name="ControlScheme" class="ButtonsThatShrinkToFit" />
@@ -11,7 +11,7 @@
                 <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
                 <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
             </ui:VisualElement>
-            <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-506237120&amp;guid=d63068fd6a521394e8f6640e8677bf54&amp;type=3#Spritesheet_UI_Flat_Button_02_1&apos;); align-items: center; flex-direction: row; align-self: center; height: 10%; justify-content: flex-start; width: 100%; -unity-background-scale-mode: scale-and-crop;">
+            <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-506237120&amp;guid=d63068fd6a521394e8f6640e8677bf54&amp;type=3#Spritesheet_UI_Flat_Button_02_1&apos;); align-items: center; flex-direction: row; align-self: center; height: auto; justify-content: flex-start; width: 100%; -unity-background-scale-mode: scale-and-crop; flex-grow: 0;">
                 <ui:VisualElement name="CurrentCharacterData" style="width: auto; height: auto; max-width: 35px; max-height: 35px;" />
                 <ui:Label text="This tip can be sper long but that does not matter" display-tooltip-when-elided="true" name="Tip" />
             </ui:VisualElement>
