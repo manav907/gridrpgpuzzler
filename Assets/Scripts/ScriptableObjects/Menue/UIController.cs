@@ -32,12 +32,17 @@ public class UIController : MonoBehaviour
         storyModeButon.clicked += storyModeButonPressed;
         arcadeModeButton.clicked += arcadeModeButtonPressed;
         backButtons.clicked += backButtonPressed;
+        UpdateDiffiucltyText();
 
         initilizeArcadeModeGrid();
     }
     void difficultyToggled()
     {
         UserDataManager.SmartPosistioning = !UserDataManager.SmartPosistioning;
+        UpdateDiffiucltyText();
+    }
+    void UpdateDiffiucltyText()
+    {
         if (UserDataManager.SmartPosistioning)
         {
             difficulty.text = "Smart AI";
@@ -55,8 +60,6 @@ public class UIController : MonoBehaviour
     {
         Modes.style.display = DisplayStyle.None;
         ButtonGrid.style.display = DisplayStyle.Flex;
-        //
-
     }
     void initilizeArcadeModeGrid()
     {
