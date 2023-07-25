@@ -595,6 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControlAI: 0
+  currentAbiltyName: 
   theroticalCurrentPos: {x: 0, y: 0, z: 0}
 --- !u!114 &732592035
 MonoBehaviour:

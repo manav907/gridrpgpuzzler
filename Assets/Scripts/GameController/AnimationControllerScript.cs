@@ -16,30 +16,32 @@ public class AnimationControllerScript : MonoBehaviour
     {
         return TurnManager.thisCharacter == this.gameObject;
     }
-    //public CharacterAnimationState currentState;
-    public IEnumerator setAnimationAndWaitForIt(CharacterAnimationState state, bool wait = true)
+    CharacterAnimationState lastState;
+    public IEnumerator trySetNewAnimation(CharacterAnimationState state)
     {
         var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (animatorStateInfo.IsName(state.ToString()))
+        animator.ResetTrigger(lastState.ToString());
+        if (UserDataManager.skipAnimations)
         {
-            //Debug.Log("not Changing");
+            StartCoroutine(setAnimation(state));
         }
         else
         {
-            animator.SetTrigger(state.ToString());
-            /* if (true)
-            {
-                var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
-                Debug.Log(gameObject.name +
-                "\n" + " State Info: " + state.ToString() + " " + "Current State Matches?: " + animatorStateInfo.IsName(state.ToString()) +
-                "\n" + " Clip Info: " + animatorClipInfo.name);
-            }   */
+            yield return StartCoroutine(setAnimation(state));
         }
-        if (!UserDataManager.skipAnimations)
-            if (wait)
-                yield return StartCoroutine(waitForAnimation(state));
+        IEnumerator setAnimation(CharacterAnimationState state)
+        {
+            lastState = state;
+            animator.SetTrigger(state.ToString());
+            yield return StartCoroutine(waitForAnimation(state));
 
+            /* var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+            Debug.Log(gameObject.name +
+            "\n" + " State Info: " + state.ToString() + " " + "Current State Matches?: " + animatorStateInfo.IsName(state.ToString()) +
+            "\n" + " Clip Info: " + animatorClipInfo.name); */
+        }
     }
+
     public IEnumerator waitForAnimation(CharacterAnimationState state)
     {
         yield return new WaitUntil(() =>

@@ -77,6 +77,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         GameEvents.current.inGameUI.setTip(Tip);
     }
+    [SerializeField] string currentAbiltyName;
     [SerializeField] Vector3Int theroticalCurrentPos;
     int stageOfAction;
 
@@ -84,11 +85,12 @@ public class MoveDictionaryManager : MonoBehaviour
     Dictionary<string, List<Vector3Int>> variableNameToData;
     public void doAction(LadderCollapseFunction ladderCollapseFunction)
     {
+        currentAbiltyName = ladderCollapseFunction.Name;
         int costOfaction = 0;
         costOfaction = characterCS.abilityToCost.returnDict()[ladderCollapseFunction];
         if (characterCS.actionPoints < costOfaction)
         {
-            addToolTip("The Ability " + ladderCollapseFunction.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
+            addToolTip("The Ability " + currentAbiltyName + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
             return;
         }
         theroticalCurrentPos = characterCS.getCharV3Int();
@@ -159,14 +161,14 @@ public class MoveDictionaryManager : MonoBehaviour
                         }
 
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));
-                        yield return StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(actionEffectParams.doActionTillKeyFrameAnimation));
+                        yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
 
                     }
                     IEnumerator afterAnimationOfAction()
                     {
                         theroticalCurrentPos = characterCS.getCharV3Int();
                         StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                        StartCoroutine(characterCS.animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Idle, false));
+                        StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(CharacterAnimationState.Idle));
                         if (!UserDataManager.skipWaitTime)
                             yield return new WaitForSeconds(UserDataManager.waitAction);
                     }
@@ -255,7 +257,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else//if it is the player character
         {
-            addToolTip("select Purple Tile To Contine with Action " + actionInputParams + " Or Right Click to Cancel");
+            addToolTip("Select Purple Tile To Contine with  " + currentAbiltyName + " Or Right Click to Cancel");
             setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = (reticalManager.getMovePoint());
@@ -291,7 +293,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             if (listOfValidtargets.Count == 0)
             {
-                addToolTip("No Valid Tiles for This Action; Select an Button To Perform an Action");
+                addToolTip("No Valid Tiles for " + currentAbiltyName + "; Select an Button To Perform an Action");
                 setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
                 //Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
                 //getValidTargetList(basicAction);
@@ -307,7 +309,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                addToolTip("Action Cancelled; Select an Button To Perform an Action");
+                addToolTip(currentAbiltyName + " Cancelled; Select an Button To Perform an Action");
                 setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
                 ShouldContinue = false;
                 return true;

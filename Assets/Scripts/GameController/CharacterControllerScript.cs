@@ -116,7 +116,7 @@ public class CharacterControllerScript : MonoBehaviour
         if (isALive)
         {
             //animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
-            StartCoroutine(animationControllerScript.setAnimationAndWaitForIt(CharacterAnimationState.Walk));
+            StartCoroutine(animationControllerScript.trySetNewAnimation(CharacterAnimationState.Walk));
             if (controlCharacter)
             {
                 GameEvents.current.TriggerNextDialog();//Disable this laeter
