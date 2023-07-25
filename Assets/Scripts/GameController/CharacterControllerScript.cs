@@ -88,6 +88,8 @@ public class CharacterControllerScript : MonoBehaviour
             Vector3Int thisCharPos = universalCalculator.castAsV3Int(this.gameObject.transform.position);
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
             turnManager.ListOfInteractableCharacters.Remove(gameObject);
+            if (controlCharacter)
+                GameEvents.current.PlaySound(2);
             mapManager.KillCharacter(getCharV3Int());
             if (TurnManager.thisCharacter == this.gameObject)
             {

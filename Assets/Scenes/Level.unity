@@ -1902,6 +1902,7 @@ MonoBehaviour:
   sfx:
   - {fileID: 8300000, guid: 800597fa51e470149884807229cbb097, type: 3}
   - {fileID: 8300000, guid: 73ae828fecce3b344a339e157f25df8a, type: 3}
+  - {fileID: 8300000, guid: cc808481a23d1c549ac8004b6b7300e5, type: 3}
   EventInMotion: 0
 --- !u!4 &943107458
 Transform:
