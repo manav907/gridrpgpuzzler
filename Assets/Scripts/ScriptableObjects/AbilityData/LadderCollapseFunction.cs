@@ -30,7 +30,7 @@ public class ActionInputParams
     public TargetType targetType;
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
     [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
-    public ReticalShapes areaOfEffectType;
+    public AoeType areaOfEffectType;
     //public OptimalTargetTip optimalTargetTip;
     public bool ignoreValidTargetsCheck = false;
     public ValidTargets validTargets;
@@ -57,10 +57,6 @@ public class ActionEffectParams
     public CharacterAnimationState doActionTillKeyFrameAnimation;
     public AnimationMovementType animationMovementType;
     public AnimationLoopType loopType;
-}
-public class AnimationParameter
-{
-
 }
 public enum OptimalTargetTip
 {
