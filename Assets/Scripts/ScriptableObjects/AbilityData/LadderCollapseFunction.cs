@@ -30,7 +30,7 @@ public class ActionInputParams
     public TargetType targetType;
     [SerializeField] RangeOfActionEnum rangeOfActionEnum;
     [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
-    public AoeType areaOfEffectType;
+    public AoeStyle areaOfEffectType;
     //public OptimalTargetTip optimalTargetTip;
     public bool ignoreValidTargetsCheck = false;
     public ValidTargets validTargets;
@@ -54,14 +54,10 @@ public class ActionInputParams
 public class ActionEffectParams
 {
     public TypeOfAction typeOfAction;
+    public ValidTargets OnlyApplyOn;
     public CharacterAnimationState doActionTillKeyFrameAnimation;
     public AnimationMovementType animationMovementType;
     public AnimationLoopType loopType;
-}
-public enum OptimalTargetTip
-{
-    PrefferEnemies,
-    PrefferAllies
 }
 public enum TargetType
 {

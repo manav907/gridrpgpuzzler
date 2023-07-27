@@ -5,5 +5,6 @@ using UnityEngine;
 public class AbilityData : ScriptableObject
 {
     public TypeOfAction Primaryuse;
-    public List<TileToEffectPair> listOfEffects;
+    public List<TileToEffectPair> ValidTileData;
+    public List<ActionEffectParams> ApplyEffects;
 }

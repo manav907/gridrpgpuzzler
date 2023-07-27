@@ -165,6 +165,15 @@ public class UniversalCalculator : MonoBehaviour
     {
         return Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
     }
+    public Vector3Int getLeftDirection(Vector3Int forwardDirection)
+    {
+        return new Vector3Int(-forwardDirection.y, forwardDirection.x, 0);
+    }
+
+    public Vector3Int getRightDirection(Vector3Int forwardDirection)
+    {
+        return new Vector3Int(forwardDirection.y, -forwardDirection.x, 0);
+    }
     public List<Vector3Int> PointsInDirectionFilter(Vector3Int fromPoint, Vector3Int toPoint, List<Vector3Int> checkPoints)
     {
         var dircetion = getNormalizedDirection(fromPoint, toPoint);
@@ -233,6 +242,13 @@ public class UniversalCalculator : MonoBehaviour
         }
         return arcTiles;
 
+    }
+    public List<Vector3Int> generatePoint(Vector3Int fromPoint, Vector3Int toWardPoint, float rangeOfAction)
+    {
+        var output = new List<Vector3Int>();
+        Vector3Int consideredDirection = getNormalizedDirection(fromPoint, toWardPoint);
+
+        return output;
     }
     ///List Handeling
     public int SelectRandomBetweenZeroAndInt(int ListCount)

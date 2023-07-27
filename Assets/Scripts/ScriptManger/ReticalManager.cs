@@ -109,16 +109,17 @@ public class ReticalManager : MonoBehaviour
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
-        if (actionInputParams.areaOfEffectType == AoeType.SSingle)
+        if (actionInputParams.areaOfEffectType == AoeStyle.SSingle)
         {
             retiacalTiles.Add(atPoint);
         }
-        else if (actionInputParams.areaOfEffectType == AoeType.SSweep)
+
+        else if (actionInputParams.areaOfEffectType == AoeStyle.SSweep)
         {
             retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, actionInputParams.getMagnititudeOfAction()));
             retiacalTiles.Remove(fromPoint);
         }
-        else if (actionInputParams.areaOfEffectType == AoeType.S3x3)
+        else if (actionInputParams.areaOfEffectType == AoeStyle.S3x3)
         {
             retiacalTiles.AddRange(
                 universalCalculator.generateRangeFrom2Vectors(
@@ -151,7 +152,7 @@ public class ReticalManager : MonoBehaviour
             SetTiles(theseTiles, onTileMap, thisTile);
     }
 }
-public enum AoeType
+public enum AoeStyle
 {
     SSingle,
     S3x3,
