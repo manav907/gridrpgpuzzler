@@ -282,7 +282,8 @@ public static class GlobalCal
         {
             case AoeStyle.SSingle:
                 {
-                    return new List<Vector3Int>() { getNormalizedDirection(fromPoint, atPoint) };
+                    //return new List<Vector3Int>() { getNormalizedDirection(fromPoint, atPoint) };
+                    return new List<Vector3Int>() { atPoint };
                 }
             case AoeStyle.SSweep:
                 {
@@ -292,7 +293,12 @@ public static class GlobalCal
                 {
                     return generateRangeFromPoint(fromPoint, RangeOfAction);
                 }
+            case AoeStyle.Taxi:
+                {
+                    return generateTaxiRangeFromPoint(fromPoint, RangeOfAction);
+                }
         }
+        Debug.LogError("Aoe Style Not Found");
         return new List<Vector3Int>();
         List<Vector3Int> getSimpleArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction)
         {

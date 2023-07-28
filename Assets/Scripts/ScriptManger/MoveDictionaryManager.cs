@@ -36,8 +36,6 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         thisCharacter = TurnManager.thisCharacter;
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
-        theroticalCurrentPos = characterCS.getCharV3Int();
-        reticalManager.fromPoint = theroticalCurrentPos;
     }
     Dictionary<TypeOfAction, Action> abilityNameToAction;
 
@@ -93,9 +91,11 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         return pointToScannedAreas;
     }
+    public AbilityData currnetAbility;
     public void doAction(AbilityData abilityData)
     {
         currentAbiltyName = abilityData.name;
+
         int costOfaction = abilityData.costOfaction;
         if (characterCS.actionPoints < costOfaction)
         {
@@ -104,100 +104,28 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
             Debug.Log("Great Erros");
-        reticalManager.UpdateReticalInputParams(generateAbiltyPointMap(abilityData, characterCS.getCharV3Int()));
+        var pointMap = generateAbiltyPointMap(abilityData, characterCS.getCharV3Int());
+        if (pointMap.Keys.Count == 0)
+        {
+            addToolTip("The Ability " + currentAbiltyName + " cannot be used as No Valid Tilees");
+            Debug.Log("No Valid Tilees");
+            return;
+        }
+        currnetAbility = abilityData;
+        reticalManager.UpdateReticalInputParams(pointMap);
         setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
         StartCoroutine(SequenceOfEvents());
         IEnumerator SequenceOfEvents()
         {
-
-
-            ///////////////////
-            foreach (var keyPair in ladderCollapseFunction.ValidTileData)
-            {
-                if (GetInputState != CoRoutineStateCheck.Proceeding)
+            yield return StartCoroutine(getInput(pointMap.Keys.ToList()));
+            if (pointMap.ContainsKey(tryHere))
+                for (int i = 0; i < abilityData.ApplyEffects.Count; i++)
                 {
-                    break;
+                    yield return StartCoroutine(AnimationCoRoutione(pointMap[tryHere][i], abilityData.ApplyEffects[i], characterCS.getCharV3Int(), tryHere));
                 }
-                currentVarirable = keyPair.value;
-                if (keyPair.key == LadderCollapseFunctionEnums.setDataWithID)
-                {
-                    variableNameToData.Add(currentVarirable, new List<Vector3Int>());
-                    yield return StartCoroutine(getInput(ladderCollapseFunction.SetDataAtIndex[currentsetDataWithID]));
-                    currentsetDataWithID++;
-                }
-                else if (keyPair.key == LadderCollapseFunctionEnums.doActionWithID)
-                {
-                    float startTime = Time.time;
-                    float lastTime = Time.time;
-                    debugTime(false);
-                    void debugTime(bool debugit = true)
-                    {
-                        if (!debugit)
-                            return;
-                        float currentTime = Time.time;
-                        float deltaTime = currentTime - lastTime;
+            else
+                setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
 
-                        Debug.Log("Delta Time: " + deltaTime);
-                        lastTime = currentTime;
-                    }
-                    //
-                    GameEvents.current.inGameUI.ClearButtons();//Clearing Buttons while action is in progress
-                    ActionEffectParams actionEffectParams = ladderCollapseFunction.DoActionFromDataAtIndex[currentdoActionWithID];
-                    TypeOfAction actiontype = actionEffectParams.typeOfAction;
-                    AnimationMovementType animationMovementType = actionEffectParams.animationMovementType;
-                    AnimationLoopType animationLoopType = actionEffectParams.loopType;
-                    IEnumerator animationActionFunction()
-                    {
-                        Vector3 targetLocation = tryHere;
-                        if (animationMovementType == AnimationMovementType.NudgeToPoint)
-                        {
-                            Vector3 point1 = theroticalCurrentPos;
-                            Vector3 point2 = tryHere;
-                            float distanceFactor = 0.3f;  // Adjust this value to control the distance from point1
-
-                            Vector3 direction = (point2 - point1).normalized;  // Calculate the direction between the points
-                            Vector3 midPoint = point1 + direction * distanceFactor * Vector3.Distance(point1, point2);
-                            targetLocation = midPoint;
-
-
-                        }
-                        else if (animationMovementType == AnimationMovementType.NoMovement)
-                        {
-                            targetLocation = theroticalCurrentPos;
-                        }
-
-                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));
-                        yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
-
-                    }
-                    IEnumerator afterAnimationOfAction()
-                    {
-                        theroticalCurrentPos = characterCS.getCharV3Int();
-                        StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, theroticalCurrentPos, moveTimeSpeed));
-                        StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(CharacterAnimationState.Idle));
-                        if (!UserDataManager.skipWaitTime)
-                            yield return new WaitForSeconds(UserDataManager.waitAction);
-                    }
-
-                    if (animationLoopType == AnimationLoopType.forAction)
-                    {
-                        yield return StartCoroutine(animationActionFunction());
-                    }
-                    foreach (Vector3Int point in variableNameToData[currentVarirable])
-                    {
-                        tryHere = point;
-                        if (animationLoopType == AnimationLoopType.forEachPoint)
-                            yield return StartCoroutine(animationActionFunction());
-                        abilityNameToAction[actiontype]();//The Actual Action
-
-                    }
-                    yield return afterAnimationOfAction();
-
-
-
-                    currentdoActionWithID++;
-                }
-            }
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
                 characterCS.actionPoints = characterCS.actionPoints - costOfaction;
@@ -230,20 +158,15 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         GetInputState = newState;
     }
-    IEnumerator getInput(Dictionary<Vector3Int, List<List<Vector3Int>>> ValidPosToShapeData)
+    IEnumerator getInput(List<Vector3Int> validInputs)
     {
         //Declaring Variables        
-        reticalManager.fromPoint = theroticalCurrentPos;//setting from point
-        reticalManager.reDrawValidTiles(ValidPosToShapeData.Keys.ToList(), ValidPosToShapeData.Keys.ToList());//this sets the Valid Tiles Overlay
+        reticalManager.reDrawValidTiles(validInputs, validInputs);//this sets the Valid Tiles Overlay
         ShouldContinue = false;
-
-        List<Vector3Int> tempData = new List<Vector3Int>();
-        //SettingUPReticle
-        reticalManager.UpdateReticalInputParams(reticalManager.ValidPosToShapeData);
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
-            tryHere = characterCS.getTarget(ValidPosToShapeData.Keys.ToList());
+            tryHere = characterCS.getTarget(currnetAbility);
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
 
@@ -257,22 +180,6 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
         {
-
-
-            if (reticalManager.ValidPosToShapeData.ContainsKey(tryHere))
-            { tempData = reticalManager.ValidPosToShapeData[tryHere]; }
-            else
-            { Debug.Log("InvalidTile"); }
-            if (actionInputParams.updateTheroticalPos)
-            {
-                theroticalCurrentPos = tempData.Last();
-                tryHere = theroticalCurrentPos;
-            }
-            foreach (Vector3Int pos in tempData)
-            {
-                if (CheckIfTargetis(pos, actionInputParams.validTargets))
-                    variableNameToData[currentVarirable].Add(pos);
-            }
             setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
         }
         else
@@ -284,16 +191,7 @@ public class MoveDictionaryManager : MonoBehaviour
         //Methods
         bool CheckContinue()
         {
-            if (listOfValidtargets.Count == 0)
-            {
-                addToolTip("No Valid Tiles for " + currentAbiltyName + "; Select an Button To Perform an Action");
-                setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
-                //Debug.Log("No Valid Tiles Exist; Ending GetData; Debugging Just in Case;");
-                //getValidTargetList(basicAction);
-                ShouldContinue = false;
-                return true;
-            }
-            else if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 addToolTip("Select an Button To Perform an Action");
                 setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
@@ -312,7 +210,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         bool CheckMovePoint()
         {
-            if (ShouldContinue && listOfValidtargets.Contains(tryHere))
+            if (ShouldContinue && validInputs.Contains(tryHere))
             {
                 return true;
             }
@@ -326,12 +224,20 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     public List<Vector3Int> generateAreaForTileToEffectPair(TileToEffectPair tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
     {
+        string TestDebugString = "Creating Area For " + tileToEffectPair + " with AoeStyle" + tileToEffectPair.aoeStyle;
         var output = GlobalCal.generateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.getRangeOfAction());
-        output = mapManager.filterListWithTileRequirements(fromPoint, output, tileToEffectPair.TileRequirements);
-        output = mapManager.filterListWithWalkRequirements(fromPoint, output, characterCS.canWalkOn);
-        output = CheckVectorValidity(fromPoint, output, tileToEffectPair.targetType);
-
+        PrintOutputStatus();
+        //output = mapManager.filterListWithTileRequirements(fromPoint, output, tileToEffectPair.TileRequirements);
+        //output = mapManager.filterListWithWalkRequirements(fromPoint, output, characterCS.canWalkOn);
+        //output = CheckVectorValidity(fromPoint, output, tileToEffectPair.targetType);
+        Debug.Log(TestDebugString);
         return output;
+        void PrintOutputStatus()
+        {
+            //TestDebugString += "\n " + output.Count;
+            foreach (var point in output)
+                TestDebugString += "\n      :" + point;
+        }
         List<Vector3Int> CheckVectorValidity(Vector3Int fromPoint, List<Vector3Int> listOfRanges, TargetType targetType)
         {
             //Direction and Distance are very Important Check For those if you are having problems
@@ -357,6 +263,72 @@ public class MoveDictionaryManager : MonoBehaviour
             return listOfRanges;
 
         }
+    }
+    IEnumerator AnimationCoRoutione(List<Vector3Int> points, ActionEffectParams actionEffectParams, Vector3Int fromPoint, Vector3Int atPoint)
+    {
+        float startTime = Time.time;
+        float lastTime = Time.time;
+        debugTime(false);
+        void debugTime(bool debugit = true)
+        {
+            if (!debugit)
+                return;
+            float currentTime = Time.time;
+            float deltaTime = currentTime - lastTime;
+
+            Debug.Log("Delta Time: " + deltaTime);
+            lastTime = currentTime;
+        }
+        //
+        GameEvents.current.inGameUI.ClearButtons();//Clearing Buttons while action is in progress
+        TypeOfAction actiontype = actionEffectParams.typeOfAction;
+        AnimationMovementType animationMovementType = actionEffectParams.animationMovementType;
+        AnimationLoopType animationLoopType = actionEffectParams.loopType;
+        IEnumerator animationActionFunction()
+        {
+            Vector3 targetLocation = tryHere;
+            if (animationMovementType == AnimationMovementType.NudgeToPoint)
+            {
+                Vector3 point1 = fromPoint;
+                Vector3 point2 = atPoint;
+                float distanceFactor = 0.3f;  // Adjust this value to control the distance from point1
+
+                Vector3 direction = (point2 - point1).normalized;  // Calculate the direction between the points
+                Vector3 midPoint = point1 + direction * distanceFactor * Vector3.Distance(point1, point2);
+                targetLocation = midPoint;
+
+
+            }
+            else if (animationMovementType == AnimationMovementType.NoMovement)
+            {
+                targetLocation = fromPoint;
+            }
+
+            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));
+            yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
+
+        }
+        IEnumerator afterAnimationOfAction()
+        {
+            StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, characterCS.getCharV3Int(), moveTimeSpeed));
+            StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(CharacterAnimationState.Idle));
+            if (!UserDataManager.skipWaitTime)
+                yield return new WaitForSeconds(UserDataManager.waitAction);
+        }
+
+        if (animationLoopType == AnimationLoopType.forAction)
+        {
+            yield return StartCoroutine(animationActionFunction());
+        }
+        foreach (Vector3Int point in points)
+        {
+            tryHere = point;
+            if (animationLoopType == AnimationLoopType.forEachPoint)
+                yield return StartCoroutine(animationActionFunction());
+            abilityNameToAction[actiontype]();//The Actual Action
+
+        }
+        yield return afterAnimationOfAction();
     }
 }
 

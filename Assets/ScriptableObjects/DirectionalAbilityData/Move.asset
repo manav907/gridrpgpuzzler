@@ -10,16 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
-  m_Name: Axe
+  m_Name: Move
   m_EditorClassIdentifier: 
   Primaryuse: 0
   costOfaction: 0
-  AreaOfAbility: {fileID: 11400000, guid: 4a0a1dacf93f0154190e30b6203b3c17, type: 2}
-  ValidTileData:
-  - {fileID: 11400000, guid: 4a0a1dacf93f0154190e30b6203b3c17, type: 2}
-  ApplyEffects:
-  - typeOfAction: 0
-    OnlyApplyOn: 0
-    doActionTillKeyFrameAnimation: 0
-    animationMovementType: 0
-    loopType: 0
+  AreaOfAbility: {fileID: 0}
+  ValidTileData: []
+  ApplyEffects: []

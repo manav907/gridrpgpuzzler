@@ -12,7 +12,6 @@ public class ReticalManager : MonoBehaviour
 
     [Header("Retical Shape")]
     public AbilityData actionInputParams;
-    public Vector3Int fromPoint = Vector3Int.zero;
 
     [Header("Retical References")]
     [SerializeField] Vector3 reticalPos;
@@ -107,27 +106,6 @@ public class ReticalManager : MonoBehaviour
         return GridCellPos;
 
     }
-    public List<Vector3Int> generateShape(Vector3Int atPoint)
-    {
-        var retiacalTiles = new List<Vector3Int>();
-        /* if (actionInputParams.areaOfEffectType == AoeStyle.SSingle) */
-        {
-            retiacalTiles.Add(atPoint);
-        }
-
-        /* else if (actionInputParams.areaOfEffectType == AoeStyle.SSweep)
-        {
-            retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, actionInputParams.getMagnititudeOfAction()));
-            retiacalTiles.Remove(fromPoint);
-        }
-        else if (actionInputParams.areaOfEffectType == AoeStyle.S3x3)
-        {
-            retiacalTiles.AddRange(
-                universalCalculator.generateRangeFrom2Vectors(
-                atPoint + Vector3Int.up + Vector3Int.left, atPoint + Vector3Int.right + Vector3Int.down));
-        } */
-        return retiacalTiles;
-    }
     //Tile Stuff
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles
     {
@@ -139,12 +117,6 @@ public class ReticalManager : MonoBehaviour
     void ClearAllTiles(Tilemap thistilemap)
     {
         thistilemap.ClearAllTiles();
-    }
-    public void setReticalToFromPoint()
-    {
-        List<Vector3Int> thisPos = new List<Vector3Int>() { };
-        thisPos.Add(fromPoint);
-        reDrawReticalTiles(thisPos);
     }
     public void reDrawTiles(List<Vector3Int> theseTiles, Tilemap onTileMap, TileBase thisTile)//Needs review
     {
