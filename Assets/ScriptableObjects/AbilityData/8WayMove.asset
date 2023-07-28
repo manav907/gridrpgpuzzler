@@ -10,16 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
-  m_Name: 4WayAttack
+  m_Name: 8WayMove
   m_EditorClassIdentifier: 
-  Primaryuse: 0
+  Primaryuse: 2
   costOfaction: 0
-  AreaOfAbility: {fileID: 11400000, guid: b7a5c4c944ffd804eb4ac8b6b98b9ca5, type: 2}
+  AreaOfAbility:
+    ShowCastOn: 1
+    targetType: 0
+    areaOfEffectRange: 15
+    aoeStyle: 4
   ValidTileData:
-  - {fileID: 11400000, guid: 000da2a30172a5e4fa3141620ec2055e, type: 2}
+  - ShowCastOn: 1
+    targetType: 0
+    areaOfEffectRange: 10
+    aoeStyle: 0
   ApplyEffects:
-  - typeOfAction: 0
+  - typeOfAction: 2
     OnlyApplyOn: 0
-    doActionTillKeyFrameAnimation: 0
+    doActionTillKeyFrameAnimation: 1
     animationMovementType: 2
     loopType: 0

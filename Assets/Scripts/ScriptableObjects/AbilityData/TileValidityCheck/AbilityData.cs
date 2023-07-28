@@ -11,7 +11,23 @@ public class AbilityData : ScriptableObject
     public List<TileToEffectPair> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
 }
+[Serializable]
+public class TileToEffectPair
+{
+    //public int minpoints = 1;
+    //public int MaxPoints = 1;
+    //public bool sortFromPoint = true;
+    public ValidTargets ShowCastOn;
+    public TargetType targetType;
+    public RangeOfActionEnum areaOfEffectRange;
+    public AoeStyle aoeStyle;
 
+    public float getRangeOfAction()
+    {
+        return (float)areaOfEffectRange / 10;
+    }
+
+}
 [Serializable]
 public class ActionEffectParams
 {
