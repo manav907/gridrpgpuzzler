@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87ab93a51d0892748aab9e0ef19a9c93, type: 3}
-  m_Name: EmptyMoveableTile
+  m_Name: 4WayDirectionalEmpty
   m_EditorClassIdentifier: 
-  minpoints: 1
-  MaxPoints: 1
-  sortFromPoint: 1
-  TileRequirements: 0
+  ShowCastOn: 1
   targetType: 0
   areaOfEffectRange: 10
-  aoeStyle: 0
+  aoeStyle: 4

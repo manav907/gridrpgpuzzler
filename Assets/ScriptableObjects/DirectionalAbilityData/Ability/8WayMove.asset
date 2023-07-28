@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
-  m_Name: Axe
+  m_Name: 8WayMove
   m_EditorClassIdentifier: 
   Primaryuse: 0
   costOfaction: 0
-  AreaOfAbility: {fileID: 11400000, guid: 4a0a1dacf93f0154190e30b6203b3c17, type: 2}
+  AreaOfAbility: {fileID: 11400000, guid: 76d924e5860d01948b0f057a03e6ce14, type: 2}
   ValidTileData:
-  - {fileID: 11400000, guid: 2021bc784c969f4429324227fcaabb4f, type: 2}
+  - {fileID: 11400000, guid: 000da2a30172a5e4fa3141620ec2055e, type: 2}
   ApplyEffects:
-  - typeOfAction: 0
+  - typeOfAction: 2
     OnlyApplyOn: 0
     doActionTillKeyFrameAnimation: 0
-    animationMovementType: 0
+    animationMovementType: 2
     loopType: 0
