@@ -13,5 +13,11 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   Primaryuse: 0
-  listOfEffects:
-  - {fileID: 0}
+  ValidTileData:
+  - {fileID: 11400000, guid: 4a0a1dacf93f0154190e30b6203b3c17, type: 2}
+  ApplyEffects:
+  - typeOfAction: 0
+    OnlyApplyOn: 0
+    doActionTillKeyFrameAnimation: 0
+    animationMovementType: 0
+    loopType: 0

@@ -11,7 +11,7 @@ public class ReticalManager : MonoBehaviour
     TurnManager turnManager;
 
     [Header("Retical Shape")]
-    public ActionInputParams actionInputParams;
+    public AbilityData actionInputParams;
     public Vector3Int fromPoint = Vector3Int.zero;
 
     [Header("Retical References")]
@@ -42,8 +42,7 @@ public class ReticalManager : MonoBehaviour
     }
     void Start()
     {
-        defaultShape = new ActionInputParams();
-        ValidPosToShapeData = new Dictionary<Vector3Int, List<Vector3Int>>();
+        ValidPosToShapeData = new Dictionary<Vector3Int, List<List<Vector3Int>>>();
         lastMovePoint = getMovePoint();
         ResetReticalInputParams();
     }
@@ -59,32 +58,34 @@ public class ReticalManager : MonoBehaviour
             reticalPos = currentMovePoint;
             lastMovePoint = currentMovePoint;
             //Setting Retical Tiles
-            reDrawReticalTiles(selectShape(currentMovePoint));
+            reDrawReticalTiles(compressLists(selectShape(currentMovePoint)));
         }
     }
-    //Retical Stuff
-    ActionInputParams defaultShape;
+    List<Vector3Int> compressLists(List<List<Vector3Int>> listSet)
+    {
+        var output = new List<Vector3Int>();
+        foreach (var list in listSet)
+            foreach (var point in list)
+                output.Add(point);
+
+        return output;
+    }
     public void ResetReticalInputParams()
     {
-        actionInputParams = defaultShape;
         ValidPosToShapeData.Clear();
         ClearAllTiles(validReticalTilesTilemap);
     }
-    public Dictionary<Vector3Int, List<Vector3Int>> ValidPosToShapeData;
-    public void UpdateReticalInputParams(ActionInputParams inputParams, List<Vector3Int> ValidTiles)
+    public Dictionary<Vector3Int, List<List<Vector3Int>>> ValidPosToShapeData;
+    public void UpdateReticalInputParams(Dictionary<Vector3Int, List<List<Vector3Int>>> ValidTiles)
     {
-        actionInputParams = inputParams;
         ValidPosToShapeData.Clear();
-        for (int i = 0; i < ValidTiles.Count; i++)
-        {
-            ValidPosToShapeData[ValidTiles[i]] = generateShape(ValidTiles[i]);//ValidPosToShapeData.Add(ValidTiles[i], generateShape(ValidTiles[i]));
-        }
+        ValidPosToShapeData = ValidTiles;
     }
-    List<Vector3Int> selectShape(Vector3Int currentMovePoint)
+    List<List<Vector3Int>> selectShape(Vector3Int currentMovePoint)
     {
         if (ValidPosToShapeData.ContainsKey(currentMovePoint))
             return ValidPosToShapeData[currentMovePoint];
-        return (new List<Vector3Int>()/* {currentMovePoint} */);
+        return (new List<List<Vector3Int>>()/* {currentMovePoint} */);
     }
     public Vector3Int getIntPoint()
     {
@@ -109,12 +110,12 @@ public class ReticalManager : MonoBehaviour
     public List<Vector3Int> generateShape(Vector3Int atPoint)
     {
         var retiacalTiles = new List<Vector3Int>();
-        if (actionInputParams.areaOfEffectType == AoeStyle.SSingle)
+        /* if (actionInputParams.areaOfEffectType == AoeStyle.SSingle) */
         {
             retiacalTiles.Add(atPoint);
         }
 
-        else if (actionInputParams.areaOfEffectType == AoeStyle.SSweep)
+        /* else if (actionInputParams.areaOfEffectType == AoeStyle.SSweep)
         {
             retiacalTiles.AddRange(universalCalculator.generateComplexArc(fromPoint, atPoint, actionInputParams.getMagnititudeOfAction()));
             retiacalTiles.Remove(fromPoint);
@@ -124,7 +125,7 @@ public class ReticalManager : MonoBehaviour
             retiacalTiles.AddRange(
                 universalCalculator.generateRangeFrom2Vectors(
                 atPoint + Vector3Int.up + Vector3Int.left, atPoint + Vector3Int.right + Vector3Int.down));
-        }
+        } */
         return retiacalTiles;
     }
     //Tile Stuff
@@ -157,5 +158,6 @@ public enum AoeStyle
     SSingle,
     S3x3,
     SSweep,
-    SArrow
+    SArrow,
+    Taxi
 }

@@ -2,54 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(fileName = "New CharacterAbility")]
-public class LadderCollapseFunction : ScriptableObject
-{
-    public string Name;
-    public TypeOfAction primaryUseForAction;
-    public List<string> Varirables;
-    public SerializableDictionary<LadderCollapseFunctionEnums, string> invokeFunction;
-    public List<ActionInputParams> SetDataAtIndex;
-    public List<ActionEffectParams> DoActionFromDataAtIndex;
-    public LadderCollapseFunction()
-    {
-
-    }
-    public LadderCollapseFunction(LadderCollapseFunction given)
-    {
-        this.name = given.name;
-        //Rework This
-        invokeFunction = (given.invokeFunction);
-        SetDataAtIndex = (given.SetDataAtIndex);
-        DoActionFromDataAtIndex = (given.DoActionFromDataAtIndex);
-    }
-}
-[Serializable]
-public class ActionInputParams
-{
-    public TargetType targetType;
-    [SerializeField] RangeOfActionEnum rangeOfActionEnum;
-    [SerializeField] RangeOfActionEnum magnititudeOfActionEnum;
-    public AoeStyle areaOfEffectType;
-    //public OptimalTargetTip optimalTargetTip;
-    public bool ignoreValidTargetsCheck = false;
-    public ValidTargets validTargets;
-    public bool includeSelf;
-    public bool updateTheroticalPos = true;
-    public ActionInputParams()
-    {
-
-    }
-    public float getRangeOfAction()
-    {
-        return (float)rangeOfActionEnum / 10;
-    }
-    public float getMagnititudeOfAction()
-    {
-        return (float)magnititudeOfActionEnum / 10;
-
-    }
-}
 [Serializable]
 public class ActionEffectParams
 {
@@ -88,5 +40,6 @@ public enum ValidTargets
     AnyFaction,
     Enemies,
     Allies,
-    Neutral
+    Neutral,
+    AnyValidOrInValid
 }

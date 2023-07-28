@@ -96,19 +96,6 @@ public class MapManager : MonoBehaviour
                 dataFromTiles.Add(tileFound, ScriptableObjects);
             }
     }
-
-    public bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos, CharacterControllerScript characterDataHolder)
-    {
-        if (!cellDataDir.ContainsKey(tilePos))
-        {
-            return false;
-        }
-        //This get data From SO
-        foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)//This Gets Cached Data
-            if (!characterDataHolder.canWalkOn.Contains(groundFloorType))
-                return false;
-        return true;
-    }
     public void PlaceCharacterAtPos(Vector3Int newPos, GameObject character)
     {
         PosToCharGO.Add(newPos, character);
@@ -257,8 +244,85 @@ public class MapManager : MonoBehaviour
             NeighbourToTotalCost.Add(neighbour, neighbour.FScore);
         }
     }
+    public List<Vector3Int> filterListWithWalkRequirements(Vector3Int fromPoint, List<Vector3Int> scanPoints, List<GroundFloorType> canWalkOn)
+    {
+        var newList = new List<Vector3Int>();
+        foreach (var point in scanPoints)
+        {
+            if (checkAtPosIfCharacterCanWalk(point))
+            {
+                newList.Add(point);
+            }
+        }
+        return newList;
+        bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos)
+        {
+            if (!cellDataDir.ContainsKey(tilePos))
+                return false;
+            //This get data From SO
+            foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)//This Gets Cached Data
+                if (!canWalkOn.Contains(groundFloorType))
+                    return false;
+            return true;
+        }
+    }
+    public List<Vector3Int> filterListWithTileRequirements(Vector3Int fromPoint, List<Vector3Int> scanPoints, ValidTargets validTargets)
+    {
+        CharacterControllerScript castingCharacter = cellDataDir[fromPoint].characterAtCell.GetComponent<CharacterControllerScript>();
+        var newList = new List<Vector3Int>();
+        foreach (var point in scanPoints)
+        {
+            if (CheckIfTargetis(point))
+            {
+                newList.Add(point);
+            }
+        }
+        return newList;
+
+
+        bool CheckIfTargetis(Vector3Int checkPos)
+        {
+            if (validTargets == ValidTargets.AnyValidOrInValid)
+                return true;
+            if (cellDataDir.ContainsKey(checkPos))
+                if (validTargets == ValidTargets.Empty)
+                    return !isCellHoldingCharacer(checkPos);
+                else
+                {
+                    string faction = cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
+                    string factionOfCaster = castingCharacter.faction;
+                    //Debug.Log("Checking Factions between " + faction + " and " + factionOfCaster + " for condition " + requitedCondtion);
+                    //Debug.Log(faction == factionOfCaster);
+                    switch (validTargets)
+                    {
+                        case ValidTargets.AnyFaction:
+                            {
+                                return true;
+                            }
+                        case ValidTargets.Enemies:
+                            {
+                                if (factionOfCaster != faction)
+                                    return true;
+                                else
+                                    return false;
+                            }
+                        case ValidTargets.Allies:
+                            {
+                                if (factionOfCaster == faction)
+                                    return true;
+                                else
+                                    return false;
+                            }
+
+                    }
+
+                }
+            return false;
+        }
+    }
+
     MoveDictionaryManager moveDictionaryManager;
-    public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, ActionInputParams actionInputParams, bool ignoreCharacters = false)
+    public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, AbilityData actionInputParams, bool ignoreCharacters = false)
     {
         string AStarDebug = "Starting Astar Navigation from Point " + startPos;
         List<Node> openList = new List<Node>();

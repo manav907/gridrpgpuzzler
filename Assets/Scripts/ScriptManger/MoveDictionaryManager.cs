@@ -78,38 +78,44 @@ public class MoveDictionaryManager : MonoBehaviour
         GameEvents.current.inGameUI.setTip(Tip);
     }
     [SerializeField] string currentAbiltyName;
-    [SerializeField] Vector3Int theroticalCurrentPos;
-    int stageOfAction;
-
-    string currentVarirable;
-    Dictionary<string, List<Vector3Int>> variableNameToData;
-    public void doAction(LadderCollapseFunction ladderCollapseFunction)
+    public Dictionary<Vector3Int, List<List<Vector3Int>>> generateAbiltyPointMap(AbilityData abilityData, Vector3Int fromPoint)
     {
-        currentAbiltyName = ladderCollapseFunction.Name;
-        int costOfaction = 0;
-        costOfaction = characterCS.abilityToCost.returnDict()[ladderCollapseFunction];
+        var pointsToScan = generateAreaForTileToEffectPair(abilityData.AreaOfAbility, fromPoint, fromPoint);
+        Dictionary<Vector3Int, List<List<Vector3Int>>> pointToScannedAreas = new Dictionary<Vector3Int, List<List<Vector3Int>>>();
+        foreach (Vector3Int point in pointsToScan)
+        {
+            List<List<Vector3Int>> list = new List<List<Vector3Int>>();
+            foreach (TileToEffectPair TileDataPair in abilityData.ValidTileData)
+            {
+                list.Add(generateAreaForTileToEffectPair(TileDataPair, fromPoint, point));
+            }
+            pointToScannedAreas[point] = list;
+        }
+        return pointToScannedAreas;
+    }
+    public void doAction(AbilityData abilityData)
+    {
+        currentAbiltyName = abilityData.name;
+        int costOfaction = abilityData.costOfaction;
         if (characterCS.actionPoints < costOfaction)
         {
             addToolTip("The Ability " + currentAbiltyName + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
             return;
         }
-        theroticalCurrentPos = characterCS.getCharV3Int();
+        if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
+            Debug.Log("Great Erros");
+        reticalManager.UpdateReticalInputParams(generateAbiltyPointMap(abilityData, characterCS.getCharV3Int()));
         setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
         StartCoroutine(SequenceOfEvents());
         IEnumerator SequenceOfEvents()
         {
-            variableNameToData = new Dictionary<string, List<Vector3Int>>();
 
-            int currentsetDataWithID = 0;
-            int currentdoActionWithID = 0;
-            int currentSetDataUsingTherorticalPosAtArrayIndex = 0;
 
-            foreach (var keyPair in ladderCollapseFunction.invokeFunction.KeyValuePairs)
+            ///////////////////
+            foreach (var keyPair in ladderCollapseFunction.ValidTileData)
             {
                 if (GetInputState != CoRoutineStateCheck.Proceeding)
                 {
-                    //Debug.Log("Action was" + GetInputState);
-                    //thisCharacter.GetComponent<CharacterControllerScript>().OnActionComplete(GetInputState);
                     break;
                 }
                 currentVarirable = keyPair.value;
@@ -191,12 +197,6 @@ public class MoveDictionaryManager : MonoBehaviour
 
                     currentdoActionWithID++;
                 }
-                else if (keyPair.key == LadderCollapseFunctionEnums.SetDataUsingTherorticalPosAtArrayIndex)
-                {
-                    currentSetDataUsingTherorticalPosAtArrayIndex++;
-                    variableNameToData[currentVarirable] = new List<Vector3Int>();
-                    variableNameToData[currentVarirable].Add(theroticalCurrentPos);
-                }
             }
             if (GetInputState == CoRoutineStateCheck.Proceeding)
             {
@@ -230,27 +230,20 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         GetInputState = newState;
     }
-    IEnumerator getInput(ActionInputParams actionInputParams)
+    IEnumerator getInput(Dictionary<Vector3Int, List<List<Vector3Int>>> ValidPosToShapeData)
     {
-        //Declaring Variables
-        float rangeOfAction = actionInputParams.getRangeOfAction();
-        float magnititudeOfAction = actionInputParams.getMagnititudeOfAction();
-        if (rangeOfAction == 0)
-            Debug.Log(rangeOfAction + " was zero");
-        yield return null;
-        List<Vector3Int> listOfValidtargets = getValidTargetList(actionInputParams, theroticalCurrentPos);
-        List<Vector3Int> listOfPossibleValidTargets = universalCalculator.generateTaxiRangeFromPoint(theroticalCurrentPos, rangeOfAction);
+        //Declaring Variables        
         reticalManager.fromPoint = theroticalCurrentPos;//setting from point
-        reticalManager.reDrawValidTiles(listOfValidtargets, listOfPossibleValidTargets);//this sets the Valid Tiles Overlay
+        reticalManager.reDrawValidTiles(ValidPosToShapeData.Keys.ToList(), ValidPosToShapeData.Keys.ToList());//this sets the Valid Tiles Overlay
         ShouldContinue = false;
 
         List<Vector3Int> tempData = new List<Vector3Int>();
         //SettingUPReticle
-        reticalManager.UpdateReticalInputParams(actionInputParams, listOfValidtargets);
+        reticalManager.UpdateReticalInputParams(reticalManager.ValidPosToShapeData);
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
         {
-            tryHere = characterCS.getTarget(actionInputParams);
+            tryHere = characterCS.getTarget(ValidPosToShapeData.Keys.ToList());
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
 
@@ -330,134 +323,39 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             return false;
         }
-
     }
-    public bool CheckIfTargetis(Vector3Int checkPos, ValidTargets validTargets)
+    public List<Vector3Int> generateAreaForTileToEffectPair(TileToEffectPair tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
     {
-        ValidTargets requitedCondtion = validTargets;
-        if (mapManager.cellDataDir.ContainsKey(checkPos))
-        {
-            if (requitedCondtion == ValidTargets.Empty)
-            {
-                return !mapManager.isCellHoldingCharacer(checkPos);
-            }
-            else if (mapManager.isCellHoldingCharacer(checkPos))
-            {
-                string faction = mapManager.cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
-                string factionOfCaster = thisCharacter.GetComponent<CharacterControllerScript>().faction;
-                //Debug.Log("Checking Factions between " + faction + " and " + factionOfCaster + " for condition " + requitedCondtion);
-                //Debug.Log(faction == factionOfCaster);
-                switch (requitedCondtion)
-                {
-                    case ValidTargets.AnyFaction:
-                        {
-                            return true;
-                        }
-                    case ValidTargets.Enemies:
-                        {
-                            if (factionOfCaster != faction)
-                                return true;
-                            else
-                                return false;
-                        }
-                    case ValidTargets.Allies:
-                        {
-                            if (factionOfCaster == faction)
-                                return true;
-                            else
-                                return false;
-                        }
+        var output = GlobalCal.generateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.getRangeOfAction());
+        output = mapManager.filterListWithTileRequirements(fromPoint, output, tileToEffectPair.TileRequirements);
+        output = mapManager.filterListWithWalkRequirements(fromPoint, output, characterCS.canWalkOn);
+        output = CheckVectorValidity(fromPoint, output, tileToEffectPair.targetType);
 
-                }
-            }
-        }
-        return false;
-    }
-    public List<Vector3Int> getValidTargetList(ActionInputParams action, Vector3Int fromPoint, bool ignoreCharacters = false, List<Vector3Int> ignoreConditionsForPos = null)
-    {
-        float rangeOfAction;
-        rangeOfAction = action.getRangeOfAction();
-        List<Vector3Int> listOfRanges = universalCalculator.generateTaxiRangeFromPoint(fromPoint, rangeOfAction);
-        listOfRanges = universalCalculator.SortListAccordingtoDistanceFromPoint(listOfRanges, fromPoint);//Sorts Points Accoding to Distance
-        //List<Vector3Int> listOfRanges = universalCalculator.generateDirectionalRange(centerPos, rangeOfAction, universalCalculator.generate9WayReffence());
-
-        bool checkWalkability = true;
-        bool requireCharacter = false;
-        bool reverseRequireCharacterCondiditon = false;
-        if (action.ignoreValidTargetsCheck)
-        {
-            checkWalkability = false;
-            requireCharacter = false;
-        }
-        else if (action.validTargets == ValidTargets.Empty)
-        {
-            requireCharacter = true;
-            reverseRequireCharacterCondiditon = true;
-        }
-        else// if (action.validTileType == ValidTileType.UnitTargeted)
-        {
-            requireCharacter = true;
-        }
-        if (ignoreCharacters)
-        {
-            requireCharacter = false;
-            reverseRequireCharacterCondiditon = false;
-        }
-        if (!action.includeSelf)
-        {
-            listOfRanges.Remove(fromPoint);
-        }
-        //The Following Removes Invalid Tiles
-        CheckTileValidity();
-        CheckVectorValidity();
-        if (action.includeSelf && !listOfRanges.Contains(fromPoint))
-        {
-            listOfRanges.Add(fromPoint);
-            //Debug.Log("ForceAddedSelf");
-        }
-        return listOfRanges;
-        void CheckVectorValidity()
+        return output;
+        List<Vector3Int> CheckVectorValidity(Vector3Int fromPoint, List<Vector3Int> listOfRanges, TargetType targetType)
         {
             //Direction and Distance are very Important Check For those if you are having problems
             var normalizedDirectionToTilePos = universalCalculator.DirectionToCellSnapData(fromPoint, listOfRanges);
             var listOfVectorRanges = new List<Vector3Int>();
-            if (action.targetType == TargetType.AnyValid)
+            if (targetType == TargetType.AnyValid)
             {
-                listOfVectorRanges = listOfRanges;
+                return listOfRanges;
             }
             else
                 foreach (var direction in normalizedDirectionToTilePos)
                 {
-                    if (action.targetType == TargetType.FirstValid)
+                    if (targetType == TargetType.FirstValid)
                     {
                         listOfVectorRanges.Add(direction.Value.First());
                     }
-                    else if (action.targetType == TargetType.LastValid)
+                    else if (targetType == TargetType.LastValid)
                     {
                         listOfVectorRanges.Add(direction.Value.Last());
                     }
                 }
             listOfRanges = listOfVectorRanges;
+            return listOfRanges;
 
-        }
-        void CheckTileValidity()
-        {
-            List<Vector3Int> removedTiles = new List<Vector3Int>();
-            for (int i = listOfRanges.Count - 1; i >= 0; i--)
-            {
-                bool requireCharacterCondition = requireCharacter ? mapManager.isCellHoldingCharacer(listOfRanges[i]) : true;
-                if (reverseRequireCharacterCondiditon)
-                {
-                    requireCharacterCondition = !requireCharacterCondition;
-                }
-
-                if (!requireCharacterCondition || (checkWalkability && !mapManager.checkAtPosIfCharacterCanWalk(listOfRanges[i], characterCS)))
-                {
-                    if (ignoreConditionsForPos != null && ignoreConditionsForPos.Contains(listOfRanges[i]))
-                        continue;
-                    listOfRanges.RemoveAt(i);
-                }
-            }
         }
     }
 }

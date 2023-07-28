@@ -77,19 +77,19 @@ public class InGameUI : MonoBehaviour
     {
         Tip.text = tip;
     }
-    public void MakeButtonsFromLadderCollapseFunction(List<LadderCollapseFunction> list)
+    public void MakeButtonsFromLadderCollapseFunction(List<AbilityData> list)
     {
         ClearButtons();
         for (int i = 0; i < list.Count; i++)
         {
-            LadderCollapseFunction ladderCollapseFunction = list[i];
-            Action newAction = delegate { GameEvents.current.moveDictionaryManager.doAction(ladderCollapseFunction); };
+            AbilityData abilityData = list[i];
+            Action newAction = delegate { GameEvents.current.moveDictionaryManager.doAction(abilityData); };
 
             if (i >= actionsAssigned.Count)
             { actionsAssigned.Add(newAction); }
             else
                 actionsAssigned[i] = newAction;
-            addButton(ladderCollapseFunction.Name, actionsAssigned[i]);
+            addButton(abilityData.name, actionsAssigned[i]);
         }
         if (endTurn == null)
         {

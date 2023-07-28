@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ab93a51d0892748aab9e0ef19a9c93, type: 3}
   m_Name: AxeArea
   m_EditorClassIdentifier: 
-  validTargersForThesePoints: 2
-  areaOfEffectType: 3
-  effectAppliedOnTiles:
-    typeOfAction: 0
-    doActionTillKeyFrameAnimation: 0
-    animationMovementType: 0
-    loopType: 0
+  minpoints: 1
+  MaxPoints: 1
+  sortFromPoint: 1
+  TileRequirements: 1
+  areaOfEffectRange: 15
+  areaOfEffectStyle: 1

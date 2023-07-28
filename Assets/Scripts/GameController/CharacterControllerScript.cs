@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -239,12 +240,13 @@ public class CharacterControllerScript : MonoBehaviour
         Debug.LogError("Fata error");
         return Vector3Int.zero;
     }
-    public Vector3Int getTarget(ActionInputParams actionInputParams)
+    public Vector3Int getTarget(AbilityData abilityData)
     //validTargets depends on the action being performed
     {
-        if (actionInputParams.updateTheroticalPos)
+        List<Vector3Int> validTiles = moveDictionaryManager.generateAbiltyPointMap(abilityData, getCharV3Int()).Keys.ToList();
+        if (abilityData.updateTheroticalPos)
         {
-            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), actionInputParams, true);
+            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), abilityData, true);
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
             {
@@ -257,20 +259,19 @@ public class CharacterControllerScript : MonoBehaviour
                 Debug.Log("no Vaid Path Found");
                 return getBasicDirection();
             }
-            if (!moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int()).Contains(chosenPath))
+            if (!validTiles.Contains(chosenPath))
                 return getCharV3Int();
             return chosenPath;
         }
         return getBasicDirection();
         Vector3Int getBasicDirection()
         {
-            List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, getCharV3Int());
             Vector3Int selectedValidTile = universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getUseableTarget()[0])[0];
             return selectedValidTile;
         }
         List<Vector3Int> getUseableTarget()
         {
-            List<Vector3Int> validTiles = moveDictionaryManager.getValidTargetList(actionInputParams, destinationTarget);
+            List<Vector3Int> validTiles = moveDictionaryManager.generateAbiltyPointMap(abilityData, destinationTarget).Keys.ToList();
             validTiles.Remove(destinationTarget);
             if (UserDataManager.SmartPosistioning == false || validTiles.Count == 0)
             {

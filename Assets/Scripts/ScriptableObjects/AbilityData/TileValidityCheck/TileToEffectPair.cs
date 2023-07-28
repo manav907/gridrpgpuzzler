@@ -8,6 +8,13 @@ public class TileToEffectPair : ScriptableObject
     public int MaxPoints = 1;
     public bool sortFromPoint = true;
     public ValidTargets TileRequirements;
+    public TargetType targetType;
     public RangeOfActionEnum areaOfEffectRange;
-    public AoeStyle areaOfEffectStyle;
+    public AoeStyle aoeStyle;
+
+    public float getRangeOfAction()
+    {
+        return (float)areaOfEffectRange / 10;
+    }
+
 }
