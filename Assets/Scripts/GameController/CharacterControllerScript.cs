@@ -32,7 +32,7 @@ public class CharacterControllerScript : MonoBehaviour
     private TurnManager turnManager;
     public AnimationControllerScript animationControllerScript;
     UniversalCalculator universalCalculator;
-    public SerializableDictionary<LadderCollapseFunction, int> abilityToCost;
+    public SerializableDictionary<AbilityData, int> abilityToCost;
     public void InitilizeCharacter(GameObject gameController)
     {
         mapManager = gameController.GetComponent<MapManager>();
@@ -121,7 +121,7 @@ public class CharacterControllerScript : MonoBehaviour
             if (controlCharacter)
             {
                 GameEvents.current.TriggerNextDialog();//Disable this laeter
-                List<LadderCollapseFunction> allAbilities = new List<LadderCollapseFunction>();
+                List<AbilityData> allAbilities = new List<AbilityData>();
                 allAbilities.AddRange(abilityToCost.Keys());
                 GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(allAbilities);
                 turnManager.setCameraPos(getCharV3Int());
@@ -134,20 +134,18 @@ public class CharacterControllerScript : MonoBehaviour
     }
     [SerializeField] Vector3Int destinationTarget;
     int GhostVision = 1;
-    Dictionary<TypeOfAction, List<LadderCollapseFunction>> abilityMap()
+    Dictionary<TypeOfAction, List<AbilityData>> abilityMap()
     {
-        var newDict = new Dictionary<TypeOfAction, List<LadderCollapseFunction>>();
+        var newDict = new Dictionary<TypeOfAction, List<AbilityData>>();
         foreach (var keypair in abilityToCost.KeyValuePairs)
         {
-            //if (keypair.value <= actionPoints)
+            if (!newDict.ContainsKey(keypair.key.Primaryuse))
             {
-                if (!newDict.ContainsKey(keypair.key.primaryUseForAction))
-                {
-                    newDict.Add(keypair.key.primaryUseForAction, new List<LadderCollapseFunction>());
-                }
-                newDict[keypair.key.primaryUseForAction].Add(keypair.key);
-                //Debug.Log(characterName + " Character added " + keypair.key.Name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
+                newDict.Add(keypair.key.Primaryuse, new List<AbilityData>());
             }
+            newDict[keypair.key.Primaryuse].Add(keypair.key);
+            //Debug.Log(characterName + " Character added " + keypair.key.Name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
+
         }
         return newDict;
     }
@@ -158,7 +156,9 @@ public class CharacterControllerScript : MonoBehaviour
         if (actionPoints > 0)
         {
             Vector3Int thisCharpos = getCharV3Int();
-            var VisionList = universalCalculator.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
+            //var VisionList = GlobalCal.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
+            var VisionList = GlobalCal.generateArea(AoeStyle.Square, thisCharpos, thisCharpos, rangeOfVision + GhostVision);
+
             //GhostVision for tracking after leaving Vision
             var targetList = listOfPossibleTargets(VisionList);
             //Debug.LogError("AI Stuf Needs Rework");
@@ -171,20 +171,9 @@ public class CharacterControllerScript : MonoBehaviour
             else
             {
                 destinationTarget = selectOptimalTarget();
-                var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
-                for (int i = 0; i < attackRangeList.Count; i++)
-                {
-                    if (!moveDictionaryManager.CheckIfTargetis(attackRangeList[i], ValidTargets.Enemies))
-                    {
-                        //Debug.Log("Will Remove this Target is not an Enemy");
-                        attackRangeList.Remove(attackRangeList[i]);
-                        i--;
-                    }
-                    else
-                    {
-                        //Debug.Log("This is an Enemy");
-                    }
-                }
+                //var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
+                var attackRangeList = moveDictionaryManager.generateAbiltyPointMap(optionsofAbilities[TypeOfAction.apply_Damage][0], getCharV3Int()).Keys.ToList();
+                attackRangeList = mapManager.filterListWithTileRequirements(getCharV3Int(), attackRangeList, ValidTargets.Enemies);
                 if (attackRangeList.Count > 0)
                 {
                     if (costIndex[optionsofAbilities[TypeOfAction.apply_Damage][0]] <= actionPoints)
@@ -244,7 +233,7 @@ public class CharacterControllerScript : MonoBehaviour
     //validTargets depends on the action being performed
     {
         List<Vector3Int> validTiles = moveDictionaryManager.generateAbiltyPointMap(abilityData, getCharV3Int()).Keys.ToList();
-        if (abilityData.updateTheroticalPos)
+        if (abilityData.Primaryuse == TypeOfAction.apply_SelfMove)
         {
             var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), abilityData, true);
             validPathToObjective.Remove(currentCellPosOfCharcter);

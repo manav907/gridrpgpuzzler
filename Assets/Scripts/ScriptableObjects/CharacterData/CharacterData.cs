@@ -19,7 +19,7 @@ public class CharacterData : ScriptableObject
     public int defaultActionPoints = 1;
     //AI
     public List<GroundFloorType> canWalkOn;
-    public SerializableDictionary<LadderCollapseFunction, int> abilityToCost;
+    public SerializableDictionary<AbilityData, int> abilityToCost;
     public void ReplaceDataWithPreset(CharacterData characterData)
     {
         if (characterData == null)

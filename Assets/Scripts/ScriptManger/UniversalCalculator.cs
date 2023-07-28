@@ -288,6 +288,10 @@ public static class GlobalCal
                 {
                     return getSimpleArc(fromPoint, atPoint, RangeOfAction);
                 }
+            case AoeStyle.Square:
+                {
+                    return generateRangeFromPoint(fromPoint, RangeOfAction);
+                }
         }
         return new List<Vector3Int>();
         List<Vector3Int> getSimpleArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction)

@@ -159,5 +159,6 @@ public enum AoeStyle
     S3x3,
     SSweep,
     SArrow,
-    Taxi
+    Taxi,
+    Square
 }

@@ -322,7 +322,7 @@ public class MapManager : MonoBehaviour
     }
 
     MoveDictionaryManager moveDictionaryManager;
-    public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, AbilityData actionInputParams, bool ignoreCharacters = false)
+    public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, AbilityData abilityData, bool ignoreCharacters = false)
     {
         string AStarDebug = "Starting Astar Navigation from Point " + startPos;
         List<Node> openList = new List<Node>();
@@ -353,7 +353,7 @@ public class MapManager : MonoBehaviour
                 PrintDebug("Path Found");
                 return reconstructPath(currentNode);
             }
-            foreach (Vector3Int neighbourPoint in moveDictionaryManager.getValidTargetList(actionInputParams, currentNode.nodeID, ignoreCharacters, endPos))
+            foreach (Vector3Int neighbourPoint in moveDictionaryManager.generateAbiltyPointMap(abilityData, currentNode.nodeID).Keys.ToList())
             {
                 if (closeList.Contains(neighbourPoint))
                     continue;
