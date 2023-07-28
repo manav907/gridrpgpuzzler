@@ -11,6 +11,7 @@ public class AbilityData : ScriptableObject
     public List<TileToEffectPair> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
 }
+
 [Serializable]
 public class ActionEffectParams
 {

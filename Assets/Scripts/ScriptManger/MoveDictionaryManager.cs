@@ -93,7 +93,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             pointToScannedAreas[point] = list;
         }
-        Debug.Log(abiPointMapString);
+        //Debug.Log(abiPointMapString);
         return pointToScannedAreas;
     }
     public List<Vector3Int> generateAreaWithParams(TileToEffectPair tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)

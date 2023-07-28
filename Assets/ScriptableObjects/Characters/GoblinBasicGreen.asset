@@ -25,7 +25,5 @@ MonoBehaviour:
   canWalkOn: 0100000002000000
   abilityToCost:
     KeyValuePairs:
-    - key: {fileID: 11400000, guid: 66fdce11573df53408f7129337c08d7d, type: 2}
-      value: 2
-    - key: {fileID: 11400000, guid: 66fdce11573df53408f7129337c08d7d, type: 2}
+    - key: {fileID: 11400000, guid: 1bcf15e4717f9a241af089f559ba55bd, type: 2}
       value: 2
