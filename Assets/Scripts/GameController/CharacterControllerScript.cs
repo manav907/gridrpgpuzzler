@@ -128,7 +128,7 @@ public class CharacterControllerScript : MonoBehaviour
             }
             else
             {
-                determineAction();
+                //determineAction();
             }
         }
     }

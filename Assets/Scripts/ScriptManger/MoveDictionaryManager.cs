@@ -22,7 +22,7 @@ public class MoveDictionaryManager : MonoBehaviour
     [Header("Debug Data")]
     public bool ControlAI = false;
 
-    bool ShouldContinue;
+    bool ShouldContinue = false;
     public void setVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
@@ -75,168 +75,41 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         GameEvents.current.inGameUI.setTip(Tip);
     }
-    [SerializeField] string currentAbiltyName;
+    string abiPointMapString = "";
     public Dictionary<Vector3Int, List<List<Vector3Int>>> generateAbiltyPointMap(AbilityData abilityData, Vector3Int fromPoint)
     {
-        var pointsToScan = generateAreaForTileToEffectPair(abilityData.AreaOfAbility, fromPoint, fromPoint);
+        abiPointMapString = "";
+        var pointsToScan = generateAreaWithParams(abilityData.AreaOfAbility, fromPoint, fromPoint);
         Dictionary<Vector3Int, List<List<Vector3Int>>> pointToScannedAreas = new Dictionary<Vector3Int, List<List<Vector3Int>>>();
         foreach (Vector3Int point in pointsToScan)
         {
             List<List<Vector3Int>> list = new List<List<Vector3Int>>();
             foreach (TileToEffectPair TileDataPair in abilityData.ValidTileData)
             {
-                list.Add(generateAreaForTileToEffectPair(TileDataPair, fromPoint, point));
+                list.Add(generateAreaWithParams(TileDataPair, fromPoint, point));
             }
             pointToScannedAreas[point] = list;
         }
+        //Debug.Log(abiPointMapString);
+
+        //Debug.Log(pointToScannedAreas.ContainsKey(new Vector3Int(-1, 4)));
         return pointToScannedAreas;
     }
-    public AbilityData currnetAbility;
-    public void doAction(AbilityData abilityData)
+    public List<Vector3Int> generateAreaWithParams(TileToEffectPair tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
     {
-        currentAbiltyName = abilityData.name;
-
-        int costOfaction = abilityData.costOfaction;
-        if (characterCS.actionPoints < costOfaction)
-        {
-            addToolTip("The Ability " + currentAbiltyName + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
-            return;
-        }
-        if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
-            Debug.Log("Great Erros");
-        var pointMap = generateAbiltyPointMap(abilityData, characterCS.getCharV3Int());
-        if (pointMap.Keys.Count == 0)
-        {
-            addToolTip("The Ability " + currentAbiltyName + " cannot be used as No Valid Tilees");
-            Debug.Log("No Valid Tilees");
-            return;
-        }
-        currnetAbility = abilityData;
-        reticalManager.UpdateReticalInputParams(pointMap);
-        setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
-        StartCoroutine(SequenceOfEvents());
-        IEnumerator SequenceOfEvents()
-        {
-            yield return StartCoroutine(getInput(pointMap.Keys.ToList()));
-            if (pointMap.ContainsKey(tryHere))
-                for (int i = 0; i < abilityData.ApplyEffects.Count; i++)
-                {
-                    yield return StartCoroutine(AnimationCoRoutione(pointMap[tryHere][i], abilityData.ApplyEffects[i], characterCS.getCharV3Int(), tryHere));
-                }
-            else
-                setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
-
-            if (GetInputState == CoRoutineStateCheck.Proceeding)
-            {
-                characterCS.actionPoints = characterCS.actionPoints - costOfaction;
-                if (characterCS.doActionPointsRemainAfterAbility())
-                    characterCS.BeginThisCharacterTurn();
-                else
-                {
-                    turnManager.endTurn();
-                }
-                //abilityNameToAction[TypeOfAction.apply_TryEndTurn]();
-                ///Debug.LogError("Hey End Turn is Disableed");
-            }
-            yield return null;
-        }
-    }
-    List<List<Vector3Int>> listOfPointsForCompundAction;
-    CoRoutineStateCheck GetInputState;
-    void setGetInputCoRoutineState(CoRoutineStateCheck newState)
-    {
-        if (newState == CoRoutineStateCheck.Misinput)
-        {
-            if (GetInputState == CoRoutineStateCheck.Aborting)
-            {
-                newState = CoRoutineStateCheck.Aborting;
-            }
-        }
-        if (newState != CoRoutineStateCheck.Waiting)
-        {
-            // Debug.Log(newState);
-        }
-        GetInputState = newState;
-    }
-    IEnumerator getInput(List<Vector3Int> validInputs)
-    {
-        //Declaring Variables        
-        reticalManager.reDrawValidTiles(validInputs, validInputs);//this sets the Valid Tiles Overlay
-        ShouldContinue = false;
-        //Executing Script
-        if (!characterCS.controlCharacter)//if Non Player Character
-        {
-            tryHere = characterCS.getTarget(currnetAbility);
-            ShouldContinue = true;
-            yield return new WaitForSeconds(UserDataManager.waitAI);
-
-        }
-        else//if it is the player character
-        {
-            addToolTip("Select Purple Tile To Contine with  " + currentAbiltyName + " Or Right Click to Cancel");
-            setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
-            yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
-            tryHere = (reticalManager.getMovePoint());
-        }
-        if (CheckMovePoint())//if Getting tryHere was at a Valid Tile
-        {
-            setGetInputCoRoutineState(CoRoutineStateCheck.Proceeding);
-        }
-        else
-        {
-            setGetInputCoRoutineState(CoRoutineStateCheck.Misinput);
-        }
-        reticalManager.reDrawValidTiles(new List<Vector3Int>(), new List<Vector3Int>());
-        reticalManager.ResetReticalInputParams();
-        //Methods
-        bool CheckContinue()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                addToolTip("Select an Button To Perform an Action");
-                setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
-                ShouldContinue = true;
-                return true;
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                addToolTip(currentAbiltyName + " Cancelled; Select an Button To Perform an Action");
-                setGetInputCoRoutineState(CoRoutineStateCheck.Aborting);
-                ShouldContinue = false;
-                return true;
-            }
-            setGetInputCoRoutineState(CoRoutineStateCheck.Waiting);
-            return false;
-        }
-        bool CheckMovePoint()
-        {
-            if (ShouldContinue && validInputs.Contains(tryHere))
-            {
-                return true;
-            }
-            if (!characterCS.controlCharacter)
-            {
-                Debug.LogError("AI Exception");
-                turnManager.endTurn();
-            }
-            return false;
-        }
-    }
-    public List<Vector3Int> generateAreaForTileToEffectPair(TileToEffectPair tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
-    {
-        string TestDebugString = "Creating Area For " + tileToEffectPair + " with AoeStyle" + tileToEffectPair.aoeStyle;
+        abiPointMapString += "   " + "Creating Area For " + tileToEffectPair + " with AoeStyle" + tileToEffectPair.aoeStyle + ":  ";
         var output = GlobalCal.generateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.getRangeOfAction());
         PrintOutputStatus();
         //output = mapManager.filterListWithTileRequirements(fromPoint, output, tileToEffectPair.TileRequirements);
         //output = mapManager.filterListWithWalkRequirements(fromPoint, output, characterCS.canWalkOn);
         //output = CheckVectorValidity(fromPoint, output, tileToEffectPair.targetType);
-        Debug.Log(TestDebugString);
+        //Debug.Log(TestDebugString);
         return output;
         void PrintOutputStatus()
         {
-            //TestDebugString += "\n " + output.Count;
             foreach (var point in output)
-                TestDebugString += "\n      :" + point;
+                abiPointMapString += ", " + point;
+            abiPointMapString += "\n";
         }
         List<Vector3Int> CheckVectorValidity(Vector3Int fromPoint, List<Vector3Int> listOfRanges, TargetType targetType)
         {
@@ -264,6 +137,102 @@ public class MoveDictionaryManager : MonoBehaviour
 
         }
     }
+    public AbilityData currnetAbility;
+    public void doAction(AbilityData abilityData)
+    {
+        int costOfaction = abilityData.costOfaction;
+        if (characterCS.actionPoints < costOfaction)
+        {
+            addToolTip("The Ability " + currnetAbility.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
+            return;
+        }
+        if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
+            Debug.Log("Great Erros");
+        var pointMap = generateAbiltyPointMap(abilityData, characterCS.getCharV3Int());
+        Debug.Log(pointMap.ContainsKey(new Vector3Int(-1,-4)));
+        if (pointMap.Keys.Count == 0)
+        {
+            addToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
+            Debug.Log("No Valid Tilees");
+            return;
+        }
+        currnetAbility = abilityData;
+        reticalManager.UpdateReticalInputParams(pointMap);
+        StartCoroutine(SequenceOfEvents());
+        IEnumerator SequenceOfEvents()
+        {
+            yield return StartCoroutine(getInput(pointMap.Keys.ToList()));
+            if (ShouldContinue)
+            {
+                characterCS.actionPoints = characterCS.actionPoints - costOfaction;//Consume Ability Point
+                List<List<Vector3Int>> ListOfListPointToEffect = pointMap[tryHere];
+                for (int i = 0; i < abilityData.ApplyEffects.Count; i++)
+                {
+                    yield return StartCoroutine(AnimationCoRoutione(ListOfListPointToEffect[i], abilityData.ApplyEffects[i], characterCS.getCharV3Int(), tryHere));
+                }
+            }
+            ShouldContinue = false;
+            if (characterCS.doActionPointsRemainAfterAbility())
+                characterCS.BeginThisCharacterTurn();
+            else
+            {
+                turnManager.endTurn();
+            }
+            yield return null;
+        }
+    }
+    IEnumerator getInput(List<Vector3Int> validInputs)
+    {
+        //Declaring Variables        
+        reticalManager.reDrawValidTiles(validInputs, validInputs);//this sets the Valid Tiles Overlay
+        ShouldContinue = false;
+        //Executing Script
+        if (!characterCS.controlCharacter)//if Non Player Character
+        {
+            tryHere = characterCS.getTarget(currnetAbility);
+            ShouldContinue = true;
+            yield return new WaitForSeconds(UserDataManager.waitAI);
+        }
+        else//if it is the player character
+        {
+            addToolTip("Select Purple Tile To Contine with  " + currnetAbility.name + " Or Right Click to Cancel");
+            yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
+            tryHere = (reticalManager.getMovePoint());
+        }
+        if (ShouldContinue && validInputs.Contains(tryHere))
+        {
+            //this is fine
+        }
+        else
+        {
+            ShouldContinue = false;
+            if (!characterCS.controlCharacter)
+            {
+                Debug.LogError("AI Exception");
+                turnManager.endTurn();
+            }
+        }
+        reticalManager.reDrawValidTiles(new List<Vector3Int>(), new List<Vector3Int>());
+        reticalManager.ResetReticalInputParams();
+        //Methods
+        bool CheckContinue()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                addToolTip("Select an Button To Perform an Action");
+                ShouldContinue = true;
+                return true;
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                addToolTip(currnetAbility.name + " Cancelled; Select an Button To Perform an Action");
+                ShouldContinue = false;
+                return true;
+            }
+            return false;
+        }
+    }
+
     IEnumerator AnimationCoRoutione(List<Vector3Int> points, ActionEffectParams actionEffectParams, Vector3Int fromPoint, Vector3Int atPoint)
     {
         float startTime = Time.time;

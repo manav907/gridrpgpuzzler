@@ -71,13 +71,14 @@ public class ReticalManager : MonoBehaviour
     }
     public void ResetReticalInputParams()
     {
-        ValidPosToShapeData.Clear();
+        //ValidPosToShapeData.Clear();
+        ValidPosToShapeData = new Dictionary<Vector3Int, List<List<Vector3Int>>>();
         ClearAllTiles(validReticalTilesTilemap);
     }
     public Dictionary<Vector3Int, List<List<Vector3Int>>> ValidPosToShapeData;
     public void UpdateReticalInputParams(Dictionary<Vector3Int, List<List<Vector3Int>>> ValidTiles)
     {
-        ValidPosToShapeData.Clear();
+        //ValidPosToShapeData.Clear();
         ValidPosToShapeData = ValidTiles;
     }
     List<List<Vector3Int>> selectShape(Vector3Int currentMovePoint)
