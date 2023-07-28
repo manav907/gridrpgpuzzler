@@ -45,10 +45,11 @@ public enum RangeOfActionEnum
 }
 public enum ValidTargets
 {
-    Empty,
-    AnyFaction,
-    Enemies,
-    Allies,
+    AnyValidOrInValid = 0,
+    Empty = 1,
+    AnyFaction = 2,
+    Enemies = 3,
+    Allies = 4,
     Neutral,
-    AnyValidOrInValid
+
 }

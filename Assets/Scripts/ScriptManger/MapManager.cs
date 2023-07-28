@@ -287,7 +287,7 @@ public class MapManager : MonoBehaviour
             if (cellDataDir.ContainsKey(checkPos))
                 if (validTargets == ValidTargets.Empty)
                     return !isCellHoldingCharacer(checkPos);
-                else
+                else if (isCellHoldingCharacer(checkPos))
                 {
                     string faction = cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
                     string factionOfCaster = castingCharacter.faction;

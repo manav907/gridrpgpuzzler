@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87ab93a51d0892748aab9e0ef19a9c93, type: 3}
-  m_Name: 8WayDirectionalEmpty
+  m_Name: 8WayDirectionalAnyFaction
   m_EditorClassIdentifier: 
   TileRequirements: 0
   targetType: 0

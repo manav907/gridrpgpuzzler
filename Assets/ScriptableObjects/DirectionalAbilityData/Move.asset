@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Primaryuse: 0
   costOfaction: 0
-  AreaOfAbility: {fileID: 0}
-  ValidTileData: []
-  ApplyEffects: []
+  AreaOfAbility: {fileID: 11400000, guid: 76d924e5860d01948b0f057a03e6ce14, type: 2}
+  ValidTileData:
+  - {fileID: 11400000, guid: 000da2a30172a5e4fa3141620ec2055e, type: 2}
+  ApplyEffects:
+  - typeOfAction: 2
+    OnlyApplyOn: 0
+    doActionTillKeyFrameAnimation: 0
+    animationMovementType: 2
+    loopType: 0

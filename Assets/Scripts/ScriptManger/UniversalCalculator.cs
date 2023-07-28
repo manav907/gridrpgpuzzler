@@ -287,7 +287,8 @@ public static class GlobalCal
                 }
             case AoeStyle.SSweep:
                 {
-                    return getSimpleArc(fromPoint, atPoint, RangeOfAction);
+                    return generateComplexArc(fromPoint, atPoint, RangeOfAction);
+                    //return generateComplexArc(atPoint, fromPoint, RangeOfAction);
                 }
             case AoeStyle.Square:
                 {
@@ -300,7 +301,7 @@ public static class GlobalCal
         }
         Debug.LogError("Aoe Style Not Found");
         return new List<Vector3Int>();
-        List<Vector3Int> getSimpleArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction)
+        /* List<Vector3Int> getSimpleArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction)
         {
             var retiacalTiles = new List<Vector3Int>();
             Vector3Int direction = getNormalizedDirection(atPoint, fromPoint);
@@ -350,7 +351,7 @@ public static class GlobalCal
             retiacalTiles.Add(second);
             retiacalTiles.Add(direction);
             return retiacalTiles;
-        }
+        } */
         List<Vector3Int> generateComplexArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction, bool doAxeCheck = true)
         {
             var arcTiles = new List<Vector3Int>();

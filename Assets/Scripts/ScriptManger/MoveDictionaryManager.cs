@@ -48,11 +48,14 @@ public class MoveDictionaryManager : MonoBehaviour
 
         void apply_Damage()
         {
-            CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
-            CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-            targetCharacter.health -= attackingCharacter.attackDamage;
-            checkCharacters(targetCharacter);
-            GameEvents.current.PlaySound(0);
+            if (mapManager.cellDataDir[tryHere].characterAtCell != null)
+            {
+                CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+                CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
+                targetCharacter.health -= attackingCharacter.attackDamage;
+                checkCharacters(targetCharacter);
+                GameEvents.current.PlaySound(0);
+            }
         }
         void apply_Heal()
         {
@@ -90,20 +93,17 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             pointToScannedAreas[point] = list;
         }
-        //Debug.Log(abiPointMapString);
-
-        //Debug.Log(pointToScannedAreas.ContainsKey(new Vector3Int(-1, 4)));
+        Debug.Log(abiPointMapString);
         return pointToScannedAreas;
     }
     public List<Vector3Int> generateAreaWithParams(TileToEffectPair tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
     {
         abiPointMapString += "   " + "Creating Area For " + tileToEffectPair + " with AoeStyle" + tileToEffectPair.aoeStyle + ":  ";
         var output = GlobalCal.generateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.getRangeOfAction());
-        PrintOutputStatus();
-        //output = mapManager.filterListWithTileRequirements(fromPoint, output, tileToEffectPair.TileRequirements);
+        output = mapManager.filterListWithTileRequirements(fromPoint, output, tileToEffectPair.ShowCastOn);
         //output = mapManager.filterListWithWalkRequirements(fromPoint, output, characterCS.canWalkOn);
         //output = CheckVectorValidity(fromPoint, output, tileToEffectPair.targetType);
-        //Debug.Log(TestDebugString);
+        PrintOutputStatus();
         return output;
         void PrintOutputStatus()
         {
@@ -149,7 +149,6 @@ public class MoveDictionaryManager : MonoBehaviour
         if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
             Debug.Log("Great Erros");
         var pointMap = generateAbiltyPointMap(abilityData, characterCS.getCharV3Int());
-        Debug.Log(pointMap.ContainsKey(new Vector3Int(-1,-4)));
         if (pointMap.Keys.Count == 0)
         {
             addToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
@@ -235,6 +234,8 @@ public class MoveDictionaryManager : MonoBehaviour
 
     IEnumerator AnimationCoRoutione(List<Vector3Int> points, ActionEffectParams actionEffectParams, Vector3Int fromPoint, Vector3Int atPoint)
     {
+        points = mapManager.filterListWithTileRequirements(fromPoint, points, actionEffectParams.OnlyApplyOn);
+
         float startTime = Time.time;
         float lastTime = Time.time;
         debugTime(false);

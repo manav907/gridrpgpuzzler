@@ -16,7 +16,7 @@ MonoBehaviour:
   costOfaction: 0
   AreaOfAbility: {fileID: 11400000, guid: 4a0a1dacf93f0154190e30b6203b3c17, type: 2}
   ValidTileData:
-  - {fileID: 11400000, guid: 4a0a1dacf93f0154190e30b6203b3c17, type: 2}
+  - {fileID: 11400000, guid: 2021bc784c969f4429324227fcaabb4f, type: 2}
   ApplyEffects:
   - typeOfAction: 0
     OnlyApplyOn: 0
