@@ -87,7 +87,7 @@ public class MoveDictionaryManager : MonoBehaviour
         foreach (Vector3Int point in pointsToScan)
         {
             List<List<Vector3Int>> list = new List<List<Vector3Int>>();
-            foreach (TileToEffectPair TileDataPair in abilityData.ValidTileData)
+            foreach (AreaGenerationParams TileDataPair in abilityData.ValidTileData)
             {
                 list.Add(generateAreaWithParams(TileDataPair, fromPoint, point));
             }
@@ -96,12 +96,12 @@ public class MoveDictionaryManager : MonoBehaviour
         //Debug.Log(abiPointMapString);
         return pointToScannedAreas;
     }
-    public List<Vector3Int> generateAreaWithParams(TileToEffectPair tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
+    public List<Vector3Int> generateAreaWithParams(AreaGenerationParams tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
     {
         abiPointMapString += "   " + "Creating Area For " + tileToEffectPair + " with AoeStyle" + tileToEffectPair.aoeStyle + ":  ";
         var output = GlobalCal.generateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.getRangeOfAction());
-        output = mapManager.filterListWithTileRequirements(output, characterCS, tileToEffectPair.ShowCastOn);
-        output = mapManager.filterListWithWalkRequirements(output, characterCS.canWalkOn);
+        output = mapManager.filterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
+        output = mapManager.filterListWithWalkRequirements(output, tileToEffectPair.tileValidityParms.validFloors);
         //output = CheckVectorValidity(fromPoint, output, tileToEffectPair.targetType);
         PrintOutputStatus();
         return output;
@@ -134,12 +134,12 @@ public class MoveDictionaryManager : MonoBehaviour
                 }
             listOfRanges = listOfVectorRanges;
             return listOfRanges;
-
         }
     }
     public AbilityData currnetAbility;
     public void doAction(AbilityData abilityData)
     {
+        currnetAbility = abilityData;
         int costOfaction = characterCS.abilityToCost.returnDict()[abilityData];
         if (characterCS.actionPoints < costOfaction)
         {
@@ -155,7 +155,6 @@ public class MoveDictionaryManager : MonoBehaviour
             Debug.Log("No Valid Tilees");
             return;
         }
-        currnetAbility = abilityData;
         reticalManager.UpdateReticalInputParams(pointMap);
         StartCoroutine(SequenceOfEvents());
         IEnumerator SequenceOfEvents()
@@ -199,9 +198,7 @@ public class MoveDictionaryManager : MonoBehaviour
             tryHere = (reticalManager.getMovePoint());
         }
         if (ShouldContinue && validInputs.Contains(tryHere))
-        {
-            //this is fine
-        }
+        {            /* this is fine */        }
         else
         {
             ShouldContinue = false;
@@ -266,14 +263,11 @@ public class MoveDictionaryManager : MonoBehaviour
                 Vector3 direction = (point2 - point1).normalized;  // Calculate the direction between the points
                 Vector3 midPoint = point1 + direction * distanceFactor * Vector3.Distance(point1, point2);
                 targetLocation = midPoint;
-
-
             }
             else if (animationMovementType == AnimationMovementType.NoMovement)
             {
                 targetLocation = fromPoint;
             }
-
             yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));
             yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
 
@@ -296,13 +290,10 @@ public class MoveDictionaryManager : MonoBehaviour
             if (animationLoopType == AnimationLoopType.forEachPoint)
                 yield return StartCoroutine(animationActionFunction());
             abilityNameToAction[actiontype]();//The Actual Action
-
         }
         yield return afterAnimationOfAction();
     }
 }
-
-
 public enum CoRoutineStateCheck
 {
     Waiting,

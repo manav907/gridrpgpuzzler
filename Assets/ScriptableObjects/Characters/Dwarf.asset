@@ -21,7 +21,7 @@ MonoBehaviour:
   attackDamage: 1
   speedValue: 7
   rangeOfVision: 5
-  defaultActionPoints: 1
+  defaultActionPoints: 2
   canWalkOn: 01000000
   abilityToCost:
     KeyValuePairs:

@@ -10,40 +10,26 @@ public class ReticalManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     TurnManager turnManager;
 
-    [Header("Retical Shape")]
-    public AbilityData actionInputParams;
-
-    [Header("Retical References")]
+    [Header("Cursor References")]
     [SerializeField] Vector3 reticalPos;
     [SerializeField] Vector3 lastMovePoint;
-    [Header("Grid References")]
-    public Tilemap Grid;
 
     [Header("Retical Tilemap Reffrences")]
     [SerializeField] TileBase reticalTile;
+    [SerializeField] Tilemap Grid;
     [SerializeField] Tilemap validReticalTilesTilemap;
-    void reDrawReticalTiles(List<Vector3Int> validReticalTiles)
-    {
-        reDrawTiles(validReticalTiles, validReticalTilesTilemap, reticalTile);
-    }
-    [Header("Valid Tilemap References")]
-    [SerializeField] private Tilemap validTilesTileMap;
-    public void reDrawValidTiles(List<Vector3Int> validTilesList, List<Vector3Int> possibleValidTilesList)
-    {
-        reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
-        reDrawTiles(possibleValidTilesList, GhostTiles, reticalTile);
-    }
+    [SerializeField] Tilemap validTilesTileMap;
     [SerializeField] private Tilemap GhostTiles;
-    public void setVariables()
-    {
-        universalCalculator = this.GetComponent<UniversalCalculator>();
-        turnManager = GetComponent<TurnManager>();
-    }
     void Start()
     {
         ValidPosToShapeData = new Dictionary<Vector3Int, List<List<Vector3Int>>>();
         lastMovePoint = getMovePoint();
         ResetReticalInputParams();
+    }
+    public void setVariables()
+    {
+        universalCalculator = this.GetComponent<UniversalCalculator>();
+        turnManager = GetComponent<TurnManager>();
     }
     void FixedUpdate()
     {
@@ -108,6 +94,16 @@ public class ReticalManager : MonoBehaviour
 
     }
     //Tile Stuff
+    void reDrawReticalTiles(List<Vector3Int> validReticalTiles)
+    {
+        reDrawTiles(validReticalTiles, validReticalTilesTilemap, reticalTile);
+    }
+
+    public void reDrawValidTiles(List<Vector3Int> validTilesList, List<Vector3Int> possibleValidTilesList)
+    {
+        reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
+        reDrawTiles(possibleValidTilesList, GhostTiles, reticalTile);
+    }
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles
     {
         //foreach (Vector3Int pos in range) { thistilemap.SetTile(pos, thistile); }

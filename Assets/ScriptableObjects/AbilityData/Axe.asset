@@ -13,15 +13,12 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   Primaryuse: 0
-  costOfaction: 0
   AreaOfAbility:
-    ShowCastOn: 0
-    targetType: 0
+    tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
     areaOfEffectRange: 15
     aoeStyle: 4
   ValidTileData:
-  - ShowCastOn: 0
-    targetType: 0
+  - tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
     areaOfEffectRange: 15
     aoeStyle: 2
   ApplyEffects:

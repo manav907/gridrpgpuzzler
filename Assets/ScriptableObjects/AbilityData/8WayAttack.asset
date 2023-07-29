@@ -14,13 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Primaryuse: 0
   AreaOfAbility:
-    ShowCastOn: 3
-    targetType: 0
+    tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     areaOfEffectRange: 15
     aoeStyle: 4
   ValidTileData:
-  - ShowCastOn: 2
-    targetType: 0
+  - tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     areaOfEffectRange: 15
     aoeStyle: 0
   ApplyEffects:

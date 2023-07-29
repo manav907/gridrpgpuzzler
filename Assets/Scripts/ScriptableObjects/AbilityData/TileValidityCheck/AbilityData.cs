@@ -6,18 +6,18 @@ using UnityEngine;
 public class AbilityData : ScriptableObject
 {
     public TypeOfAction Primaryuse;
-    public TileToEffectPair AreaOfAbility;
-    public List<TileToEffectPair> ValidTileData;
+    public AreaGenerationParams AreaOfAbility;
+    public List<AreaGenerationParams> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
 }
+
 [Serializable]
-public class TileToEffectPair
+public class AreaGenerationParams
 {
     //public int minpoints = 1;
     //public int MaxPoints = 1;
     //public bool sortFromPoint = true;
-    public ValidTargets ShowCastOn;
-    public TargetType targetType;
+    public TileValidityParms tileValidityParms;
     public RangeOfActionEnum areaOfEffectRange;
     public AoeStyle aoeStyle;
 
