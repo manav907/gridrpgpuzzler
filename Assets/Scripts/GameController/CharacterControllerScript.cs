@@ -128,7 +128,7 @@ public class CharacterControllerScript : MonoBehaviour
             }
             else
             {
-                //determineAction();
+                determineAction();
             }
         }
     }
@@ -144,7 +144,7 @@ public class CharacterControllerScript : MonoBehaviour
                 newDict.Add(keypair.key.Primaryuse, new List<AbilityData>());
             }
             newDict[keypair.key.Primaryuse].Add(keypair.key);
-            //Debug.Log(characterName + " Character added " + keypair.key.Name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
+            //Debug.Log(characterName + " Character added " + keypair.key.name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
 
         }
         return newDict;
@@ -173,7 +173,7 @@ public class CharacterControllerScript : MonoBehaviour
                 destinationTarget = selectOptimalTarget();
                 //var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
                 var attackRangeList = moveDictionaryManager.generateAbiltyPointMap(optionsofAbilities[TypeOfAction.apply_Damage][0], getCharV3Int()).Keys.ToList();
-                attackRangeList = mapManager.filterListWithTileRequirements(getCharV3Int(), attackRangeList, ValidTargets.Enemies);
+                attackRangeList = mapManager.filterListWithTileRequirements(attackRangeList, this, ValidTargets.Enemies);
                 if (attackRangeList.Count > 0)
                 {
                     if (costIndex[optionsofAbilities[TypeOfAction.apply_Damage][0]] <= actionPoints)

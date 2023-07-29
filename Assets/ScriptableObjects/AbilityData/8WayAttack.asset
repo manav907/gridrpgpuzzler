@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 8WayAttack
   m_EditorClassIdentifier: 
   Primaryuse: 0
-  costOfaction: 0
   AreaOfAbility:
-    ShowCastOn: 0
+    ShowCastOn: 3
     targetType: 0
     areaOfEffectRange: 15
     aoeStyle: 4

@@ -100,8 +100,8 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         abiPointMapString += "   " + "Creating Area For " + tileToEffectPair + " with AoeStyle" + tileToEffectPair.aoeStyle + ":  ";
         var output = GlobalCal.generateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.getRangeOfAction());
-        output = mapManager.filterListWithTileRequirements(fromPoint, output, tileToEffectPair.ShowCastOn);
-        //output = mapManager.filterListWithWalkRequirements(fromPoint, output, characterCS.canWalkOn);
+        output = mapManager.filterListWithTileRequirements(output, characterCS, tileToEffectPair.ShowCastOn);
+        output = mapManager.filterListWithWalkRequirements(output, characterCS.canWalkOn);
         //output = CheckVectorValidity(fromPoint, output, tileToEffectPair.targetType);
         PrintOutputStatus();
         return output;
@@ -140,7 +140,7 @@ public class MoveDictionaryManager : MonoBehaviour
     public AbilityData currnetAbility;
     public void doAction(AbilityData abilityData)
     {
-        int costOfaction = abilityData.costOfaction;
+        int costOfaction = characterCS.abilityToCost.returnDict()[abilityData];
         if (characterCS.actionPoints < costOfaction)
         {
             addToolTip("The Ability " + currnetAbility.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
@@ -234,7 +234,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
     IEnumerator AnimationCoRoutione(List<Vector3Int> points, ActionEffectParams actionEffectParams, Vector3Int fromPoint, Vector3Int atPoint)
     {
-        points = mapManager.filterListWithTileRequirements(fromPoint, points, actionEffectParams.OnlyApplyOn);
+        points = mapManager.filterListWithTileRequirements(points, characterCS, actionEffectParams.OnlyApplyOn);
 
         float startTime = Time.time;
         float lastTime = Time.time;

@@ -244,7 +244,7 @@ public class MapManager : MonoBehaviour
             NeighbourToTotalCost.Add(neighbour, neighbour.FScore);
         }
     }
-    public List<Vector3Int> filterListWithWalkRequirements(Vector3Int fromPoint, List<Vector3Int> scanPoints, List<GroundFloorType> canWalkOn)
+    public List<Vector3Int> filterListWithWalkRequirements(List<Vector3Int> scanPoints, List<GroundFloorType> canWalkOn)
     {
         var newList = new List<Vector3Int>();
         foreach (var point in scanPoints)
@@ -266,9 +266,8 @@ public class MapManager : MonoBehaviour
             return true;
         }
     }
-    public List<Vector3Int> filterListWithTileRequirements(Vector3Int fromPoint, List<Vector3Int> scanPoints, ValidTargets validTargets)
+    public List<Vector3Int> filterListWithTileRequirements(List<Vector3Int> scanPoints, CharacterControllerScript castingCharacter, ValidTargets validTargets)
     {
-        CharacterControllerScript castingCharacter = cellDataDir[fromPoint].characterAtCell.GetComponent<CharacterControllerScript>();
         var newList = new List<Vector3Int>();
         foreach (var point in scanPoints)
         {

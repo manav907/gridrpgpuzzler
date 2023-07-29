@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
-  m_Name: 4WayMove
+  m_Name: 4WayAttack
   m_EditorClassIdentifier: 
-  Primaryuse: 2
+  Primaryuse: 0
   AreaOfAbility:
-    ShowCastOn: 1
+    ShowCastOn: 3
     targetType: 0
     areaOfEffectRange: 10
     aoeStyle: 4
   ValidTileData:
-  - ShowCastOn: 0
+  - ShowCastOn: 3
     targetType: 0
     areaOfEffectRange: 0
     aoeStyle: 0
   ApplyEffects:
-  - typeOfAction: 2
-    OnlyApplyOn: 0
-    doActionTillKeyFrameAnimation: 0
-    animationMovementType: 2
+  - typeOfAction: 0
+    OnlyApplyOn: 3
+    doActionTillKeyFrameAnimation: 2
+    animationMovementType: 0
     loopType: 0
