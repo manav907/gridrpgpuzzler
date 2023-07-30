@@ -165,7 +165,7 @@ public class CharacterControllerScript : MonoBehaviour
             if (targetList.Count == 0)
             {
                 turnManager.endTurn();
-                //Debug.Log("Ideling");
+                Debug.Log("Ideling");
                 return;
             }
             else

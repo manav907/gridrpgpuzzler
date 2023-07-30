@@ -7,6 +7,8 @@ public class AbilityData : ScriptableObject
 {
     public TypeOfAction Primaryuse;
     public AreaGenerationParams AreaOfAbility;
+    /* public RangeOfActionEnum rangeOfAbility;
+    public AoeStyle typeOfArea; */
     public List<AreaGenerationParams> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
 }
@@ -41,14 +43,6 @@ public enum TargetType
     AnyValid,
     FirstValid,
     LastValid,
-}
-
-
-public enum LadderCollapseFunctionEnums
-{
-    setDataWithID,
-    doActionWithID,
-    SetDataUsingTherorticalPosAtArrayIndex,
 }
 public enum RangeOfActionEnum
 {

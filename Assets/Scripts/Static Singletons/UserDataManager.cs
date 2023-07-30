@@ -16,7 +16,6 @@ public static class UserDataManager
     {
         //UserDataManager.Snap = false;
 #if UNITY_EDITOR
-
         if (GameEvents.current.inGameUI.enableEditorQuickMode)
         {
             float quickModeTime = 00f;

@@ -283,12 +283,11 @@ public static class GlobalCal
             case AoeStyle.SSingle:
                 {
                     //return new List<Vector3Int>() { getNormalizedDirection(fromPoint, atPoint) };
-                    return new List<Vector3Int>() { atPoint };
+                    return new List<Vector3Int>() { atPoint + (getNormalizedDirection(fromPoint, atPoint) * (int)RangeOfAction) };
                 }
             case AoeStyle.SSweep:
                 {
                     return generateComplexArc(fromPoint, atPoint, RangeOfAction);
-                    //return generateComplexArc(atPoint, fromPoint, RangeOfAction);
                 }
             case AoeStyle.Square:
                 {

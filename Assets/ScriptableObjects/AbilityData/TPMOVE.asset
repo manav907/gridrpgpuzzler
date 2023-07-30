@@ -10,20 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
-  m_Name: 8WayAttack
+  m_Name: TPMOVE
   m_EditorClassIdentifier: 
-  Primaryuse: 0
+  Primaryuse: 2
   AreaOfAbility:
-    tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
+    tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
     areaOfEffectRange: 15
     aoeStyle: 4
   ValidTileData:
   - tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     areaOfEffectRange: 0
     aoeStyle: 0
+  - tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
+    areaOfEffectRange: 10
+    aoeStyle: 0
   ApplyEffects:
   - typeOfAction: 0
-    OnlyApplyOn: 3
+    OnlyApplyOn: 0
     doActionTillKeyFrameAnimation: 2
     animationMovementType: 0
+    loopType: 1
+  - typeOfAction: 2
+    OnlyApplyOn: 0
+    doActionTillKeyFrameAnimation: 1
+    animationMovementType: 2
     loopType: 0

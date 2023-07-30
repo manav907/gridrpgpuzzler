@@ -43,33 +43,40 @@ public class TransformAnimationScript : MonoBehaviour
         int currentIndex = 0;
         int TotalItems = data.NumberOfItems;
 
-
-        while (currentIndex < TotalItems)//Iterates through Each Item
-        {
-            float moveTime = data.timeToTake[currentIndex];
-            Vector3 movePoint = data.points[currentIndex];
-            float elapsedTime = 0;
-
-            Vector3 startingPosition = transform.position;
-
-            yield return null;
-            //yield return new WaitForFixedUpdate();//This makes stuff very laggy
-            //Debug.Log("moving" + transform.name + " to " + movePoint + " in " + moveTime + " seconds");
-            while (elapsedTime < moveTime)
+        if (transform != null)
+            while (currentIndex < TotalItems)//Iterates through Each Item
             {
+                float moveTime = data.timeToTake[currentIndex];
+                Vector3 movePoint = data.points[currentIndex];
+                float elapsedTime = 0;
+
+                Vector3 startingPosition = new Vector3();
+                if (transform != null)
+                    startingPosition = transform.position;
+                else { Debug.Log("Fix This "); }
+
                 yield return null;
                 //yield return new WaitForFixedUpdate();//This makes stuff very laggy
-                elapsedTime += Time.deltaTime;
-                float percentageMoved = Mathf.Clamp01(elapsedTime / moveTime);
-                transform.position = Vector3.Lerp(startingPosition, movePoint, percentageMoved);
-                //debugLine += "ElapsedTime " + elapsedTime + " and Current Position" + transform.position + " At the End\n";
+                //Debug.Log("moving" + transform.name + " to " + movePoint + " in " + moveTime + " seconds");
+                if (transform != null)
+                    while (elapsedTime < moveTime)
+                    {
+                        yield return null;
+                        //yield return new WaitForFixedUpdate();//This makes stuff very laggy
+                        elapsedTime += Time.deltaTime;
+                        float percentageMoved = Mathf.Clamp01(elapsedTime / moveTime);
+                        if (transform != null)
+                            transform.position = Vector3.Lerp(startingPosition, movePoint, percentageMoved);
+                        else { Debug.Log("Fix This "); }
+                        //debugLine += "ElapsedTime " + elapsedTime + " and Current Position" + transform.position + " At the End\n";
 
+                    }
+                else { Debug.Log("Fix This "); }
+                data.RemoveAt0();//removes the entry we just worked on
+                                 //currentIndex++;//Moves To Next Index
+                TotalItems = data.NumberOfItems;//Updates if new items were added
             }
-
-            data.RemoveAt0();//removes the entry we just worked on
-            //currentIndex++;//Moves To Next Index
-            TotalItems = data.NumberOfItems;//Updates if new items were added
-        }
+        else { Debug.Log("Fix This "); }
         moveQueueSystem.Remove(transform);
         //Debug.Log("completed removoeing transform");
         yield return null;

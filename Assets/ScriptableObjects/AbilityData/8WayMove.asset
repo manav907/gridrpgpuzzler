@@ -19,7 +19,7 @@ MonoBehaviour:
     aoeStyle: 4
   ValidTileData:
   - tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
-    areaOfEffectRange: 10
+    areaOfEffectRange: 0
     aoeStyle: 0
   ApplyEffects:
   - typeOfAction: 2

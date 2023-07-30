@@ -16,12 +16,11 @@ public class MoveDictionaryManager : MonoBehaviour
     GameObject thisCharacter;
     CharacterControllerScript characterCS;
     [Header("Retical And Tile Data")]
-    private Vector3Int tryHere;
+    [SerializeField] private Vector3Int tryHere;
     [Header("Current Ablity")]
     //[SerializeField] Ability currentAblity;
     [Header("Debug Data")]
     public bool ControlAI = false;
-
     bool ShouldContinue = false;
     public void setVariables()
     {
@@ -38,7 +37,6 @@ public class MoveDictionaryManager : MonoBehaviour
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
     }
     Dictionary<TypeOfAction, Action> abilityNameToAction;
-
     void SetMoveDictionary()
     {
         abilityNameToAction = new Dictionary<TypeOfAction, Action>();
@@ -58,9 +56,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
         }
         void apply_Heal()
-        {
-            //BasicActionInProgress = false;
-        }
+        {            /* BasicActionInProgress = false; */        }
         void apply_SelfMove()
         {
             Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
@@ -102,7 +98,7 @@ public class MoveDictionaryManager : MonoBehaviour
         var output = GlobalCal.generateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.getRangeOfAction());
         output = mapManager.filterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
         output = mapManager.filterListWithWalkRequirements(output, tileToEffectPair.tileValidityParms.validFloors);
-        //output = CheckVectorValidity(fromPoint, output, tileToEffectPair.targetType);
+        output = CheckVectorValidity(fromPoint, output, tileToEffectPair.tileValidityParms.targetType);
         PrintOutputStatus();
         return output;
         void PrintOutputStatus()
@@ -163,11 +159,17 @@ public class MoveDictionaryManager : MonoBehaviour
             if (ShouldContinue)
             {
                 characterCS.actionPoints = characterCS.actionPoints - costOfaction;//Consume Ability Point
+                //Debug.Log("Should continew was true consuming ability Point");
                 List<List<Vector3Int>> ListOfListPointToEffect = pointMap[tryHere];
                 for (int i = 0; i < abilityData.ApplyEffects.Count; i++)
                 {
                     yield return StartCoroutine(AnimationCoRoutione(ListOfListPointToEffect[i], abilityData.ApplyEffects[i], characterCS.getCharV3Int(), tryHere));
                 }
+            }
+            else if (ControlAI)
+            {
+                Debug.Log("AI Exception");
+                turnManager.endTurn();
             }
             ShouldContinue = false;
             if (characterCS.doActionPointsRemainAfterAbility())
@@ -270,7 +272,6 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));
             yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
-
         }
         IEnumerator afterAnimationOfAction()
         {

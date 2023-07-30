@@ -340,9 +340,8 @@ public class MapManager : MonoBehaviour
         int maxLoops = 0;
         while (maxLoops != 20)
         {
-            if (openList.Count == 0)
-                Debug.Log(AStarDebug);
             openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
+
             Node currentNode = openList.First();
             openList.Remove(currentNode);
             AStarDebug += "\n  Step " + maxLoops + ": Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
@@ -363,6 +362,10 @@ public class MapManager : MonoBehaviour
                 currentNode.addNeighbours(neighbourNode);
                 openList.Add(neighbourNode);
                 historyNode.Add(neighbourNode);
+            }
+            if (openList.Count == 0)
+            {                //Debug.Log(AStarDebug);
+                return reconstructPath(historyNode[0]);
             }
             maxLoops++;
         }
