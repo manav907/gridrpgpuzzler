@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   Primaryuse: 0
-  AreaOfAbility:
-    tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
-    areaOfEffectRange: 15
-    aoeStyle: 4
+  rangeOfAbility: 15
   ValidTileData:
-  - tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
+  - minpoints: 1
+    MaxPoints: 3
+    sortFromPoint: 1
+    tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
     areaOfEffectRange: 15
     aoeStyle: 2
   ApplyEffects:

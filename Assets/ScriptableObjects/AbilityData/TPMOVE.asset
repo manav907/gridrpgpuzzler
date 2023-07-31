@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: TPMOVE
   m_EditorClassIdentifier: 
   Primaryuse: 2
-  AreaOfAbility:
-    tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
-    areaOfEffectRange: 15
-    aoeStyle: 4
+  rangeOfAbility: 15
   ValidTileData:
-  - tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
+  - minpoints: 1
+    MaxPoints: 1
+    sortFromPoint: 1
+    tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     areaOfEffectRange: 0
     aoeStyle: 0
-  - tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
+  - minpoints: 1
+    MaxPoints: 1
+    sortFromPoint: 1
+    tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
     areaOfEffectRange: 10
     aoeStyle: 0
   ApplyEffects:

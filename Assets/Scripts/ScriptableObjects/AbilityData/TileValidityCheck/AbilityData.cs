@@ -6,9 +6,9 @@ using UnityEngine;
 public class AbilityData : ScriptableObject
 {
     public TypeOfAction Primaryuse;
-    public AreaGenerationParams AreaOfAbility;
-    /* public RangeOfActionEnum rangeOfAbility;
-    public AoeStyle typeOfArea; */
+   // public AreaGenerationParams AreaOfAbility;
+    public RangeOfActionEnum rangeOfAbility;
+    //public AoeStyle typeOfArea;
     public List<AreaGenerationParams> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
 }
@@ -16,9 +16,9 @@ public class AbilityData : ScriptableObject
 [Serializable]
 public class AreaGenerationParams
 {
-    //public int minpoints = 1;
-    //public int MaxPoints = 1;
-    //public bool sortFromPoint = true;
+    public int minpoints = 1;
+    public int MaxPoints = 1;
+    public bool sortFromPoint = true;
     public TileValidityParms tileValidityParms;
     public RangeOfActionEnum areaOfEffectRange;
     public AoeStyle aoeStyle;

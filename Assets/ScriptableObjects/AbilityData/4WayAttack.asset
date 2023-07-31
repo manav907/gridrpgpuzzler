@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: 4WayAttack
   m_EditorClassIdentifier: 
   Primaryuse: 0
-  AreaOfAbility:
-    tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
-    areaOfEffectRange: 10
-    aoeStyle: 4
+  rangeOfAbility: 10
   ValidTileData:
-  - tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
+  - minpoints: 1
+    MaxPoints: 1
+    sortFromPoint: 1
+    tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     areaOfEffectRange: 0
     aoeStyle: 0
   ApplyEffects:

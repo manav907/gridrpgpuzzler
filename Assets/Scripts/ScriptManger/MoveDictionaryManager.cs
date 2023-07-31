@@ -78,16 +78,22 @@ public class MoveDictionaryManager : MonoBehaviour
     public Dictionary<Vector3Int, List<List<Vector3Int>>> generateAbiltyPointMap(AbilityData abilityData, Vector3Int fromPoint)
     {
         abiPointMapString = "";
-        var pointsToScan = generateAreaWithParams(abilityData.AreaOfAbility, fromPoint, fromPoint);
+        var pointsToScan = GlobalCal.generateArea(AoeStyle.Taxi, fromPoint, fromPoint, (float)abilityData.rangeOfAbility / 10);
+        reticalManager.reDrawInValidTiles(pointsToScan);//this sets the Valid Tiles Overlay
         Dictionary<Vector3Int, List<List<Vector3Int>>> pointToScannedAreas = new Dictionary<Vector3Int, List<List<Vector3Int>>>();
+        List<Vector3Int> invalidKeys = new List<Vector3Int>();
         foreach (Vector3Int point in pointsToScan)
         {
             List<List<Vector3Int>> list = new List<List<Vector3Int>>();
             foreach (AreaGenerationParams TileDataPair in abilityData.ValidTileData)
             {
-                list.Add(generateAreaWithParams(TileDataPair, fromPoint, point));
+                List<Vector3Int> tileCount = generateAreaWithParams(TileDataPair, fromPoint, point);
+
+                if (TileDataPair.minpoints <= tileCount.Count && tileCount.Count <= TileDataPair.MaxPoints)
+                    list.Add(tileCount);
             }
-            pointToScannedAreas[point] = list;
+            if (abilityData.ValidTileData.Count == list.Count)
+                pointToScannedAreas[point] = list;
         }
         //Debug.Log(abiPointMapString);
         return pointToScannedAreas;
@@ -148,7 +154,13 @@ public class MoveDictionaryManager : MonoBehaviour
         if (pointMap.Keys.Count == 0)
         {
             addToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
-            Debug.Log("No Valid Tilees");
+            StartCoroutine(fadeOut(0.5f));
+            IEnumerator fadeOut(float waitAction)
+            {
+                yield return new WaitForSeconds(waitAction);
+                reticalManager.reDrawInValidTiles(new List<Vector3Int>());
+            }
+            //Debug.Log("No Valid Tilees");
             return;
         }
         reticalManager.UpdateReticalInputParams(pointMap);
@@ -184,7 +196,7 @@ public class MoveDictionaryManager : MonoBehaviour
     IEnumerator getInput(List<Vector3Int> validInputs)
     {
         //Declaring Variables        
-        reticalManager.reDrawValidTiles(validInputs, validInputs);//this sets the Valid Tiles Overlay
+        reticalManager.reDrawValidTiles(validInputs);//this sets the Valid Tiles Overlay
         ShouldContinue = false;
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
@@ -210,7 +222,8 @@ public class MoveDictionaryManager : MonoBehaviour
                 turnManager.endTurn();
             }
         }
-        reticalManager.reDrawValidTiles(new List<Vector3Int>(), new List<Vector3Int>());
+        reticalManager.reDrawValidTiles(new List<Vector3Int>());
+        reticalManager.reDrawInValidTiles(new List<Vector3Int>());
         reticalManager.ResetReticalInputParams();
         //Methods
         bool CheckContinue()
@@ -287,11 +300,13 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         foreach (Vector3Int point in points)
         {
+            //Debug.Log(characterCS.characterName + " did action " + currnetAbility.name + " at Point " + point);
             tryHere = point;
             if (animationLoopType == AnimationLoopType.forEachPoint)
                 yield return StartCoroutine(animationActionFunction());
             abilityNameToAction[actiontype]();//The Actual Action
         }
+        //Debug.Break();
         yield return afterAnimationOfAction();
     }
 }

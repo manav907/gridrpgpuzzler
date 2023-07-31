@@ -323,33 +323,27 @@ public class MapManager : MonoBehaviour
     MoveDictionaryManager moveDictionaryManager;
     public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, AbilityData abilityData, bool ignoreCharacters = false)
     {
-        string AStarDebug = "Starting Astar Navigation from Point " + startPos;
+        string AStarDebug = "Starting Astar Navigation from Point ";//Generate Node Data will put
         List<Node> openList = new List<Node>();
         List<Vector3Int> closeList = new List<Vector3Int>();
         List<Node> historyNode = new List<Node>();
-        //
         if (endPos.Count == 0)
         {
+            Debug.Log("End Pos 0");
             return new List<Vector3Int>() { startPos };
         }
-        //
         openList.Add(generateNodeData(startPos, null));
         closeList.Add(startPos);
-
-
         int maxLoops = 0;
         while (maxLoops != 20)
         {
             openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
-
             Node currentNode = openList.First();
             openList.Remove(currentNode);
-            AStarDebug += "\n  Step " + maxLoops + ": Evaluating Node " + currentNode.nodeID + " its F Cost was " + getFCost(currentNode) + " Available Nodes Here: ";
-
+            AStarDebug += "\n  Step " + maxLoops + ": Evaluating Node " + currentNode.nodeID + " as its F Cost was " + getFCost(currentNode) + " Neighbours: ";
             if (endPos.Contains(currentNode.nodeID))
             {
-                PrintDebug("Path Found");
-                return reconstructPath(currentNode);
+                return reconstructPath(currentNode, "End Pos contains NodeID: Path Found!");
             }
             foreach (Vector3Int neighbourPoint in moveDictionaryManager.generateAbiltyPointMap(abilityData, currentNode.nodeID).Keys.ToList())
             {
@@ -358,32 +352,26 @@ public class MapManager : MonoBehaviour
                 else
                     closeList.Add(neighbourPoint);
                 Node neighbourNode = generateNodeData(neighbourPoint, currentNode);
-
                 currentNode.addNeighbours(neighbourNode);
                 openList.Add(neighbourNode);
                 historyNode.Add(neighbourNode);
             }
             if (openList.Count == 0)
-            {                //Debug.Log(AStarDebug);
-                return reconstructPath(historyNode[0]);
+            {
+                historyNode = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(historyNode, getFCost));
+                return reconstructPath(historyNode[0], "OpenList Null Using History");
             }
             maxLoops++;
         }
-        PrintDebug("Failed as max loops were" + maxLoops);
-        //return new List<Vector3Int>();
         historyNode = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(historyNode, getFCost));
-        return reconstructPath(historyNode[0]);
-        void PrintDebug(string prefix)
-        {
-            //Debug.Log(prefix + "\n " + AStarDebug);
-            //Debug.Break();
-        }
+        return reconstructPath(historyNode[0], "Creating Path From Histrory");
         Node generateNodeData(Vector3Int pos, Node previousNode = null)
         {
-
             Vector3Int closestEndPos = universalCalculator.SortListAccordingtoDistanceFromPoint(endPos, pos).First();
             float Hcost = Vector3Int.Distance(pos, closestEndPos);//distance to endPoint
-            float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
+            float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint 
+            //AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
+            AStarDebug += pos + ", ";
             Node currentNode = new Node(pos, Hcost, Gcost, previousNode);
             return currentNode;
         }
@@ -391,17 +379,17 @@ public class MapManager : MonoBehaviour
         {
             return node.FScore;
         }
-        List<Vector3Int> reconstructPath(Node node)
+        List<Vector3Int> reconstructPath(Node node, string PrefixDebug)
         {
             List<Vector3Int> path = new List<Vector3Int>();
             string Text = "PathData";
             while (node.previousNode != null)
             {
                 path.Add(node.nodeID);
-                Text += "\n" + node.nodeID;
+                Text += " > " + node.nodeID;
                 node = node.previousNode;
             }
-            //Debug.Log(Text);
+            //Debug.Log(PrefixDebug + "\n" + Text + "\n" + AStarDebug);
             path.Reverse();
             return path;
         }

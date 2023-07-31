@@ -249,7 +249,10 @@ public class CharacterControllerScript : MonoBehaviour
                 return getBasicDirection();
             }
             if (!validTiles.Contains(chosenPath))
+            {
+                Debug.Log("path does not have currently moveable Tiles using Fallback");
                 return getCharV3Int();
+            }
             return chosenPath;
         }
         return getBasicDirection();

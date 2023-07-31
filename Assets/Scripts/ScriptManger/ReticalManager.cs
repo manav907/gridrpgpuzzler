@@ -99,9 +99,12 @@ public class ReticalManager : MonoBehaviour
         reDrawTiles(validReticalTiles, validReticalTilesTilemap, reticalTile);
     }
 
-    public void reDrawValidTiles(List<Vector3Int> validTilesList, List<Vector3Int> possibleValidTilesList)
+    public void reDrawValidTiles(List<Vector3Int> validTilesList)
     {
         reDrawTiles(validTilesList, validTilesTileMap, reticalTile);
+    }
+    public void reDrawInValidTiles(List<Vector3Int> possibleValidTilesList)
+    {
         reDrawTiles(possibleValidTilesList, GhostTiles, reticalTile);
     }
     void SetTiles(List<Vector3Int> range, Tilemap thistilemap, TileBase thistile)//This causes performece problems espcially when using rule tiles

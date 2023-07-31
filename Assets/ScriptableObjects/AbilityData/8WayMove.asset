@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: 8WayMove
   m_EditorClassIdentifier: 
   Primaryuse: 2
-  AreaOfAbility:
-    tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
-    areaOfEffectRange: 15
-    aoeStyle: 4
+  rangeOfAbility: 15
   ValidTileData:
-  - tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
+  - minpoints: 1
+    MaxPoints: 1
+    sortFromPoint: 1
+    tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
     areaOfEffectRange: 0
     aoeStyle: 0
   ApplyEffects:

@@ -32,10 +32,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 726e10e51943f87469f4bec8658bb429, type: 2}
     - key: {x: -4, y: -1, z: 0}
       value: {fileID: 11400000, guid: 1e13d0d77c89806449d7e103327284db, type: 2}
-    - key: {x: -3, y: -1, z: 0}
-      value: {fileID: 11400000, guid: 4592d8dfae1c61145a7b62b290702c07, type: 2}
-    - key: {x: -2, y: -1, z: 0}
-      value: {fileID: 11400000, guid: f2041ed21f6b528489d75a37d531eb1c, type: 2}
     - key: {x: -1, y: -1, z: 0}
       value: {fileID: 11400000, guid: b9a4e77089061584ba8c5ecc8c24f008, type: 2}
     - key: {x: 0, y: -1, z: 0}
