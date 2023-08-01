@@ -22,8 +22,4 @@ MonoBehaviour:
     areaOfEffectRange: 15
     aoeStyle: 2
   ApplyEffects:
-  - typeOfAction: 0
-    OnlyApplyOn: 3
-    doActionTillKeyFrameAnimation: 2
-    animationMovementType: 0
-    loopType: 0
+  - {fileID: 11400000, guid: d4a94f480573a8946b2b286ce87ad2e2, type: 2}

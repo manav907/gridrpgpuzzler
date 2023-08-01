@@ -154,13 +154,7 @@ public class MoveDictionaryManager : MonoBehaviour
         if (pointMap.Keys.Count == 0)
         {
             addToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
-            StartCoroutine(fadeOut(0.5f));
-            IEnumerator fadeOut(float waitAction)
-            {
-                yield return new WaitForSeconds(waitAction);
-                reticalManager.reDrawInValidTiles(new List<Vector3Int>());
-            }
-            //Debug.Log("No Valid Tilees");
+           reticalManager.reDrawInValidTiles(new List<Vector3Int>());
             return;
         }
         reticalManager.UpdateReticalInputParams(pointMap);

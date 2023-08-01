@@ -6,13 +6,10 @@ using UnityEngine;
 public class AbilityData : ScriptableObject
 {
     public TypeOfAction Primaryuse;
-   // public AreaGenerationParams AreaOfAbility;
     public RangeOfActionEnum rangeOfAbility;
-    //public AoeStyle typeOfArea;
     public List<AreaGenerationParams> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
 }
-
 [Serializable]
 public class AreaGenerationParams
 {
@@ -22,21 +19,10 @@ public class AreaGenerationParams
     public TileValidityParms tileValidityParms;
     public RangeOfActionEnum areaOfEffectRange;
     public AoeStyle aoeStyle;
-
     public float getRangeOfAction()
     {
         return (float)areaOfEffectRange / 10;
     }
-
-}
-[Serializable]
-public class ActionEffectParams
-{
-    public TypeOfAction typeOfAction;
-    public ValidTargets OnlyApplyOn;
-    public CharacterAnimationState doActionTillKeyFrameAnimation;
-    public AnimationMovementType animationMovementType;
-    public AnimationLoopType loopType;
 }
 public enum TargetType
 {
