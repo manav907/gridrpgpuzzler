@@ -13,20 +13,29 @@ MonoBehaviour:
   m_Name: TPMOVE
   m_EditorClassIdentifier: 
   Primaryuse: 2
-  rangeOfAbility: 15
-  ValidTileData:
-  - minpoints: 1
-    MaxPoints: 1
-    sortFromPoint: 1
+  rangeOfAbility:
+    name: Primary Range For Self Move
+    minpoints: 1
+    MaxPoints: 10
+    adjustAtPointWithDirection: 1
+    rangeOfArea: 3
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
-    areaOfEffectRange: 0
-    aoeStyle: 0
-  - minpoints: 1
+    aoeStyle: 4
+  ValidTileData:
+  - name: Enemy Location
+    minpoints: 1
     MaxPoints: 1
-    sortFromPoint: 1
+    adjustAtPointWithDirection: 0
+    rangeOfArea: 2
+    tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
+    aoeStyle: 4
+  - name: OIffset
+    minpoints: 1
+    MaxPoints: 4
+    adjustAtPointWithDirection: 2
+    rangeOfArea: 1
     tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
-    areaOfEffectRange: 10
-    aoeStyle: 0
+    aoeStyle: 4
   ApplyEffects:
   - {fileID: 11400000, guid: d4a94f480573a8946b2b286ce87ad2e2, type: 2}
   - {fileID: 11400000, guid: 7ef597b271159724eac85c79719cbf15, type: 2}

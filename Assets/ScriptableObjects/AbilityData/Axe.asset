@@ -13,13 +13,21 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   Primaryuse: 0
-  rangeOfAbility: 15
-  ValidTileData:
-  - minpoints: 1
-    MaxPoints: 3
-    sortFromPoint: 1
+  rangeOfAbility:
+    name: 
+    minpoints: 1
+    MaxPoints: 10
+    adjustAtPointWithDirection: 1
+    rangeOfArea: 3
     tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
-    areaOfEffectRange: 15
+    aoeStyle: 4
+  ValidTileData:
+  - name: 
+    minpoints: 1
+    MaxPoints: 3
+    adjustAtPointWithDirection: 1
+    rangeOfArea: 1
+    tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
     aoeStyle: 2
   ApplyEffects:
   - {fileID: 11400000, guid: d4a94f480573a8946b2b286ce87ad2e2, type: 2}

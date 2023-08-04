@@ -270,21 +270,16 @@ public static class GlobalCal
         {
             for (int y = starty; y <= endy; y++)// problem when y > than y
             {
-                Vector3Int atXY = new Vector3Int(x, y, 0);
+                Vector3Int atXY = new(x, y, 0);
                 listOfRanges.Add(atXY);
             }
         }
         return listOfRanges;
     }
-    public static List<Vector3Int> generateArea(AoeStyle aoeStyle, Vector3Int fromPoint, Vector3Int atPoint, float RangeOfAction)
+    public static List<Vector3Int> GenerateArea(AoeStyle aoeStyle, Vector3Int fromPoint, Vector3Int atPoint, float RangeOfAction)
     {
         switch (aoeStyle)
         {
-            case AoeStyle.SSingle:
-                {
-                    //return new List<Vector3Int>() { getNormalizedDirection(fromPoint, atPoint) };
-                    return new List<Vector3Int>() { atPoint + (getNormalizedDirection(fromPoint, atPoint) * (int)RangeOfAction) };
-                }
             case AoeStyle.SSweep:
                 {
                     return generateComplexArc(fromPoint, atPoint, RangeOfAction);
@@ -384,7 +379,9 @@ public static class GlobalCal
         List<Vector3Int> generateTaxiRangeFromPoint(Vector3Int thisPoint, float rangeOfAction)
         {
             List<Vector3Int> listOfRanges = generateRangeFromPoint(thisPoint, rangeOfAction);
-            List<Vector3Int> outputList = new List<Vector3Int>();
+
+            rangeOfAction = rangeOfAction / 2;
+            List<Vector3Int> outputList = new();
             foreach (Vector3Int point in listOfRanges)
             {
                 float distance = Vector3Int.Distance(thisPoint, point);

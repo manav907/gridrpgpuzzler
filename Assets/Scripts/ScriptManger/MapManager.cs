@@ -345,7 +345,7 @@ public class MapManager : MonoBehaviour
             {
                 return reconstructPath(currentNode, "End Pos contains NodeID: Path Found!");
             }
-            foreach (Vector3Int neighbourPoint in moveDictionaryManager.generateAbiltyPointMap(abilityData, currentNode.nodeID).Keys.ToList())
+            foreach (Vector3Int neighbourPoint in moveDictionaryManager.GenerateAbiltyPointMap(abilityData, currentNode.nodeID).Keys.ToList())
             {
                 if (closeList.Contains(neighbourPoint))
                     continue;

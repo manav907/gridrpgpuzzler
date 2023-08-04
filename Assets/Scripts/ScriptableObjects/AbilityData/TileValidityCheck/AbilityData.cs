@@ -6,38 +6,28 @@ using UnityEngine;
 public class AbilityData : ScriptableObject
 {
     public TypeOfAction Primaryuse;
-    public RangeOfActionEnum rangeOfAbility;
+    public AreaGenerationParams rangeOfAbility;
     public List<AreaGenerationParams> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
 }
 [Serializable]
 public class AreaGenerationParams
 {
+    public string name;
     public int minpoints = 1;
-    public int MaxPoints = 1;
-    public bool sortFromPoint = true;
+    //public int MaxPoints = 1;
+    [Range(-3, 3)]
+    public int adjustAtPointWithDirection = 1;
+    [Range(1, 3)]
+    public int rangeOfArea = 1;
     public TileValidityParms tileValidityParms;
-    public RangeOfActionEnum areaOfEffectRange;
     public AoeStyle aoeStyle;
-    public float getRangeOfAction()
-    {
-        return (float)areaOfEffectRange / 10;
-    }
 }
 public enum TargetType
 {
     AnyValid,
     FirstValid,
     LastValid,
-}
-public enum RangeOfActionEnum
-{
-    r0 = 0,
-    r10 = 10,
-    r15 = 15,
-    r20 = 20,
-    r25 = 25,
-    r30 = 30
 }
 public enum ValidTargets
 {
@@ -47,5 +37,11 @@ public enum ValidTargets
     Enemies = 3,
     Allies = 4,
     Neutral,
+}
+public enum AoeStyle
+{
 
+    Taxi = 4,
+    Square = 5,
+    SSweep = 2,
 }

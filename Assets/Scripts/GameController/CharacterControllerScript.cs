@@ -121,20 +121,20 @@ public class CharacterControllerScript : MonoBehaviour
             if (controlCharacter)
             {
                 GameEvents.current.TriggerNextDialog();//Disable this laeter
-                List<AbilityData> allAbilities = new List<AbilityData>();
+                List<AbilityData> allAbilities = new();
                 allAbilities.AddRange(abilityToCost.Keys());
                 GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(allAbilities);
                 turnManager.setCameraPos(getCharV3Int());
             }
             else
             {
-                determineAction();
+                DetermineAction();
             }
         }
     }
     [SerializeField] Vector3Int destinationTarget;
     int GhostVision = 1;
-    Dictionary<TypeOfAction, List<AbilityData>> abilityMap()
+    Dictionary<TypeOfAction, List<AbilityData>> AbilityMap()
     {
         var newDict = new Dictionary<TypeOfAction, List<AbilityData>>();
         foreach (var keypair in abilityToCost.KeyValuePairs)
@@ -149,15 +149,15 @@ public class CharacterControllerScript : MonoBehaviour
         }
         return newDict;
     }
-    void determineAction()
+    void DetermineAction()
     {
-        var optionsofAbilities = abilityMap();
+        var optionsofAbilities = AbilityMap();
         var costIndex = abilityToCost.returnDict();
         if (actionPoints > 0)
         {
             Vector3Int thisCharpos = getCharV3Int();
             //var VisionList = GlobalCal.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
-            var VisionList = GlobalCal.generateArea(AoeStyle.Square, thisCharpos, thisCharpos, rangeOfVision + GhostVision);
+            var VisionList = GlobalCal.GenerateArea(AoeStyle.Square, thisCharpos, thisCharpos, rangeOfVision + GhostVision);
 
             //GhostVision for tracking after leaving Vision
             var targetList = listOfPossibleTargets(VisionList);
@@ -165,20 +165,20 @@ public class CharacterControllerScript : MonoBehaviour
             if (targetList.Count == 0)
             {
                 turnManager.endTurn();
-                Debug.Log("Ideling");
+                //Debug.Log("Ideling");
                 return;
             }
             else
             {
                 destinationTarget = selectOptimalTarget();
                 //var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
-                var attackRangeList = moveDictionaryManager.generateAbiltyPointMap(optionsofAbilities[TypeOfAction.apply_Damage][0], getCharV3Int()).Keys.ToList();
+                var attackRangeList = moveDictionaryManager.GenerateAbiltyPointMap(optionsofAbilities[TypeOfAction.apply_Damage][0], getCharV3Int()).Keys.ToList();
                 attackRangeList = mapManager.filterListWithTileRequirements(attackRangeList, this, ValidTargets.Enemies);
                 if (attackRangeList.Count > 0)
                 {
                     if (costIndex[optionsofAbilities[TypeOfAction.apply_Damage][0]] <= actionPoints)
                     {
-                        moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
+                        moveDictionaryManager.DoAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
                     }
                     else
                     {
@@ -187,7 +187,7 @@ public class CharacterControllerScript : MonoBehaviour
                 }
                 else if (costIndex[optionsofAbilities[TypeOfAction.apply_SelfMove][0]] <= actionPoints)
                 {
-                    moveDictionaryManager.doAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+                    moveDictionaryManager.DoAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ public class CharacterControllerScript : MonoBehaviour
     public Vector3Int getTarget(AbilityData abilityData)
     //validTargets depends on the action being performed
     {
-        List<Vector3Int> validTiles = moveDictionaryManager.generateAbiltyPointMap(abilityData, getCharV3Int()).Keys.ToList();
+        List<Vector3Int> validTiles = moveDictionaryManager.GenerateAbiltyPointMap(abilityData, getCharV3Int()).Keys.ToList();
         if (abilityData.Primaryuse == TypeOfAction.apply_SelfMove)
         {
             var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), abilityData, true);
@@ -263,7 +263,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
         List<Vector3Int> getUseableTarget()
         {
-            List<Vector3Int> validTiles = moveDictionaryManager.generateAbiltyPointMap(abilityData, destinationTarget).Keys.ToList();
+            List<Vector3Int> validTiles = moveDictionaryManager.GenerateAbiltyPointMap(abilityData, destinationTarget).Keys.ToList();
             validTiles.Remove(destinationTarget);
             if (UserDataManager.SmartPosistioning == false || validTiles.Count == 0)
             {

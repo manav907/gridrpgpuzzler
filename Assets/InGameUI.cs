@@ -83,7 +83,7 @@ public class InGameUI : MonoBehaviour
         for (int i = 0; i < list.Count; i++)
         {
             AbilityData abilityData = list[i];
-            Action newAction = delegate { GameEvents.current.moveDictionaryManager.doAction(abilityData); };
+            Action newAction = delegate { GameEvents.current.moveDictionaryManager.DoAction(abilityData); };
 
             if (i >= actionsAssigned.Count)
             { actionsAssigned.Add(newAction); }

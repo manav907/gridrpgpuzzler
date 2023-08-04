@@ -13,13 +13,21 @@ MonoBehaviour:
   m_Name: 8WayAttack
   m_EditorClassIdentifier: 
   Primaryuse: 0
-  rangeOfAbility: 15
-  ValidTileData:
-  - minpoints: 1
-    MaxPoints: 1
-    sortFromPoint: 1
+  rangeOfAbility:
+    name: 
+    minpoints: 1
+    MaxPoints: 10
+    adjustAtPointWithDirection: 1
+    rangeOfArea: 3
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
-    areaOfEffectRange: 0
-    aoeStyle: 0
+    aoeStyle: 4
+  ValidTileData:
+  - name: 
+    minpoints: 1
+    MaxPoints: 1
+    adjustAtPointWithDirection: 1
+    rangeOfArea: 0
+    tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
+    aoeStyle: 4
   ApplyEffects:
   - {fileID: 11400000, guid: d4a94f480573a8946b2b286ce87ad2e2, type: 2}

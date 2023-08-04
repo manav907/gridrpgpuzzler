@@ -125,12 +125,3 @@ public class ReticalManager : MonoBehaviour
             SetTiles(theseTiles, onTileMap, thisTile);
     }
 }
-public enum AoeStyle
-{
-    SSingle,
-    S3x3,
-    SSweep,
-    SArrow,
-    Taxi,
-    Square
-}

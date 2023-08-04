@@ -22,7 +22,7 @@ public class MoveDictionaryManager : MonoBehaviour
     [Header("Debug Data")]
     public bool ControlAI = false;
     bool ShouldContinue = false;
-    public void setVariables()
+    public void SetVariables()
     {
         turnManager = this.GetComponent<TurnManager>();
         reticalManager = this.GetComponent<ReticalManager>();
@@ -31,7 +31,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
         SetMoveDictionary();
     }
-    public void getThisCharacterData()
+    public void GetThisCharacterData()
     {
         thisCharacter = TurnManager.thisCharacter;
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
@@ -39,10 +39,12 @@ public class MoveDictionaryManager : MonoBehaviour
     Dictionary<TypeOfAction, Action> abilityNameToAction;
     void SetMoveDictionary()
     {
-        abilityNameToAction = new Dictionary<TypeOfAction, Action>();
-        abilityNameToAction.Add(TypeOfAction.apply_SelfMove, apply_SelfMove);
-        abilityNameToAction.Add(TypeOfAction.apply_Damage, apply_Damage);
-        abilityNameToAction.Add(TypeOfAction.apply_Heal, apply_Heal);
+        abilityNameToAction = new Dictionary<TypeOfAction, Action>
+        {
+            { TypeOfAction.apply_SelfMove, apply_SelfMove },
+            { TypeOfAction.apply_Damage, apply_Damage },
+            { TypeOfAction.apply_Heal, apply_Heal }
+        };
 
         void apply_Damage()
         {
@@ -70,38 +72,47 @@ public class MoveDictionaryManager : MonoBehaviour
         }
     }
 
-    void addToolTip(string Tip)
+    void AddToolTip(string Tip)
     {
         GameEvents.current.inGameUI.setTip(Tip);
     }
     string abiPointMapString = "";
-    public Dictionary<Vector3Int, List<List<Vector3Int>>> generateAbiltyPointMap(AbilityData abilityData, Vector3Int fromPoint)
+    public Dictionary<Vector3Int, List<List<Vector3Int>>> GenerateAbiltyPointMap(AbilityData abilityData, Vector3Int fromPoint)
     {
         abiPointMapString = "";
-        var pointsToScan = GlobalCal.generateArea(AoeStyle.Taxi, fromPoint, fromPoint, (float)abilityData.rangeOfAbility / 10);
-        reticalManager.reDrawInValidTiles(pointsToScan);//this sets the Valid Tiles Overlay
-        Dictionary<Vector3Int, List<List<Vector3Int>>> pointToScannedAreas = new Dictionary<Vector3Int, List<List<Vector3Int>>>();
-        List<Vector3Int> invalidKeys = new List<Vector3Int>();
+        //var pointsToScan = GlobalCal.GenerateArea(AoeStyle.Taxi, fromPoint, fromPoint, (float)abilityData.rangeOfAbility / 10);
+        var pointsToScan = GenerateAreaWithParams(abilityData.rangeOfAbility, fromPoint, fromPoint);
+        Dictionary<Vector3Int, List<List<Vector3Int>>> pointToScannedAreas = new();
         foreach (Vector3Int point in pointsToScan)
         {
-            List<List<Vector3Int>> list = new List<List<Vector3Int>>();
+            List<List<Vector3Int>> list = new();
             foreach (AreaGenerationParams TileDataPair in abilityData.ValidTileData)
             {
-                List<Vector3Int> tileCount = generateAreaWithParams(TileDataPair, fromPoint, point);
+                List<Vector3Int> tileCount = GenerateAreaWithParams(TileDataPair, fromPoint, point);
 
-                if (TileDataPair.minpoints <= tileCount.Count && tileCount.Count <= TileDataPair.MaxPoints)
+                //if (TileDataPair.minpoints <= tileCount.Count && tileCount.Count <= TileDataPair.MaxPoints)
+                if (TileDataPair.minpoints <= tileCount.Count)
+                {
+                    //Debug.Log(TileDataPair.name +" Was Added");
                     list.Add(tileCount);
+                }
             }
             if (abilityData.ValidTileData.Count == list.Count)
                 pointToScannedAreas[point] = list;
         }
+        //
         //Debug.Log(abiPointMapString);
         return pointToScannedAreas;
     }
-    public List<Vector3Int> generateAreaWithParams(AreaGenerationParams tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
+    public List<Vector3Int> GenerateAreaWithParams(AreaGenerationParams tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
     {
-        abiPointMapString += "   " + "Creating Area For " + tileToEffectPair + " with AoeStyle" + tileToEffectPair.aoeStyle + ":  ";
-        var output = GlobalCal.generateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.getRangeOfAction());
+        var direction = GlobalCal.getNormalizedDirection(fromPoint, AtPoint);
+
+        AtPoint = fromPoint + direction * tileToEffectPair.adjustAtPointWithDirection;
+
+        fromPoint = AtPoint;
+        abiPointMapString += "   " + "Creating Area For " + tileToEffectPair.name + " with AoeStyle " + tileToEffectPair.aoeStyle + "From Point " + fromPoint + " At Point " + AtPoint + ":  ";
+        var output = GlobalCal.GenerateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.rangeOfArea);
         output = mapManager.filterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
         output = mapManager.filterListWithWalkRequirements(output, tileToEffectPair.tileValidityParms.validFloors);
         output = CheckVectorValidity(fromPoint, output, tileToEffectPair.tileValidityParms.targetType);
@@ -110,7 +121,7 @@ public class MoveDictionaryManager : MonoBehaviour
         void PrintOutputStatus()
         {
             foreach (var point in output)
-                abiPointMapString += ", " + point;
+                abiPointMapString += point + ", ";
             abiPointMapString += "\n";
         }
         List<Vector3Int> CheckVectorValidity(Vector3Int fromPoint, List<Vector3Int> listOfRanges, TargetType targetType)
@@ -139,22 +150,22 @@ public class MoveDictionaryManager : MonoBehaviour
         }
     }
     public AbilityData currnetAbility;
-    public void doAction(AbilityData abilityData)
+    public void DoAction(AbilityData abilityData)
     {
         currnetAbility = abilityData;
         int costOfaction = characterCS.abilityToCost.returnDict()[abilityData];
         if (characterCS.actionPoints < costOfaction)
         {
-            addToolTip("The Ability " + currnetAbility.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
+            AddToolTip("The Ability " + currnetAbility.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
             return;
         }
         if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
             Debug.Log("Great Erros");
-        var pointMap = generateAbiltyPointMap(abilityData, characterCS.getCharV3Int());
+        var pointMap = GenerateAbiltyPointMap(abilityData, characterCS.getCharV3Int());
         if (pointMap.Keys.Count == 0)
         {
-            addToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
-           reticalManager.reDrawInValidTiles(new List<Vector3Int>());
+            AddToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
+            reticalManager.reDrawInValidTiles(new List<Vector3Int>());
             return;
         }
         reticalManager.UpdateReticalInputParams(pointMap);
@@ -191,6 +202,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         //Declaring Variables        
         reticalManager.reDrawValidTiles(validInputs);//this sets the Valid Tiles Overlay
+        reticalManager.reDrawInValidTiles(GlobalCal.GenerateArea(currnetAbility.rangeOfAbility.aoeStyle, characterCS.getCharV3Int(), characterCS.getCharV3Int(), currnetAbility.rangeOfAbility.rangeOfArea));//this sets the Valid Tiles Overlay
         ShouldContinue = false;
         //Executing Script
         if (!characterCS.controlCharacter)//if Non Player Character
@@ -201,7 +213,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else//if it is the player character
         {
-            addToolTip("Select Purple Tile To Contine with  " + currnetAbility.name + " Or Right Click to Cancel");
+            AddToolTip("Select Purple Tile To Contine with  " + currnetAbility.name + " Or Right Click to Cancel");
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = (reticalManager.getMovePoint());
         }
@@ -224,13 +236,13 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                addToolTip("Select an Button To Perform an Action");
+                AddToolTip("Select an Button To Perform an Action");
                 ShouldContinue = true;
                 return true;
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                addToolTip(currnetAbility.name + " Cancelled; Select an Button To Perform an Action");
+                AddToolTip(currnetAbility.name + " Cancelled; Select an Button To Perform an Action");
                 ShouldContinue = false;
                 return true;
             }

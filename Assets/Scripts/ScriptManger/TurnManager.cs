@@ -46,7 +46,7 @@ public class TurnManager : MonoBehaviour
         gameController = this.gameObject;
 
         mapManager.setVariables();
-        moveDictionaryManager.setVariables();
+        moveDictionaryManager.SetVariables();
         reticalManager.setVariables();
         universalCalculator.setVariables();
         basicCameraController.setVariables(gameController);
@@ -103,7 +103,7 @@ public class TurnManager : MonoBehaviour
         {
             thisCharacter = OrderOfInteractableCharacters[TurnCountInt];//updateing thisCharacterReffrence
             thisCharacterData = thisCharacter.gameObject.GetComponent<CharacterControllerScript>();
-            moveDictionaryManager.getThisCharacterData();
+            moveDictionaryManager.GetThisCharacterData();
         }
         bool noPlayerCharacterRemaining()
         {
