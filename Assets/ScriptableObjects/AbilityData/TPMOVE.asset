@@ -16,7 +16,6 @@ MonoBehaviour:
   rangeOfAbility:
     name: Primary Range For Self Move
     minpoints: 1
-    MaxPoints: 10
     adjustAtPointWithDirection: 1
     rangeOfArea: 3
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
@@ -24,14 +23,12 @@ MonoBehaviour:
   ValidTileData:
   - name: Enemy Location
     minpoints: 1
-    MaxPoints: 1
-    adjustAtPointWithDirection: 0
+    adjustAtPointWithDirection: 1
     rangeOfArea: 2
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     aoeStyle: 4
   - name: OIffset
-    minpoints: 1
-    MaxPoints: 4
+    minpoints: 0
     adjustAtPointWithDirection: 2
     rangeOfArea: 1
     tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
