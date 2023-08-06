@@ -107,10 +107,8 @@ public class MoveDictionaryManager : MonoBehaviour
     public List<Vector3Int> GenerateAreaWithParams(AreaGenerationParams tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
     {
         var direction = GlobalCal.getNormalizedDirection(fromPoint, AtPoint);
-
-        AtPoint = fromPoint + direction * tileToEffectPair.adjustAtPointWithDirection;
-
-        fromPoint = AtPoint;
+        fromPoint = fromPoint + direction * tileToEffectPair.adjustAtPointWithDirection;
+        AtPoint = fromPoint+direction;
         abiPointMapString += "   " + "Creating Area For " + tileToEffectPair.name + " with AoeStyle " + tileToEffectPair.aoeStyle + "From Point " + fromPoint + " At Point " + AtPoint + ":  ";
         var output = GlobalCal.GenerateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.rangeOfArea);
         output = mapManager.filterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
@@ -172,7 +170,7 @@ public class MoveDictionaryManager : MonoBehaviour
         StartCoroutine(SequenceOfEvents());
         IEnumerator SequenceOfEvents()
         {
-            yield return StartCoroutine(getInput(pointMap.Keys.ToList()));
+            yield return StartCoroutine(GetInput(pointMap.Keys.ToList()));
             if (ShouldContinue)
             {
                 characterCS.actionPoints = characterCS.actionPoints - costOfaction;//Consume Ability Point
@@ -198,7 +196,7 @@ public class MoveDictionaryManager : MonoBehaviour
             yield return null;
         }
     }
-    IEnumerator getInput(List<Vector3Int> validInputs)
+    IEnumerator GetInput(List<Vector3Int> validInputs)
     {
         //Declaring Variables        
         reticalManager.reDrawValidTiles(validInputs);//this sets the Valid Tiles Overlay
