@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class CharacterControllerScript : MonoBehaviour
 {
-    public string characterName;
     [HideInInspector]
     public bool ControlCharacter
     {
@@ -18,13 +17,6 @@ public class CharacterControllerScript : MonoBehaviour
             return true;
         }
     }
-    public bool isPlayerCharacter = true;
-    public int health;
-    public int attackDamage;
-    public int speedValue;
-    public int rangeOfVision;
-    public string faction;
-    public List<GroundFloorType> canWalkOn;
     public CharacterData CharacterDataSO;
     public Vector3Int currentCellPosOfCharcter;
     [SerializeField] private TMPro.TextMeshPro Heatlh;
@@ -33,6 +25,15 @@ public class CharacterControllerScript : MonoBehaviour
     public AnimationControllerScript animationControllerScript;
     UniversalCalculator universalCalculator;
     public SerializableDictionary<AbilityData, int> abilityToCost;
+    [Header("SO Data")]
+    public string characterName;
+    public bool isPlayerCharacter = true;
+    public int health;
+    public int attackDamage;
+    public int speedValue;
+    public int rangeOfVision;
+    public string faction;
+    public List<GroundFloorType> canWalkOn;
     public void InitilizeCharacter(GameObject gameController)
     {
         mapManager = gameController.GetComponent<MapManager>();

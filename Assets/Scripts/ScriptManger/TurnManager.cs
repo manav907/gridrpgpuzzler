@@ -11,7 +11,7 @@ public class TurnManager : MonoBehaviour
     {
         GetGameObjects();
         InstantiateallIntractableCharacters();//Can only be called after getting game objects
-        recalculateOrder();//can only be called after Instanstiating the Characterts       
+        RecalculateOrder();//can only be called after Instanstiating the Characterts       
         //GameEvents.current.setText("");
         beginTurnIfPossible();
     }
@@ -117,20 +117,20 @@ public class TurnManager : MonoBehaviour
             return true;
         }
     }
-    public void setCameraPos(Vector3 pos)
+    public void SetCameraPos(Vector3 pos)
     {
         basicCameraController.setCameraPos(pos);
     }
 
-    public void endTurn()
+    public void EndTurn()
     {
 
         GameEvents.current.inGameUI.ClearButtons();
-        StartCoroutine(thisCharacterData.animationControllerScript.trySetNewAnimation(CharacterAnimationState.Idle));
+        StartCoroutine(thisCharacterData.animationControllerScript.TrySetNewAnimation(CharacterAnimationState.Idle));
         TurnCountInt++;
         if (TurnCountInt >= OrderOfInteractableCharacters.Count)
         {
-            recalculateOrder();
+            RecalculateOrder();
             TurnCountInt = 0;
         }
         else
@@ -140,7 +140,7 @@ public class TurnManager : MonoBehaviour
         beginTurnIfPossible();
     }
     int TurnLoop = -1;
-    void recalculateOrder()
+    void RecalculateOrder()
     {
         //reticalManager.reDrawShadows();
         TurnLoop++;

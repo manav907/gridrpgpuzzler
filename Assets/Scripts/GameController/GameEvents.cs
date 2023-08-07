@@ -212,13 +212,13 @@ public class GameEvents : MonoBehaviour
                 //Debug.Log("Character" + keyPair.Key + " Said \n" + keyPair.Value.dialogText);
                 setDialog(null, value.dialogText);
                 if (NameTagToTransform.ContainsKey(key))
-                    turnManager.setCameraPos(NameTagToTransform[key].transform.position);
+                    turnManager.SetCameraPos(NameTagToTransform[key].transform.position);
 
 
                 yield return new WaitForSeconds(2f);
                 setDialogToNull();
             }
-            turnManager.setCameraPos(originalPos);
+            turnManager.SetCameraPos(originalPos);
             EventInMotion = false;// This is Super Inportant
         }
     }

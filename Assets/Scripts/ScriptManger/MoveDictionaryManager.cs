@@ -177,7 +177,7 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             AddToolTip("Select Purple Tile To Contine with  " + currnetAbility.name + " Or Right Click to Cancel");
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
-            tryHere = (reticalManager.getMovePoint());
+            tryHere = reticalManager.getMovePoint();
         }
         if (ShouldContinue && validInputs.Contains(tryHere))
         {            /* this is fine */        }
@@ -215,8 +215,7 @@ public class MoveDictionaryManager : MonoBehaviour
     IEnumerator AnimationCoRoutione(List<Vector3Int> points, ActionEffectParams actionEffectParams, Vector3Int fromPoint, Vector3Int atPoint)
     {
         points = mapManager.filterListWithTileRequirements(points, characterCS, actionEffectParams.OnlyApplyOn);
-
-        float startTime = Time.time;
+        /* float startTime = Time.time;
         float lastTime = Time.time;
         CreateDebugLogsForTime(false);
         void CreateDebugLogsForTime(bool debugit = true)
@@ -228,38 +227,12 @@ public class MoveDictionaryManager : MonoBehaviour
 
             Debug.Log("Delta Time: " + deltaTime);
             lastTime = currentTime;
-        }
+        } */
         //
         GameEvents.current.inGameUI.ClearButtons();//Clearing Buttons while action is in progress
         TypeOfAction actiontype = actionEffectParams.typeOfAction;
         //AnimationMovementType animationMovementType = actionEffectParams.animationMovementType;
         AnimationLoopType animationLoopType = actionEffectParams.loopType;
-        IEnumerator animationActionFunction()
-        {
-            Vector3 targetLocation = tryHere;
-            //if (animationMovementType == AnimationMovementType.NudgeToPoint)
-            {
-                Vector3 point1 = fromPoint;
-                Vector3 point2 = atPoint;
-                float distanceFactor = 0.3f;  // Adjust this value to control the distance from point1
-                Vector3 direction = (point2 - point1).normalized;  // Calculate the direction between the points
-                Vector3 midPoint = point1 + direction * distanceFactor * Vector3.Distance(point1, point2);
-                targetLocation = midPoint;
-            }
-            /* else if (animationMovementType == AnimationMovementType.NoMovement)
-            {
-                targetLocation = fromPoint;
-            } */
-            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));
-            yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
-        }
-        IEnumerator afterAnimationOfAction()
-        {
-            StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, characterCS.GetCharV3Int(), moveTimeSpeed));
-            StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(CharacterAnimationState.Idle));
-            if (!UserDataManager.skipWaitTime)
-                yield return new WaitForSeconds(UserDataManager.waitAction);
-        }
 
         if (animationLoopType == AnimationLoopType.forAction)
         {
@@ -276,6 +249,27 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         //Debug.Break();
         yield return afterAnimationOfAction();
+        ///////Functions
+        Vector3 calculateNudge(Vector3Int towardsPoint, float distanceFactor = 0.3f)
+        {
+            /* if (animationMovementType == AnimationMovementType.NoMovement)                targetLocation = fromPoint;            else if (animationMovementType == AnimationMovementType.NudgeToPoint) */
+            //float distanceFactor = 0.3f;  // Adjust this value to control the distance from point1
+            Vector3 direction = GlobalCal.getNormalizedDirection(fromPoint, towardsPoint);  // Calculate the direction between the points
+            Vector3 midPoint = fromPoint + direction * distanceFactor * Vector3.Distance(fromPoint, towardsPoint);
+            return midPoint;
+        }
+        IEnumerator animationActionFunction()
+        {
+            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, calculateNudge(atPoint), moveTimeSpeed));
+            yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
+        }
+        IEnumerator afterAnimationOfAction()
+        {
+            StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, characterCS.GetCharV3Int(), moveTimeSpeed));
+            StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(CharacterAnimationState.Idle));
+            if (!UserDataManager.skipWaitTime)
+                yield return new WaitForSeconds(UserDataManager.waitAction);
+        }
         IEnumerator abinameToAction(TypeOfAction typeOfAction)
         {
             List<CharacterControllerScript> refreshList = new();
@@ -307,14 +301,16 @@ public class MoveDictionaryManager : MonoBehaviour
                         Vector3Int sourceOfPush = characterCS.GetCharV3Int();
                         Vector3Int directionOfPush = GlobalCal.getNormalizedDirection(sourceOfPush, tryHere);
                         Vector3Int newPos = tryHere + directionOfPush;
-                        if (!mapManager.isCellHoldingCharacer(newPos))
+                        if (!mapManager.isCellHoldingCharacer(newPos) &&
+                        mapManager.filterListWithWalkRequirements(new List<Vector3Int>() { newPos }, targetCharacter.canWalkOn).Count != 0)
                         {
                             mapManager.UpdateCharacterPosistion(targetCharacter.GetCharV3Int(), newPos, targetCharacter.gameObject);
                             refreshList.Add(targetCharacter);
                         }
                         else
                         {
-                            Debug.Log("Cant Push");
+                            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(targetCharacter.transform, calculateNudge(newPos, 0.6f), moveTimeSpeed));
+                            yield return StartCoroutine(abinameToAction(TypeOfAction.apply_Damage));
                         }
                         break;
                     }

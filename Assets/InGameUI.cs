@@ -93,7 +93,7 @@ public class InGameUI : MonoBehaviour
         }
         if (endTurn == null)
         {
-            endTurn = delegate { GameEvents.current.turnManager.endTurn(); };
+            endTurn = delegate { GameEvents.current.turnManager.EndTurn(); };
         }
         AbilityButtonSideBar.Add(InstansiateButton("End Turn", endTurn));
     }

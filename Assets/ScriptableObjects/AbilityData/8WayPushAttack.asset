@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
-  m_Name: 8WayAttack
+  m_Name: 8WayPushAttack
   m_EditorClassIdentifier: 
   Primaryuse: 0
   rangeOfAbility:
@@ -28,4 +28,4 @@ MonoBehaviour:
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     aoeStyle: 4
   ApplyEffects:
-  - {fileID: 11400000, guid: d4a94f480573a8946b2b286ce87ad2e2, type: 2}
+  - {fileID: 11400000, guid: 41eedcee4faaefd40907702a458d886b, type: 2}
