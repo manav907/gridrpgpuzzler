@@ -7,6 +7,6 @@ public class ActionEffectParams : ScriptableObject
     public TypeOfAction typeOfAction;
     public ValidTargets OnlyApplyOn;
     public CharacterAnimationState doActionTillKeyFrameAnimation;
-    public AnimationMovementType animationMovementType;
+    //public AnimationMovementType animationMovementType;
     public AnimationLoopType loopType;
 }

@@ -11,7 +11,7 @@ public class MoveDictionaryManager : MonoBehaviour
     MapManager mapManager;
     UniversalCalculator universalCalculator;
     [Header("Read Only Data")]
-    private float moveTimeSpeed = 0.12f;
+    private readonly float moveTimeSpeed = 0.12f;
     [Header("Character Data")]
     GameObject thisCharacter;
     CharacterControllerScript characterCS;
@@ -28,55 +28,19 @@ public class MoveDictionaryManager : MonoBehaviour
         reticalManager = this.GetComponent<ReticalManager>();
         mapManager = this.GetComponent<MapManager>();
         universalCalculator = this.GetComponent<UniversalCalculator>();
-
-        SetMoveDictionary();
     }
     public void GetThisCharacterData()
     {
         thisCharacter = TurnManager.thisCharacter;
         characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
     }
-    Dictionary<TypeOfAction, Action> abilityNameToAction;
-    void SetMoveDictionary()
-    {
-        abilityNameToAction = new Dictionary<TypeOfAction, Action>
-        {
-            { TypeOfAction.apply_SelfMove, apply_SelfMove },
-            { TypeOfAction.apply_Damage, apply_Damage },
-            { TypeOfAction.apply_Heal, apply_Heal }
-        };
-
-        void apply_Damage()
-        {
-            if (mapManager.cellDataDir[tryHere].characterAtCell != null)
-            {
-                CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
-                CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
-                targetCharacter.health -= attackingCharacter.attackDamage;
-                checkCharacters(targetCharacter);
-                GameEvents.current.PlaySound(0);
-            }
-        }
-        void apply_Heal()
-        {            /* BasicActionInProgress = false; */        }
-        void apply_SelfMove()
-        {
-            Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().getCharV3Int();
-            mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
-        }
-        /* void DoubleTeam())
-        { characterCS.actionPoints += 1; } */
-        void checkCharacters(CharacterControllerScript targetCharacter)
-        {
-            targetCharacter.CheckIfCharacterIsDead();
-        }
-    }
 
     void AddToolTip(string Tip)
     {
         GameEvents.current.inGameUI.setTip(Tip);
     }
-    string abiPointMapString = "";
+
+    private string abiPointMapString = "";
     public Dictionary<Vector3Int, List<List<Vector3Int>>> GenerateAbiltyPointMap(AbilityData abilityData, Vector3Int fromPoint)
     {
         abiPointMapString = "";
@@ -108,7 +72,7 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         var direction = GlobalCal.getNormalizedDirection(fromPoint, AtPoint);
         fromPoint = fromPoint + direction * tileToEffectPair.adjustAtPointWithDirection;
-        AtPoint = fromPoint+direction;
+        AtPoint = fromPoint + direction;
         abiPointMapString += "   " + "Creating Area For " + tileToEffectPair.name + " with AoeStyle " + tileToEffectPair.aoeStyle + "From Point " + fromPoint + " At Point " + AtPoint + ":  ";
         var output = GlobalCal.GenerateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.rangeOfArea);
         output = mapManager.filterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
@@ -159,7 +123,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
             Debug.Log("Great Erros");
-        var pointMap = GenerateAbiltyPointMap(abilityData, characterCS.getCharV3Int());
+        var pointMap = GenerateAbiltyPointMap(abilityData, characterCS.GetCharV3Int());
         if (pointMap.Keys.Count == 0)
         {
             AddToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
@@ -178,7 +142,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 List<List<Vector3Int>> ListOfListPointToEffect = pointMap[tryHere];
                 for (int i = 0; i < abilityData.ApplyEffects.Count; i++)
                 {
-                    yield return StartCoroutine(AnimationCoRoutione(ListOfListPointToEffect[i], abilityData.ApplyEffects[i], characterCS.getCharV3Int(), tryHere));
+                    yield return StartCoroutine(AnimationCoRoutione(ListOfListPointToEffect[i], abilityData.ApplyEffects[i], characterCS.GetCharV3Int(), tryHere));
                 }
             }
             else if (ControlAI)
@@ -187,7 +151,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 turnManager.endTurn();
             }
             ShouldContinue = false;
-            if (characterCS.doActionPointsRemainAfterAbility())
+            if (characterCS.DoActionPointsRemainAfterAbility())
                 characterCS.BeginThisCharacterTurn();
             else
             {
@@ -200,12 +164,12 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         //Declaring Variables        
         reticalManager.reDrawValidTiles(validInputs);//this sets the Valid Tiles Overlay
-        reticalManager.reDrawInValidTiles(GlobalCal.GenerateArea(currnetAbility.rangeOfAbility.aoeStyle, characterCS.getCharV3Int(), characterCS.getCharV3Int(), currnetAbility.rangeOfAbility.rangeOfArea));//this sets the Valid Tiles Overlay
+        reticalManager.reDrawInValidTiles(GlobalCal.GenerateArea(currnetAbility.rangeOfAbility.aoeStyle, characterCS.GetCharV3Int(), characterCS.GetCharV3Int(), currnetAbility.rangeOfAbility.rangeOfArea));//this sets the Valid Tiles Overlay
         ShouldContinue = false;
         //Executing Script
-        if (!characterCS.controlCharacter)//if Non Player Character
+        if (!characterCS.ControlCharacter)//if Non Player Character
         {
-            tryHere = characterCS.getTarget(currnetAbility);
+            tryHere = characterCS.GetTarget(currnetAbility);
             ShouldContinue = true;
             yield return new WaitForSeconds(UserDataManager.waitAI);
         }
@@ -220,7 +184,7 @@ public class MoveDictionaryManager : MonoBehaviour
         else
         {
             ShouldContinue = false;
-            if (!characterCS.controlCharacter)
+            if (!characterCS.ControlCharacter)
             {
                 Debug.LogError("AI Exception");
                 turnManager.endTurn();
@@ -254,8 +218,8 @@ public class MoveDictionaryManager : MonoBehaviour
 
         float startTime = Time.time;
         float lastTime = Time.time;
-        debugTime(false);
-        void debugTime(bool debugit = true)
+        CreateDebugLogsForTime(false);
+        void CreateDebugLogsForTime(bool debugit = true)
         {
             if (!debugit)
                 return;
@@ -268,31 +232,30 @@ public class MoveDictionaryManager : MonoBehaviour
         //
         GameEvents.current.inGameUI.ClearButtons();//Clearing Buttons while action is in progress
         TypeOfAction actiontype = actionEffectParams.typeOfAction;
-        AnimationMovementType animationMovementType = actionEffectParams.animationMovementType;
+        //AnimationMovementType animationMovementType = actionEffectParams.animationMovementType;
         AnimationLoopType animationLoopType = actionEffectParams.loopType;
         IEnumerator animationActionFunction()
         {
             Vector3 targetLocation = tryHere;
-            if (animationMovementType == AnimationMovementType.NudgeToPoint)
+            //if (animationMovementType == AnimationMovementType.NudgeToPoint)
             {
                 Vector3 point1 = fromPoint;
                 Vector3 point2 = atPoint;
                 float distanceFactor = 0.3f;  // Adjust this value to control the distance from point1
-
                 Vector3 direction = (point2 - point1).normalized;  // Calculate the direction between the points
                 Vector3 midPoint = point1 + direction * distanceFactor * Vector3.Distance(point1, point2);
                 targetLocation = midPoint;
             }
-            else if (animationMovementType == AnimationMovementType.NoMovement)
+            /* else if (animationMovementType == AnimationMovementType.NoMovement)
             {
                 targetLocation = fromPoint;
-            }
+            } */
             yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, targetLocation, moveTimeSpeed));
             yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
         }
         IEnumerator afterAnimationOfAction()
         {
-            StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, characterCS.getCharV3Int(), moveTimeSpeed));
+            StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, characterCS.GetCharV3Int(), moveTimeSpeed));
             StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(CharacterAnimationState.Idle));
             if (!UserDataManager.skipWaitTime)
                 yield return new WaitForSeconds(UserDataManager.waitAction);
@@ -308,10 +271,72 @@ public class MoveDictionaryManager : MonoBehaviour
             tryHere = point;
             if (animationLoopType == AnimationLoopType.forEachPoint)
                 yield return StartCoroutine(animationActionFunction());
-            abilityNameToAction[actiontype]();//The Actual Action
+            //abilityNameToAction[actiontype]();//The Actual Action
+            yield return StartCoroutine(abinameToAction(actiontype));
         }
         //Debug.Break();
         yield return afterAnimationOfAction();
+        IEnumerator abinameToAction(TypeOfAction typeOfAction)
+        {
+            List<CharacterControllerScript> refreshList = new();
+            yield return null;
+            switch (typeOfAction)
+            {
+                case TypeOfAction.apply_Damage:
+                    {
+                        CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+                        CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
+                        targetCharacter.health -= attackingCharacter.attackDamage;
+                        refreshList.Add(targetCharacter);
+                        GameEvents.current.PlaySound(0);
+                        break;
+                    }
+                case TypeOfAction.apply_Heal:
+                    {
+                        break;
+                    }
+                case TypeOfAction.apply_SelfMove:
+                    {
+                        Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().GetCharV3Int();
+                        mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
+                        break;
+                    }
+                case TypeOfAction.apply_Push:
+                    {
+                        CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+                        Vector3Int sourceOfPush = characterCS.GetCharV3Int();
+                        Vector3Int directionOfPush = GlobalCal.getNormalizedDirection(sourceOfPush, tryHere);
+                        Vector3Int newPos = tryHere + directionOfPush;
+                        if (!mapManager.isCellHoldingCharacer(newPos))
+                        {
+                            mapManager.UpdateCharacterPosistion(targetCharacter.GetCharV3Int(), newPos, targetCharacter.gameObject);
+                            refreshList.Add(targetCharacter);
+                        }
+                        else
+                        {
+                            Debug.Log("Cant Push");
+                        }
+                        break;
+                    }
+                default:
+                    break;
+            }
+            foreach (CharacterControllerScript character in refreshList)
+            {
+                if (character.transform.position != character.currentCellPosOfCharcter)
+                    yield return StartCoroutine(
+                        TransformAnimationScript.current.MoveUsingQueueSystem
+                        (
+                            character.transform, character.currentCellPosOfCharcter, moveTimeSpeed)
+                        );
+                checkCharacters(character);
+                void checkCharacters(CharacterControllerScript targetCharacter)
+                {
+                    targetCharacter.CheckIfCharacterIsDead();
+                }
+            }
+
+        }
     }
 }
 public enum CoRoutineStateCheck
@@ -326,6 +351,7 @@ public enum TypeOfAction
     apply_Damage,
     apply_Heal,
     apply_SelfMove,
+    apply_Push
 }
 public enum BoolEnum
 {

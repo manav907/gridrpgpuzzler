@@ -65,13 +65,13 @@ public enum CharacterAnimationState
     RegularAttack,
     SpecialAttack
 }
-public enum AnimationMovementType
+/* public enum AnimationMovementType
 {
     NudgeToPoint,
     NoMovement,
     WalkToPoint,
 
-}
+} */
 public enum AnimationLoopType
 {
     forEachPoint,

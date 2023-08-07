@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77f1a9986370af64a8aab81c300bc34a, type: 3}
-  m_Name: MoveTo
+  m_Name: PushEnemies
   m_EditorClassIdentifier: 
-  typeOfAction: 2
-  OnlyApplyOn: 1
-  doActionTillKeyFrameAnimation: 1
+  typeOfAction: 3
+  OnlyApplyOn: 3
+  doActionTillKeyFrameAnimation: 2
   loopType: 0

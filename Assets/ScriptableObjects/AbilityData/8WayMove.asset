@@ -16,7 +16,6 @@ MonoBehaviour:
   rangeOfAbility:
     name: 
     minpoints: 1
-    MaxPoints: 30
     adjustAtPointWithDirection: 1
     rangeOfArea: 3
     tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}
@@ -24,7 +23,6 @@ MonoBehaviour:
   ValidTileData:
   - name: 
     minpoints: 1
-    MaxPoints: 1
     adjustAtPointWithDirection: 1
     rangeOfArea: 0
     tileValidityParms: {fileID: 11400000, guid: 0e49357395bce624588ed56fbd74a851, type: 2}

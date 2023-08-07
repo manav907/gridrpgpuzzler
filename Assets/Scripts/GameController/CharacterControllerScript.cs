@@ -9,7 +9,7 @@ public class CharacterControllerScript : MonoBehaviour
 {
     public string characterName;
     [HideInInspector]
-    public bool controlCharacter
+    public bool ControlCharacter
     {
         get
         {
@@ -86,12 +86,11 @@ public class CharacterControllerScript : MonoBehaviour
         {
             GameEvents.current.DeathEvent(this.GetComponent<CharacterControllerScript>());
             isALive = false;
-            Vector3Int thisCharPos = universalCalculator.castAsV3Int(this.gameObject.transform.position);
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
             turnManager.ListOfInteractableCharacters.Remove(gameObject);
-            if (controlCharacter)
+            if (ControlCharacter)
                 GameEvents.current.PlaySound(2);
-            mapManager.KillCharacter(getCharV3Int());
+            mapManager.KillCharacter(GetCharV3Int());
             if (TurnManager.thisCharacter == this.gameObject)
             {
                 turnManager.endTurn();
@@ -101,7 +100,7 @@ public class CharacterControllerScript : MonoBehaviour
     }
     public int actionPoints = 1;
     public int defaultActionPoints = 1;
-    public bool doActionPointsRemainAfterAbility()
+    public bool DoActionPointsRemainAfterAbility()
     {
         if (actionPoints <= 0)
             return false;
@@ -118,13 +117,13 @@ public class CharacterControllerScript : MonoBehaviour
         {
             //animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
             StartCoroutine(animationControllerScript.trySetNewAnimation(CharacterAnimationState.Walk));
-            if (controlCharacter)
+            if (ControlCharacter)
             {
                 GameEvents.current.TriggerNextDialog();//Disable this laeter
                 List<AbilityData> allAbilities = new();
                 allAbilities.AddRange(abilityToCost.Keys());
                 GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(allAbilities);
-                turnManager.setCameraPos(getCharV3Int());
+                turnManager.setCameraPos(GetCharV3Int());
             }
             else
             {
@@ -133,7 +132,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
     [SerializeField] Vector3Int destinationTarget;
-    int GhostVision = 1;
+    private readonly int GhostVision = 1;
     Dictionary<TypeOfAction, List<AbilityData>> AbilityMap()
     {
         var newDict = new Dictionary<TypeOfAction, List<AbilityData>>();
@@ -155,7 +154,7 @@ public class CharacterControllerScript : MonoBehaviour
         var costIndex = abilityToCost.returnDict();
         if (actionPoints > 0)
         {
-            Vector3Int thisCharpos = getCharV3Int();
+            Vector3Int thisCharpos = GetCharV3Int();
             //var VisionList = GlobalCal.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
             var VisionList = GlobalCal.GenerateArea(AoeStyle.Square, thisCharpos, thisCharpos, rangeOfVision + GhostVision);
 
@@ -172,7 +171,7 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 destinationTarget = selectOptimalTarget();
                 //var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
-                var attackRangeList = moveDictionaryManager.GenerateAbiltyPointMap(optionsofAbilities[TypeOfAction.apply_Damage][0], getCharV3Int()).Keys.ToList();
+                var attackRangeList = moveDictionaryManager.GenerateAbiltyPointMap(optionsofAbilities[TypeOfAction.apply_Damage][0], GetCharV3Int()).Keys.ToList();
                 attackRangeList = mapManager.filterListWithTileRequirements(attackRangeList, this, ValidTargets.Enemies);
                 if (attackRangeList.Count > 0)
                 {
@@ -199,13 +198,13 @@ public class CharacterControllerScript : MonoBehaviour
             List<Vector3Int> listOfPossibleTargets(List<Vector3Int> visionList)
             {
                 var OrderOfInteractableCharacters = turnManager.OrderOfInteractableCharacters;
-                List<Vector3Int> thisList = new List<Vector3Int>();
+                List<Vector3Int> thisList = new();
                 foreach (GameObject character in OrderOfInteractableCharacters)
                 {
                     CharacterControllerScript CSS = character.GetComponent<CharacterControllerScript>();
-                    Vector3Int positionofCSS = CSS.getCharV3Int();
+                    Vector3Int positionofCSS = CSS.GetCharV3Int();
                     if (visionList.Contains(positionofCSS))//if Character is in vision
-                        if (CSS.controlCharacter)//if is Player Character
+                        if (CSS.ControlCharacter)//if is Player Character
                             thisList.Add(positionofCSS);
                 }
                 thisList.Remove(thisCharpos);
@@ -213,7 +212,7 @@ public class CharacterControllerScript : MonoBehaviour
             }
             Vector3Int selectOptimalTarget()
             {
-                return universalCalculator.SortListAccordingtoDistanceFromPoint(targetList, getCharV3Int())[0];
+                return universalCalculator.SortListAccordingtoDistanceFromPoint(targetList, GetCharV3Int())[0];
             }
         }
         else
@@ -222,20 +221,20 @@ public class CharacterControllerScript : MonoBehaviour
             turnManager.endTurn();
         }
     }
-    public Vector3Int getCharV3Int()
+    public Vector3Int GetCharV3Int()
     {
         if (mapManager.cellDataDir[currentCellPosOfCharcter].characterAtCell = this.gameObject)
             return currentCellPosOfCharcter;
         Debug.LogError("Fata error");
         return Vector3Int.zero;
     }
-    public Vector3Int getTarget(AbilityData abilityData)
+    public Vector3Int GetTarget(AbilityData abilityData)
     //validTargets depends on the action being performed
     {
-        List<Vector3Int> validTiles = moveDictionaryManager.GenerateAbiltyPointMap(abilityData, getCharV3Int()).Keys.ToList();
+        List<Vector3Int> validTiles = moveDictionaryManager.GenerateAbiltyPointMap(abilityData, GetCharV3Int()).Keys.ToList();
         if (abilityData.Primaryuse == TypeOfAction.apply_SelfMove)
         {
-            var validPathToObjective = mapManager.findOptimalPath(getCharV3Int(), getUseableTarget(), abilityData, true);
+            var validPathToObjective = mapManager.findOptimalPath(GetCharV3Int(), getUseableTarget(), abilityData, true);
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
             {
@@ -243,7 +242,7 @@ public class CharacterControllerScript : MonoBehaviour
                 return getBasicDirection();
             }
             Vector3Int chosenPath = validPathToObjective[0];
-            if (chosenPath == getCharV3Int())
+            if (chosenPath == GetCharV3Int())
             {
                 Debug.Log("no Vaid Path Found");
                 return getBasicDirection();
@@ -251,7 +250,7 @@ public class CharacterControllerScript : MonoBehaviour
             if (!validTiles.Contains(chosenPath))
             {
                 Debug.Log("path does not have currently moveable Tiles using Fallback");
-                return getCharV3Int();
+                return GetCharV3Int();
             }
             return chosenPath;
         }
@@ -269,7 +268,7 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 return new List<Vector3Int>() { destinationTarget };
             }
-            return universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, getCharV3Int());
+            return universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, GetCharV3Int());
         }
     }
 }
