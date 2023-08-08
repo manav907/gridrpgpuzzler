@@ -32,12 +32,12 @@ public class InGameUI : MonoBehaviour
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
         ControlScheme = root.Q<Button>("ControlScheme");
-        setUpUI();
+        SetUpUI();
 
 
         restartButton.clicked += GameEvents.current.reloadScene;
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
-        ControlScheme.clicked += swithControlScheme;
+        ControlScheme.clicked += SwithControlScheme;
 
         UserDataManager.setSetting();
 
@@ -45,7 +45,7 @@ public class InGameUI : MonoBehaviour
 
         //initilizeArcadeModeGrid();
     }
-    void swithControlScheme()
+    void SwithControlScheme()
     {
         if (UserDataManager.Snap == false)
         {
@@ -58,7 +58,7 @@ public class InGameUI : MonoBehaviour
             ControlScheme.text = "Pick Mode";
         }
     }
-    void setUpUI()
+    void SetUpUI()
     {
         ControlScheme.text = "Pick Mode";
 #if UNITY_EDITOR
@@ -73,23 +73,26 @@ public class InGameUI : MonoBehaviour
         TipBox = root.Q<VisualElement>("TipBox");
         Tip.text = "Kill All Enemies";
     }
-    public void setTip(string tip)
+    public void SetTip(string tip)
     {
         Tip.text = tip;
     }
-    public void MakeButtonsFromLadderCollapseFunction(List<AbilityData> list)
+    public void MakeButtonsFromAbilityies(List<AbilityData> list)
     {
         ClearButtons();
         for (int i = 0; i < list.Count; i++)
         {
             AbilityData abilityData = list[i];
-            Action newAction = delegate { GameEvents.current.moveDictionaryManager.DoAction(abilityData); };
+            void newAction() { GameEvents.current.moveDictionaryManager.DoAction(abilityData); }
 
             if (i >= actionsAssigned.Count)
             { actionsAssigned.Add(newAction); }
             else
                 actionsAssigned[i] = newAction;
-            addButton(abilityData.name, actionsAssigned[i]);
+            string buttonName = abilityData.userFriendlyName;
+            if (buttonName == "")
+                buttonName = abilityData.name;
+            AddButton(buttonName, actionsAssigned[i]);
         }
         if (endTurn == null)
         {
@@ -107,15 +110,17 @@ public class InGameUI : MonoBehaviour
             actionsAssigned = new List<Action>();
         }
     }
-    public void addButton(string nameOFButton, Action action)
+    public void AddButton(string nameOFButton, Action action)
     {
         AbilityButtonSideBar.Add(InstansiateButton(nameOFButton, action));
     }
     public Button InstansiateButton(string nameOFButton, Action action)
     {
-        var newButton = new Button();
-        newButton.name = nameOFButton;
-        newButton.text = nameOFButton;
+        var newButton = new Button
+        {
+            name = nameOFButton,
+            text = nameOFButton
+        };
         newButton.style.height = AblityButtonExample.style.height;
 
         newButton.AddToClassList("ButtonsThatShrinkToFit");

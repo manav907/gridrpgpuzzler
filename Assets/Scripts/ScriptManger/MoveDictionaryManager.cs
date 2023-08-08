@@ -37,7 +37,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
     void AddToolTip(string Tip)
     {
-        GameEvents.current.inGameUI.setTip(Tip);
+        GameEvents.current.inGameUI.SetTip(Tip);
     }
 
     private string abiPointMapString = "";
@@ -301,6 +301,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         Vector3Int sourceOfPush = characterCS.GetCharV3Int();
                         Vector3Int directionOfPush = GlobalCal.getNormalizedDirection(sourceOfPush, tryHere);
                         Vector3Int newPos = tryHere + directionOfPush;
+                        yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(targetCharacter.transform, calculateNudge(newPos, 0.6f), moveTimeSpeed));
                         if (!mapManager.isCellHoldingCharacer(newPos) &&
                         mapManager.filterListWithWalkRequirements(new List<Vector3Int>() { newPos }, targetCharacter.canWalkOn).Count != 0)
                         {
@@ -309,7 +310,6 @@ public class MoveDictionaryManager : MonoBehaviour
                         }
                         else
                         {
-                            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(targetCharacter.transform, calculateNudge(newPos, 0.6f), moveTimeSpeed));
                             yield return StartCoroutine(abinameToAction(TypeOfAction.apply_Stun));
                             yield return StartCoroutine(abinameToAction(TypeOfAction.apply_Damage));
                         }
@@ -319,8 +319,6 @@ public class MoveDictionaryManager : MonoBehaviour
                     {
                         CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
                         targetCharacter.actionPointsPenelty++;
-                        targetCharacter.actionPointsPenelty++;
-                        //targetCharacter.actionPointsPenelty++;
                         break;
                     }
                 default:

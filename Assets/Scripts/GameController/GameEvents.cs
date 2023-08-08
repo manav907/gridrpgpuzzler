@@ -118,7 +118,7 @@ public class GameEvents : MonoBehaviour
     }
     public void setText(string text)
     {
-        inGameUI.setTip(text);
+        inGameUI.SetTip(text);
     }
     void CheckWinCondidion()
     {

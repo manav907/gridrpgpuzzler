@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New AbilityData", menuName = "AbilityData")]
 public class AbilityData : ScriptableObject
 {
+    public string userFriendlyName;
     public TypeOfAction Primaryuse;
     public AreaGenerationParams rangeOfAbility;
     public List<AreaGenerationParams> ValidTileData;

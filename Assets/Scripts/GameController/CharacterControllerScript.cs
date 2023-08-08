@@ -109,18 +109,18 @@ public class CharacterControllerScript : MonoBehaviour
     }
     public bool DoActionPointsRemainAfterAbility()
     {
-        if (actionPoints > 0)
+        if (actionPoints > 0)//if we have more than 0 actionPoints
             return true;
         return false;
-
     }
     public void BeginThisCharacterTurn()
     {
         if (isALive)
         {
-            actionPoints -= actionPointsPenelty;
-            if (!DoActionPointsRemainAfterAbility())
+            if (actionPointsPenelty > 0)
             {
+                actionPoints = 0;
+                actionPointsPenelty--;
                 Debug.Log("No Action Points");
                 turnManager.EndTurn();
             }
@@ -132,7 +132,7 @@ public class CharacterControllerScript : MonoBehaviour
                     GameEvents.current.TriggerNextDialog();//Disable this laeter
                     List<AbilityData> allAbilities = new();
                     allAbilities.AddRange(abilityToCost.Keys());
-                    GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(allAbilities);
+                    GameEvents.current.inGameUI.MakeButtonsFromAbilityies(allAbilities);
                     turnManager.SetCameraPos(GetCharV3Int());
                 }
                 else
