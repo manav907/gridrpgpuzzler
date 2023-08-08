@@ -148,14 +148,14 @@ public class MoveDictionaryManager : MonoBehaviour
             else if (ControlAI)
             {
                 Debug.Log("AI Exception");
-                turnManager.endTurn();
+                turnManager.EndTurn();
             }
             ShouldContinue = false;
             if (characterCS.DoActionPointsRemainAfterAbility())
                 characterCS.BeginThisCharacterTurn();
             else
             {
-                turnManager.endTurn();
+                turnManager.EndTurn();
             }
             yield return null;
         }
@@ -187,7 +187,7 @@ public class MoveDictionaryManager : MonoBehaviour
             if (!characterCS.ControlCharacter)
             {
                 Debug.LogError("AI Exception");
-                turnManager.endTurn();
+                turnManager.EndTurn();
             }
         }
         reticalManager.reDrawValidTiles(new List<Vector3Int>());
@@ -261,12 +261,12 @@ public class MoveDictionaryManager : MonoBehaviour
         IEnumerator animationActionFunction()
         {
             yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, calculateNudge(atPoint), moveTimeSpeed));
-            yield return StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
+            yield return StartCoroutine(characterCS.animationControllerScript.TrySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
         }
         IEnumerator afterAnimationOfAction()
         {
             StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, characterCS.GetCharV3Int(), moveTimeSpeed));
-            StartCoroutine(characterCS.animationControllerScript.trySetNewAnimation(CharacterAnimationState.Idle));
+            StartCoroutine(characterCS.animationControllerScript.TrySetNewAnimation(CharacterAnimationState.Idle));
             if (!UserDataManager.skipWaitTime)
                 yield return new WaitForSeconds(UserDataManager.waitAction);
         }
@@ -310,8 +310,17 @@ public class MoveDictionaryManager : MonoBehaviour
                         else
                         {
                             yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(targetCharacter.transform, calculateNudge(newPos, 0.6f), moveTimeSpeed));
+                            yield return StartCoroutine(abinameToAction(TypeOfAction.apply_Stun));
                             yield return StartCoroutine(abinameToAction(TypeOfAction.apply_Damage));
                         }
+                        break;
+                    }
+                case TypeOfAction.apply_Stun:
+                    {
+                        CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+                        targetCharacter.actionPointsPenelty++;
+                        targetCharacter.actionPointsPenelty++;
+                        //targetCharacter.actionPointsPenelty++;
                         break;
                     }
                 default:
@@ -347,7 +356,8 @@ public enum TypeOfAction
     apply_Damage,
     apply_Heal,
     apply_SelfMove,
-    apply_Push
+    apply_Push,
+    apply_Stun,
 }
 public enum BoolEnum
 {

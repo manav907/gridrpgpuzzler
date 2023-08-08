@@ -18,13 +18,12 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
     public CharacterData CharacterDataSO;
-    public Vector3Int currentCellPosOfCharcter;
     [SerializeField] private TMPro.TextMeshPro Heatlh;
     private MapManager mapManager;
     private TurnManager turnManager;
+    MoveDictionaryManager moveDictionaryManager;
     public AnimationControllerScript animationControllerScript;
     UniversalCalculator universalCalculator;
-    public SerializableDictionary<AbilityData, int> abilityToCost;
     [Header("SO Data")]
     public string characterName;
     public bool isPlayerCharacter = true;
@@ -33,7 +32,16 @@ public class CharacterControllerScript : MonoBehaviour
     public int speedValue;
     public int rangeOfVision;
     public string faction;
+    public int defaultActionPoints = 1;
+    public SerializableDictionary<AbilityData, int> abilityToCost;
     public List<GroundFloorType> canWalkOn;
+    [Header("Debuff Data")]
+    public Vector3Int currentCellPosOfCharcter;
+    public int actionPointsPenelty = 0;
+    public int actionPoints = 1;
+    bool isALive = true;
+    [SerializeField] Vector3Int destinationTarget;
+    private readonly int GhostVision = 1;
     public void InitilizeCharacter(GameObject gameController)
     {
         mapManager = gameController.GetComponent<MapManager>();
@@ -69,7 +77,7 @@ public class CharacterControllerScript : MonoBehaviour
             GameEvents.current.addCharacter(isPlayerCharacter);
             //doingAnimController
             //animationControllerScript.setVariables(gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum));
-            animationControllerScript.setVariables(CharacterDataSO.characterAnimationData);
+            animationControllerScript.SetVariables(CharacterDataSO.characterAnimationData);
             //Methods
         }
     }
@@ -85,55 +93,56 @@ public class CharacterControllerScript : MonoBehaviour
         return false;
         void KillCharacter()
         {
-            GameEvents.current.DeathEvent(this.GetComponent<CharacterControllerScript>());
+            GameEvents.current.DeathEvent(GetComponent<CharacterControllerScript>());
             isALive = false;
             turnManager.OrderOfInteractableCharacters.Remove(gameObject);
             turnManager.ListOfInteractableCharacters.Remove(gameObject);
             if (ControlCharacter)
                 GameEvents.current.PlaySound(2);
             mapManager.KillCharacter(GetCharV3Int());
-            if (TurnManager.thisCharacter == this.gameObject)
+            if (TurnManager.thisCharacter == gameObject)
             {
-                turnManager.endTurn();
+                turnManager.EndTurn();
             }
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
-    public int actionPoints = 1;
-    public int defaultActionPoints = 1;
     public bool DoActionPointsRemainAfterAbility()
     {
-        if (actionPoints <= 0)
-            return false;
-        else
-        {
+        if (actionPoints > 0)
             return true;
-        }
+        return false;
+
     }
-    MoveDictionaryManager moveDictionaryManager;
-    bool isALive = true;
     public void BeginThisCharacterTurn()
     {
         if (isALive)
         {
-            //animationControllerScript.setCharacterAnimationAndReturnLength(CharacterAnimationState.Walk);
-            StartCoroutine(animationControllerScript.trySetNewAnimation(CharacterAnimationState.Walk));
-            if (ControlCharacter)
+            actionPoints -= actionPointsPenelty;
+            if (!DoActionPointsRemainAfterAbility())
             {
-                GameEvents.current.TriggerNextDialog();//Disable this laeter
-                List<AbilityData> allAbilities = new();
-                allAbilities.AddRange(abilityToCost.Keys());
-                GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(allAbilities);
-                turnManager.setCameraPos(GetCharV3Int());
+                Debug.Log("No Action Points");
+                turnManager.EndTurn();
             }
             else
             {
-                DetermineAction();
+                StartCoroutine(animationControllerScript.TrySetNewAnimation(CharacterAnimationState.Walk));
+                if (ControlCharacter)
+                {
+                    GameEvents.current.TriggerNextDialog();//Disable this laeter
+                    List<AbilityData> allAbilities = new();
+                    allAbilities.AddRange(abilityToCost.Keys());
+                    GameEvents.current.inGameUI.MakeButtonsFromLadderCollapseFunction(allAbilities);
+                    turnManager.SetCameraPos(GetCharV3Int());
+                }
+                else
+                {
+                    DetermineAction();
+                }
             }
         }
     }
-    [SerializeField] Vector3Int destinationTarget;
-    private readonly int GhostVision = 1;
+
     Dictionary<TypeOfAction, List<AbilityData>> AbilityMap()
     {
         var newDict = new Dictionary<TypeOfAction, List<AbilityData>>();
@@ -164,7 +173,7 @@ public class CharacterControllerScript : MonoBehaviour
             //Debug.LogError("AI Stuf Needs Rework");
             if (targetList.Count == 0)
             {
-                turnManager.endTurn();
+                turnManager.EndTurn();
                 //Debug.Log("Ideling");
                 return;
             }
@@ -182,7 +191,7 @@ public class CharacterControllerScript : MonoBehaviour
                     }
                     else
                     {
-                        turnManager.endTurn();
+                        turnManager.EndTurn();
                     }
                 }
                 else if (costIndex[optionsofAbilities[TypeOfAction.apply_SelfMove][0]] <= actionPoints)
@@ -192,7 +201,7 @@ public class CharacterControllerScript : MonoBehaviour
                 else
                 {
                     Debug.Log("no Action Points for apply move");
-                    turnManager.endTurn();
+                    turnManager.EndTurn();
                 }
             }
             //determineAction();
@@ -219,7 +228,7 @@ public class CharacterControllerScript : MonoBehaviour
         else
         {
             Debug.Log("no Action Points");
-            turnManager.endTurn();
+            turnManager.EndTurn();
         }
     }
     public Vector3Int GetCharV3Int()
