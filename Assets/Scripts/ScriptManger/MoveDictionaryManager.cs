@@ -215,25 +215,9 @@ public class MoveDictionaryManager : MonoBehaviour
     IEnumerator AnimationCoRoutione(List<Vector3Int> points, ActionEffectParams actionEffectParams, Vector3Int fromPoint, Vector3Int atPoint)
     {
         points = mapManager.filterListWithTileRequirements(points, characterCS, actionEffectParams.OnlyApplyOn);
-        /* float startTime = Time.time;
-        float lastTime = Time.time;
-        CreateDebugLogsForTime(false);
-        void CreateDebugLogsForTime(bool debugit = true)
-        {
-            if (!debugit)
-                return;
-            float currentTime = Time.time;
-            float deltaTime = currentTime - lastTime;
-
-            Debug.Log("Delta Time: " + deltaTime);
-            lastTime = currentTime;
-        } */
-        //
         GameEvents.current.inGameUI.ClearButtons();//Clearing Buttons while action is in progress
         TypeOfAction actiontype = actionEffectParams.typeOfAction;
-        //AnimationMovementType animationMovementType = actionEffectParams.animationMovementType;
         AnimationLoopType animationLoopType = actionEffectParams.loopType;
-
         if (animationLoopType == AnimationLoopType.forAction)
         {
             yield return StartCoroutine(animationActionFunction());
@@ -252,8 +236,6 @@ public class MoveDictionaryManager : MonoBehaviour
         ///////Functions
         Vector3 calculateNudge(Vector3Int towardsPoint, float distanceFactor = 0.3f)
         {
-            /* if (animationMovementType == AnimationMovementType.NoMovement)                targetLocation = fromPoint;            else if (animationMovementType == AnimationMovementType.NudgeToPoint) */
-            //float distanceFactor = 0.3f;  // Adjust this value to control the distance from point1
             Vector3 direction = GlobalCal.getNormalizedDirection(fromPoint, towardsPoint);  // Calculate the direction between the points
             Vector3 midPoint = fromPoint + direction * distanceFactor * Vector3.Distance(fromPoint, towardsPoint);
             return midPoint;
