@@ -239,12 +239,12 @@ public class MapManager : MonoBehaviour
             this.GScore = GScore;
             this.previousNode = previousNode;
         }
-        public void addNeighbours(Node neighbour)//, float HCost, float GCost)
+        public void AddNeighbours(Node neighbour)//, float HCost, float GCost)
         {
             NeighbourToTotalCost.Add(neighbour, neighbour.FScore);
         }
     }
-    public List<Vector3Int> filterListWithWalkRequirements(List<Vector3Int> scanPoints, List<GroundFloorType> canWalkOn)
+    public List<Vector3Int> FilterListWithWalkRequirements(List<Vector3Int> scanPoints, List<GroundFloorType> canWalkOn)
     {
         var newList = new List<Vector3Int>();
         foreach (var point in scanPoints)
@@ -257,8 +257,12 @@ public class MapManager : MonoBehaviour
         return newList;
         bool checkAtPosIfCharacterCanWalk(Vector3Int tilePos)
         {
+            if (canWalkOn.Contains(GroundFloorType.Invalid))
+                return true;
             if (!cellDataDir.ContainsKey(tilePos))
+            {
                 return false;
+            }
             //This get data From SO
             foreach (GroundFloorType groundFloorType in cellDataDir[tilePos].groundFloorTypeWalkRequireMents)//This Gets Cached Data
                 if (!canWalkOn.Contains(groundFloorType))
@@ -266,7 +270,7 @@ public class MapManager : MonoBehaviour
             return true;
         }
     }
-    public List<Vector3Int> filterListWithTileRequirements(List<Vector3Int> scanPoints, CharacterControllerScript castingCharacter, ValidTargets validTargets)
+    public List<Vector3Int> FilterListWithTileRequirements(List<Vector3Int> scanPoints, CharacterControllerScript castingCharacter, ValidTargets validTargets)
     {
         var newList = new List<Vector3Int>();
         foreach (var point in scanPoints)
@@ -321,7 +325,7 @@ public class MapManager : MonoBehaviour
     }
 
     MoveDictionaryManager moveDictionaryManager;
-    public List<Vector3Int> findOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, AbilityData abilityData, bool ignoreCharacters = false)
+    public List<Vector3Int> FindOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, AbilityData abilityData, bool ignoreCharacters = false)
     {
         string AStarDebug = "Starting Astar Navigation from Point ";//Generate Node Data will put
         List<Node> openList = new List<Node>();
@@ -352,7 +356,7 @@ public class MapManager : MonoBehaviour
                 else
                     closeList.Add(neighbourPoint);
                 Node neighbourNode = generateNodeData(neighbourPoint, currentNode);
-                currentNode.addNeighbours(neighbourNode);
+                currentNode.AddNeighbours(neighbourNode);
                 openList.Add(neighbourNode);
                 historyNode.Add(neighbourNode);
             }
@@ -398,6 +402,7 @@ public class MapManager : MonoBehaviour
 //Defining Global NameSapce
 public enum GroundFloorType
 {
+    Invalid = -1,
     NotSet = 0,
     Normal = 1,
     Water = 2,

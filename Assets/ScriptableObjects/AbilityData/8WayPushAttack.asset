@@ -28,5 +28,12 @@ MonoBehaviour:
     rangeOfArea: 0
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     aoeStyle: 4
+  - name: 
+    minpoints: 1
+    adjustAtPointWithDirection: 2
+    rangeOfArea: 0
+    tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
+    aoeStyle: 4
   ApplyEffects:
+  - {fileID: 11400000, guid: 41eedcee4faaefd40907702a458d886b, type: 2}
   - {fileID: 11400000, guid: 41eedcee4faaefd40907702a458d886b, type: 2}

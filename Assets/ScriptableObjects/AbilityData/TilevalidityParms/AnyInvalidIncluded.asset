@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031f8e304f414da46a360e997443b95d, type: 3}
   m_Name: AnyInvalidIncluded
   m_EditorClassIdentifier: 
-  validFloors: 0100000004000000
+  validFloors: ffffffff
   ShowCastOn: 0
   targetType: 0

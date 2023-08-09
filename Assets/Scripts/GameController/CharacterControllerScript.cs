@@ -183,7 +183,7 @@ public class CharacterControllerScript : MonoBehaviour
                 destinationTarget = selectOptimalTarget();
                 //var attackRangeList = moveDictionaryManager.getValidTargetList(optionsofAbilities[TypeOfAction.apply_Damage][0].SetDataAtIndex[0], getCharV3Int());
                 var attackRangeList = moveDictionaryManager.GenerateAbiltyPointMap(optionsofAbilities[TypeOfAction.apply_Damage][0], GetCharV3Int()).Keys.ToList();
-                attackRangeList = mapManager.filterListWithTileRequirements(attackRangeList, this, ValidTargets.Enemies);
+                attackRangeList = mapManager.FilterListWithTileRequirements(attackRangeList, this, ValidTargets.Enemies);
                 if (attackRangeList.Count > 0)
                 {
                     if (costIndex[optionsofAbilities[TypeOfAction.apply_Damage][0]] <= actionPoints)
@@ -245,7 +245,7 @@ public class CharacterControllerScript : MonoBehaviour
         List<Vector3Int> validTiles = moveDictionaryManager.GenerateAbiltyPointMap(abilityData, GetCharV3Int()).Keys.ToList();
         if (abilityData.Primaryuse == TypeOfAction.apply_SelfMove)
         {
-            var validPathToObjective = mapManager.findOptimalPath(GetCharV3Int(), getUseableTarget(), abilityData, true);
+            var validPathToObjective = mapManager.FindOptimalPath(GetCharV3Int(), getUseableTarget(), abilityData, true);
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
             {

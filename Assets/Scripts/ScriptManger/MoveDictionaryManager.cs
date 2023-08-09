@@ -75,8 +75,8 @@ public class MoveDictionaryManager : MonoBehaviour
         AtPoint = fromPoint + direction;
         abiPointMapString += "   " + "Creating Area For " + tileToEffectPair.name + " with AoeStyle " + tileToEffectPair.aoeStyle + "From Point " + fromPoint + " At Point " + AtPoint + ":  ";
         var output = GlobalCal.GenerateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.rangeOfArea);
-        output = mapManager.filterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
-        output = mapManager.filterListWithWalkRequirements(output, tileToEffectPair.tileValidityParms.validFloors);
+        output = mapManager.FilterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
+        output = mapManager.FilterListWithWalkRequirements(output, tileToEffectPair.tileValidityParms.validFloors);
         output = CheckVectorValidity(fromPoint, output, tileToEffectPair.tileValidityParms.targetType);
         PrintOutputStatus();
         return output;
@@ -128,6 +128,11 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             AddToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
             reticalManager.reDrawInValidTiles(new List<Vector3Int>());
+            if (!characterCS.ControlCharacter)
+            {
+                characterCS.actionPoints = 0;
+                characterCS.BeginThisCharacterTurn();
+            }
             return;
         }
         reticalManager.UpdateReticalInputParams(pointMap);
@@ -214,7 +219,7 @@ public class MoveDictionaryManager : MonoBehaviour
 
     IEnumerator AnimationCoRoutione(List<Vector3Int> points, ActionEffectParams actionEffectParams, Vector3Int fromPoint, Vector3Int atPoint)
     {
-        points = mapManager.filterListWithTileRequirements(points, characterCS, actionEffectParams.OnlyApplyOn);
+        points = mapManager.FilterListWithTileRequirements(points, characterCS, actionEffectParams.OnlyApplyOn);
         GameEvents.current.inGameUI.ClearButtons();//Clearing Buttons while action is in progress
         TypeOfAction actiontype = actionEffectParams.typeOfAction;
         AnimationLoopType animationLoopType = actionEffectParams.loopType;
@@ -285,7 +290,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         Vector3Int newPos = tryHere + directionOfPush;
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(targetCharacter.transform, calculateNudge(newPos, 0.6f), moveTimeSpeed));
                         if (!mapManager.isCellHoldingCharacer(newPos) &&
-                        mapManager.filterListWithWalkRequirements(new List<Vector3Int>() { newPos }, targetCharacter.canWalkOn).Count != 0)
+                        mapManager.FilterListWithWalkRequirements(new List<Vector3Int>() { newPos }, targetCharacter.canWalkOn).Count != 0)
                         {
                             mapManager.UpdateCharacterPosistion(targetCharacter.GetCharV3Int(), newPos, targetCharacter.gameObject);
                             refreshList.Add(targetCharacter);
