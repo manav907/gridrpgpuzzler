@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
   m_Name: TPMOVE
   m_EditorClassIdentifier: 
+  userFriendlyName: Kincho Slash
   Primaryuse: 2
   rangeOfAbility:
     name: Primary Range For Self Move

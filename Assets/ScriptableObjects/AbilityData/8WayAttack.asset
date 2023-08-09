@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
   m_Name: 8WayAttack
   m_EditorClassIdentifier: 
+  userFriendlyName: Attack
   Primaryuse: 0
   rangeOfAbility:
     name: 

@@ -300,6 +300,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 case TypeOfAction.apply_Stun:
                     {
                         CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+                        StartCoroutine(targetCharacter.animationControllerScript.SetStatusEffect(StatusEffect.Stun));
                         targetCharacter.actionPointsPenelty++;
                         break;
                     }

@@ -12,6 +12,7 @@ public class InGameUI : MonoBehaviour
     public Button restartButton;
     public Button exitButton;
     public Button ControlScheme;
+    public Button SkipAnimation;
     public Button NextButton;
     public Button AblityButtonExample;
     public VisualElement TipBox;
@@ -32,18 +33,37 @@ public class InGameUI : MonoBehaviour
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
         ControlScheme = root.Q<Button>("ControlScheme");
+        SkipAnimation = root.Q<Button>("SkipAnimation");
         SetUpUI();
 
 
         restartButton.clicked += GameEvents.current.reloadScene;
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
         ControlScheme.clicked += SwithControlScheme;
+        SkipAnimation.clicked += SwithSkipAnimation;
 
-        UserDataManager.setSetting();
+        UserDataManager.SetSetting();
 
-        //backButtons.clicked += backButtonPressed;
+        SwithControlScheme();
+        SwithSkipAnimation();
+        SwithControlScheme();
+        SwithSkipAnimation();
 
-        //initilizeArcadeModeGrid();
+
+        //Debug.Log("Start was called");
+    }
+    void SwithSkipAnimation()
+    {
+        if (UserDataManager.skipAnimations == false)
+        {
+            UserDataManager.skipAnimations = true;
+            SkipAnimation.text = "Fast Animations";
+        }
+        else if (UserDataManager.skipAnimations == true)
+        {
+            UserDataManager.skipAnimations = false;
+            SkipAnimation.text = "Normal Animations";
+        }
     }
     void SwithControlScheme()
     {

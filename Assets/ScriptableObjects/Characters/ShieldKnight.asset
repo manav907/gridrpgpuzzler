@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
-  m_Name: Knight
+  m_Name: ShieldKnight
   m_EditorClassIdentifier: 
   InstanceID: 1
-  characterName: Knight
+  characterName: ShieldKnight
   characterAnimationData: {fileID: 11400000, guid: adb96c03a75a05b4d9bf2ecf44a5880f, type: 2}
   isPlayerCharacter: 1
   Faction: 
@@ -25,7 +25,7 @@ MonoBehaviour:
   canWalkOn: 01000000
   abilityToCost:
     KeyValuePairs:
-    - key: {fileID: 11400000, guid: b5724ac8695069640bad111ef8a0be65, type: 2}
+    - key: {fileID: 11400000, guid: d6187e5e920dcaf49a409633059d9952, type: 2}
       value: 1
     - key: {fileID: 11400000, guid: c3fa9cacee22da04795d1f630f4a22a7, type: 2}
       value: 1

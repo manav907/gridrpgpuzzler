@@ -12,7 +12,7 @@ public static class UserDataManager
     public static bool skipAnimations = false;
     public static bool Snap = false;
     public static bool SmartPosistioning = false;
-    public static void setSetting()
+    public static void SetSetting()
     {
         //UserDataManager.Snap = false;
 #if UNITY_EDITOR

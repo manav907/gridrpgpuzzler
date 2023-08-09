@@ -7,20 +7,16 @@ public class AnimationControllerScript : MonoBehaviour
 {
     public void SetVariables(CharacterAnimationData characterAnimationData)
     {
-        animator.runtimeAnimatorController = characterAnimationData.GeneratedAnimatorOverrideController;
+        characterAnimator.runtimeAnimatorController = characterAnimationData.GeneratedAnimatorOverrideController;
         spriteHolder.position = new Vector3(spriteHolder.position.x + characterAnimationData.spriteOffsetX, spriteHolder.position.y + characterAnimationData.spriteOffsetY, spriteHolder.position.z);
     }
-    public Animator animator;
+    public Animator characterAnimator;
     [SerializeField] Transform spriteHolder;
-    public bool CheckifCharacterTurn()
-    {
-        return TurnManager.thisCharacter == gameObject;
-    }
-    CharacterAnimationState lastState;
+    CharacterAnimationState lastCharacterAnimationState;
     public IEnumerator TrySetNewAnimation(CharacterAnimationState state)
     {
         //var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        animator.ResetTrigger(lastState.ToString());
+        characterAnimator.ResetTrigger(lastCharacterAnimationState.ToString());
         if (UserDataManager.skipAnimations)
         {
             StartCoroutine(setAnimation(state));
@@ -31,9 +27,9 @@ public class AnimationControllerScript : MonoBehaviour
         }
         IEnumerator setAnimation(CharacterAnimationState state)
         {
-            lastState = state;
-            animator.SetTrigger(state.ToString());
-            yield return StartCoroutine(WaitForAnimation(state));
+            lastCharacterAnimationState = state;
+            characterAnimator.SetTrigger(state.ToString());
+            yield return StartCoroutine(WaitForAnimation(state.ToString()));
 
             /* var animatorClipInfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
             Debug.Log(gameObject.name +
@@ -42,21 +38,46 @@ public class AnimationControllerScript : MonoBehaviour
         }
     }
 
-    public IEnumerator WaitForAnimation(CharacterAnimationState state)
+    public IEnumerator WaitForAnimation(string state)
     {
         yield return new WaitUntil(() =>
         {
             return isTheCorrectAnimation();
         });
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+        yield return new WaitUntil(() => characterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
         bool isTheCorrectAnimation()
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName(state.ToString()))
+            if (characterAnimator.GetCurrentAnimatorStateInfo(0).IsName(state))
                 return true;
             //Debug.Log("Waiting for the Wrong animation");
             return false;
         }
     }
+    public Animator statusAnimator;
+    public StatusEffect lastStatusEffect;
+    public IEnumerator SetStatusEffect(StatusEffect statusEffect)
+    {
+        statusAnimator.ResetTrigger(lastStatusEffect.ToString());
+        if (UserDataManager.skipAnimations)
+        {
+            StartCoroutine(setAnimation(statusEffect));
+        }
+        else
+        {
+            yield return StartCoroutine(setAnimation(statusEffect));
+        }
+        IEnumerator setAnimation(StatusEffect statusEffect)
+        {
+            lastStatusEffect = statusEffect;
+            statusAnimator.SetTrigger(statusEffect.ToString());
+            yield return StartCoroutine(WaitForAnimation(statusEffect.ToString()));
+        }
+    }
+}
+public enum StatusEffect
+{
+    Normal,
+    Stun,
 }
 public enum CharacterAnimationState
 {

@@ -121,7 +121,8 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 actionPoints = 0;
                 actionPointsPenelty--;
-                Debug.Log("No Action Points");
+                if (actionPointsPenelty <= 0)
+                    StartCoroutine(animationControllerScript.SetStatusEffect(StatusEffect.Normal));
                 turnManager.EndTurn();
             }
             else
