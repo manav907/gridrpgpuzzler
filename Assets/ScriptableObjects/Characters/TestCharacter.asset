@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f692410a6cd145c4596f962524603a21, type: 3}
+  m_Name: TestCharacter
+  m_EditorClassIdentifier: 
+  InstanceID: 1
+  characterName: TestCharcter
+  characterAnimationData: {fileID: 11400000, guid: adb96c03a75a05b4d9bf2ecf44a5880f, type: 2}
+  isPlayerCharacter: 1
+  Faction: 
+  health: 1
+  attackDamage: 1
+  speedValue: 8
+  rangeOfVision: 5
+  defaultActionPoints: 1
+  canWalkOn: 01000000
+  abilityToCost:
+    KeyValuePairs:
+    - key: {fileID: 11400000, guid: b5724ac8695069640bad111ef8a0be65, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: c3fa9cacee22da04795d1f630f4a22a7, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: 66fdce11573df53408f7129337c08d7d, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: d6187e5e920dcaf49a409633059d9952, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: dfca52ef5e5c9a04da424d2d073cc5e6, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: 2d05104c758cfc841b77e061be89273d, type: 2}
+      value: 1
+    - key: {fileID: 11400000, guid: 1527ba24c2f4f054f9be3c2800da94e1, type: 2}
+      value: 1

@@ -8,13 +8,7 @@ using UnityEditor;
 using System.IO;
 
 public class UniversalCalculator : MonoBehaviour
-{
-
-    ReticalManager reticalManager;
-    public void setVariables()
-    {
-        reticalManager = GetComponent<ReticalManager>();
-    }
+{    
     ///String handeling
     public string CamelCaseToSpaces(string input)
     {
@@ -23,7 +17,7 @@ public class UniversalCalculator : MonoBehaviour
             return input;
         }
 
-        StringBuilder output = new StringBuilder();
+        StringBuilder output = new();
         output.Append(input[0]);
 
         for (int i = 1; i < input.Length; i++)
@@ -39,20 +33,20 @@ public class UniversalCalculator : MonoBehaviour
     }
 
     //Vector handeling
-    public Vector3Int castAsV3Int(Vector3 thisVector)
+    public Vector3Int CastAsV3Int(Vector3 thisVector)
     {
         return new Vector3Int((int)thisVector.x, (int)thisVector.y, (int)thisVector.z);
     }
-    public List<Vector3Int> castListAsV3Int(List<Vector3> v3List)
+    public List<Vector3Int> CastListAsV3Int(List<Vector3> v3List)
     {
         var List = new List<Vector3Int>();
         foreach (var pos in v3List)
         {
-            List.Add(castAsV3Int(pos));
+            List.Add(CastAsV3Int(pos));
         }
         return List;
     }
-    public List<Vector3> castListAsV3(List<Vector3Int> v3IntList)
+    public List<Vector3> CastListAsV3(List<Vector3Int> v3IntList)
     {
         var List = new List<Vector3>();
         foreach (var pos in v3IntList)
@@ -63,7 +57,7 @@ public class UniversalCalculator : MonoBehaviour
     }
 
 
-    public List<Vector3Int> generateDirectionalRange(Vector3Int fromPoint, float rangeOfAction, List<Vector3Int> reffrences)
+    public List<Vector3Int> GenerateDirectionalRange(Vector3Int fromPoint, float rangeOfAction, List<Vector3Int> reffrences)
     {
         int range = Mathf.FloorToInt(rangeOfAction);
         List<Vector3Int> output = new List<Vector3Int>();
@@ -78,7 +72,7 @@ public class UniversalCalculator : MonoBehaviour
         output.Reverse();
         return output;
     }
-    public List<Vector3Int> generate9WayReffence()
+    public List<Vector3Int> Generate9WayReffence()
     {
         List<Vector3Int> reffrence = new List<Vector3Int>();
         for (int i = -1; i <= 1; i++)
@@ -96,7 +90,7 @@ public class UniversalCalculator : MonoBehaviour
         var dict = new Dictionary<Vector3Int, List<Vector3Int>>();
         foreach (var point in toWardsPoint)
         {
-            var dircetion = GlobalCal.getNormalizedDirection(fromPoint, point);
+            var dircetion = GlobalCal.GetNormalizedDirection(fromPoint, point);
             if (!dict.ContainsKey(dircetion))
             {
                 dict.Add(dircetion, new List<Vector3Int>());
@@ -113,23 +107,16 @@ public class UniversalCalculator : MonoBehaviour
         var random = new System.Random();
         return random.Next(ListCount);
     }
-    public List<T> convertSortedListToNormalList<T>(SortedList<float, T> inputList)
+    public List<T> ConvertSortedListToNormalList<T>(SortedList<float, T> inputList)
     {
         return inputList.Values.ToList();
     }
-    List<T> getReverseList<T>(List<T> thislist)
-    {
-        thislist.Reverse();
-        return thislist;
-    }
-
-    System.Random rand = new System.Random(64);
-    public SortedList<float, T> sortListWithVar<T>(List<T> thisList, Func<T, float> thisFloat, Func<T, float> tieBreaker = null)
+    public SortedList<float, T> SortListWithVar<T>(List<T> thisList, Func<T, float> thisFloat, Func<T, float> tieBreaker = null)
     // here Func<T, float> thisFloat represent a function that takes Function of the float distance or float speed 
     //with variable T(from point or GameObject) then calculates a float value 
     //which is representrdd by the later part of Func<T, float> thisFloat
     {
-        SortedList<float, T> newList = new SortedList<float, T>();
+        SortedList<float, T> newList = new();
         foreach (var element in thisList)
         {
             float thisDistance = thisFloat(element);
@@ -155,13 +142,13 @@ public class UniversalCalculator : MonoBehaviour
     {
         if (!alignToPoint)
         {
-            return convertSortedListToNormalList(sortListWithVar(thisV3IntList, distance, isAligned));
+            return ConvertSortedListToNormalList(SortListWithVar(thisV3IntList, distance, isAligned));
         }
-        return convertSortedListToNormalList(sortListWithVar(thisV3IntList, distance));
+        return ConvertSortedListToNormalList(SortListWithVar(thisV3IntList, distance));
         //declaring necessary function to be used as a delegate
         float isAligned(Vector3Int fromPoint)
         {
-            Vector3Int AlignmentToEndPos = GlobalCal.getNormalizedDirection(fromPoint, toPoint);
+            Vector3Int AlignmentToEndPos = GlobalCal.GetNormalizedDirection(fromPoint, toPoint);
             if (AlignmentToEndPos.x == 0 || AlignmentToEndPos.y == 0)
                 return 1 / 10;
             return 0 / 10;
@@ -171,7 +158,7 @@ public class UniversalCalculator : MonoBehaviour
             return Vector3Int.Distance(fromPoint, toPoint);
         }
     }
-    public List<T> filterOutList<T>(List<T> GivenList, List<T> ListOfValidObjects)
+    public List<T> FilterOutList<T>(List<T> GivenList, List<T> ListOfValidObjects)
     {
         var outputList = new List<T>();
         foreach (T GivenObjectFromGivenList in GivenList)
@@ -221,7 +208,7 @@ public class UniversalCalculator : MonoBehaviour
 
 public static class GlobalCal
 {
-    public static List<T> createCopyListUsingConstructor<T>(List<T> GivenList)
+    public static List<T> CreateCopyListUsingConstructor<T>(List<T> GivenList)
     {
         var newList = new List<T>();
         foreach (T item in GivenList)
@@ -231,7 +218,7 @@ public static class GlobalCal
         }
         return newList;
     }
-    public static bool compareBool(bool compareWith, BoolEnum compareTo)
+    public static bool CompareBool(bool compareWith, BoolEnum compareTo)
     {
         switch (compareTo)
         {
@@ -246,9 +233,9 @@ public static class GlobalCal
         }
 
     }
-    public static List<Vector3Int> generateRangeFrom2Vectors(Vector3 start, Vector3 end)
+    public static List<Vector3Int> GenerateRangeFrom2Vectors(Vector3 start, Vector3 end)
     {
-        List<Vector3Int> listOfRanges = new List<Vector3Int>();
+        List<Vector3Int> listOfRanges = new();
 
         int startx = (int)start.x;
         int starty = (int)start.y;
@@ -286,11 +273,11 @@ public static class GlobalCal
                 }
             case AoeStyle.Square:
                 {
-                    return generateRangeFromPoint(fromPoint, RangeOfAction);
+                    return generateRangeFromPoint(atPoint, RangeOfAction);
                 }
             case AoeStyle.Taxi:
                 {
-                    return generateTaxiRangeFromPoint(fromPoint, RangeOfAction);
+                    return generateTaxiRangeFromPoint(atPoint, RangeOfAction);
                 }
         }
         Debug.LogError("Aoe Style Not Found");
@@ -349,12 +336,12 @@ public static class GlobalCal
         List<Vector3Int> generateComplexArc(Vector3Int fromPoint, Vector3Int atPoint, float rangeOfAction, bool doAxeCheck = true)
         {
             var arcTiles = new List<Vector3Int>();
-            Vector3Int direction = getNormalizedDirection(atPoint, fromPoint);
+            Vector3Int direction = GetNormalizedDirection(atPoint, fromPoint);
             int xDirection = direction.x;
             int yDirection = direction.y;
             foreach (Vector3Int pos in generateTaxiRangeFromPoint(fromPoint, rangeOfAction))
             {
-                Vector3Int consideredDirection = getNormalizedDirection(pos, fromPoint);
+                Vector3Int consideredDirection = GetNormalizedDirection(pos, fromPoint);
                 bool SpearCheck = consideredDirection.x == xDirection || consideredDirection.y == yDirection;
                 bool AxeCheck;
                 if (doAxeCheck)//This is smaller
@@ -373,7 +360,7 @@ public static class GlobalCal
             Vector3 centerPos = thisPoint;
             Vector3 startRange = centerPos - new Vector3(rangeOfAction, rangeOfAction);
             Vector3 endRange = centerPos + new Vector3(rangeOfAction, rangeOfAction);
-            List<Vector3Int> listOfRanges = generateRangeFrom2Vectors(startRange, endRange);
+            List<Vector3Int> listOfRanges = GenerateRangeFrom2Vectors(startRange, endRange);
             return listOfRanges;
         }
         List<Vector3Int> generateTaxiRangeFromPoint(Vector3Int thisPoint, float rangeOfAction)
@@ -394,7 +381,7 @@ public static class GlobalCal
         }
     }
 
-    public static Vector3Int getNormalizedDirection(Vector3Int fromPoint, Vector3Int atPoint)
+    public static Vector3Int GetNormalizedDirection(Vector3Int fromPoint, Vector3Int atPoint)
     {
         return Vector3Int.RoundToInt(Vector3.Normalize(atPoint - fromPoint));
     }

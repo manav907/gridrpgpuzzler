@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
-  m_Name: 8WayPushAttack
+  m_Name: 8WayMindControl
   m_EditorClassIdentifier: 
-  userFriendlyName: Bash
+  userFriendlyName: Mind Control
   Primaryuse: 0
   rangeOfAbility:
     name: 
@@ -28,19 +28,5 @@ MonoBehaviour:
     rangeOfArea: 0
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
     aoeStyle: 4
-  - name: 
-    minpoints: 1
-    adjustAtPointWithDirection: 1
-    rangeOfArea: 0
-    tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
-    aoeStyle: 4
-  - name: 
-    minpoints: 1
-    adjustAtPointWithDirection: 2
-    rangeOfArea: 0
-    tileValidityParms: {fileID: 11400000, guid: cb2271c161913454eafc42edbf1e2b6e, type: 2}
-    aoeStyle: 4
   ApplyEffects:
-  - {fileID: 11400000, guid: d4a94f480573a8946b2b286ce87ad2e2, type: 2}
-  - {fileID: 11400000, guid: 41eedcee4faaefd40907702a458d886b, type: 2}
-  - {fileID: 11400000, guid: 41eedcee4faaefd40907702a458d886b, type: 2}
+  - {fileID: 11400000, guid: 9fc6512a7bbfd6f4082db312880d6de6, type: 2}

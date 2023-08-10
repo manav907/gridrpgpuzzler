@@ -45,10 +45,10 @@ public class TurnManager : MonoBehaviour
 
         gameController = this.gameObject;
 
-        mapManager.setVariables();
+        mapManager.SetVariables();
         moveDictionaryManager.SetVariables();
         reticalManager.setVariables();
-        universalCalculator.setVariables();
+        universalCalculator.SetVariables();
         basicCameraController.setVariables(gameController);
 
     }
@@ -148,7 +148,7 @@ public class TurnManager : MonoBehaviour
 
         List<GameObject> SortBySpeed(List<GameObject> thisList)
         {
-            SortedList<float, GameObject> sortedList = universalCalculator.sortListWithVar(thisList, speed, speedTieBreaker);
+            SortedList<float, GameObject> sortedList = universalCalculator.SortListWithVar(thisList, speed, speedTieBreaker);
             thisList = sortedList.Values.ToList();
             thisList.Reverse();
             return thisList;

@@ -48,6 +48,7 @@ public class CharacterControllerScript : MonoBehaviour
         turnManager = gameController.GetComponent<TurnManager>();
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
+        reticalManager = gameController.GetComponent<ReticalManager>();
         //Initilizing
         try
         { setVariables(); }
@@ -239,6 +240,7 @@ public class CharacterControllerScript : MonoBehaviour
         Debug.LogError("Fata error");
         return Vector3Int.zero;
     }
+    ReticalManager reticalManager;
     public Vector3Int GetTarget(AbilityData abilityData)
     //validTargets depends on the action being performed
     {
@@ -246,6 +248,10 @@ public class CharacterControllerScript : MonoBehaviour
         if (abilityData.Primaryuse == TypeOfAction.apply_SelfMove)
         {
             var validPathToObjective = mapManager.FindOptimalPath(GetCharV3Int(), getUseableTarget(), abilityData, true);
+            //
+            /* reticalManager.reDrawValidTiles(validPathToObjective);
+            Debug.Break(); */
+            //
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
             {

@@ -70,10 +70,16 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     public List<Vector3Int> GenerateAreaWithParams(AreaGenerationParams tileToEffectPair, Vector3Int fromPoint, Vector3Int AtPoint)
     {
-        var direction = GlobalCal.getNormalizedDirection(fromPoint, AtPoint);
-        fromPoint = fromPoint + direction * tileToEffectPair.adjustAtPointWithDirection;
-        AtPoint = fromPoint + direction;
         abiPointMapString += "   " + "Creating Area For " + tileToEffectPair.name + " with AoeStyle " + tileToEffectPair.aoeStyle + "From Point " + fromPoint + " At Point " + AtPoint + ":  ";
+
+
+        var direction = GlobalCal.GetNormalizedDirection(fromPoint, AtPoint);
+        AtPoint = fromPoint + direction * tileToEffectPair.adjustAtPointWithDirection;
+
+        abiPointMapString += "          " + "adjusted At Point " + AtPoint + ":  ";
+
+
+
         var output = GlobalCal.GenerateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.rangeOfArea);
         output = mapManager.FilterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
         output = mapManager.FilterListWithWalkRequirements(output, tileToEffectPair.tileValidityParms.validFloors);
@@ -241,7 +247,7 @@ public class MoveDictionaryManager : MonoBehaviour
         ///////Functions
         Vector3 calculateNudge(Vector3Int towardsPoint, float distanceFactor = 0.3f)
         {
-            Vector3 direction = GlobalCal.getNormalizedDirection(fromPoint, towardsPoint);  // Calculate the direction between the points
+            Vector3 direction = GlobalCal.GetNormalizedDirection(fromPoint, towardsPoint);  // Calculate the direction between the points
             Vector3 midPoint = fromPoint + direction * distanceFactor * Vector3.Distance(fromPoint, towardsPoint);
             return midPoint;
         }
@@ -282,14 +288,19 @@ public class MoveDictionaryManager : MonoBehaviour
                         mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
                         break;
                     }
+                case TypeOfAction.apply_MindControl:
+                    {
+                        mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>().isPlayerCharacter = true;
+                        break;
+                    }
                 case TypeOfAction.apply_Push:
                     {
                         CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
                         Vector3Int sourceOfPush = characterCS.GetCharV3Int();
-                        Vector3Int directionOfPush = GlobalCal.getNormalizedDirection(sourceOfPush, tryHere);
+                        Vector3Int directionOfPush = GlobalCal.GetNormalizedDirection(sourceOfPush, tryHere);
                         Vector3Int newPos = tryHere + directionOfPush;
                         yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(targetCharacter.transform, calculateNudge(newPos, 0.6f), moveTimeSpeed));
-                        if (!mapManager.isCellHoldingCharacer(newPos) &&
+                        if (!mapManager.IsCellHoldingCharacer(newPos) &&
                         mapManager.FilterListWithWalkRequirements(new List<Vector3Int>() { newPos }, targetCharacter.canWalkOn).Count != 0)
                         {
                             mapManager.UpdateCharacterPosistion(targetCharacter.GetCharV3Int(), newPos, targetCharacter.gameObject);
@@ -344,6 +355,7 @@ public enum TypeOfAction
     apply_SelfMove,
     apply_Push,
     apply_Stun,
+    apply_MindControl,
 }
 public enum BoolEnum
 {

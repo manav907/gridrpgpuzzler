@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
     TurnManager turnManager;
 
 
-    public void setVariables()
+    public void SetVariables()
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
         turnManager = GetComponent<TurnManager>();
@@ -30,8 +30,8 @@ public class MapManager : MonoBehaviour
         LoadMapDataFromSO();
         Character_Placement.ClearAllTiles();
         PosToCharGO = new Dictionary<Vector3Int, GameObject>();
-        setTilesDir();
-        setCellDataDir();
+        SetTilesDir();
+        SetCellDataDir();
     }
     void LoadCorrectScene()
     {
@@ -52,7 +52,7 @@ public class MapManager : MonoBehaviour
         pullToTileMapStore(Character_Placement, LoadThisLevel.Character_Placeholder);
         void pullToTileMapStore(Tilemap tilemap, SerializableDictionary<Vector3Int, TileBase> tileMapStore)
         {
-            Dictionary<Vector3Int, TileBase> dict = new Dictionary<Vector3Int, TileBase>();
+            Dictionary<Vector3Int, TileBase> dict = new();
             foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
             {
                 TileBase tile = tilemap.GetTile(pos);
@@ -87,7 +87,7 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-    void setTilesDir()
+    void SetTilesDir()
     {
         dataFromTiles = new Dictionary<TileBase, TileData>();
         foreach (var ScriptableObjects in GameEvents.current.tileDatas)
@@ -122,7 +122,7 @@ public class MapManager : MonoBehaviour
         RemoveCharacterFromPos(newPos);
         cellDataDir[newPos].characterAtCell = null;
     }
-    public bool isCellHoldingCharacer(Vector3Int pos)
+    public bool IsCellHoldingCharacer(Vector3Int pos)
     {
         if (cellDataDir.ContainsKey(pos))
         {
@@ -135,11 +135,13 @@ public class MapManager : MonoBehaviour
         }
         return false;
     }
-    void setCellDataDir()
+    void SetCellDataDir()
     {
-        allTileMaps = new List<Tilemap>();
-        allTileMaps.Add(Ground_Floor);
-        allTileMaps.Add(Ground_Floor_Over);
+        allTileMaps = new List<Tilemap>
+        {
+            Ground_Floor,
+            Ground_Floor_Over
+        };
         cellDataDir = new Dictionary<Vector3Int, CellData>();
         foreach (Tilemap tilemap in allTileMaps)
         {
@@ -289,8 +291,8 @@ public class MapManager : MonoBehaviour
                 return true;
             if (cellDataDir.ContainsKey(checkPos))
                 if (validTargets == ValidTargets.Empty)
-                    return !isCellHoldingCharacer(checkPos);
-                else if (isCellHoldingCharacer(checkPos))
+                    return !IsCellHoldingCharacer(checkPos);
+                else if (IsCellHoldingCharacer(checkPos))
                 {
                     string faction = cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
                     string factionOfCaster = castingCharacter.faction;
@@ -341,7 +343,7 @@ public class MapManager : MonoBehaviour
         int maxLoops = 0;
         while (maxLoops != 20)
         {
-            openList = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(openList, getFCost));
+            openList = universalCalculator.ConvertSortedListToNormalList(universalCalculator.SortListWithVar(openList, getFCost));
             Node currentNode = openList.First();
             openList.Remove(currentNode);
             AStarDebug += "\n  Step " + maxLoops + ": Evaluating Node " + currentNode.nodeID + " as its F Cost was " + getFCost(currentNode) + " Neighbours: ";
@@ -362,12 +364,12 @@ public class MapManager : MonoBehaviour
             }
             if (openList.Count == 0)
             {
-                historyNode = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(historyNode, getFCost));
+                historyNode = universalCalculator.ConvertSortedListToNormalList(universalCalculator.SortListWithVar(historyNode, getFCost));
                 return reconstructPath(historyNode[0], "OpenList Null Using History");
             }
             maxLoops++;
         }
-        historyNode = universalCalculator.convertSortedListToNormalList(universalCalculator.sortListWithVar(historyNode, getFCost));
+        historyNode = universalCalculator.ConvertSortedListToNormalList(universalCalculator.SortListWithVar(historyNode, getFCost));
         return reconstructPath(historyNode[0], "Creating Path From Histrory");
         Node generateNodeData(Vector3Int pos, Node previousNode = null)
         {
