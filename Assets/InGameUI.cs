@@ -40,30 +40,59 @@ public class InGameUI : MonoBehaviour
         restartButton.clicked += GameEvents.current.reloadScene;
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
         ControlScheme.clicked += SwithControlScheme;
-        SkipAnimation.clicked += SwithSkipAnimation;
+        SkipAnimation.clicked += SwitchSkipAnimation;
 
         UserDataManager.SetSetting();
 
         SwithControlScheme();
-        SwithSkipAnimation();
+        SwitchSkipAnimation();
         SwithControlScheme();
-        SwithSkipAnimation();
+        SwitchSkipAnimation();
 
 
         //Debug.Log("Start was called");
     }
-    void SwithSkipAnimation()
+    AnimationSkipState AnimationSkipStateNum;
+    int SelectNextEnum(int currentEnum)
     {
-        if (UserDataManager.skipAnimations == false)
+
+        int newEnum = currentEnum + 1;
+        if (newEnum > 2)
+            newEnum = 0;
+        return newEnum;
+    }
+    void SwitchSkipAnimation()
+    {
+        AnimationSkipStateNum = (AnimationSkipState)SelectNextEnum((int)AnimationSkipStateNum);
+        switch (AnimationSkipStateNum)
         {
-            UserDataManager.skipAnimations = true;
-            SkipAnimation.text = "Fast Animations";
+            case AnimationSkipState.Normal:
+                {
+                    UserDataManager.skipWaitTime = false;
+                    UserDataManager.skipAnimations = false;
+                    break;
+                }
+            case AnimationSkipState.Fast:
+                {
+                    UserDataManager.skipWaitTime = true;
+                    UserDataManager.skipAnimations = false;
+                    break;
+                }
+            case AnimationSkipState.Debug:
+                {
+                    UserDataManager.skipWaitTime = true;
+                    UserDataManager.skipAnimations = true;
+                    break;
+                }
         }
-        else if (UserDataManager.skipAnimations == true)
-        {
-            UserDataManager.skipAnimations = false;
-            SkipAnimation.text = "Normal Animations";
-        }
+        SkipAnimation.text = AnimationSkipStateNum.ToString() + " Speed";
+    }
+
+    enum AnimationSkipState
+    {
+        Normal,
+        Fast,
+        Debug,
     }
     void SwithControlScheme()
     {

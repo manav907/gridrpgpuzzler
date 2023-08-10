@@ -182,7 +182,8 @@ public class MoveDictionaryManager : MonoBehaviour
         {
             tryHere = characterCS.GetTarget(currnetAbility);
             ShouldContinue = true;
-            yield return new WaitForSeconds(UserDataManager.waitAI);
+            if (!UserDataManager.skipWaitTime)
+                yield return new WaitForSeconds(UserDataManager.waitAI);
         }
         else//if it is the player character
         {
@@ -253,8 +254,14 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         IEnumerator animationActionFunction()
         {
-            yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, calculateNudge(atPoint), moveTimeSpeed));
-            yield return StartCoroutine(characterCS.animationControllerScript.TrySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
+            //yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, calculateNudge(atPoint), moveTimeSpeed));
+            if (actionEffectParams.waitForAnimation)
+            {
+                yield return StartCoroutine(characterCS.animationControllerScript.TrySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
+                //if animations are getting skipped then skip animations must be true
+            }
+            else
+                StartCoroutine(characterCS.animationControllerScript.TrySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
         }
         IEnumerator afterAnimationOfAction()
         {
@@ -288,9 +295,12 @@ public class MoveDictionaryManager : MonoBehaviour
                         mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
                         break;
                     }
-                case TypeOfAction.apply_MindControl:
+                case TypeOfAction.apply_StrongMindControl:
                     {
-                        mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>().isPlayerCharacter = true;
+                        CharacterControllerScript target = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
+                        GameEvents.current.DeathEvent(target);
+                        target.isPlayerCharacter = !target.isPlayerCharacter;
+                        target.faction = characterCS.faction;
                         break;
                     }
                 case TypeOfAction.apply_Push:
@@ -355,7 +365,7 @@ public enum TypeOfAction
     apply_SelfMove,
     apply_Push,
     apply_Stun,
-    apply_MindControl,
+    apply_StrongMindControl,
 }
 public enum BoolEnum
 {

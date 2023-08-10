@@ -48,7 +48,6 @@ public class TurnManager : MonoBehaviour
         mapManager.SetVariables();
         moveDictionaryManager.SetVariables();
         reticalManager.setVariables();
-        universalCalculator.SetVariables();
         basicCameraController.setVariables(gameController);
 
     }
@@ -79,7 +78,7 @@ public class TurnManager : MonoBehaviour
             InstansiatedCCS.InitilizeCharacter(gameController);//Last step Initilization
         }
 
-        GameEvents.current.setUpCamera();//Move This Somewhere Else
+        GameEvents.current.SetUpCamera();//Move This Somewhere Else
     }
     public void beginTurnIfPossible()
     {
@@ -97,7 +96,7 @@ public class TurnManager : MonoBehaviour
         void triggerGameEnd()
         {
             //Debug.Log("Game Over");
-            GameEvents.current.setText("Game Over");
+            GameEvents.current.SetText("Game Over");
         }
         void setCharacterData()
         {

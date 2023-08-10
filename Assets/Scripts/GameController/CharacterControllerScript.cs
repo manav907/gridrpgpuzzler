@@ -75,7 +75,7 @@ public class CharacterControllerScript : MonoBehaviour
             //Setting Specific Name
             this.name = characterName + " " + CharacterDataSO.InstanceID;
             //Game Event Regersery
-            GameEvents.current.addCharacter(isPlayerCharacter);
+            GameEvents.current.AddCharacter(isPlayerCharacter);
             //doingAnimController
             //animationControllerScript.setVariables(gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum));
             animationControllerScript.SetVariables(CharacterDataSO.characterAnimationData);

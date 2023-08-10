@@ -43,14 +43,14 @@ public class GameEvents : MonoBehaviour
     private void Awake()
     {
         current = this;
-        onCharacterDeath += delegate { Debug.Log("Even dEath Called"); };
+        OnCharacterDeath += delegate { Debug.Log("Even dEath Called"); };
         turnManager = scriptManager.GetComponent<TurnManager>();
         mapManager = scriptManager.GetComponent<MapManager>();
         universalCalculator = scriptManager.GetComponent<UniversalCalculator>();
         moveDictionaryManager = scriptManager.GetComponent<MoveDictionaryManager>();
     }
     Dictionary<string, Transform> NameTagToTransform;
-    public void setUpCamera()
+    public void SetUpCamera()
     {
         NameTagToTransform = new Dictionary<string, Transform>();
 
@@ -67,19 +67,18 @@ public class GameEvents : MonoBehaviour
             }
         }
     }
-    public event Action onCharacterDeath;
+    public event Action OnCharacterDeath;
     public void CheckDath()
     {
-        if (onCharacterDeath != null)
+        if (OnCharacterDeath != null)
         {
-            onCharacterDeath();
+            OnCharacterDeath();
         }
     }
-    public void DeathEvent(CharacterControllerScript characterControllerScript)
+    void RemoveCharacter(bool isPlayerCharacter)
     {
-
         //Debug.Log("Death of " + characterControllerScript.CharacterDataSO.NameEnum);
-        if (!characterControllerScript.isPlayerCharacter)
+        if (!isPlayerCharacter)
         {
             TotalEnemies--;
             //Debug.Log("Remaining Enemies are" + TotalEnemies);
@@ -90,6 +89,20 @@ public class GameEvents : MonoBehaviour
             //Debug.Log("Remaining Survivors are" + Survivors);
         }
         CheckWinCondidion();
+    }
+    public void AddCharacter(bool isPlayerCharacter)
+    {
+        if (!isPlayerCharacter)
+            TotalEnemies++;
+        else
+        {
+            TotalPlayers++;
+            Survivors++;
+        }
+    }
+    public void DeathEvent(CharacterControllerScript characterControllerScript)
+    {
+        RemoveCharacter(characterControllerScript.isPlayerCharacter);
     }
     public bool EventInMotion;
     public void sendChoice(GameObject subjectCharacter, TypeOfAction abilityPerfomed, GameObject objectCharacter)
@@ -116,7 +129,7 @@ public class GameEvents : MonoBehaviour
             }
         }
     }
-    public void setText(string text)
+    public void SetText(string text)
     {
         inGameUI.SetTip(text);
     }
@@ -126,7 +139,7 @@ public class GameEvents : MonoBehaviour
         void winGameDialog()
         {
             //textBox.text = gameWinDialog;
-            setText(gameWinDialog);
+            SetText(gameWinDialog);
 
             /*  //Setting Portrait transparency to 0
              Color spriteColor = imagePortraitReffrence.color;
@@ -157,16 +170,7 @@ public class GameEvents : MonoBehaviour
             TriggerNextDialogAction += winGameDialog;
         }
     }
-    public void addCharacter(bool isPlayerCharacter)
-    {
-        if (!isPlayerCharacter)
-            TotalEnemies++;
-        else
-        {
-            TotalPlayers++;
-            Survivors++;
-        }
-    }
+
     public event Action TriggerNextDialogAction;
     public void TriggerNextDialog()
     {
