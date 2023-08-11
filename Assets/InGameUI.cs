@@ -34,40 +34,31 @@ public class InGameUI : MonoBehaviour
         SkipAnimation = root.Q<Button>("SkipAnimation");
         SetUpUI();
 
-
         restartButton.clicked += GameEvents.current.reloadScene;
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
-        ControlScheme.clicked += SwithControlScheme;
-        SkipAnimation.clicked += SwitchSkipAnimation;
 
-
-        AnimationSkipStateNum = AnimationSkipState.Debug;//this becomes normal
+        ControlScheme.clicked += delegate { UserDataManager.Snap = !UserDataManager.Snap; };
+        ControlScheme.clicked += RefreshContolScheme;
+        SkipAnimation.clicked += delegate { UserDataManager.AnimationSkipStateNum = (AnimationSkipState)SelectNextEnum((int)UserDataManager.AnimationSkipStateNum); };
+        SkipAnimation.clicked += RefreshSkipAnimationButton;
 #if UNITY_EDITOR
-        AnimationSkipStateNum = AnimationSkipState.Fast;//this becomes debug
-        ControlScheme.text = "Editor Snap Mode";
+        UserDataManager.AnimationSkipStateNum = AnimationSkipState.Debug;
         UserDataManager.Snap = true;
 #endif
-        SwitchSkipAnimation();
-        //
-        SwithControlScheme();
-        SwithControlScheme();
-
-
-        //Debug.Log("Start was called");
+        RefreshSkipAnimationButton();
+        RefreshContolScheme();
     }
-    AnimationSkipState AnimationSkipStateNum;
+
     int SelectNextEnum(int currentEnum)
     {
-
         int newEnum = currentEnum + 1;
         if (newEnum > 2)
             newEnum = 0;
         return newEnum;
     }
-    void SwitchSkipAnimation()
+    void RefreshSkipAnimationButton()
     {
-        AnimationSkipStateNum = (AnimationSkipState)SelectNextEnum((int)AnimationSkipStateNum);
-        switch (AnimationSkipStateNum)
+        switch (UserDataManager.AnimationSkipStateNum)
         {
             case AnimationSkipState.Normal:
                 {
@@ -88,31 +79,17 @@ public class InGameUI : MonoBehaviour
                     break;
                 }
         }
-        SkipAnimation.text = AnimationSkipStateNum.ToString() + " Speed";
+        SkipAnimation.text = UserDataManager.AnimationSkipStateNum.ToString() + " Speed";
     }
-
-    enum AnimationSkipState
-    {
-        Normal,
-        Fast,
-        Debug,
-    }
-    void SwithControlScheme()
+    void RefreshContolScheme()
     {
         if (UserDataManager.Snap == false)
-        {
-            UserDataManager.Snap = true;
-            ControlScheme.text = "Snap Mode";
-        }
-        else if (UserDataManager.Snap == true)
-        {
-            UserDataManager.Snap = false;
             ControlScheme.text = "Pick Mode";
-        }
+        else if (UserDataManager.Snap == true)
+            ControlScheme.text = "Snap Mode";
     }
     void SetUpUI()
     {
-        ControlScheme.text = "Pick Mode";
         var root = GetComponent<UIDocument>().rootVisualElement;
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");

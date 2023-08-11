@@ -28,7 +28,7 @@ public class UIController : MonoBehaviour
 
 
 
-        difficulty.clicked += difficultyToggled;
+        difficulty.clicked += DifficultyToggled;
         storyModeButon.clicked += storyModeButonPressed;
         arcadeModeButton.clicked += arcadeModeButtonPressed;
         backButtons.clicked += backButtonPressed;
@@ -36,7 +36,7 @@ public class UIController : MonoBehaviour
 
         initilizeArcadeModeGrid();
     }
-    void difficultyToggled()
+    void DifficultyToggled()
     {
         UserDataManager.SmartPosistioning = !UserDataManager.SmartPosistioning;
         UpdateDiffiucltyText();
