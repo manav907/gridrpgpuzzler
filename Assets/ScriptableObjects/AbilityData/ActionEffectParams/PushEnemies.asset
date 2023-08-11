@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfAction: 3
   OnlyApplyOn: 3
-  doActionTillKeyFrameAnimation: 2
+  waitForAnimation: 0
+  doActionTillKeyFrameAnimation: 1
   loopType: 0
