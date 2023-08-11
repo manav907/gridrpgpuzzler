@@ -12,13 +12,11 @@ public class MoveDictionaryManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     [Header("Read Only Data")]
     private readonly float moveTimeSpeed = 0.12f;
-    [Header("Character Data")]
-    GameObject thisCharacter;
     CharacterControllerScript characterCS;
     [Header("Retical And Tile Data")]
     [SerializeField] private Vector3Int tryHere;
     [Header("Current Ablity")]
-    //[SerializeField] Ability currentAblity;
+    public AbilityData currentAbility;
     [Header("Debug Data")]
     public bool ControlAI = false;
     bool ShouldContinue = false;
@@ -31,8 +29,7 @@ public class MoveDictionaryManager : MonoBehaviour
     }
     public void GetThisCharacterData()
     {
-        thisCharacter = TurnManager.thisCharacter;
-        characterCS = thisCharacter.GetComponent<CharacterControllerScript>();
+        characterCS = TurnManager.thisCharacter.GetComponent<CharacterControllerScript>();
     }
 
     void AddToolTip(string Tip)
@@ -72,13 +69,10 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         abiPointMapString += "   " + "Creating Area For " + tileToEffectPair.name + " with AoeStyle " + tileToEffectPair.aoeStyle + "From Point " + fromPoint + " At Point " + AtPoint + ":  ";
 
-
         var direction = GlobalCal.GetNormalizedDirection(fromPoint, AtPoint);
         AtPoint = fromPoint + direction * tileToEffectPair.adjustAtPointWithDirection;
 
         abiPointMapString += "          " + "adjusted At Point " + AtPoint + ":  ";
-
-
 
         var output = GlobalCal.GenerateArea(tileToEffectPair.aoeStyle, fromPoint, AtPoint, tileToEffectPair.rangeOfArea);
         output = mapManager.FilterListWithTileRequirements(output, characterCS, tileToEffectPair.tileValidityParms.ShowCastOn);
@@ -117,14 +111,13 @@ public class MoveDictionaryManager : MonoBehaviour
             return listOfRanges;
         }
     }
-    public AbilityData currnetAbility;
     public void DoAction(AbilityData abilityData)
     {
-        currnetAbility = abilityData;
+        currentAbility = abilityData;
         int costOfaction = characterCS.abilityToCost.returnDict()[abilityData];
         if (characterCS.actionPoints < costOfaction)
         {
-            AddToolTip("The Ability " + currnetAbility.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
+            AddToolTip("The Ability " + currentAbility.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
             return;
         }
         if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
@@ -132,7 +125,7 @@ public class MoveDictionaryManager : MonoBehaviour
         var pointMap = GenerateAbiltyPointMap(abilityData, characterCS.GetCharV3Int());
         if (pointMap.Keys.Count == 0)
         {
-            AddToolTip("The Ability " + currnetAbility.name + " cannot be used as No Valid Tilees");
+            AddToolTip("The Ability " + currentAbility.name + " cannot be used as No Valid Tilees");
             reticalManager.reDrawInValidTiles(new List<Vector3Int>());
             if (!characterCS.ControlCharacter)
             {
@@ -175,19 +168,19 @@ public class MoveDictionaryManager : MonoBehaviour
     {
         //Declaring Variables        
         reticalManager.reDrawValidTiles(validInputs);//this sets the Valid Tiles Overlay
-        reticalManager.reDrawInValidTiles(GlobalCal.GenerateArea(currnetAbility.rangeOfAbility.aoeStyle, characterCS.GetCharV3Int(), characterCS.GetCharV3Int(), currnetAbility.rangeOfAbility.rangeOfArea));//this sets the Valid Tiles Overlay
+        reticalManager.reDrawInValidTiles(GlobalCal.GenerateArea(currentAbility.rangeOfAbility.aoeStyle, characterCS.GetCharV3Int(), characterCS.GetCharV3Int(), currentAbility.rangeOfAbility.rangeOfArea));//this sets the Valid Tiles Overlay
         ShouldContinue = false;
         //Executing Script
         if (!characterCS.ControlCharacter)//if Non Player Character
         {
-            tryHere = characterCS.GetTarget(currnetAbility);
+            tryHere = characterCS.GetTarget(currentAbility);
             ShouldContinue = true;
             if (!UserDataManager.skipWaitTime)
                 yield return new WaitForSeconds(UserDataManager.waitAI);
         }
         else//if it is the player character
         {
-            AddToolTip("Select Purple Tile To Contine with  " + currnetAbility.name + " Or Right Click to Cancel");
+            AddToolTip("Select Purple Tile To Contine with  " + currentAbility.name + " Or Right Click to Cancel");
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
         }
@@ -216,7 +209,7 @@ public class MoveDictionaryManager : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                AddToolTip(currnetAbility.name + " Cancelled; Select an Button To Perform an Action");
+                AddToolTip(currentAbility.name + " Cancelled; Select an Button To Perform an Action");
                 ShouldContinue = false;
                 return true;
             }
@@ -254,7 +247,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         IEnumerator animationActionFunction()
         {
-            //yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, calculateNudge(atPoint), moveTimeSpeed));
+            //yield return StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(characterCS.transform, calculateNudge(atPoint), moveTimeSpeed));
             if (actionEffectParams.waitForAnimation)
             {
                 yield return StartCoroutine(characterCS.animationControllerScript.TrySetNewAnimation(actionEffectParams.doActionTillKeyFrameAnimation));
@@ -265,7 +258,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         IEnumerator afterAnimationOfAction()
         {
-            StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(thisCharacter.transform, characterCS.GetCharV3Int(), moveTimeSpeed));
+            StartCoroutine(TransformAnimationScript.current.MoveUsingQueueSystem(characterCS.transform, characterCS.GetCharV3Int(), moveTimeSpeed));
             StartCoroutine(characterCS.animationControllerScript.TrySetNewAnimation(CharacterAnimationState.Idle));
             if (!UserDataManager.skipWaitTime)
                 yield return new WaitForSeconds(UserDataManager.waitAction);
@@ -279,7 +272,7 @@ public class MoveDictionaryManager : MonoBehaviour
                 case TypeOfAction.apply_Damage:
                     {
                         CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
-                        CharacterControllerScript attackingCharacter = thisCharacter.GetComponent<CharacterControllerScript>();
+                        CharacterControllerScript attackingCharacter = characterCS.GetComponent<CharacterControllerScript>();
                         targetCharacter.health -= attackingCharacter.attackDamage;
                         refreshList.Add(targetCharacter);
                         GameEvents.current.PlaySound(0);
@@ -291,8 +284,8 @@ public class MoveDictionaryManager : MonoBehaviour
                     }
                 case TypeOfAction.apply_SelfMove:
                     {
-                        Vector3Int currentPosition = thisCharacter.GetComponent<CharacterControllerScript>().GetCharV3Int();
-                        mapManager.UpdateCharacterPosistion(currentPosition, tryHere, thisCharacter);
+                        Vector3Int currentPosition = characterCS.GetComponent<CharacterControllerScript>().GetCharV3Int();
+                        mapManager.UpdateCharacterPosistion(currentPosition, tryHere, characterCS.gameObject);
                         break;
                     }
                 case TypeOfAction.apply_StrongMindControl:
@@ -350,13 +343,6 @@ public class MoveDictionaryManager : MonoBehaviour
 
         }
     }
-}
-public enum CoRoutineStateCheck
-{
-    Waiting,
-    Proceeding,
-    Aborting,
-    Misinput
 }
 public enum TypeOfAction
 {

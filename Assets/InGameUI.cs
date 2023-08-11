@@ -38,8 +38,8 @@ public class InGameUI : MonoBehaviour
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
 
         ControlScheme.clicked += delegate { UserDataManager.Snap = !UserDataManager.Snap; };
-        ControlScheme.clicked += RefreshContolScheme;
-        SkipAnimation.clicked += delegate { UserDataManager.AnimationSkipStateNum = (AnimationSkipState)SelectNextEnum((int)UserDataManager.AnimationSkipStateNum); };
+        ControlScheme.clicked += RefreshContolScheme;        
+        SkipAnimation.clicked += delegate { UserDataManager.AnimationSkipStateNum = (AnimationSkipState)GetNextEnum(UserDataManager.AnimationSkipStateNum); };
         SkipAnimation.clicked += RefreshSkipAnimationButton;
 #if UNITY_EDITOR
         UserDataManager.AnimationSkipStateNum = AnimationSkipState.Debug;
@@ -49,12 +49,14 @@ public class InGameUI : MonoBehaviour
         RefreshContolScheme();
     }
 
-    int SelectNextEnum(int currentEnum)
+    Enum GetNextEnum(Enum currentEnum)
     {
-        int newEnum = currentEnum + 1;
-        if (newEnum > 2)
-            newEnum = 0;
-        return newEnum;
+        var arrayOfEnum = Enum.GetValues(currentEnum.GetType());
+        int index = Array.IndexOf(arrayOfEnum, currentEnum);
+        index++;
+        if (index >= arrayOfEnum.Length)
+            index = 0;
+        return (Enum)arrayOfEnum.GetValue(index);
     }
     void RefreshSkipAnimationButton()
     {

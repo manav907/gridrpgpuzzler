@@ -105,7 +105,8 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 turnManager.EndTurn();
             }
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
         }
     }
     public bool DoActionPointsRemainAfterAbility()

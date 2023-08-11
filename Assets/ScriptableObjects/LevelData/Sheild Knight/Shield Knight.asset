@@ -14,34 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ground_Floor_Over:
     KeyValuePairs:
+    - key: {x: -4, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 2065e13670ef32548a8f68c1b0fdc042, type: 2}
+    - key: {x: -3, y: -7, z: 0}
+      value: {fileID: 11400000, guid: a0c18f364264c664f95a9750a9dce128, type: 2}
     - key: {x: -7, y: -6, z: 0}
       value: {fileID: 11400000, guid: 778889c7f682efd40a6acd95375cc91d, type: 2}
     - key: {x: -4, y: -6, z: 0}
-      value: {fileID: 11400000, guid: 2065e13670ef32548a8f68c1b0fdc042, type: 2}
+      value: {fileID: 11400000, guid: 7b0316c67fb982245ad55a6c43639b14, type: 2}
     - key: {x: -3, y: -6, z: 0}
-      value: {fileID: 11400000, guid: a0c18f364264c664f95a9750a9dce128, type: 2}
+      value: {fileID: 11400000, guid: 059fdcc86b129e444a9eb836f3b79d03, type: 2}
     - key: {x: -7, y: -5, z: 0}
       value: {fileID: 11400000, guid: 726e10e51943f87469f4bec8658bb429, type: 2}
     - key: {x: -6, y: -5, z: 0}
       value: {fileID: 11400000, guid: 13beab8a9d87ab748b7b99f68669073a, type: 2}
-    - key: {x: -4, y: -5, z: 0}
-      value: {fileID: 11400000, guid: 7b0316c67fb982245ad55a6c43639b14, type: 2}
-    - key: {x: -3, y: -5, z: 0}
-      value: {fileID: 11400000, guid: 059fdcc86b129e444a9eb836f3b79d03, type: 2}
-    - key: {x: -2, y: -5, z: 0}
-      value: {fileID: 11400000, guid: c660a8db86514bc448e3e40ff61c3ce6, type: 2}
-    - key: {x: -1, y: -5, z: 0}
-      value: {fileID: 11400000, guid: 6a2cc76eb9568254882189db4aa88419, type: 2}
-    - key: {x: -8, y: -4, z: 0}
-      value: {fileID: 11400000, guid: b9abf0e98c58846498a51caaa1e73136, type: 2}
     - key: {x: -4, y: -4, z: 0}
       value: {fileID: 11400000, guid: fca79f5e5a24b334793e19cba8569d35, type: 2}
     - key: {x: -3, y: -4, z: 0}
       value: {fileID: 11400000, guid: e29611ae159752342961c5472732bdb8, type: 2}
-    - key: {x: -2, y: -4, z: 0}
-      value: {fileID: 11400000, guid: 7b38960ab19b3fa4c863f9fa3aa4e897, type: 2}
-    - key: {x: -1, y: -4, z: 0}
-      value: {fileID: 11400000, guid: f640f02c9d13bc740abc94092e17b6ad, type: 2}
     - key: {x: -9, y: -3, z: 0}
       value: {fileID: 11400000, guid: 81f8b0db36ff1d649bdfefb791ca0609, type: 2}
     - key: {x: -7, y: -3, z: 0}
@@ -152,15 +142,25 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 9c18f266eb1e92546bd48c9f2e6be934, type: 2}
   Ground_Floor:
     KeyValuePairs:
+    - key: {x: -4, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -3, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -2, y: -8, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -7, y: -7, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -6, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -5, y: -7, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -4, y: -7, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -3, y: -7, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -2, y: -7, z: 0}
+      value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
+    - key: {x: -8, y: -6, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
     - key: {x: -7, y: -6, z: 0}
       value: {fileID: 11400000, guid: 9c6a3ace44e249543933f715425ef9da, type: 2}
@@ -390,8 +390,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 8ba320bbbc5b08444a0b0e5faae55b8a, type: 2}
     - key: {x: -1, y: -3, z: 0}
       value: {fileID: 11400000, guid: 44f87fc83fc473b498fedabe005bb8c3, type: 2}
-    - key: {x: -10, y: -2, z: 0}
-      value: {fileID: 11400000, guid: 7cf7cb54ec2f4d543937af14b2225f5e, type: 2}
     - key: {x: -9, y: -2, z: 0}
       value: {fileID: 11400000, guid: 7cf7cb54ec2f4d543937af14b2225f5e, type: 2}
     - key: {x: -7, y: 0, z: 0}

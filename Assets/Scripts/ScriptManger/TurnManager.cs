@@ -21,12 +21,10 @@ public class TurnManager : MonoBehaviour
     MoveDictionaryManager moveDictionaryManager;
     ReticalManager reticalManager;
     UniversalCalculator universalCalculator;
-    TurnManager turnManager;
     [SerializeField] BasicCameraController basicCameraController;
     [Header("Character Prefab Data to Instanstace Characters")]
     [SerializeField] GameObject characterPrefab;
     [SerializeField] GameObject characterHolder;
-    [SerializeField] List<CharacterData> listOfCD;
     [Header("List of Active Characters")]
     public List<GameObject> ListOfInteractableCharacters;
     public List<GameObject> OrderOfInteractableCharacters;

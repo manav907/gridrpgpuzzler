@@ -40,5 +40,21 @@ public class CharacterData : ScriptableObject
         Faction = characterData.Faction;
         characterAnimationData = characterData.characterAnimationData;
     }
+}
+public class AbilityBalanaceData
+{
+    List<AbilityData> abilityDatas;
+    List<int> cost;
+    List<CostType> costTypes;
+    enum CostType
+    {
+        Stamina,//Refilled Each turn
+        FocusPoints,//Earned Each Turn
+        /* Flow,//Lost Each turn
+        Mana,//Needs Manual Refillling
+        Health,//Costs Health
+        Consentraion,//Earned Each Kill\
+        Zen,//Earned on Specific Actions */
 
+    }
 }
