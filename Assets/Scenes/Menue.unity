@@ -194,6 +194,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0e89d6355ec0ea64cab3c69e6aeb43e1, type: 2}
   - {fileID: 11400000, guid: 2e72b9df6a2287c428c6516ab116454b, type: 2}
   - {fileID: 11400000, guid: 792988880f4c9de41ba54d54de7b5d12, type: 2}
+  - {fileID: 11400000, guid: 6cf4179eeb1df2c47985b70ee40404c0, type: 2}
   GridXLimit: 5
 --- !u!1 &615890425
 GameObject:

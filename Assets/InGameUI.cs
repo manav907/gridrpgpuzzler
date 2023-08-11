@@ -6,8 +6,6 @@ using UnityEngine.UIElements;
 
 public class InGameUI : MonoBehaviour
 {
-    [Header("EditorSettings")]
-    public bool enableEditorQuickMode = true;
     [Header("Other")]
     public Button restartButton;
     public Button exitButton;
@@ -42,12 +40,17 @@ public class InGameUI : MonoBehaviour
         ControlScheme.clicked += SwithControlScheme;
         SkipAnimation.clicked += SwitchSkipAnimation;
 
-        UserDataManager.SetSetting();
 
-        SwithControlScheme();
+        AnimationSkipStateNum = AnimationSkipState.Debug;//this becomes normal
+#if UNITY_EDITOR
+        AnimationSkipStateNum = AnimationSkipState.Fast;//this becomes debug
+        ControlScheme.text = "Editor Snap Mode";
+        UserDataManager.Snap = true;
+#endif
         SwitchSkipAnimation();
+        //
         SwithControlScheme();
-        SwitchSkipAnimation();
+        SwithControlScheme();
 
 
         //Debug.Log("Start was called");
@@ -110,13 +113,6 @@ public class InGameUI : MonoBehaviour
     void SetUpUI()
     {
         ControlScheme.text = "Pick Mode";
-#if UNITY_EDITOR
-        if (GameEvents.current.inGameUI.enableEditorQuickMode)
-        {
-            ControlScheme.text = "Editor Snap Mode";
-        }
-#endif
-
         var root = GetComponent<UIDocument>().rootVisualElement;
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");

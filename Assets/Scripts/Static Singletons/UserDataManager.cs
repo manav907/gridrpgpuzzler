@@ -11,16 +11,4 @@ public static class UserDataManager
     public static bool skipAnimations = false;
     public static bool Snap = false;
     public static bool SmartPosistioning = false;
-    public static void SetSetting()
-    {
-        //UserDataManager.Snap = false;
-#if UNITY_EDITOR
-        if (GameEvents.current.inGameUI.enableEditorQuickMode)
-        {
-            Snap = true;
-            skipAnimations = true;
-            skipWaitTime = true;
-        }
-#endif
-    }
 }
