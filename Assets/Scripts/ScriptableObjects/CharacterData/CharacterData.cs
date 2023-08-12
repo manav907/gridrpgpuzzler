@@ -16,10 +16,10 @@ public class CharacterData : ScriptableObject
     public int attackDamage = 2;
     public int speedValue = 3;
     public int rangeOfVision = 2;
-    public int defaultActionPoints = 1;
-    //AI
+    public int maxStamina = 1;
+    public int maxFocusPoints = 2;
     public List<GroundFloorType> canWalkOn;
-    public SerializableDictionary<AbilityData, int> abilityToCost;
+    public List<AbilityData> listOfAbilities;
     public void ReplaceDataWithPreset(CharacterData characterData)
     {
         if (characterData == null)
@@ -35,26 +35,9 @@ public class CharacterData : ScriptableObject
         speedValue = characterData.speedValue;
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        defaultActionPoints = characterData.defaultActionPoints;
-        abilityToCost = characterData.abilityToCost;
+        maxStamina = characterData.maxStamina;
+        listOfAbilities = characterData.listOfAbilities;
         Faction = characterData.Faction;
         characterAnimationData = characterData.characterAnimationData;
-    }
-}
-public class AbilityBalanaceData
-{
-    List<AbilityData> abilityDatas;
-    List<int> cost;
-    List<CostType> costTypes;
-    enum CostType
-    {
-        Stamina,//Refilled Each turn
-        FocusPoints,//Earned Each Turn
-        /* Flow,//Lost Each turn
-        Mana,//Needs Manual Refillling
-        Health,//Costs Health
-        Consentraion,//Earned Each Kill\
-        Zen,//Earned on Specific Actions */
-
     }
 }

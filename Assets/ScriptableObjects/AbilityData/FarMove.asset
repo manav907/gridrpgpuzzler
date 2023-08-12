@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userFriendlyName: 
   Primaryuse: 2
+  primaryCost:
+    KeyValuePairs:
+    - key: 2
+      value: 0
   rangeOfAbility:
     name: FarMove
     minpoints: 1

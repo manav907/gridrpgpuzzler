@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daeb2db289b4d9c41968d5b02a78b23f, type: 3}
   m_Name: 4WayAttack
   m_EditorClassIdentifier: 
+  userFriendlyName: 
   Primaryuse: 0
+  primaryCost:
+    KeyValuePairs:
+    - key: 1
+      value: 0
   rangeOfAbility:
     name: 
     minpoints: 1
-    MaxPoints: 10
     adjustAtPointWithDirection: 1
     rangeOfArea: 2
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}
@@ -24,7 +28,6 @@ MonoBehaviour:
   ValidTileData:
   - name: 
     minpoints: 1
-    MaxPoints: 1
     adjustAtPointWithDirection: 1
     rangeOfArea: 0
     tileValidityParms: {fileID: 11400000, guid: 77e19fdc7bb444b4a8466cc1b0ca5c46, type: 2}

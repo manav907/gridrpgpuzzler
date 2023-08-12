@@ -32,13 +32,15 @@ public class CharacterControllerScript : MonoBehaviour
     public int speedValue;
     public int rangeOfVision;
     public string faction;
-    public int defaultActionPoints = 1;
-    public SerializableDictionary<AbilityData, int> abilityToCost;
+    public List<AbilityData> listOfAbilities;
     public List<GroundFloorType> canWalkOn;
+    public int maxStamina = 1;
+    public int maxFocusPoints = 2;
     [Header("Debuff Data")]
     public Vector3Int currentCellPosOfCharcter;
-    public int actionPointsPenelty = 0;
-    public int actionPoints = 1;
+    public int StaminaPenelty = 0;
+    public int currentStamina = 1;
+    public int currentFocusPoints = 2;
     bool isALive = true;
     [SerializeField] Vector3Int destinationTarget;
     private readonly int GhostVision = 1;
@@ -69,8 +71,8 @@ public class CharacterControllerScript : MonoBehaviour
             //ListStuff
             canWalkOn = CharacterDataSO.canWalkOn;
             //Rewordk This
-            defaultActionPoints = CharacterDataSO.defaultActionPoints;
-            abilityToCost = CharacterDataSO.abilityToCost;
+            maxStamina = CharacterDataSO.maxStamina;
+            listOfAbilities = CharacterDataSO.listOfAbilities;
             //Setting Data
             //Setting Specific Name
             this.name = characterName + " " + CharacterDataSO.InstanceID;
@@ -111,7 +113,7 @@ public class CharacterControllerScript : MonoBehaviour
     }
     public bool DoActionPointsRemainAfterAbility()
     {
-        if (actionPoints > 0)//if we have more than 0 actionPoints
+        if (currentStamina > 0)//if we have more than 0 actionPoints
             return true;
         return false;
     }
@@ -119,11 +121,11 @@ public class CharacterControllerScript : MonoBehaviour
     {
         if (isALive)
         {
-            if (actionPointsPenelty > 0)
+            if (StaminaPenelty > 0)
             {
-                actionPoints = 0;
-                actionPointsPenelty--;
-                if (actionPointsPenelty <= 0)
+                currentStamina = 0;
+                StaminaPenelty--;
+                if (StaminaPenelty <= 0)
                     StartCoroutine(animationControllerScript.SetStatusEffect(StatusEffect.Normal));
                 turnManager.EndTurn();
             }
@@ -134,7 +136,7 @@ public class CharacterControllerScript : MonoBehaviour
                 {
                     GameEvents.current.TriggerNextDialog();//Disable this laeter
                     List<AbilityData> allAbilities = new();
-                    allAbilities.AddRange(abilityToCost.Keys());
+                    allAbilities.AddRange(listOfAbilities);
                     GameEvents.current.inGameUI.MakeButtonsFromAbilityies(allAbilities);
                     turnManager.SetCameraPos(GetCharV3Int());
                 }
@@ -149,13 +151,13 @@ public class CharacterControllerScript : MonoBehaviour
     Dictionary<TypeOfAction, List<AbilityData>> AbilityMap()
     {
         var newDict = new Dictionary<TypeOfAction, List<AbilityData>>();
-        foreach (var keypair in abilityToCost.KeyValuePairs)
+        foreach (var keypair in listOfAbilities)
         {
-            if (!newDict.ContainsKey(keypair.key.Primaryuse))
+            if (!newDict.ContainsKey(keypair.Primaryuse))
             {
-                newDict.Add(keypair.key.Primaryuse, new List<AbilityData>());
+                newDict.Add(keypair.Primaryuse, new List<AbilityData>());
             }
-            newDict[keypair.key.Primaryuse].Add(keypair.key);
+            newDict[keypair.Primaryuse].Add(keypair);
             //Debug.Log(characterName + " Character added " + keypair.key.name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
 
         }
@@ -164,8 +166,7 @@ public class CharacterControllerScript : MonoBehaviour
     void DetermineAction()
     {
         var optionsofAbilities = AbilityMap();
-        var costIndex = abilityToCost.returnDict();
-        if (actionPoints > 0)
+        if (currentStamina > 0)
         {
             Vector3Int thisCharpos = GetCharV3Int();
             //var VisionList = GlobalCal.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
@@ -188,7 +189,7 @@ public class CharacterControllerScript : MonoBehaviour
                 attackRangeList = mapManager.FilterListWithTileRequirements(attackRangeList, this, ValidTargets.Enemies);
                 if (attackRangeList.Count > 0)
                 {
-                    if (costIndex[optionsofAbilities[TypeOfAction.apply_Damage][0]] <= actionPoints)
+                    if (optionsofAbilities[TypeOfAction.apply_Damage][0].CheckAbilityBudget(this))
                     {
                         moveDictionaryManager.DoAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
                     }
@@ -197,9 +198,10 @@ public class CharacterControllerScript : MonoBehaviour
                         turnManager.EndTurn();
                     }
                 }
-                else if (costIndex[optionsofAbilities[TypeOfAction.apply_SelfMove][0]] <= actionPoints)
+                else if (optionsofAbilities[TypeOfAction.apply_SelfMove][0].CheckAbilityBudget(this))
                 {
                     moveDictionaryManager.DoAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
+                    Debug.Log("Move COndstion was meet");
                 }
                 else
                 {

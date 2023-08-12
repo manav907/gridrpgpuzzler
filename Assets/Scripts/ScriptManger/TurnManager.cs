@@ -87,7 +87,7 @@ public class TurnManager : MonoBehaviour
         {
             //Debug.Log("New Turn");
             setCharacterData();//sets new chracterData
-            thisCharacterData.actionPoints = thisCharacterData.defaultActionPoints;
+            thisCharacterData.currentStamina = thisCharacterData.maxStamina;
             thisCharacterData.BeginThisCharacterTurn();
 
         }

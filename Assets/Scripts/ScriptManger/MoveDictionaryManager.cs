@@ -114,10 +114,9 @@ public class MoveDictionaryManager : MonoBehaviour
     public void DoAction(AbilityData abilityData)
     {
         currentAbility = abilityData;
-        int costOfaction = characterCS.abilityToCost.returnDict()[abilityData];
-        if (characterCS.actionPoints < costOfaction)
+        if (!currentAbility.CheckAbilityBudget(characterCS))
         {
-            AddToolTip("The Ability " + currentAbility.name + " cannot be used as you dont have action Points Remaining " + characterCS.actionPoints);
+            AddToolTip("The Ability " + currentAbility.name + " cannot be used as you dont meet cost Requirements");
             return;
         }
         if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
@@ -129,7 +128,7 @@ public class MoveDictionaryManager : MonoBehaviour
             reticalManager.reDrawInValidTiles(new List<Vector3Int>());
             if (!characterCS.ControlCharacter)
             {
-                characterCS.actionPoints = 0;
+                characterCS.currentStamina = 0;
                 characterCS.BeginThisCharacterTurn();
             }
             return;
@@ -141,8 +140,7 @@ public class MoveDictionaryManager : MonoBehaviour
             yield return StartCoroutine(GetInput(pointMap.Keys.ToList()));
             if (ShouldContinue)
             {
-                characterCS.actionPoints = characterCS.actionPoints - costOfaction;//Consume Ability Point
-                //Debug.Log("Should continew was true consuming ability Point");
+                currentAbility.CheckAbilityBudget(characterCS, true);
                 List<List<Vector3Int>> ListOfListPointToEffect = pointMap[tryHere];
                 for (int i = 0; i < abilityData.ApplyEffects.Count; i++)
                 {
@@ -320,7 +318,7 @@ public class MoveDictionaryManager : MonoBehaviour
                     {
                         CharacterControllerScript targetCharacter = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
                         StartCoroutine(targetCharacter.animationControllerScript.SetStatusEffect(StatusEffect.Stun));
-                        targetCharacter.actionPointsPenelty++;
+                        targetCharacter.StaminaPenelty++;
                         break;
                     }
                 default:

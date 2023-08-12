@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userFriendlyName: Attack
   Primaryuse: 0
+  primaryCost:
+    KeyValuePairs:
+    - key: 2
+      value: 0
   rangeOfAbility:
     name: 
     minpoints: 1

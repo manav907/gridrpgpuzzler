@@ -21,11 +21,9 @@ MonoBehaviour:
   attackDamage: 1
   speedValue: 8
   rangeOfVision: 5
-  defaultActionPoints: 1
+  maxStamina: 2
+  maxFocusPoints: 2
   canWalkOn: 01000000
-  abilityToCost:
-    KeyValuePairs:
-    - key: {fileID: 11400000, guid: b5724ac8695069640bad111ef8a0be65, type: 2}
-      value: 1
-    - key: {fileID: 11400000, guid: c3fa9cacee22da04795d1f630f4a22a7, type: 2}
-      value: 1
+  listOfAbilities:
+  - {fileID: 11400000, guid: b5724ac8695069640bad111ef8a0be65, type: 2}
+  - {fileID: 11400000, guid: c3fa9cacee22da04795d1f630f4a22a7, type: 2}

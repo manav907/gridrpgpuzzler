@@ -1,15 +1,70 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 [CreateAssetMenu(fileName = "New AbilityData", menuName = "AbilityData")]
 public class AbilityData : ScriptableObject
 {
     public string userFriendlyName;
     public TypeOfAction Primaryuse;
+    public SerializableDictionary<CostType, int> primaryCost;
     public AreaGenerationParams rangeOfAbility;
     public List<AreaGenerationParams> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
+    public bool CheckAbilityBudget(CharacterControllerScript characterControllerScript, bool consumePoints = false)
+    {
+        Debug.Log(characterControllerScript.characterName + " can use " + this.name);
+        foreach (var keypair in primaryCost.returnKeyPairList())
+        {
+            if (!canAffotd(keypair.value, keypair.key))
+                return false;
+        }
+        return true;
+        bool canAffotd(int cost, CostType costType)
+        {
+            Debug.Log(costType + cost);
+            switch (costType)
+            {
+                case CostType.Stamina:
+                    {
+                        if (characterControllerScript.currentStamina <= cost)
+                        {
+                            if (consumePoints)
+                                characterControllerScript.currentStamina = characterControllerScript.currentStamina - cost;
+                            return true;
+                        }
+                        break;
+                    }
+                case CostType.FocusPoints:
+                    {
+                        if (characterControllerScript.currentFocusPoints <= cost)
+                        {
+                            if (consumePoints)
+                                characterControllerScript.currentFocusPoints = characterControllerScript.currentFocusPoints - cost;
+                            return true;
+                        }
+                        break;
+                    }
+                default:
+                    Debug.Log("CaseFailed");
+                    break;
+
+            }
+            return false;
+        }
+    }
+}
+public enum CostType
+{
+    Stamina,//Refilled Each turn
+    FocusPoints,//Earned Each Turn
+    /* Flow,//Lost Each turn
+    Mana,//Needs Manual Refillling
+    Health,//Costs Health
+    Consentraion,//Earned Each Kill\
+    Zen,//Earned on Specific Actions */
+
 }
 [Serializable]
 public class AreaGenerationParams
