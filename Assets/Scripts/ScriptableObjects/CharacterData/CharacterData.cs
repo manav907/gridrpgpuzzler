@@ -36,6 +36,7 @@ public class CharacterData : ScriptableObject
         rangeOfVision = characterData.rangeOfVision;
         canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
         maxStamina = characterData.maxStamina;
+        maxFocusPoints = characterData.maxFocusPoints;
         listOfAbilities = characterData.listOfAbilities;
         Faction = characterData.Faction;
         characterAnimationData = characterData.characterAnimationData;

@@ -39,8 +39,8 @@ public class CharacterControllerScript : MonoBehaviour
     [Header("Debuff Data")]
     public Vector3Int currentCellPosOfCharcter;
     public int StaminaPenelty = 0;
-    public int currentStamina = 1;
-    public int currentFocusPoints = 2;
+    public int currentStamina;
+    public int currentFocusPoints;
     bool isALive = true;
     [SerializeField] Vector3Int destinationTarget;
     private readonly int GhostVision = 1;
@@ -72,6 +72,8 @@ public class CharacterControllerScript : MonoBehaviour
             canWalkOn = CharacterDataSO.canWalkOn;
             //Rewordk This
             maxStamina = CharacterDataSO.maxStamina;
+            maxFocusPoints = CharacterDataSO.maxFocusPoints;
+            currentFocusPoints = maxFocusPoints;
             listOfAbilities = CharacterDataSO.listOfAbilities;
             //Setting Data
             //Setting Specific Name

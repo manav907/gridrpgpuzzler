@@ -22,7 +22,7 @@ MonoBehaviour:
   speedValue: 8
   rangeOfVision: 5
   maxStamina: 2
-  maxFocusPoints: 2
+  maxFocusPoints: 4
   canWalkOn: 01000000
   listOfAbilities:
   - {fileID: 11400000, guid: d6187e5e920dcaf49a409633059d9952, type: 2}

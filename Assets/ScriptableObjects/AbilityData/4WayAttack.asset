@@ -16,8 +16,8 @@ MonoBehaviour:
   Primaryuse: 0
   primaryCost:
     KeyValuePairs:
-    - key: 1
-      value: 0
+    - key: 0
+      value: 1
   rangeOfAbility:
     name: 
     minpoints: 1
