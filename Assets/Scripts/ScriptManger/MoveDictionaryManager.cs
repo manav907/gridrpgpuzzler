@@ -116,7 +116,7 @@ public class MoveDictionaryManager : MonoBehaviour
         currentAbility = abilityData;
         if (!currentAbility.CheckAbilityBudget(characterCS))
         {
-            AddToolTip("The Ability " + currentAbility.name + " cannot be used as you dont meet cost Requirements");
+            AddToolTip(currentAbility.GetToolTip());
             return;
         }
         if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
@@ -178,7 +178,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else//if it is the player character
         {
-            AddToolTip("Select Purple Tile To Contine with  " + currentAbility.name + " Or Right Click to Cancel");
+            AddToolTip("Select Purple Tile To Contine with  " + currentAbility.name + " Or Right Click to Cancel" + "\n" + currentAbility.GetToolTip());
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
         }

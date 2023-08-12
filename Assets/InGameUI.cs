@@ -38,7 +38,7 @@ public class InGameUI : MonoBehaviour
         exitButton.clicked += GameEvents.current.returnToLevelSelect;
 
         ControlScheme.clicked += delegate { UserDataManager.Snap = !UserDataManager.Snap; };
-        ControlScheme.clicked += RefreshContolScheme;        
+        ControlScheme.clicked += RefreshContolScheme;
         SkipAnimation.clicked += delegate { UserDataManager.AnimationSkipStateNum = (AnimationSkipState)GetNextEnum(UserDataManager.AnimationSkipStateNum); };
         SkipAnimation.clicked += RefreshSkipAnimationButton;
 #if UNITY_EDITOR
@@ -149,8 +149,8 @@ public class InGameUI : MonoBehaviour
 
         newButton.AddToClassList("ButtonsThatShrinkToFit");
         //newButton.style.fontSize = AblityButtonExample.style.fontSize;
+        newButton.tooltip = " we got it";
         newButton.clicked += action;
-
         return newButton;
         //newButton.style
     }

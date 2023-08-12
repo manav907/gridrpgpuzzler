@@ -12,6 +12,15 @@ public class AbilityData : ScriptableObject
     public AreaGenerationParams rangeOfAbility;
     public List<AreaGenerationParams> ValidTileData;
     public List<ActionEffectParams> ApplyEffects;
+    public string GetToolTip()
+    {
+        string abilityCost = userFriendlyName + "(" + this.name + ")" + " Requires ";
+        foreach (var cost in primaryCost.returnDict())
+        {
+            abilityCost += cost.Value + " " + cost.Key + " ";
+        }
+        return abilityCost;
+    }
     public bool CheckAbilityBudget(CharacterControllerScript characterControllerScript, bool consumePoints = false)
     {
         foreach (var keypair in primaryCost.returnKeyPairList())
