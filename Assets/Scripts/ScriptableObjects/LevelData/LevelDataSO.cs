@@ -26,12 +26,10 @@ public class LevelDataSO : ScriptableObject
 
             Vector3Int atPos = dataPair.Key;
             TileBase CharacterDataID = dataPair.Value;
-            CharacterData characterData = ScriptableObject.CreateInstance<CharacterData>();
-            characterData.ReplaceDataWithPreset(TileToChar[CharacterDataID]);
             //characterData.(IdToCharacterData[CharacterDataID]);
             try
             {
-                data.Add(atPos, characterData);
+                data.Add(atPos, TileToChar[CharacterDataID]);
             }
             catch (KeyNotFoundException)
             {

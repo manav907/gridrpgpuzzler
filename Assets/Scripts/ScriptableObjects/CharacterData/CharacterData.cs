@@ -20,25 +20,32 @@ public class CharacterData : ScriptableObject
     public int maxFocusPoints = 2;
     public List<GroundFloorType> canWalkOn;
     public List<AbilityData> listOfAbilities;
-    public void ReplaceDataWithPreset(CharacterData characterData)
+    public void SetVariablesForCSS(CharacterControllerScript characterControllerScript)
     {
-        if (characterData == null)
+        characterControllerScript.CharacterDataSO = this;
+        setVariables();
+        characterControllerScript.CheckIfCharacterIsDead();
+        void setVariables()
         {
-            Debug.Log("Data was Null");
-            return;
+            characterControllerScript.characterName = characterName;
+            characterControllerScript.isPlayerCharacter = isPlayerCharacter;
+            characterControllerScript.health = health;
+            characterControllerScript.attackDamage = attackDamage;
+            characterControllerScript.speedValue = speedValue;
+            characterControllerScript.rangeOfVision = rangeOfVision;
+            characterControllerScript.Faction = Faction;
+            //ListStuff
+            characterControllerScript.canWalkOn = canWalkOn;
+            //Rewordk This
+            characterControllerScript.maxStamina = maxStamina;
+            characterControllerScript.maxFocusPoints = maxFocusPoints;
+            characterControllerScript.currentFocusPoints = maxFocusPoints;
+            characterControllerScript.listOfAbilities = listOfAbilities;
+            //Setting Data
+
+            //Game Event Regersery
+            GameEvents.current.AddCharacter(isPlayerCharacter);
+            characterControllerScript.animationControllerScript.SetVariables(characterAnimationData);
         }
-        InstanceID = characterData.InstanceID;
-        characterName = characterData.characterName;
-        isPlayerCharacter = characterData.isPlayerCharacter;
-        health = characterData.health;
-        attackDamage = characterData.attackDamage;
-        speedValue = characterData.speedValue;
-        rangeOfVision = characterData.rangeOfVision;
-        canWalkOn = new List<GroundFloorType>(characterData.canWalkOn);
-        maxStamina = characterData.maxStamina;
-        maxFocusPoints = characterData.maxFocusPoints;
-        listOfAbilities = characterData.listOfAbilities;
-        Faction = characterData.Faction;
-        characterAnimationData = characterData.characterAnimationData;
     }
 }

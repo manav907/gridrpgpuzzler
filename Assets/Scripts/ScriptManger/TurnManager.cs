@@ -58,9 +58,11 @@ public class TurnManager : MonoBehaviour
             GameObject InstansiatedCharacter = Instantiate(characterPrefab);//Instansiateding Character
             CharacterControllerScript InstansiatedCCS = InstansiatedCharacter.GetComponent<CharacterControllerScript>();//Getting CCS
             //Setting data
-            InstansiatedCharacter.transform.position = characterDataPair.Key; //The Locatrion of Character
-            InstansiatedCCS.CharacterDataSO = characterDataPair.Value;//Setting The Character Data
-            InstansiatedCCS.CharacterDataSO.InstanceID = InstansiatedCharacter.GetInstanceID();//Setting Instance ID
+            InstansiatedCharacter.transform.position = characterDataPair.Key; //The Location of Character                          
+            InstansiatedCCS.CharacterDataSO = characterDataPair.Value;//Setting Character SO
+            InstansiatedCCS.InitilizeCharacter(gameController);//Setting Varirables including initilinging SO
+
+            InstansiatedCCS.name = InstansiatedCCS.characterName + " " + InstansiatedCharacter.GetInstanceID();//Setting Instance ID         
             //Adding to Lists
             ListOfInteractableCharacters.Add(InstansiatedCharacter);//Adding Character to List
             if (mapManager.cellDataDir.ContainsKey(characterDataPair.Key))//Checks if Tile is Valid ie recorded in Dictionary does not do walkablity checks
@@ -72,10 +74,7 @@ public class TurnManager : MonoBehaviour
                 Debug.Log("Wrong Tile Skipping Character");
             }
             InstansiatedCharacter.transform.SetParent(characterHolder.transform, false);//Setting Parent GameObjects 
-            //last step
-            InstansiatedCCS.InitilizeCharacter(gameController);//Last step Initilization
         }
-
         GameEvents.current.SetUpCamera();//Move This Somewhere Else
     }
     public void beginTurnIfPossible()

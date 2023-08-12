@@ -294,8 +294,8 @@ public class MapManager : MonoBehaviour
                     return !IsCellHoldingCharacer(checkPos);
                 else if (IsCellHoldingCharacer(checkPos))
                 {
-                    string faction = cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().faction;
-                    string factionOfCaster = castingCharacter.faction;
+                    string faction = cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().Faction;
+                    string factionOfCaster = castingCharacter.Faction;
                     //Debug.Log("Checking Factions between " + faction + " and " + factionOfCaster + " for condition " + requitedCondtion);
                     //Debug.Log(faction == factionOfCaster);
                     switch (validTargets)

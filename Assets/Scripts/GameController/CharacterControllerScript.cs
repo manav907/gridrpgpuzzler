@@ -21,7 +21,7 @@ public class CharacterControllerScript : MonoBehaviour
     [SerializeField] private TMPro.TextMeshPro Heatlh;
     private MapManager mapManager;
     private TurnManager turnManager;
-    MoveDictionaryManager moveDictionaryManager;
+    private MoveDictionaryManager moveDictionaryManager;
     public AnimationControllerScript animationControllerScript;
     UniversalCalculator universalCalculator;
     [Header("SO Data")]
@@ -31,7 +31,7 @@ public class CharacterControllerScript : MonoBehaviour
     public int attackDamage;
     public int speedValue;
     public int rangeOfVision;
-    public string faction;
+    public string Faction;
     public List<AbilityData> listOfAbilities;
     public List<GroundFloorType> canWalkOn;
     public int maxStamina = 1;
@@ -51,40 +51,7 @@ public class CharacterControllerScript : MonoBehaviour
         moveDictionaryManager = gameController.GetComponent<MoveDictionaryManager>();
         universalCalculator = gameController.GetComponent<UniversalCalculator>();
         reticalManager = gameController.GetComponent<ReticalManager>();
-        //Initilizing
-        try
-        { setVariables(); }
-        catch (NullReferenceException)
-        {
-            Debug.Log("Hey if you are having null reffence here then check out the consutructor for the SO it might not have the new variable");
-        }
-        CheckIfCharacterIsDead();
-        void setVariables()
-        {
-            characterName = CharacterDataSO.characterName;
-            isPlayerCharacter = CharacterDataSO.isPlayerCharacter;
-            health = CharacterDataSO.health;
-            attackDamage = CharacterDataSO.attackDamage;
-            speedValue = CharacterDataSO.speedValue;
-            rangeOfVision = CharacterDataSO.rangeOfVision;
-            faction = CharacterDataSO.Faction;
-            //ListStuff
-            canWalkOn = CharacterDataSO.canWalkOn;
-            //Rewordk This
-            maxStamina = CharacterDataSO.maxStamina;
-            maxFocusPoints = CharacterDataSO.maxFocusPoints;
-            currentFocusPoints = maxFocusPoints;
-            listOfAbilities = CharacterDataSO.listOfAbilities;
-            //Setting Data
-            //Setting Specific Name
-            this.name = characterName + " " + CharacterDataSO.InstanceID;
-            //Game Event Regersery
-            GameEvents.current.AddCharacter(isPlayerCharacter);
-            //doingAnimController
-            //animationControllerScript.setVariables(gameController.GetComponent<DataManager>().getFromSO(CharacterDataSO.NameEnum));
-            animationControllerScript.SetVariables(CharacterDataSO.characterAnimationData);
-            //Methods
-        }
+        CharacterDataSO.SetVariablesForCSS(this);
     }
     public bool CheckIfCharacterIsDead()
     {

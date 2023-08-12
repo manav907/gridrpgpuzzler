@@ -53,18 +53,13 @@ public class GameEvents : MonoBehaviour
     public void SetUpCamera()
     {
         NameTagToTransform = new Dictionary<string, Transform>();
-
         foreach (var GO in turnManager.ListOfInteractableCharacters)
         {
-            string nameEnum = GO.GetComponent<CharacterControllerScript>().CharacterDataSO.name;
+            string nameEnum = GO.GetComponent<CharacterControllerScript>().name;
             if (NameTagToTransform.ContainsKey(nameEnum))
-            {
-            }
+            { Debug.Log("DuppplicateName"); }
             else
-            {
-                //Debug.Log(nameEnum);
-                NameTagToTransform.Add(nameEnum, GO.GetComponent<Transform>());
-            }
+            { NameTagToTransform.Add(nameEnum, GO.GetComponent<Transform>()); }
         }
     }
     public event Action OnCharacterDeath;

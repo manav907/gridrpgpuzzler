@@ -291,7 +291,7 @@ public class MoveDictionaryManager : MonoBehaviour
                         CharacterControllerScript target = mapManager.cellDataDir[tryHere].characterAtCell.GetComponent<CharacterControllerScript>();
                         GameEvents.current.DeathEvent(target);
                         target.isPlayerCharacter = !target.isPlayerCharacter;
-                        target.faction = characterCS.faction;
+                        target.Faction = characterCS.Faction;
                         break;
                     }
                 case TypeOfAction.apply_Push:
