@@ -14,21 +14,21 @@ public class AbilityData : ScriptableObject
     public List<ActionEffectParams> ApplyEffects;
     public bool CheckAbilityBudget(CharacterControllerScript characterControllerScript, bool consumePoints = false)
     {
-        Debug.Log(characterControllerScript.characterName + " can use " + this.name);
         foreach (var keypair in primaryCost.returnKeyPairList())
         {
             if (!canAffotd(keypair.value, keypair.key))
+            {
                 return false;
+            }
         }
         return true;
         bool canAffotd(int cost, CostType costType)
         {
-            Debug.Log(costType + cost);
             switch (costType)
             {
                 case CostType.Stamina:
                     {
-                        if (characterControllerScript.currentStamina <= cost)
+                        if (cost <= characterControllerScript.currentStamina)
                         {
                             if (consumePoints)
                                 characterControllerScript.currentStamina = characterControllerScript.currentStamina - cost;
@@ -38,7 +38,7 @@ public class AbilityData : ScriptableObject
                     }
                 case CostType.FocusPoints:
                     {
-                        if (characterControllerScript.currentFocusPoints <= cost)
+                        if (cost <= characterControllerScript.currentFocusPoints)
                         {
                             if (consumePoints)
                                 characterControllerScript.currentFocusPoints = characterControllerScript.currentFocusPoints - cost;

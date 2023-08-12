@@ -159,7 +159,6 @@ public class CharacterControllerScript : MonoBehaviour
             }
             newDict[keypair.Primaryuse].Add(keypair);
             //Debug.Log(characterName + " Character added " + keypair.key.name + " it had a cost of " + keypair.value + " and actionPoints Remaining were" + actionPoints);
-
         }
         return newDict;
     }
@@ -169,9 +168,7 @@ public class CharacterControllerScript : MonoBehaviour
         if (currentStamina > 0)
         {
             Vector3Int thisCharpos = GetCharV3Int();
-            //var VisionList = GlobalCal.generateRangeFromPoint(thisCharpos, rangeOfVision + GhostVision);
             var VisionList = GlobalCal.GenerateArea(AoeStyle.Square, thisCharpos, thisCharpos, rangeOfVision + GhostVision);
-
             //GhostVision for tracking after leaving Vision
             var targetList = listOfPossibleTargets(VisionList);
             //Debug.LogError("AI Stuf Needs Rework");
@@ -201,7 +198,6 @@ public class CharacterControllerScript : MonoBehaviour
                 else if (optionsofAbilities[TypeOfAction.apply_SelfMove][0].CheckAbilityBudget(this))
                 {
                     moveDictionaryManager.DoAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
-                    Debug.Log("Move COndstion was meet");
                 }
                 else
                 {
