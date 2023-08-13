@@ -22,8 +22,8 @@ public class CharacterControllerScript : MonoBehaviour
     private MapManager mapManager;
     private TurnManager turnManager;
     private MoveDictionaryManager moveDictionaryManager;
+    private UniversalCalculator universalCalculator;
     public AnimationControllerScript animationControllerScript;
-    UniversalCalculator universalCalculator;
     [Header("SO Data")]
     public string characterName;
     public bool isPlayerCharacter = true;
@@ -32,7 +32,8 @@ public class CharacterControllerScript : MonoBehaviour
     public int speedValue;
     public int rangeOfVision;
     public string Faction;
-    public List<AbilityData> listOfAbilities;
+    //public List<AbilityData> listOfAbilities;
+    public Dictionary<AbilityData, CostData> AbiToCostData;
     public List<GroundFloorType> canWalkOn;
     public int maxStamina = 1;
     public int maxFocusPoints = 2;
@@ -104,9 +105,7 @@ public class CharacterControllerScript : MonoBehaviour
                 if (ControlCharacter)
                 {
                     GameEvents.current.TriggerNextDialog();//Disable this laeter
-                    List<AbilityData> allAbilities = new();
-                    allAbilities.AddRange(listOfAbilities);
-                    GameEvents.current.inGameUI.MakeButtonsFromAbilityies(allAbilities);
+                    GameEvents.current.inGameUI.MakeButtonsFromAbilityies(AbiToCostData.Keys.ToList());
                     turnManager.SetCameraPos(GetCharV3Int());
                 }
                 else
@@ -120,7 +119,7 @@ public class CharacterControllerScript : MonoBehaviour
     Dictionary<TypeOfAction, List<AbilityData>> AbilityMap()
     {
         var newDict = new Dictionary<TypeOfAction, List<AbilityData>>();
-        foreach (var keypair in listOfAbilities)
+        foreach (var keypair in AbiToCostData.Keys.ToList())
         {
             if (!newDict.ContainsKey(keypair.Primaryuse))
             {
@@ -155,7 +154,7 @@ public class CharacterControllerScript : MonoBehaviour
                 attackRangeList = mapManager.FilterListWithTileRequirements(attackRangeList, this, ValidTargets.Enemies);
                 if (attackRangeList.Count > 0)
                 {
-                    if (optionsofAbilities[TypeOfAction.apply_Damage][0].CheckAbilityBudget(this))
+                    if (AbiToCostData[optionsofAbilities[TypeOfAction.apply_Damage][0]].CheckAbilityBudget(this))
                     {
                         moveDictionaryManager.DoAction(optionsofAbilities[TypeOfAction.apply_Damage][0]);
                     }
@@ -164,7 +163,7 @@ public class CharacterControllerScript : MonoBehaviour
                         turnManager.EndTurn();
                     }
                 }
-                else if (optionsofAbilities[TypeOfAction.apply_SelfMove][0].CheckAbilityBudget(this))
+                else if (AbiToCostData[optionsofAbilities[TypeOfAction.apply_SelfMove][0]].CheckAbilityBudget(this))
                 {
                     moveDictionaryManager.DoAction(optionsofAbilities[TypeOfAction.apply_SelfMove][0]);
                 }

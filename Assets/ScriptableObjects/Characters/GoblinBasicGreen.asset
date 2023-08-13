@@ -27,3 +27,9 @@ MonoBehaviour:
   listOfAbilities:
   - {fileID: 11400000, guid: 1d445f283badd2f448ea9c55e34f0f11, type: 2}
   - {fileID: 11400000, guid: 1bcf15e4717f9a241af089f559ba55bd, type: 2}
+  CostToAbiData:
+    KeyValuePairs:
+    - key: {fileID: 11400000, guid: 1d445f283badd2f448ea9c55e34f0f11, type: 2}
+      value: {fileID: 11400000, guid: 02087fef692cddf49a89af9ceef95ced, type: 2}
+    - key: {fileID: 11400000, guid: 1bcf15e4717f9a241af089f559ba55bd, type: 2}
+      value: {fileID: 11400000, guid: 02087fef692cddf49a89af9ceef95ced, type: 2}

@@ -114,9 +114,9 @@ public class MoveDictionaryManager : MonoBehaviour
     public void DoAction(AbilityData abilityData)
     {
         currentAbility = abilityData;
-        if (!currentAbility.CheckAbilityBudget(characterCS))
+        if (!characterCS.AbiToCostData[currentAbility].CheckAbilityBudget(characterCS))
         {
-            AddToolTip(currentAbility.GetToolTip());
+            AddToolTip(characterCS.AbiToCostData[currentAbility].GetCostTip());
             return;
         }
         if (abilityData.ValidTileData.Count != abilityData.ApplyEffects.Count)
@@ -140,7 +140,7 @@ public class MoveDictionaryManager : MonoBehaviour
             yield return StartCoroutine(GetInput(pointMap.Keys.ToList()));
             if (ShouldContinue)
             {
-                currentAbility.CheckAbilityBudget(characterCS, true);
+                characterCS.AbiToCostData[currentAbility].CheckAbilityBudget(characterCS, true);
                 List<List<Vector3Int>> ListOfListPointToEffect = pointMap[tryHere];
                 for (int i = 0; i < abilityData.ApplyEffects.Count; i++)
                 {
@@ -178,7 +178,7 @@ public class MoveDictionaryManager : MonoBehaviour
         }
         else//if it is the player character
         {
-            AddToolTip("Select Purple Tile To Contine with  " + currentAbility.name + " Or Right Click to Cancel" + "\n" + currentAbility.GetToolTip());
+            AddToolTip("Select Purple Tile To Contine Or Right Click to Cancel" + "\n" + currentAbility.userFriendlyName + "/" + currentAbility.name + " " + characterCS.AbiToCostData[currentAbility].GetCostTip());
             yield return new WaitUntil(() => CheckContinue());//this waits for MB0 or MB1         
             tryHere = reticalManager.getMovePoint();
         }

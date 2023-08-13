@@ -20,6 +20,7 @@ public class CharacterData : ScriptableObject
     public int maxFocusPoints = 2;
     public List<GroundFloorType> canWalkOn;
     public List<AbilityData> listOfAbilities;
+    public SerializableDictionary<AbilityData, CostData> CostToAbiData;
     public void SetVariablesForCSS(CharacterControllerScript characterControllerScript)
     {
         characterControllerScript.CharacterDataSO = this;
@@ -40,7 +41,8 @@ public class CharacterData : ScriptableObject
             characterControllerScript.maxStamina = maxStamina;
             characterControllerScript.maxFocusPoints = maxFocusPoints;
             characterControllerScript.currentFocusPoints = maxFocusPoints;
-            characterControllerScript.listOfAbilities = listOfAbilities;
+            //characterControllerScript.listOfAbilities = listOfAbilities;
+            characterControllerScript.AbiToCostData = CostToAbiData.returnDict();
             //Setting Data
 
             //Game Event Regersery
