@@ -1,27 +1,23 @@
 .ButtonsThatShrinkToFit {
     font-size: 70%;
-    white-space: normal;
-    -unity-text-align: middle-center;
-    background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=1948302057&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_4');
+    background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-67310725&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_3');
     background-color: rgba(56, 56, 56, 0);
     -unity-background-scale-mode: stretch-to-fill;
     flex-grow: 1;
     flex-basis: auto;
     min-height: 5%;
-    -unity-slice-scale: 32px;
-    border-left-color: rgba(0, 0, 0, 0);
-    border-right-color: rgba(0, 0, 0, 0);
-    border-top-color: rgba(0, 0, 0, 0);
-    border-bottom-color: rgba(0, 0, 0, 0);
     margin-left: 1px;
     margin-right: 1px;
     margin-top: 1px;
     margin-bottom: 1px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
 }
 
 .ButtonsThatShrinkToFit:hover {
-    background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-67310725&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_3');
-    -unity-slice-scale: 32px;
+    background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=1561342746&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_2');
     margin-left: 1px;
     margin-right: 1px;
     margin-top: 1px;
@@ -30,7 +26,6 @@
 
 .ButtonsThatShrinkToFit:active {
     background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-506237120&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_1');
-    -unity-slice-scale: 32px;
     margin-left: 1px;
     margin-right: 1px;
     margin-top: 1px;
