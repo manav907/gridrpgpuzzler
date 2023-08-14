@@ -6,6 +6,9 @@ using UnityEngine.UIElements;
 
 public class InGameUI : MonoBehaviour
 {
+    [Header("Debug Stuff")]
+    public bool enableDebugPathFinding = false;
+    public bool enableDebugQuickMode = false;
     [Header("Other")]
     public Button restartButton;
     public Button exitButton;
@@ -44,8 +47,16 @@ public class InGameUI : MonoBehaviour
         SkipAnimation.clicked += delegate { UserDataManager.AnimationSkipStateNum = (AnimationSkipState)GetNextEnum(UserDataManager.AnimationSkipStateNum); };
         SkipAnimation.clicked += RefreshSkipAnimationButton;
 #if UNITY_EDITOR
-        UserDataManager.AnimationSkipStateNum = AnimationSkipState.Debug;
-        UserDataManager.Snap = true;
+        if (enableDebugQuickMode)
+        {
+            UserDataManager.AnimationSkipStateNum = AnimationSkipState.Debug;
+            UserDataManager.Snap = true;
+        }
+        if (enableDebugPathFinding)
+        {
+            UserDataManager.AnimationSkipStateNum = AnimationSkipState.Normal;
+            UserDataManager.Snap = true;
+        }
 #endif
         RefreshSkipAnimationButton();
         RefreshContolScheme();

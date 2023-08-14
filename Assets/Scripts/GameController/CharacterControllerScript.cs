@@ -223,10 +223,10 @@ public class CharacterControllerScript : MonoBehaviour
         List<Vector3Int> validTiles = moveDictionaryManager.GenerateAbiltyPointMap(abilityData, GetCharV3Int()).Keys.ToList();
         if (abilityData.Primaryuse == TypeOfAction.apply_SelfMove)
         {
-            var validPathToObjective = mapManager.FindOptimalPath(GetCharV3Int(), getUseableTarget(), abilityData, true);
+            var validPathToObjective = mapManager.FindOptimalPath(GetCharV3Int(), getUseableTarget(), abilityData, GenratePossiblitiesForAttack);
             //
-            /* reticalManager.reDrawValidTiles(validPathToObjective);
-            Debug.Break(); */
+            if (GameEvents.current.inGameUI.enableDebugPathFinding)
+                reticalManager.reDrawValidTiles(validPathToObjective);
             //
             validPathToObjective.Remove(currentCellPosOfCharcter);
             if (validPathToObjective.Count == 0)
@@ -261,10 +261,14 @@ public class CharacterControllerScript : MonoBehaviour
             {
                 List<Vector3Int> combinedList = new List<Vector3Int>() { destinationTarget };
                 combinedList.AddRange(validTiles);
-                //return new List<Vector3Int>() { destinationTarget };
-                return combinedList;
+                return new List<Vector3Int>() { destinationTarget };
+                //return combinedList;
             }
             return universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, GetCharV3Int());
+        }
+        List<Vector3Int> GenratePossiblitiesForAttack(Vector3Int fromPoint)
+        {
+            return moveDictionaryManager.GenerateAbiltyPointMap(AbilityMap()[TypeOfAction.apply_Damage][0], fromPoint).Keys.ToList();
         }
     }
 }
