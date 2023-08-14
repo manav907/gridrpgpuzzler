@@ -17,13 +17,9 @@ public class MapManager : MonoBehaviour
     [SerializeField] Dictionary<TileBase, TileData> dataFromTiles;
     Dictionary<Vector3Int, GameObject> PosToCharGO;
     UniversalCalculator universalCalculator;
-    TurnManager turnManager;
-
-
     public void SetVariables()
     {
         universalCalculator = this.gameObject.GetComponent<UniversalCalculator>();
-        turnManager = GetComponent<TurnManager>();
         moveDictionaryManager = GetComponent<MoveDictionaryManager>();
         LoadCorrectScene();
 
@@ -64,7 +60,6 @@ public class MapManager : MonoBehaviour
             }
             tileMapStore.CopyDict(dict);
         }
-
     }
     public void LoadMapDataFromSO()
     {
@@ -318,7 +313,6 @@ public class MapManager : MonoBehaviour
                                 else
                                     return false;
                             }
-
                     }
 
                 }
@@ -327,7 +321,7 @@ public class MapManager : MonoBehaviour
     }
 
     MoveDictionaryManager moveDictionaryManager;
-    public List<Vector3Int> FindOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, AbilityData abilityData, bool ignoreCharacters = false)
+    public List<Vector3Int> FindOptimalPath(Vector3Int startPos, List<Vector3Int> endPos, AbilityData abilityData, bool priortiseFistEndPos = false)
     {
         string AStarDebug = "Starting Astar Navigation from Point ";//Generate Node Data will put
         List<Node> openList = new List<Node>();
@@ -373,7 +367,11 @@ public class MapManager : MonoBehaviour
         return reconstructPath(historyNode[0], "Creating Path From Histrory");
         Node generateNodeData(Vector3Int pos, Node previousNode = null)
         {
-            Vector3Int closestEndPos = universalCalculator.SortListAccordingtoDistanceFromPoint(endPos, pos).First();
+            Vector3Int closestEndPos = endPos.First();
+            if (!priortiseFistEndPos)
+            {
+                closestEndPos = universalCalculator.SortListAccordingtoDistanceFromPoint(endPos, pos).First();
+            }
             float Hcost = Vector3Int.Distance(pos, closestEndPos);//distance to endPoint
             float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint 
             //AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
@@ -395,7 +393,7 @@ public class MapManager : MonoBehaviour
                 Text += " > " + node.nodeID;
                 node = node.previousNode;
             }
-            //Debug.Log(PrefixDebug + "\n" + Text + "\n" + AStarDebug);
+            //Debug.Log(PrefixDebug + " " + path.Count + " Jumps needed" + "\n" + Text + "\n" + AStarDebug);
             path.Reverse();
             return path;
         }

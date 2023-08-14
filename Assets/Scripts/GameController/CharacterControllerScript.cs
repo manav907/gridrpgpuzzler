@@ -259,7 +259,10 @@ public class CharacterControllerScript : MonoBehaviour
             validTiles.Remove(destinationTarget);
             if (UserDataManager.SmartPosistioning == false || validTiles.Count == 0)
             {
-                return new List<Vector3Int>() { destinationTarget };
+                List<Vector3Int> combinedList = new List<Vector3Int>() { destinationTarget };
+                combinedList.AddRange(validTiles);
+                //return new List<Vector3Int>() { destinationTarget };
+                return combinedList;
             }
             return universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, GetCharV3Int());
         }

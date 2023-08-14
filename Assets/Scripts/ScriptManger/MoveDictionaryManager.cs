@@ -141,7 +141,8 @@ public class MoveDictionaryManager : MonoBehaviour
             if (ShouldContinue)
             {
                 characterCS.AbiToCostData[currentAbility].CheckAbilityBudget(characterCS, true);
-                characterCS.UpdateEnergyInfo();
+                if (characterCS.ControlCharacter)
+                    characterCS.UpdateEnergyInfo();
                 List<List<Vector3Int>> ListOfListPointToEffect = pointMap[tryHere];
                 for (int i = 0; i < abilityData.ApplyEffects.Count; i++)
                 {
