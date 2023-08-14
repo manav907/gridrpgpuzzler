@@ -232,17 +232,20 @@ public class CharacterControllerScript : MonoBehaviour
             if (validPathToObjective.Count == 0)
             {
                 Debug.Log("using FallBAck");
+                Debug.Break();
                 return getBasicDirection();
             }
             Vector3Int chosenPath = validPathToObjective[0];
             if (chosenPath == GetCharV3Int())
             {
                 Debug.Log("no Vaid Path Found");
+                Debug.Break();
                 return getBasicDirection();
             }
             if (!validTiles.Contains(chosenPath))
             {
                 Debug.Log("path does not have currently moveable Tiles using Fallback");
+                Debug.Break();
                 return GetCharV3Int();
             }
             return chosenPath;
@@ -259,10 +262,10 @@ public class CharacterControllerScript : MonoBehaviour
             validTiles.Remove(destinationTarget);
             if (UserDataManager.SmartPosistioning == false || validTiles.Count == 0)
             {
-                List<Vector3Int> combinedList = new List<Vector3Int>() { destinationTarget };
+                /* List<Vector3Int> combinedList = new List<Vector3Int>() { destinationTarget };
                 combinedList.AddRange(validTiles);
+                return combinedList; */
                 return new List<Vector3Int>() { destinationTarget };
-                //return combinedList;
             }
             return universalCalculator.SortListAccordingtoDistanceFromPoint(validTiles, GetCharV3Int());
         }

@@ -330,7 +330,7 @@ public class MapManager : MonoBehaviour
         List<Node> historyNode = new List<Node>();
         if (endPos.Count == 0)
         {
-            Debug.Log("End Pos 0");
+            Debug.Log("End Pos 0; There are no Targets what are you expecting");
             return new List<Vector3Int>() { startPos };
         }
         openList.Add(generateNodeData(startPos, null));
@@ -395,7 +395,7 @@ public class MapManager : MonoBehaviour
                 Text += " > " + node.nodeID;
                 node = node.previousNode;
             }
-            Debug.Log(PrefixDebug + " " + path.Count + " Jumps needed" + "\n" + Text + "\n" + AStarDebug);
+            //Debug.Log(PrefixDebug + " " + path.Count + " Jumps needed" + "\n" + Text + "\n" + AStarDebug);
             path.Reverse();
             return path;
         }
