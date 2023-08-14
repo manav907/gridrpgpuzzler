@@ -16,3 +16,5 @@ MonoBehaviour:
     KeyValuePairs:
     - key: 0
       value: 2
+    - key: 1
+      value: 2

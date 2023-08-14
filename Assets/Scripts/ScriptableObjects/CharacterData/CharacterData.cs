@@ -19,7 +19,6 @@ public class CharacterData : ScriptableObject
     public int maxStamina = 1;
     public int maxFocusPoints = 2;
     public List<GroundFloorType> canWalkOn;
-    public List<AbilityData> listOfAbilities;
     public SerializableDictionary<AbilityData, CostData> CostToAbiData;
     public void SetVariablesForCSS(CharacterControllerScript characterControllerScript)
     {
@@ -41,7 +40,6 @@ public class CharacterData : ScriptableObject
             characterControllerScript.maxStamina = maxStamina;
             characterControllerScript.maxFocusPoints = maxFocusPoints;
             characterControllerScript.currentFocusPoints = maxFocusPoints;
-            //characterControllerScript.listOfAbilities = listOfAbilities;
             characterControllerScript.AbiToCostData = CostToAbiData.returnDict();
             //Setting Data
 

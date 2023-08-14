@@ -24,12 +24,9 @@ MonoBehaviour:
   maxStamina: 2
   maxFocusPoints: 2
   canWalkOn: 01000000
-  listOfAbilities:
-  - {fileID: 11400000, guid: 66fdce11573df53408f7129337c08d7d, type: 2}
-  - {fileID: 11400000, guid: c3fa9cacee22da04795d1f630f4a22a7, type: 2}
   CostToAbiData:
     KeyValuePairs:
-    - key: {fileID: 11400000, guid: b5724ac8695069640bad111ef8a0be65, type: 2}
+    - key: {fileID: 11400000, guid: 66fdce11573df53408f7129337c08d7d, type: 2}
       value: {fileID: 11400000, guid: 2c87da94442f39c4daea530ba2d60515, type: 2}
     - key: {fileID: 11400000, guid: c3fa9cacee22da04795d1f630f4a22a7, type: 2}
       value: {fileID: 11400000, guid: 2c87da94442f39c4daea530ba2d60515, type: 2}
