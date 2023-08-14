@@ -3,9 +3,6 @@
     background-image: url('project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-67310725&guid=d63068fd6a521394e8f6640e8677bf54&type=3#Spritesheet_UI_Flat_Button_02_3');
     background-color: rgba(56, 56, 56, 0);
     -unity-background-scale-mode: stretch-to-fill;
-    flex-grow: 1;
-    flex-basis: auto;
-    min-height: 5%;
     margin-left: 1px;
     margin-right: 1px;
     margin-top: 1px;

@@ -8,9 +8,14 @@
             <ui:Button text="AnimationMode" display-tooltip-when-elided="true" name="SkipAnimation" class="ButtonsThatShrinkToFit" />
         </ui:VisualElement>
         <ui:VisualElement name="GameUI" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: space-between;">
-            <ui:VisualElement name="SideButtons" style="width: auto; min-width: 10%;">
-                <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
-                <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
+            <ui:VisualElement name="MidScreen" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                <ui:VisualElement name="LeftGUI" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Energy  Info Text" display-tooltip-when-elided="true" name="EnergyInfo" style="background-color: rgba(255, 255, 255, 0); -unity-text-outline-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255); -unity-text-outline-width: 0; text-shadow: 1px 1px 0 rgb(0, 0, 0);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="SideButtons">
+                    <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
+                    <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-506237120&amp;guid=d63068fd6a521394e8f6640e8677bf54&amp;type=3#Spritesheet_UI_Flat_Button_02_1&apos;); align-items: center; flex-direction: row; align-self: center; height: auto; justify-content: flex-start; width: 100%; -unity-background-scale-mode: scale-and-crop; flex-grow: 0;">
                 <ui:VisualElement name="CurrentCharacterData" style="width: auto; height: auto; max-width: 35px; max-height: 35px;" />

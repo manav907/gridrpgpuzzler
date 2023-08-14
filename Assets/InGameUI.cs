@@ -15,6 +15,7 @@ public class InGameUI : MonoBehaviour
     public Button AblityButtonExample;
     public VisualElement TipBox;
     public Label Tip;
+    public Label EnergyInfo;
     public VisualElement AbilityButtonSideBar;
     public VisualElement DialogBoxBar;
 
@@ -29,6 +30,7 @@ public class InGameUI : MonoBehaviour
         AbilityButtonSideBar = root.Q<VisualElement>("SideButtons");
         DialogBoxBar = root.Q<VisualElement>("DialogBox");
         Tip = root.Q<Label>("Tip");
+        EnergyInfo = root.Q<Label>("EnergyInfo");
         TipBox = root.Q<VisualElement>("TipBox");
         ControlScheme = root.Q<Button>("ControlScheme");
         SkipAnimation = root.Q<Button>("SkipAnimation");
@@ -96,6 +98,10 @@ public class InGameUI : MonoBehaviour
         Tip = root.Q<Label>("Tip");
         TipBox = root.Q<VisualElement>("TipBox");
         Tip.text = "Kill All Enemies";
+    }
+    public void SetEnergyInfo(string info)
+    {
+        EnergyInfo.text = info;
     }
     public void SetTip(string tip)
     {

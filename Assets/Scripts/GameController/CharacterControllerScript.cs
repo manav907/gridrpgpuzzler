@@ -101,10 +101,12 @@ public class CharacterControllerScript : MonoBehaviour
             }
             else
             {
+
                 StartCoroutine(animationControllerScript.TrySetNewAnimation(CharacterAnimationState.Walk));
                 if (ControlCharacter)
                 {
-                    GameEvents.current.TriggerNextDialog();//Disable this laeter
+                    UpdateEnergyInfo();
+                    GameEvents.current.TriggerNextDialog();//Disable this later
                     GameEvents.current.inGameUI.MakeButtonsFromAbilityies(AbiToCostData.Keys.ToList());
                     turnManager.SetCameraPos(GetCharV3Int());
                 }
@@ -114,6 +116,13 @@ public class CharacterControllerScript : MonoBehaviour
                 }
             }
         }
+    }
+    public void UpdateEnergyInfo()
+    {
+        string newInfo = "";
+        newInfo += currentStamina + "/" + maxStamina + " Stamina" + "\n";
+        newInfo += currentFocusPoints + "/" + maxFocusPoints + " FocusPoints" + "\n";
+        GameEvents.current.inGameUI.SetEnergyInfo(newInfo);
     }
 
     Dictionary<TypeOfAction, List<AbilityData>> AbilityMap()

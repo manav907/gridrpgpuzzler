@@ -149,10 +149,12 @@ public class CharacterAnimationDataEditor : Editor
                         // Add the curve to the animation clip
                         AnimationUtility.SetObjectReferenceCurve(clip, EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"), spriteFrames);
                         //AnimationClipSettings Being Created
-                        AnimationClipSettings animationClipSettings = new AnimationClipSettings();
-                        //animationClipSettings.loopTime = originalClip.isLooping;//Mess with this to refine loops
-                        animationClipSettings.loopTime = animationClipData.isLooping;//Mess with this to refine loops
-                        animationClipSettings.stopTime = clip.length;
+                        AnimationClipSettings animationClipSettings = new AnimationClipSettings
+                        {
+                            //animationClipSettings.loopTime = originalClip.isLooping;//Mess with this to refine loops
+                            loopTime = animationClipData.isLooping,//Mess with this to refine loops
+                            stopTime = clip.length
+                        };
                         //animationClipSettings.stopTime = 1f;
                         //AnimationClipSettings Being Set
                         AnimationUtility.SetAnimationClipSettings(clip, animationClipSettings);
