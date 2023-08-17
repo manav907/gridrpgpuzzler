@@ -161,13 +161,6 @@ public class MapManager : MonoBehaviour
         //Declaring Variables for use in Script
         public List<GroundFloorType> groundFloorTypeWalkRequireMents;
         public Vector3Int cellPos;
-        //Declaring Scripts From Game Controller
-        //UniversalCalculator universalCalculator;
-        //MapManager mapManager;
-        //Declaring Objects From Game Controller
-        //List<Tilemap> OrderOfTileMaps;
-        //Dictionary<TileBase, TileData> dataFromTiles;
-        //Characters
         public GameObject characterAtCell;
         //Constructer For Initilizing CellData
         public CellData(Vector3Int pos)
@@ -197,9 +190,7 @@ public class MapManager : MonoBehaviour
                     }
                     else
                     {
-                        var TileLayerConflict = GameEvents.current.TileLayerConflict;
                         Debug.LogError("Yo This Tile was not in the Dictionary Catorize it in GameEvent");
-                        //KeyPair<TileBase, GroundFloorType> keyPair = new KeyPair<TileBase, GroundFloorType>(tile, GroundFloorType.NotSet);
                         GameEvents.current.TileLayerConflict.Add(tile);
                         return;
                     }
@@ -303,15 +294,19 @@ public class MapManager : MonoBehaviour
                             {
                                 if (factionOfCaster != faction)
                                     return true;
-                                else
-                                    return false;
+                                return false;
+                            }
+                        case ValidTargets.SolidObstruction:
+                            {
+                                if (cellDataDir[checkPos].groundFloorTypeWalkRequireMents.Contains(GroundFloorType.StructuresNonWalkable))
+                                    return true;
+                                return false;
                             }
                         case ValidTargets.Allies:
                             {
                                 if (factionOfCaster == faction)
                                     return true;
-                                else
-                                    return false;
+                                return false;
                             }
                     }
 
@@ -401,13 +396,3 @@ public class MapManager : MonoBehaviour
         }
     }
 }
-//Defining Global NameSapce
-public enum GroundFloorType
-{
-    Invalid = -1,
-    NotSet = 0,
-    Normal = 1,
-    Water = 2,
-    Fire = 3,
-    StructuresNonWalkable = 4
-};

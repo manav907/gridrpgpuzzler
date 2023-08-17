@@ -10,7 +10,7 @@ public class AbilityData : ScriptableObject
     public TypeOfAction Primaryuse;
     public AreaGenerationParams rangeOfAbility;
     public List<AreaGenerationParams> ValidTileData;
-    public List<ActionEffectParams> ApplyEffects;    
+    public List<ActionEffectParams> ApplyEffects;
 }
 
 [Serializable]
@@ -39,12 +39,22 @@ public enum ValidTargets
     AnyFaction = 2,
     Enemies = 3,
     Allies = 4,
+    SolidObstruction = 5,
     Neutral,
 }
 public enum AoeStyle
 {
-
     Taxi = 4,
     Square = 5,
     SSweep = 2,
 }
+//Defining Global NameSapce
+public enum GroundFloorType
+{
+    Invalid = -1,
+    NotSet = 0,
+    Normal = 1,
+    Water = 2,
+    Fire = 3,
+    StructuresNonWalkable = 4
+};
