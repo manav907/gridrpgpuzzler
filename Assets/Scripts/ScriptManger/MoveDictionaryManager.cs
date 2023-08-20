@@ -12,7 +12,7 @@ public class MoveDictionaryManager : MonoBehaviour
     UniversalCalculator universalCalculator;
     [Header("Read Only Data")]
     private readonly float moveTimeSpeed = 0.12f;
-    CharacterControllerScript characterCS;
+    public CharacterControllerScript characterCS;
     [Header("Retical And Tile Data")]
     [SerializeField] private Vector3Int tryHere;
     [Header("Current Ablity")]
@@ -352,6 +352,7 @@ public enum TypeOfAction
     apply_Push,
     apply_Stun,
     apply_StrongMindControl,
+    ignore = 10,
 }
 public enum BoolEnum
 {

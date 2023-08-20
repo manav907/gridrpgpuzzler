@@ -263,55 +263,158 @@ public class MapManager : MonoBehaviour
         var newList = new List<Vector3Int>();
         foreach (var point in scanPoints)
         {
-            if (CheckIfTargetis(point))
+            if (CheckIfTargetis(point, validTargets, castingCharacter.Faction))
             {
                 newList.Add(point);
             }
         }
         return newList;
-
-
-        bool CheckIfTargetis(Vector3Int checkPos)
-        {
-            if (validTargets == ValidTargets.AnyValidOrInValid)
-                return true;
-            if (cellDataDir.ContainsKey(checkPos))
-                if (validTargets == ValidTargets.Empty)
-                    return !IsCellHoldingCharacer(checkPos);
-                else if (IsCellHoldingCharacer(checkPos))
-                {
-                    string faction = cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().Faction;
-                    string factionOfCaster = castingCharacter.Faction;
-                    //Debug.Log("Checking Factions between " + faction + " and " + factionOfCaster + " for condition " + requitedCondtion);
-                    //Debug.Log(faction == factionOfCaster);
-                    switch (validTargets)
-                    {
-                        case ValidTargets.AnyFaction:
-                            {
-                                return true;
-                            }
-                        case ValidTargets.Enemies:
-                            {
-                                if (factionOfCaster != faction)
-                                    return true;
-                                return false;
-                            }
-                        case ValidTargets.SolidObstruction:
-                            {
-                                if (cellDataDir[checkPos].groundFloorTypeWalkRequireMents.Contains(GroundFloorType.StructuresNonWalkable))
-                                    return true;
-                                return false;
-                            }
-                        case ValidTargets.Allies:
-                            {
-                                if (factionOfCaster == faction)
-                                    return true;
-                                return false;
-                            }
-                    }
-
-                }
+    }
+    public bool CheckIfTargetis(Vector3Int checkPos, ValidTargets validTargets, string factionOfCaster)
+    {
+        if (validTargets == ValidTargets.AnyValidOrInValid)
+            return true;
+        if (!cellDataDir.ContainsKey(checkPos))
             return false;
+        if (validTargets == ValidTargets.SolidObstruction)
+            return cellDataDir[checkPos].groundFloorTypeWalkRequireMents.Contains(GroundFloorType.StructuresNonWalkable);
+        if (validTargets == ValidTargets.Empty)
+            return !IsCellHoldingCharacer(checkPos);
+        else if (IsCellHoldingCharacer(checkPos))
+        {
+            string faction = cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().Faction;
+            //Debug.Log("Checking Factions between " + faction + " and " + factionOfCaster + " for condition " + requitedCondtion);
+            //Debug.Log(faction == factionOfCaster);
+            switch (validTargets)
+            {
+                case ValidTargets.AnyFaction:
+                    {
+                        return true;
+                    }
+                case ValidTargets.Enemies:
+                    {
+                        if (factionOfCaster != faction)
+                            return true;
+                        return false;
+                    }
+                case ValidTargets.Allies:
+                    {
+                        if (factionOfCaster == faction)
+                            return true;
+                        return false;
+                    }
+            }
+
+        }
+        return false;
+    }
+    public List<Vector3Int> GetListOfAffectedTiles(Vector3Int fromPoint, Vector3Int Direction, ExploreParams exploreParams, string faction)
+    {
+        List<Vector3Int> ValidPos = new List<Vector3Int>();
+        bool targetPriority = false;
+        switch (exploreParams.expansionType)
+        {
+            case ExpansionType.CollideableProjectile:
+                {
+                    Debug.Log("Collidable Projectile");
+                    for (int i = 0; i < exploreParams.ExploreRangeMax; i++)
+                    {
+                        Vector3Int CheckingPos = fromPoint + (Direction * i);
+                        Debug.Log("Checking " + CheckingPos);
+                        if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction) && !targetPriority)
+                        {
+                            Debug.Log("Found Secondary Target" + exploreParams.StoppedByTargets);
+                            ValidPos.Add(CheckingPos);
+                            return ValidPos;
+                        }
+                        if (CheckTargetMatch(CheckingPos, exploreParams.AffectTargets, faction))
+                        {
+                            Debug.Log("Found Primary Target" + exploreParams.AffectTargets);
+                            ValidPos.Add(CheckingPos);
+                            return ValidPos;
+                        }
+                    }
+                    break;
+                }
+            case ExpansionType.PericingProjectile:
+                {
+                    for (int i = 0; i < exploreParams.ExploreRangeMax; i++)
+                    {
+                        Vector3Int CheckingPos = fromPoint + (Direction * i);
+                        Debug.Log("Checking " + CheckingPos);
+                        if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction) && !targetPriority)
+                        {
+                            Debug.Log("Got Blocked By" + exploreParams.StoppedByTargets);
+                            return ValidPos;
+                        }
+                        if (CheckTargetMatch(CheckingPos, exploreParams.AffectTargets, faction))
+                        {
+                            Debug.Log("Found Primary Target" + exploreParams.AffectTargets);
+                            ValidPos.Add(CheckingPos);
+                        }
+                    }
+                    return ValidPos;
+                }
+            case ExpansionType.LobbedProjectile:
+                {
+                    for (int i = 0; i < exploreParams.ExploreRangeMax; i++)
+                    {
+                        Vector3Int CheckingPos = fromPoint + (Direction * i);
+                        if (CheckTargetMatch(CheckingPos, exploreParams.AffectTargets, faction))
+                        {
+                            ValidPos.Add(CheckingPos + Direction);
+                            return ValidPos;
+                        }
+                    }
+                    Vector3Int JustOutOFBound = fromPoint + (Direction * (exploreParams.ExploreRangeMax + 1));
+                    if (CheckTargetMatch(JustOutOFBound, exploreParams.AffectTargets, faction))
+                    {
+                        ValidPos.Add(JustOutOFBound);
+                        return ValidPos;
+                    }
+                    break;
+                }
+            default:
+                break;
+        }
+        return ValidPos;
+
+    }
+    bool CheckTargetMatch(Vector3Int pos, List<ValidTargets> targets, string faction)
+    {
+        foreach (var target in targets)
+            if (CheckIfTargetis(pos, target, faction))
+                return true;
+        return false;
+    }
+    public List<Vector3Int> GetArea(Vector3Int fromPoint, AoeParams aoeParams, string faction)
+    {
+        List<Vector3Int> ValidPos = new List<Vector3Int>();
+        switch (aoeParams.TypeOfRange)
+        {
+            case DirectionalUseParams.Taxi:
+                {
+                    ValidPos = GlobalCal.GenerateArea(AoeStyle.Taxi, fromPoint, fromPoint, aoeParams.ExploreRangeMax);
+                    return GlobalCal.FilterWithFunc(ValidPos, simplifiedMatchCondition);
+                }
+            case DirectionalUseParams.Omni:
+                {
+                    break;
+                }
+            case DirectionalUseParams.Cardinal:
+                {
+                    break;
+                }
+            case DirectionalUseParams.Ordinal:
+                {
+                    break;
+                }
+        }
+        Debug.Log("Using Fall Back");
+        return ValidPos;
+        bool simplifiedMatchCondition(Vector3Int pos)
+        {
+            return CheckTargetMatch(pos, aoeParams.AffectTargets, faction);
         }
     }
 

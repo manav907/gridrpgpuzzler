@@ -8,7 +8,7 @@ using UnityEditor;
 using System.IO;
 
 public class UniversalCalculator : MonoBehaviour
-{    
+{
     ///String handeling
     public string CamelCaseToSpaces(string input)
     {
@@ -171,7 +171,6 @@ public class UniversalCalculator : MonoBehaviour
         }
         return outputList;
     }
-
     public void DebugEachItemInList<T>(IEnumerable<T> collection)
     {
         foreach (T item in collection)
@@ -217,6 +216,18 @@ public static class GlobalCal
             newList.Add(newItem);
         }
         return newList;
+    }
+    public static List<T> FilterWithFunc<T>(List<T> GivenList, Func<T, bool> func)
+    {
+        List<T> output = new List<T>();
+        foreach (var item in GivenList)
+        {
+            if (func(item))
+            {
+                output.Add(item);
+            }
+        }
+        return output;
     }
     public static bool CompareBool(bool compareWith, BoolEnum compareTo)
     {
