@@ -18,10 +18,14 @@ public class ExploreParams
     public int ExploreRangeMax = 3;
     public ExpansionType expansionType;
     public AoeParams AffectsArea;
-    public TypeOfAction Effect;
     public List<ValidTargets> AffectTargets = new List<ValidTargets> { ValidTargets.Enemies };
     public List<ValidTargets> StoppedByTargets = new List<ValidTargets> { ValidTargets.SolidObstruction };
 }
+/* public enum TargetPrefference
+{
+    StopExpansion,
+    Contineu
+} */
 [Serializable]
 public class AoeParams
 {
@@ -32,15 +36,13 @@ public class AoeParams
 }
 public enum DirectionalUseParams
 {
+    Taxi,
     Omni,//Star
     Cardinal,//Cross
     Ordinal,//Diagonals
-    Taxi,
-
 }
 public enum ExpansionType
 {
-    Taxi,
     CollideableProjectile,//Like a Fireball
     PericingProjectile,//Like a Lazer
     LobbedProjectile,//Like a Grenade

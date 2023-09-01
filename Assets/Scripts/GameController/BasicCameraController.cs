@@ -54,8 +54,12 @@ public class BasicCameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //mapManager.getCellData(reticalManager.getMovePoint());
-            Vector3Int thisPos = reticalManager.getIntPoint();
-            var area = mapManager.GetArea(moveDictionaryManager.characterCS.GetCharV3Int(), example.AreaOfAbility, moveDictionaryManager.characterCS.Faction);
+            Vector3Int MousePos = reticalManager.getIntPoint();
+            Vector3Int currentCharPos = moveDictionaryManager.characterCS.GetCharV3Int();
+            string faction = moveDictionaryManager.characterCS.Faction;
+            /* var area = mapManager.GetArea(moveDictionaryManager.characterCS.GetCharV3Int(), example.AreaOfAbility, moveDictionaryManager.characterCS.Faction);
+            reticalManager.reDrawInValidTiles(area); */
+            var area = mapManager.GetListOfAffectedTiles(currentCharPos, GlobalCal.GetNormalizedDirection(currentCharPos, MousePos), example.ProjectilesFired, faction);
             reticalManager.reDrawInValidTiles(area);
         }
     }

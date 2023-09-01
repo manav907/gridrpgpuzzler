@@ -310,8 +310,8 @@ public class MapManager : MonoBehaviour
     }
     public List<Vector3Int> GetListOfAffectedTiles(Vector3Int fromPoint, Vector3Int Direction, ExploreParams exploreParams, string faction)
     {
-        List<Vector3Int> ValidPos = new List<Vector3Int>();
-        bool targetPriority = false;
+        List<Vector3Int> ValidPos = new();
+
         switch (exploreParams.expansionType)
         {
             case ExpansionType.CollideableProjectile:
@@ -321,7 +321,7 @@ public class MapManager : MonoBehaviour
                     {
                         Vector3Int CheckingPos = fromPoint + (Direction * i);
                         Debug.Log("Checking " + CheckingPos);
-                        if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction) && !targetPriority)
+                        if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction))// && !targetPriority)
                         {
                             Debug.Log("Found Secondary Target" + exploreParams.StoppedByTargets);
                             ValidPos.Add(CheckingPos);
@@ -342,7 +342,8 @@ public class MapManager : MonoBehaviour
                     {
                         Vector3Int CheckingPos = fromPoint + (Direction * i);
                         Debug.Log("Checking " + CheckingPos);
-                        if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction) && !targetPriority)
+
+                        if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction))// && !targetPriority)
                         {
                             Debug.Log("Got Blocked By" + exploreParams.StoppedByTargets);
                             return ValidPos;
@@ -355,29 +356,31 @@ public class MapManager : MonoBehaviour
                     }
                     return ValidPos;
                 }
-            case ExpansionType.LobbedProjectile:
+            /* case ExpansionType.LobbedProjectile:
                 {
+                    List<List<Vector3Int>> PotentialOptimalAreas = new List<List<Vector3Int>>();
+                    int MaxUnitsAffected = 0;
+                    List<Vector3Int> OptialArea = new List<Vector3Int>();
                     for (int i = 0; i < exploreParams.ExploreRangeMax; i++)
                     {
                         Vector3Int CheckingPos = fromPoint + (Direction * i);
-                        if (CheckTargetMatch(CheckingPos, exploreParams.AffectTargets, faction))
+                        PotentialOptimalAreas.Add(GetArea(CheckingPos, exploreParams.AffectsArea, faction));
+                        if (PotentialOptimalAreas[i].Count > MaxUnitsAffected)
                         {
-                            ValidPos.Add(CheckingPos + Direction);
-                            return ValidPos;
+                            OptialArea = PotentialOptimalAreas[i];
+                            MaxUnitsAffected = PotentialOptimalAreas[i].Count;
                         }
                     }
-                    Vector3Int JustOutOFBound = fromPoint + (Direction * (exploreParams.ExploreRangeMax + 1));
-                    if (CheckTargetMatch(JustOutOFBound, exploreParams.AffectTargets, faction))
-                    {
-                        ValidPos.Add(JustOutOFBound);
-                        return ValidPos;
-                    }
+                    return OptialArea;
+                } */
+            default:
+                {
+                    Debug.Log("Not Not Accounted For");
                     break;
                 }
-            default:
-                break;
         }
         return ValidPos;
+        
 
     }
     bool CheckTargetMatch(Vector3Int pos, List<ValidTargets> targets, string faction)

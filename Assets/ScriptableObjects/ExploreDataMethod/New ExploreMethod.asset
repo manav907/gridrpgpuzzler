@@ -14,3 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userFriendlyName: 
   Primaryuse: 0
+  AreaOfAbility:
+    ExploreRangeMax: 3
+    TypeOfRange: 0
+    AffectTargets: 00000000
+  ProjectilesFired:
+    ExploreRangeMax: 5
+    expansionType: 1
+    AffectsArea:
+      ExploreRangeMax: 3
+      TypeOfRange: 0
+      AffectTargets: 03000000
+    Effect: 0
+    AffectTargets: 03000000
+    StoppedByTargets: 05000000
