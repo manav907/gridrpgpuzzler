@@ -51,16 +51,25 @@ public class BasicCameraController : MonoBehaviour
         {
             thisGameObject.transform.position = thisGameObject.transform.position + Vector3.right / speedreudce;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && false)
         {
             //mapManager.getCellData(reticalManager.getMovePoint());
             Vector3Int MousePos = reticalManager.getIntPoint();
             Vector3Int currentCharPos = moveDictionaryManager.characterCS.GetCharV3Int();
+            Vector3Int direction = GlobalCal.GetNormalizedDirection(currentCharPos, MousePos);
             string faction = moveDictionaryManager.characterCS.Faction;
-            /* var area = mapManager.GetArea(moveDictionaryManager.characterCS.GetCharV3Int(), example.AreaOfAbility, moveDictionaryManager.characterCS.Faction);
-            reticalManager.reDrawInValidTiles(area); */
-            var area = mapManager.GetListOfAffectedTiles(currentCharPos, GlobalCal.GetNormalizedDirection(currentCharPos, MousePos), example.ProjectilesFired, faction);
-            reticalManager.reDrawInValidTiles(area);
+            List<Vector3Int> TotalArea = new List<Vector3Int>();
+            Debug.Log("Current Faction  " + faction);
+            foreach (Vector3Int point in mapManager.CheckDirection(currentCharPos, direction, example.ProjectilesFired, faction))
+            {
+                TotalArea.AddRange(mapManager.GetArea(point, direction, example.HelpUiArea, faction));
+            }
+            reticalManager.reDrawInValidTiles(TotalArea);
+
+            //reticalManager.reDrawInValidTiles(mapManager.GetArea(currentCharPos, direction, example.ProjectilesFired.AffectsArea, faction));
+            /* var area = mapManager.CheckDirection(currentCharPos, GlobalCal.GetNormalizedDirection(currentCharPos, MousePos), example.ProjectilesFired, faction);
+            Debug.Log(area + " " + GlobalCal.GetNormalizedDirection(currentCharPos, MousePos)); */
+            //reticalManager.reDrawInValidTiles(area);
         }
     }
 }

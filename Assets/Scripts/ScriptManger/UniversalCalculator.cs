@@ -290,6 +290,7 @@ public static class GlobalCal
                 {
                     return generateTaxiRangeFromPoint(atPoint, RangeOfAction);
                 }
+                
         }
         Debug.LogError("Aoe Style Not Found");
         return new List<Vector3Int>();

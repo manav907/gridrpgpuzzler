@@ -16,26 +16,19 @@ MonoBehaviour:
   characterName: TestCharcter
   characterAnimationData: {fileID: 11400000, guid: adb96c03a75a05b4d9bf2ecf44a5880f, type: 2}
   isPlayerCharacter: 1
-  Faction: 
+  Faction: Party
   health: 1
   attackDamage: 1
   speedValue: 8
   rangeOfVision: 5
-  defaultActionPoints: 1
+  maxStamina: 2
+  maxFocusPoints: 2
   canWalkOn: 01000000
-  abilityToCost:
+  CostToAbiData:
     KeyValuePairs:
     - key: {fileID: 11400000, guid: b5724ac8695069640bad111ef8a0be65, type: 2}
-      value: 1
-    - key: {fileID: 11400000, guid: c3fa9cacee22da04795d1f630f4a22a7, type: 2}
-      value: 1
+      value: {fileID: 11400000, guid: 2c87da94442f39c4daea530ba2d60515, type: 2}
     - key: {fileID: 11400000, guid: 66fdce11573df53408f7129337c08d7d, type: 2}
-      value: 1
-    - key: {fileID: 11400000, guid: d6187e5e920dcaf49a409633059d9952, type: 2}
-      value: 1
-    - key: {fileID: 11400000, guid: dfca52ef5e5c9a04da424d2d073cc5e6, type: 2}
-      value: 1
-    - key: {fileID: 11400000, guid: 2d05104c758cfc841b77e061be89273d, type: 2}
-      value: 1
-    - key: {fileID: 11400000, guid: 1527ba24c2f4f054f9be3c2800da94e1, type: 2}
-      value: 1
+      value: {fileID: 11400000, guid: 2c87da94442f39c4daea530ba2d60515, type: 2}
+    - key: {fileID: 11400000, guid: c3fa9cacee22da04795d1f630f4a22a7, type: 2}
+      value: {fileID: 11400000, guid: 2c87da94442f39c4daea530ba2d60515, type: 2}

@@ -10,21 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a850458765ee38641912ed73eabf2a1c, type: 3}
-  m_Name: New ExploreMethod
+  m_Name: AxeType
   m_EditorClassIdentifier: 
   userFriendlyName: 
   Primaryuse: 0
   AreaOfAbility:
     ExploreRangeMax: 3
-    TypeOfRange: 0
+    TypeOfRange: 4
+    AffectTargets: 00000000
+  HelpUiArea:
+    ExploreRangeMax: 3
+    TypeOfRange: 2
     AffectTargets: 00000000
   ProjectilesFired:
     ExploreRangeMax: 5
-    expansionType: 1
     AffectsArea:
       ExploreRangeMax: 3
-      TypeOfRange: 0
+      TypeOfRange: 4
       AffectTargets: 03000000
-    Effect: 0
+    perices: 1
     AffectTargets: 03000000
-    StoppedByTargets: 05000000
+    StoppedByTargets: 

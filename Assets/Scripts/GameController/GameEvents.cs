@@ -12,6 +12,7 @@ public class GameEvents : MonoBehaviour
     [SerializeField] GameObject scriptManager;
     [HideInInspector] public TurnManager turnManager;
     [HideInInspector] public MapManager mapManager;
+    [HideInInspector] public ReticalManager reticalManager;
     [HideInInspector] public MoveDictionaryManager moveDictionaryManager;
     public InGameUI inGameUI;
     public UniversalCalculator universalCalculator;
@@ -48,6 +49,7 @@ public class GameEvents : MonoBehaviour
         mapManager = scriptManager.GetComponent<MapManager>();
         universalCalculator = scriptManager.GetComponent<UniversalCalculator>();
         moveDictionaryManager = scriptManager.GetComponent<MoveDictionaryManager>();
+        reticalManager = scriptManager.GetComponent<ReticalManager>();
     }
     Dictionary<string, Transform> NameTagToTransform;
     public void SetUpCamera()

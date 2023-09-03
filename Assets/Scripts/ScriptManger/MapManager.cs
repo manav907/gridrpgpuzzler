@@ -283,8 +283,7 @@ public class MapManager : MonoBehaviour
         else if (IsCellHoldingCharacer(checkPos))
         {
             string faction = cellDataDir[checkPos].characterAtCell.GetComponent<CharacterControllerScript>().Faction;
-            //Debug.Log("Checking Factions between " + faction + " and " + factionOfCaster + " for condition " + requitedCondtion);
-            //Debug.Log(faction == factionOfCaster);
+            //Debug.Log("Factions " + faction + checkPos + " and " + factionOfCaster + "\n are " + validTargets + "?");
             switch (validTargets)
             {
                 case ValidTargets.AnyFaction:
@@ -304,116 +303,57 @@ public class MapManager : MonoBehaviour
                         return false;
                     }
             }
-
         }
         return false;
     }
-    public List<Vector3Int> GetListOfAffectedTiles(Vector3Int fromPoint, Vector3Int Direction, ExploreParams exploreParams, string faction)
+    public List<Vector3Int> CheckDirection(Vector3Int fromPoint, Vector3Int Direction, ExploreParams exploreParams, string faction)
     {
-        List<Vector3Int> ValidPos = new();
-
-        switch (exploreParams.expansionType)
+        List<Vector3Int> ValidPoints = new List<Vector3Int>();
+        int startPoint = 1;
+        if (Direction == Vector3Int.zero)
         {
-            case ExpansionType.CollideableProjectile:
-                {
-                    Debug.Log("Collidable Projectile");
-                    for (int i = 0; i < exploreParams.ExploreRangeMax; i++)
-                    {
-                        Vector3Int CheckingPos = fromPoint + (Direction * i);
-                        Debug.Log("Checking " + CheckingPos);
-                        if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction))// && !targetPriority)
-                        {
-                            Debug.Log("Found Secondary Target" + exploreParams.StoppedByTargets);
-                            ValidPos.Add(CheckingPos);
-                            return ValidPos;
-                        }
-                        if (CheckTargetMatch(CheckingPos, exploreParams.AffectTargets, faction))
-                        {
-                            Debug.Log("Found Primary Target" + exploreParams.AffectTargets);
-                            ValidPos.Add(CheckingPos);
-                            return ValidPos;
-                        }
-                    }
-                    break;
-                }
-            case ExpansionType.PericingProjectile:
-                {
-                    for (int i = 0; i < exploreParams.ExploreRangeMax; i++)
-                    {
-                        Vector3Int CheckingPos = fromPoint + (Direction * i);
-                        Debug.Log("Checking " + CheckingPos);
-
-                        if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction))// && !targetPriority)
-                        {
-                            Debug.Log("Got Blocked By" + exploreParams.StoppedByTargets);
-                            return ValidPos;
-                        }
-                        if (CheckTargetMatch(CheckingPos, exploreParams.AffectTargets, faction))
-                        {
-                            Debug.Log("Found Primary Target" + exploreParams.AffectTargets);
-                            ValidPos.Add(CheckingPos);
-                        }
-                    }
-                    return ValidPos;
-                }
-            /* case ExpansionType.LobbedProjectile:
-                {
-                    List<List<Vector3Int>> PotentialOptimalAreas = new List<List<Vector3Int>>();
-                    int MaxUnitsAffected = 0;
-                    List<Vector3Int> OptialArea = new List<Vector3Int>();
-                    for (int i = 0; i < exploreParams.ExploreRangeMax; i++)
-                    {
-                        Vector3Int CheckingPos = fromPoint + (Direction * i);
-                        PotentialOptimalAreas.Add(GetArea(CheckingPos, exploreParams.AffectsArea, faction));
-                        if (PotentialOptimalAreas[i].Count > MaxUnitsAffected)
-                        {
-                            OptialArea = PotentialOptimalAreas[i];
-                            MaxUnitsAffected = PotentialOptimalAreas[i].Count;
-                        }
-                    }
-                    return OptialArea;
-                } */
-            default:
-                {
-                    Debug.Log("Not Not Accounted For");
-                    break;
-                }
+            startPoint = exploreParams.ExploreRangeMax;
         }
-        return ValidPos;
-        
-
+        for (int i = startPoint; i < exploreParams.ExploreRangeMax; i++)
+        {
+            Debug.Log("Exploreing range " + i);
+            Vector3Int CheckingPos = fromPoint + (Direction * i);
+            var area = GetArea(CheckingPos, Direction, exploreParams.AffectsArea, faction);
+            if (area.Count > 0)
+            {
+                Debug.Log("The Point is Valid" + CheckingPos + "for realtion of " + exploreParams.AffectsArea.AffectTargets.First() + " to Faction" + faction);
+                ValidPoints.Add(CheckingPos);
+                if (exploreParams.perices)
+                    continue;
+                else
+                    return ValidPoints;
+            }
+            if (CheckTargetMatch(CheckingPos, exploreParams.StoppedByTargets, faction))// && !targetPriority)
+            {
+                return ValidPoints;
+            }
+        }
+        return ValidPoints;
     }
     bool CheckTargetMatch(Vector3Int pos, List<ValidTargets> targets, string faction)
     {
         foreach (var target in targets)
             if (CheckIfTargetis(pos, target, faction))
+            {
+                //.LogError("faction Condetion Met " + pos + target + " " + faction);
+                //Debug.Break();
                 return true;
+            }
         return false;
     }
-    public List<Vector3Int> GetArea(Vector3Int fromPoint, AoeParams aoeParams, string faction)
+    public List<Vector3Int> GetArea(Vector3Int fromPoint, Vector3Int direction, AoeParams aoeParams, string faction)
     {
         List<Vector3Int> ValidPos = new List<Vector3Int>();
-        switch (aoeParams.TypeOfRange)
-        {
-            case DirectionalUseParams.Taxi:
-                {
-                    ValidPos = GlobalCal.GenerateArea(AoeStyle.Taxi, fromPoint, fromPoint, aoeParams.ExploreRangeMax);
-                    return GlobalCal.FilterWithFunc(ValidPos, simplifiedMatchCondition);
-                }
-            case DirectionalUseParams.Omni:
-                {
-                    break;
-                }
-            case DirectionalUseParams.Cardinal:
-                {
-                    break;
-                }
-            case DirectionalUseParams.Ordinal:
-                {
-                    break;
-                }
-        }
-        Debug.Log("Using Fall Back");
+        ValidPos = GlobalCal.GenerateArea(aoeParams.TypeOfRange, fromPoint, fromPoint + direction, aoeParams.ExploreRangeMax);
+        GameEvents.current.reticalManager.reDrawInValidTiles(ValidPos);
+        ValidPos = GlobalCal.FilterWithFunc(ValidPos, simplifiedMatchCondition);
+        GameEvents.current.reticalManager.reDrawValidTiles(ValidPos);
+        Debug.Break();
         return ValidPos;
         bool simplifiedMatchCondition(Vector3Int pos)
         {
@@ -477,7 +417,7 @@ public class MapManager : MonoBehaviour
             closestEndPos = universalCalculator.SortListAccordingtoDistanceFromPoint(endPos, pos).First();
             float Hcost = Vector3Int.Distance(pos, closestEndPos);//distance to endPoint
             float Gcost = Vector3Int.Distance(pos, startPos);//distance to startPoint 
-            //AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
+                                                             //AStarDebug += "\n" + "         " + pos + " had H and G cost of " + Hcost + " " + Gcost;
             AStarDebug += pos + ", ";
             Node currentNode = new Node(pos, Hcost, Gcost, previousNode);
             return currentNode;

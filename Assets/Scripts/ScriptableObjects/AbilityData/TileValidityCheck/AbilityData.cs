@@ -47,6 +47,9 @@ public enum AoeStyle
     Taxi = 4,
     Square = 5,
     SSweep = 2,
+    Omni,//Star
+    Cardinal,//Cross
+    Ordinal,//Diagonals
 }
 //Defining Global NameSapce
 public enum GroundFloorType
