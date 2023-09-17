@@ -51,25 +51,39 @@ public class BasicCameraController : MonoBehaviour
         {
             thisGameObject.transform.position = thisGameObject.transform.position + Vector3.right / speedreudce;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && false)
+        if (Input.GetKeyDown(KeyCode.Space) && true)
         {
-            //mapManager.getCellData(reticalManager.getMovePoint());
-            Vector3Int MousePos = reticalManager.getIntPoint();
-            Vector3Int currentCharPos = moveDictionaryManager.characterCS.GetCharV3Int();
-            Vector3Int direction = GlobalCal.GetNormalizedDirection(currentCharPos, MousePos);
-            string faction = moveDictionaryManager.characterCS.Faction;
-            List<Vector3Int> TotalArea = new List<Vector3Int>();
-            Debug.Log("Current Faction  " + faction);
-            foreach (Vector3Int point in mapManager.CheckDirection(currentCharPos, direction, example.ProjectilesFired, faction))
-            {
-                TotalArea.AddRange(mapManager.GetArea(point, direction, example.HelpUiArea, faction));
-            }
-            reticalManager.reDrawInValidTiles(TotalArea);
-
-            //reticalManager.reDrawInValidTiles(mapManager.GetArea(currentCharPos, direction, example.ProjectilesFired.AffectsArea, faction));
-            /* var area = mapManager.CheckDirection(currentCharPos, GlobalCal.GetNormalizedDirection(currentCharPos, MousePos), example.ProjectilesFired, faction);
-            Debug.Log(area + " " + GlobalCal.GetNormalizedDirection(currentCharPos, MousePos)); */
-            //reticalManager.reDrawInValidTiles(area);
+            if (refrsh != null)
+                StopCoroutine(refrsh);
+            refrsh = StartCoroutine(RefreshStuff());
         }
+    }
+    private Coroutine refrsh;
+    IEnumerator RefreshStuff()
+    {
+        //mapManager.getCellData(reticalManager.getMovePoint());
+        Vector3Int MousePos = reticalManager.getIntPoint();
+        Vector3Int currentCharPos = moveDictionaryManager.characterCS.GetCharV3Int();
+        Vector3Int direction = GlobalCal.GetNormalizedDirection(currentCharPos, MousePos);
+        string faction = moveDictionaryManager.characterCS.Faction;
+        List<Vector3Int> TotalArea = new List<Vector3Int>();
+        Debug.Log("Current Faction  " + faction);
+        foreach (Vector3Int point in mapManager.CheckDirection(currentCharPos, direction, example.ProjectilesFired, faction))
+        {
+            yield return new WaitForSeconds(0.2f);
+            reticalManager.validReticalTilesTilemap.SetTile(point, reticalManager.reticalTile);
+            TotalArea.AddRange(mapManager.GetArea(point, direction, example.HelpUiArea, faction));
+        }
+        foreach (Vector3Int subpoint in TotalArea)
+        {
+            yield return new WaitForSeconds(0.2f);
+            reticalManager.GhostTiles.SetTile(subpoint, reticalManager.reticalTile);
+        }
+        //reticalManager.reDrawInValidTiles(TotalArea);
+
+        //reticalManager.reDrawInValidTiles(mapManager.GetArea(currentCharPos, direction, example.ProjectilesFired.AffectsArea, faction));
+        /* var area = mapManager.CheckDirection(currentCharPos, GlobalCal.GetNormalizedDirection(currentCharPos, MousePos), example.ProjectilesFired, faction);
+        Debug.Log(area + " " + GlobalCal.GetNormalizedDirection(currentCharPos, MousePos)); */
+        //reticalManager.reDrawInValidTiles(area);
     }
 }

@@ -15,11 +15,11 @@ public class ReticalManager : MonoBehaviour
     [SerializeField] Vector3 lastMovePoint;
 
     [Header("Retical Tilemap Reffrences")]
-    [SerializeField] TileBase reticalTile;
-    [SerializeField] Tilemap Grid;
-    [SerializeField] Tilemap validReticalTilesTilemap;
-    [SerializeField] Tilemap validTilesTileMap;
-    [SerializeField] private Tilemap GhostTiles;
+    public TileBase reticalTile;
+    public Tilemap Grid;
+    public Tilemap validReticalTilesTilemap;
+    public Tilemap validTilesTileMap;
+    public Tilemap GhostTiles;
     void Start()
     {
         ValidPosToShapeData = new Dictionary<Vector3Int, List<List<Vector3Int>>>();

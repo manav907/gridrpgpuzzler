@@ -12,6 +12,15 @@ public class ExploreMethod : ScriptableObject
     public AoeParams HelpUiArea;//Shown as Selectable Area
     public ExploreParams ProjectilesFired;
 }
+public class AbilityCheckData
+{
+    [Range(0, 5)]
+    public int ExploreRangeMax = 3;
+    public AoeParams StartSeachNodes;//this makes start seach nodes for projectiles
+    public AoeParams CheckAreaInNode;//This Creates and Checks for Conditions in an Area
+    public bool isPearcing;//This Checks wether or not the Node Check should be canceled upon Inconnect Collision.
+    public bool calculateNewDirection;//this calculates new direction from a given origin point
+}
 [Serializable]
 public class ExploreParams
 {

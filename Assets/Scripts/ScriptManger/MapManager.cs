@@ -353,7 +353,6 @@ public class MapManager : MonoBehaviour
         GameEvents.current.reticalManager.reDrawInValidTiles(ValidPos);
         ValidPos = GlobalCal.FilterWithFunc(ValidPos, simplifiedMatchCondition);
         GameEvents.current.reticalManager.reDrawValidTiles(ValidPos);
-        Debug.Break();
         return ValidPos;
         bool simplifiedMatchCondition(Vector3Int pos)
         {
