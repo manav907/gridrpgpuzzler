@@ -22,6 +22,7 @@ public class UIController : MonoBehaviour
         storyModeButon = root.Q<Button>("StoryMode");
         arcadeModeButton = root.Q<Button>("ArcadeMode");
         difficulty = root.Q<Button>("Difficulty");
+        settingButtons = root.Q<Button>("Settings");
         backButtons = root.Q<Button>("Back");
         Modes = root.Q<VisualElement>("Modes");
         ButtonGrid = root.Q<VisualElement>("ButtonGird");
@@ -61,8 +62,16 @@ public class UIController : MonoBehaviour
         Modes.style.display = DisplayStyle.None;
         ButtonGrid.style.display = DisplayStyle.Flex;
     }
+    void disableVestagialButtons()
+    {
+        Debug.Log("disableVestagialButtons disabled");
+        backButtons.style.display = DisplayStyle.None;
+        settingButtons.style.display = DisplayStyle.None;
+    }
     void initilizeArcadeModeGrid()
     {
+        disableVestagialButtons();
+
         ButtonGrid.style.flexDirection = FlexDirection.Column;
 
         int numberOfButtons = arcadeModeLevels.Count;
@@ -107,6 +116,7 @@ public class UIController : MonoBehaviour
     }
     void backButtonPressed()
     {
+
         Modes.style.display = DisplayStyle.Flex;
         ButtonGrid.style.display = DisplayStyle.None;
     }
