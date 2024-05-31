@@ -17,9 +17,9 @@
                     <ui:Button text="Button" display-tooltip-when-elided="true" name="ExampleButton" class="ButtonsThatShrinkToFit" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="TipBox" style="background-image: url(&apos;project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-67310725&amp;guid=d63068fd6a521394e8f6640e8677bf54&amp;type=3#Spritesheet_UI_Flat_Button_02_3&apos;); align-items: center; flex-direction: row; align-self: center; height: auto; justify-content: flex-start; width: 100%; -unity-background-scale-mode: scale-and-crop; flex-grow: 0;">
+            <ui:VisualElement name="TipBox" style="background-image: url(&quot;project://database/Assets/Pallet/UI/Complete_GUI_Essential_Pack_Free_Version/Spritesheet_UI_Flat_Button_02.png?fileID=-67310725&amp;guid=d63068fd6a521394e8f6640e8677bf54&amp;type=3#Spritesheet_UI_Flat_Button_02_3&quot;); align-items: center; flex-direction: row; align-self: center; height: auto; justify-content: flex-start; width: 100%; -unity-background-scale-mode: scale-and-crop; flex-grow: 0;">
                 <ui:VisualElement name="CurrentCharacterData" style="width: auto; height: auto; max-width: 35px; max-height: 35px;" />
-                <ui:Label text="Select Purple Tile To Continew Or Right Click to Cancel&#10;/Axe Requires 2 Stamina" display-tooltip-when-elided="true" name="Tip" style="font-size: 24%; white-space: normal; text-overflow: clip; flex-grow: 1; -unity-text-align: middle-left;" />
+                <ui:Label text="Select Purple Tile To Continew Or Right Click to Cancel&#10;/Axe Requires 2 Stamina" display-tooltip-when-elided="true" name="Tip" style="font-size: 24%; white-space: normal; text-overflow: clip; flex-grow: 1; -unity-text-align: middle-left; padding-bottom: 16px; padding-left: 12px; padding-right: 12px; padding-top: 8px;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="DialogBox" style="font-size: 100%; align-items: stretch; justify-content: flex-start; display: none;">
